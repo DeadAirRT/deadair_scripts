@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<diff>
+	<add sel="/macros">
+		<macro name="ZoneDAG1_Cluster_112_Sector001_macro" class="zone">
+			<component ref="standardzone"/>
+			<connections>
+				<connection name="connection_ClusterGateDAG112ATo112B" ref="gates">
+					<offset>
+						<position x="0" y="250" z="-500"/>
+						<quaternion qx="0" qy="0" qz="0" qw="1"/>
+					</offset>
+					<macro ref="props_gates_anc_gate_macro" connection="space">
+						<properties>
+							<state active="false" />
+						</properties>
+					</macro>
+				</connection>
+			</connections>
+		</macro>
+	</add>
+	<add sel="/macros">
+		<macro name="ZoneDAG1_Cluster_112_Sector002_macro" class="zone">
+			<component ref="standardzone"/>
+			<connections>
+				<connection name="connection_ClusterGateDAG112BTo112A" ref="gates">
+					<offset>
+						<position x="0" y="250" z="500"/>
+						<quaternion qx="0" qy="1" qz="0" qw="0"/>
+					</offset>
+					<macro ref="props_gates_anc_gate_macro" connection="space">
+						<properties>
+							<state active="false" />
+						</properties>
+					</macro>
+				</connection>
+			</connections>
+		</macro>
+	</add>
+</diff>

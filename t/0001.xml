@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language>
+	<page id="33232474" title="DeadAir Script T Files" descr="names used in DeadAir Scripts" voice="no">
+		<!-- DONE: Library entries like job names etc -->
+		<!-- DONE: hover descriptions for dynamic war -->
+		<t id="100">DA Mod Menu</t>
+		<!-- Submod Menus 101-109 -->
+		<t id="101">DA Dynamic War</t>
+		<t id="102">DA Dynamic News</t>
+		<t id="103">DA Evolution</t>
+		<t id="104">DA Fill</t>
+		<t id="105">DA Jobs</t>
+		<t id="106">DA Gate</t>
+		<t id="107">(XXX)</t>
+		<t id="108">(XXX)</t>
+		<t id="109">(XXX)</t>
+		<!-- Dynamic War Menu Entries -->
+		<t id="110">Increase Relations</t>
+		<t id="111">Decrease Relations</t>
+		<t id="112">Recent News</t>
+		<t id="113">Military Strength</t>
+		<t id="114">Economic Strength</t>
+		<t id="115">(Ware Stored/Wanted){1001,45} {1001,1406}\/{1001,2903}</t>
+		<t id="116">Station Storage</t>
+		<t id="117">(Options Menu){1001,2600}</t>
+		<t id="118">Unlock Relations</t>
+		<t id="119">DW Ignored Factions</t>
+		<t id="120">Insufficient Relation</t>
+		<t id="121">Producer</t>
+		<t id="122">Consumer</t>
+		<t id="123">Enable Dynamic War</t>
+		<t id="124">Enable DW Favors</t>
+		<t id="125">Dynamic War Interval</t>
+		<t id="126">Close Ally Weight</t>
+		<t id="127">Large Increase Weight</t>
+		<t id="128">Small Increase Weight</t>
+		<t id="129">Small Decrease Weight</t>
+		<t id="130">Large Decrease Weight</t>
+		<t id="131">Nemesis Weight</t>
+		<t id="132">No Change Weight</t>
+		<t id="133">Primary Race Modifier</t>
+		<t id="134">Current Relations Modifier</t>
+		<t id="135">Common Relations Modifier</t>
+		<t id="136">Enable DW Flavor Text</t>
+		<t id="137">Enable DW Debug</t>
+		<t id="138">Locked</t>
+		<t id="139">Unlocked</t>
+		<t id="140">Allowed</t>
+		<t id="141">Ignored</t>
+		<t id="142">Enable AI Relations Cap</t>
+		<t id="143">Maximum Factions to Check</t>
+		<!-- Dynamic War Menu Entry Descriptions -->
+		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
+		<t id="1111">Allows the player to use credits or favors to increase relations between two factions. Decreasing relation between two factions requires a certain level of trust (reputation) with the faction.</t>
+		<t id="1112">Shows recent events similar to logbook.</t>
+		<t id="1113">Shows the amount of military ships that each supported faction has.</t>
+		<t id="1114">Shows the amount of economic ships and stations that each supported faction has.</t>
+		<t id="1115">Shows a general overview of a faction's amount of wares stored compared to amount desired.</t>
+		<t id="1116">Shows a general overview of a faction's station storage split between stations that produce a ware and stations that consume a ware.</t>
+		<t id="1117">Collection of options available to change how the Dynamic War script runs.</t>
+		<t id="1118">Allows the player to unlock a factions relation. This may cause issues with certain storyline missions.</t>
+		<t id="1119">Allows the player to enable or disable certain factions from Dynamic War script. Disabling a faction may help avoid issues with certain storyline missions.</t>
+		<t id="1120">You do not have enough reputation with (FACTION)</t>
+		<t id="1121">(XXX)</t>
+		<t id="1122">(XXX)</t>
+		<t id="1123">Changes whether the Dynamic War script will continue to run. Disabling does not revert relations.</t>
+		<t id="1124">Changes whether the player will continue to accrue favors for maintaining 20+ relation with a faction.</t>
+		<t id="1125">Changes the time \(in minutes\) between Dynamic War events. Default = 30 minutes</t>
+		<t id="1126">Changes the weighting of events where two factions' relation will increase TO 25. To calculate percent chance, take this weight and divide by total weight of events. Default = 1</t>
+		<t id="1127">Changes the weighting of events where two factions' relation will increase BY 15. To calculate percent chance, take this weight and divide by total weight of events. Default = 16</t>
+		<t id="1128">Changes the weighting of events where two factions' relation will increase BY 5. To calculate percent chance, take this weight and divide by total weight of events. Default = 32</t>
+		<t id="1129">Changes the weighting of events where two factions' relation will decrease BY 5. To calculate percent chance, take this weight and divide by total weight of events. Default = 32</t>
+		<t id="1130">Changes the weighting of events where two factions' relation will decrease BY 15. To calculate percent chance, take this weight and divide by total weight of events. Default = 16</t>
+		<t id="1131">Changes the weighting of events where two factions' relation will decrease TO -30. To calculate percent chance, take this weight and divide by total weight of events. Default = 1</t>
+		<t id="1132">Changes the weighting of events where two factions' relation will NOT change. To calculate percent chance, take this weight and divide by total weight of events. Default = 0</t>
+		<t id="1133">Changes the effect that a factions primary race plays. Factions will tend to be more friendly with same race and xenophobic the higher this value is. This value is multiplicative. Default = 0.25</t>
+		<t id="1134">Changes the effect that a factions current relation plays. Factions will tend to continue friendly relations or continue hostility the higher this value is. This value is multiplicative. Default = 0.5</t>
+		<t id="1135">Changes the effect that a factions current allies and enemies plays. Factions will tend to form coalitions the higher this value is. This value is multiplicative. Default = 0.25</t>
+		<t id="1136">TODO. Changes whether logbook entries have added flavor text. Does not affect gameplay but takes a lot of work to write them.</t>
+		<t id="1137">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1138">This faction has locked relations.</t>
+		<t id="1139">(XXX)</t>
+		<t id="1140">This faction is able to be selected in the Dynamic War script. Only factions that are active, claim space, and have unlocked relations will be chosen.</t>
+		<t id="1141">This faction will not be selected by the Dynamic War script.</t>
+		<t id="1142">Changes whether a script that limits and corrects faction relations will run. This script prevents AI to AI relations above 27 to avoid meeting the "Self" condition. It also corrects {20203,701} relations to match {20203,601} to avoid civil war.</t>
+		<t id="1143">The number of factions the script will have as potential second faction during an event. Increasing this value can potentially cause an impact to performance as there is a large amount of calculations for determining faction strength. Default = 4</t>
+		<!-- Dynamic War Misc -->
+		<t id="2110">(FACTION) Relations Locked.</t>
+		<t id="2111">Blue = Stored</t>
+		<t id="2112">Green = Excess</t>
+		<t id="2113">Red = Shortage</t>
+		<t id="2114">(XXX)</t>
+		<t id="2115">(XXX)</t>
+		<t id="2116">(XXX)</t>
+		<t id="2117">(XXX)</t>
+		<t id="2118">(XXX)</t>
+		<t id="2119">(XXX)</t>
+		<t id="2120">(XXX)</t>
+		<t id="2121">(XXX)</t>
+		<t id="2122">(XXX)</t>
+		<t id="2123">(XXX)</t>
+		<t id="2124">(XXX)</t>
+		<t id="2125">(XXX)</t>
+		<t id="2126">(XXX)</t>
+		<t id="2127">(XXX)</t>
+		<t id="2128">(XXX)</t>
+		<t id="2129">(XXX)</t>
+		<!-- Evolution Menu Entries -->
+		<t id="160">Enable Evolution</t>
+		<t id="161">Evolution Interval</t>
+		<t id="162">Evolution Current Level / Max Level</t>
+		<t id="163">Enable Evolution Xenon Fleets</t>
+		<t id="164">Maximum Xenon Fleets Added</t>
+		<t id="165">Xenon Fleet Size</t>
+		<t id="166">Small Fleet</t>
+		<t id="167">Medium Fleet</t>
+		<t id="168">Large Fleet</t>
+		<t id="169">Enable Evolution Debug</t>
+		<t id="170">Enable Xenon Station Evolution</t>
+		<t id="171">(XXX)</t>
+		<t id="172">(XXX)</t>
+		<t id="173">(XXX)</t>
+		<t id="174">(XXX)</t>
+		<t id="175">(XXX)</t>
+		<t id="176">(XXX)</t>
+		<t id="177">(XXX)</t>
+		<t id="178">(XXX)</t>
+		<t id="179">(XXX)</t>
+		<!-- Evolution Menu Entry Descriptions -->
+		<t id="1160">Changes whether the Evolution script will continue to run. Disabling does not revert ships already upgraded.</t>
+		<t id="1161">Changes the time \(in minutes\) between evolution level increases. Has no effect if Evolution disabled or already at max level. Default = 120 minutes</t>
+		<t id="1162">Shows the current progress level of Evolution.</t>
+		<t id="1163">Changes whether additional ships are built by xenon.</t>
+		<t id="1164">Changes the maximum number of Xenon fleets that will be ordered built by Xenon from this mod. Default = 10 fleets</t>
+		<t id="1165">Size of the Xenon fleets added by Evolution. This will only affect future fleets built. Default = Medium</t>
+		<t id="1166">1{1001,48}(XL) - 1{1001,48}(XL) {1001,7817}(Escort) - 3{1001,50}(M) {1001,7817}(Escort) - 6{1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1167">1{1001,48}(XL) - 3{1001,48}(XL) {1001,7817}(Escort) - 9{1001,50}(M) {1001,7817}(Escort) - 18{1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1168">1{1001,48}(XL) - 5{1001,48}(XL) {1001,7817}(Escort) - 15{1001,50}(M) {1001,7817}(Escort) - 30{1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1169">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1170">Changes whether Xenon shipyards will expand at evolution levels 1,3, and 5. At each of these tiers they will add two additional storage modules, an additional XL ship builder, and an additional defense module.</t>
+		<t id="1171">(XXX)</t>
+		<t id="1172">(XXX)</t>
+		<t id="1173">(XXX)</t>
+		<t id="1174">(XXX)</t>
+		<t id="1175">(XXX)</t>
+		<t id="1176">(XXX)</t>
+		<t id="1177">(XXX)</t>
+		<t id="1178">(XXX)</t>
+		<t id="1179">(XXX)</t>
+		<!-- Evolution Misc -->
+		<t id="2160">Branch 9 Evolution {1001,1112}</t>
+		<t id="2161">Branch 9 Evolution {1001,7817}</t>
+		<t id="2162">(XXX)</t>
+		<t id="2163">(XXX)</t>
+		<t id="2164">(XXX)</t>
+		<t id="2165">(XXX)</t>
+		<t id="2166">(XXX)</t>
+		<t id="2167">(XXX)</t>
+		<t id="2168">(XXX)</t>
+		<t id="2169">(XXX)</t>
+		<t id="2170">(XXX)</t>
+		<t id="2171">(XXX)</t>
+		<t id="2172">(XXX)</t>
+		<t id="2173">(XXX)</t>
+		<t id="2174">(XXX)</t>
+		<t id="2175">(XXX)</t>
+		<t id="2176">(XXX)</t>
+		<t id="2177">(XXX)</t>
+		<t id="2178">(XXX)</t>
+		<t id="2179">(XXX)</t>
+		<!-- Fill Menu Entries -->
+		<t id="200">Enable Fill</t>
+		<t id="201">Fill Interval</t>
+		<t id="202">Max {20102,1051} Ware %</t>
+		<t id="203">Adjusted Max {20102,1051} Ware %</t>
+		<t id="204">Min {20102,1051} Ware %</t>
+		<t id="205">Adjusted Min {20102,1051} Ware %</t>
+		<t id="206">Min {20102,1071}/{20102,1081} Ware %</t>
+		<t id="207">Adjusted Min {20102,1071}/{20102,1081} Ware %</t>
+		<t id="208">Enable Fill Ship Mods</t>
+		<t id="209">Enable Fill Debug</t>
+		<t id="210">(XXX)</t>
+		<t id="211">(XXX)</t>
+		<t id="212">(XXX)</t>
+		<t id="213">(XXX)</t>
+		<t id="214">(XXX)</t>
+		<t id="215">(XXX)</t>
+		<t id="216">(XXX)</t>
+		<t id="217">(XXX)</t>
+		<t id="218">(XXX)</t>
+		<t id="219">(XXX)</t>
+		<!-- Fill Menu Entry Descriptions -->
+		<t id="1200">Changes whether the Fill script will continue to run.</t>
+		<t id="1201">How often Fill will check stations. Default=60</t>
+		<t id="1202">The lowest percentage of capacity a ware can be before removing cargo at the {20102,1051}. Set to 100 to disable the removal of cargo. Default=90.</t>
+		<t id="1203">The percentage capacity a ware will be after removing cargo at the {20102,1051}. Default=75.</t>
+		<t id="1204">The highest percentage of capacity a ware can be before adding cargo at the {20102,1051}. Set to 0 to disable the adding of cargo. Default=5.</t>
+		<t id="1205">The percentage capacity a ware will be after adding cargo at the {20102,1051}. Default=10.</t>
+		<t id="1206">The highest percentage capacity a ware can be before adding cargo at the {20102,1071}/{20102,1081}. Set to 0 to disable the adding of cargo. Default=5.</t>
+		<t id="1207">The percentage capacity a ware will be after adding cargo at the {20102,1071}/{20102,1081}. Default=10.</t>
+		<t id="1208">Changes whether the Fill script will add ship mods to a random XL/L ship of the station owner when resources are drained.</t>
+		<t id="1209">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1210">(XXX)</t>
+		<t id="1211">(XXX)</t>
+		<t id="1212">(XXX)</t>
+		<t id="1213">(XXX)</t>
+		<t id="1214">(XXX)</t>
+		<t id="1215">(XXX)</t>
+		<t id="1216">(XXX)</t>
+		<t id="1217">(XXX)</t>
+		<t id="1218">(XXX)</t>
+		<t id="1219">(XXX)</t>
+		<!-- Jobs Menu Entries -->
+		<t id="240">Enable Expeditions</t>
+		<t id="241">Enable Smart Sector Tags</t>
+		<t id="242">Enable Jobs Exped Debug</t>
+		<t id="243">Enable Jobs SST Debug</t>
+		<t id="244">Enable Jobs SST Extra Debug</t>
+		<t id="245">Jobs Quotas</t>
+		<t id="246">{33232474,2240}</t>
+		<t id="247">{33232474,2241}</t>
+		<t id="248">{33232474,2242}</t>
+		<t id="249">{33232474,2243}</t>
+		<t id="250">Small Fleet</t>
+		<t id="251">Medium Fleet</t>
+		<t id="252">Large Fleet</t>
+		<t id="253">Galaxy Quota</t>
+		<t id="254">Sector Quota</t>
+		<t id="255">(XXX)</t>
+		<t id="256">(XXX)</t>
+		<t id="257">(XXX)</t>
+		<t id="258">(XXX)</t>
+		<t id="259">(XXX)</t>
+		<!-- Jobs Menu Entry Descriptions -->
+		<t id="1240">Changes whether the added expeditions jobs for factions will continue to be built, organized, and launched to attack enemies.</t>
+		<t id="1241">Changes whether the custom logic for determining Critical, Core, Border, and Contested sector jobs will continue to be built, organized, and launched to reinforce sectors.</t>
+		<t id="1242">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1243">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1244">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode. These debugs are extremely detailed and extensive.</t>
+		<t id="1245">(XXX)</t>
+		<t id="1246">This job patrols sectors that are considered critical to a faction. The sectors must include a shipyard or wharf AND be owned by the faction.</t>
+		<t id="1247">This job patrols sectors that are considered to be the core sectors. The sectors must not border enemy sectors or be contested. Sector must be owned by the faction and typically contains economic stations not expected to be under considerable threat.</t>
+		<t id="1248">This job patrols sectors that border enemy or unfriendly sectors. The sectors must be owned by the faction and are expected to be under considerable threat.</t>
+		<t id="1249">This job patrols sectors that have enemy or unfriendly presence in the sector. The sector must include at least one station owned by this faction and an enemy faction. These sectors are considered under considerable threat and the faction will attempt to increase it's control.</t>
+		<t id="1250">%s(#) {1002,12061}(Capital Ship) + %s(#) {1002,12061}(Capital Ship) {1001,7817}(Escort) + %s(#) {1001,50}(M) {1001,7817}(Escort) + %s(#) {1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1251">%s(#) {1002,12061}(Capital Ship) + %s(#) {1002,12061}(Capital Ship) {1001,7817}(Escort) + %s(#) {1001,50}(M) {1001,7817}(Escort) + %s(#) {1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1252">%s(#) {1002,12061}(Capital Ship) + %s(#) {1002,12061}(Capital Ship) {1001,7817}(Escort) + %s(#) {1001,50}(M) {1001,7817}(Escort) + %s(#) {1001,51}(S) {1001,7817}(Escort)</t>
+		<t id="1253">This number is the number of fleets the faction will attempt to maintain across the entire galaxy. If this number is set to 0 it will disable future orders of these fleets.</t>
+		<t id="1254">This number is the maximum number of fleets the faction will attempt to maintain in each sector that meets the criteria. If this number is set to 0 it will disable future orders of these fleets.</t>
+		<t id="1255">(XXX)</t>
+		<t id="1256">(XXX)</t>
+		<t id="1257">(XXX)</t>
+		<t id="1258">(XXX)</t>
+		<t id="1259">(XXX)</t>
+		<!-- Jobs Misc -->
+		<t id="2240">Strategic Patrol</t>
+		<t id="2241">Interior Patrol</t>
+		<t id="2242">Boundary Patrol</t>
+		<t id="2243">Arbitrator Patrol</t>
+		<t id="2244">(Destroyer Escort){20221,4001} {1001,7817}</t>
+		<t id="2245">(Frigate Escort){20221,3011} {1001,7817}</t>
+		<t id="2246">(Fighter Escort){20204,2601}</t>
+		<t id="2247">Fleet Size</t>
+		<t id="2248">(XXX)</t>
+		<t id="2249">(XXX)</t>
+		<t id="2250">(XXX)</t>
+		<t id="2251">(XXX)</t>
+		<t id="2252">(XXX)</t>
+		<t id="2253">(XXX)</t>
+		<t id="2254">(XXX)</t>
+		<t id="2255">(XXX)</t>
+		<t id="2256">(XXX)</t>
+		<t id="2257">(XXX)</t>
+		<t id="2258">(XXX)</t>
+		<t id="2259">(XXX)</t>
+		<!-- News Menu Entries -->
+		<t id="280">Enable Dynamic News</t>
+		<t id="281">Enable DN Notifications</t>
+		<t id="282">Enable DN Logbook</t>
+		<t id="283">Enable DN News Storage</t>
+		<t id="284">DN Interval</t>
+		<t id="285">Enable DN Debug</t>
+		<t id="286">(XXX)</t>
+		<t id="287">(XXX)</t>
+		<t id="288">(XXX)</t>
+		<t id="289">(XXX)</t>
+		<t id="290">(XXX)</t>
+		<t id="291">(XXX)</t>
+		<t id="292">(XXX)</t>
+		<t id="293">(XXX)</t>
+		<t id="294">(XXX)</t>
+		<t id="295">(XXX)</t>
+		<t id="296">(XXX)</t>
+		<t id="297">(XXX)</t>
+		<t id="298">(XXX)</t>
+		<t id="299">(XXX)</t>
+		<!-- News Menu Entry Descriptions -->
+		<t id="1280">Changes whether the Dynamic News script will continue to run.</t>
+		<t id="1281">Changes whether Dynamic News will send notifications on monitored events.</t>
+		<t id="1282">Changes whether Dynamic News will write to the logbook on monitored events.</t>
+		<t id="1283">Changes whether Dynamic News will store recent news events.</t>
+		<t id="1284">Changes the minimum time between the script checking for any new reports. This will change the time between checks for groups of reports that will be output in regular intervals.</t>
+		<t id="1285">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1286">(XXX)</t>
+		<t id="1287">(XXX)</t>
+		<t id="1288">(XXX)</t>
+		<t id="1289">(XXX)</t>
+		<t id="1290">(XXX)</t>
+		<t id="1291">(XXX)</t>
+		<t id="1292">(XXX)</t>
+		<t id="1293">(XXX)</t>
+		<t id="1294">(XXX)</t>
+		<t id="1295">(XXX)</t>
+		<t id="1296">(XXX)</t>
+		<t id="1297">(XXX)</t>
+		<t id="1298">(XXX)</t>
+		<t id="1299">(XXX)</t>
+		<!-- News Misc -->
+		<!-- $FACTION$ extending station $STATION_NAME$ ($STATION_IDCODE$) in $SECTOR_NAME$ -->
+		<t id="2280">%1 extending station %2 \(%3\) in %4.</t>
+		<!-- $FACTION$ extending station $STATION_NAME$ ($STATION_IDCODE$) with $MODULE_NAME$ in $SECTOR_NAME$ -->
+		<t id="2281">%1 extending station %2 \(%3\) with additional %4 in %5.</t>
+		<!-- $FACTION$ extending station $STATION_NAME$ ($STATION_IDCODE$) with $NUMBER$ modules in $SECTOR_NAME$ -->
+		<t id="2282">%1 extending station %2 \(%3\) with additional %4 modules in %5.</t>
+		<!-- $FACTION$ building new $WARE$ station in $SECTOR_NAME$ -->
+		<t id="2283">%1 building new %2 station in %3.</t>
+		<!-- $STATION$ in $SECTOR$ destroyed -->
+		<t id="2284">%s in %s destroyed</t>
+		<!-- by $KILLER$ -->
+		<t id="2285">by %s</t>
+		<!-- Stations lost: -->
+		<t id="2286">Stations lost:</t>
+		<!-- $STATION$ in $SECTOR$ -->
+		<t id="2287">%s in %s</t>
+		<!-- Expanded $STATION$($IDCODE$) in $SECTOR$ -->
+		<t id="2288">Expanded %s\(%s\) in %s</t>
+		<!-- with $NUMBER$ modules -->
+		<t id="2289">with %s modules.</t>
+		<!-- Stations expanded: -->
+		<t id="2290">Stations expanded:</t>
+		<!-- Started $STATION$($IDCODE$) in $SECTOR$ -->
+		<t id="2291">Started %s\(%s\) in %s</t>
+		<!-- to produce $WARE$ -->
+		<t id="2292">to produce %s</t>
+		<!-- New stations started: -->
+		<t id="2293">New stations started:</t>
+		<!-- $NUMBER$ stations destroyed -->
+		<t id="2294">%s stations lost</t>
+		<!-- $NUMBER$ stations expanded -->
+		<t id="2295">%s stations expanded</t>
+		<!-- $NUMBER$ stations started -->
+		<t id="2296">%s stations started</t>
+		<t id="2297">(XXX)</t>
+		<t id="2298">(XXX)</t>
+		<t id="2299">(XXX)</t>
+		<!-- Gate Menu Entries -->
+		<t id="300">Enable DA Gate</t>
+		<t id="301">Enable Gate Debug</t>
+		<t id="302">(XXX)</t>
+		<t id="303">(XXX)</t>
+		<t id="304">(XXX)</t>
+		<t id="305">(XXX)</t>
+		<t id="306">(XXX)</t>
+		<t id="307">(XXX)</t>
+		<t id="308">(XXX)</t>
+		<t id="309">(XXX)</t>
+		<t id="310">(XXX)</t>
+		<t id="311">(XXX)</t>
+		<t id="312">(XXX)</t>
+		<t id="313">(XXX)</t>
+		<t id="314">(XXX)</t>
+		<t id="315">(XXX)</t>
+		<t id="316">(XXX)</t>
+		<t id="317">(XXX)</t>
+		<t id="318">(XXX)</t>
+		<t id="319">(XXX)</t>
+		<!-- Gate Menu Entry Descriptions -->
+		<t id="1300">Changes whether the DA Gate script will continue to run. This only affects the scripts that find the gates, it does not revert gate status.</t>
+		<t id="1301">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1302">(XXX)</t>
+		<t id="1303">(XXX)</t>
+		<t id="1304">(XXX)</t>
+		<t id="1305">(XXX)</t>
+		<t id="1306">(XXX)</t>
+		<t id="1307">(XXX)</t>
+		<t id="1308">(XXX)</t>
+		<t id="1309">(XXX)</t>
+		<t id="1310">(XXX)</t>
+		<t id="1311">(XXX)</t>
+		<t id="1312">(XXX)</t>
+		<t id="1313">(XXX)</t>
+		<t id="1314">(XXX)</t>
+		<t id="1315">(XXX)</t>
+		<t id="1316">(XXX)</t>
+		<t id="1317">(XXX)</t>
+		<t id="1318">(XXX)</t>
+		<t id="1319">(XXX)</t>
+		<!-- Gate Misc -->
+		<t id="2300">(XXX)</t>
+		<t id="2301">(XXX)</t>
+		<t id="2302">(XXX)</t>
+		<t id="2303">(XXX)</t>
+		<t id="2304">(XXX)</t>
+		<t id="2305">(XXX)</t>
+		<t id="2306">(XXX)</t>
+		<t id="2307">(XXX)</t>
+		<t id="2308">(XXX)</t>
+		<t id="2309">(XXX)</t>
+		<t id="2310">(XXX)</t>
+		<t id="2311">(XXX)</t>
+		<t id="2312">(XXX)</t>
+		<t id="2313">(XXX)</t>
+		<t id="2314">(XXX)</t>
+		<t id="2315">(XXX)</t>
+		<t id="2316">(XXX)</t>
+		<t id="2317">(XXX)</t>
+		<t id="2318">(XXX)</t>
+		<t id="2319">(XXX)</t>
+		
+		<t id="403">(XXX)</t>
+		<t id="404">(XXX)</t>
+		<t id="405">(XXX)</t>
+		<t id="406">(XXX)</t>
+		<t id="407">(XXX)</t>
+		<t id="408">(XXX)</t>
+		<t id="409">(XXX)</t>
+		<t id="410">(XXX)</t>
+		<t id="411">(XXX)</t>
+		<t id="412">(XXX)</t>
+		<t id="413">(XXX)</t>
+		<t id="414">(XXX)</t>
+		<t id="415">(XXX)</t>
+		<t id="416">(XXX)</t>
+		<t id="417">(XXX)</t>
+		<t id="418">(XXX)</t>
+		<t id="419">(XXX)</t>
+		<t id="420">(XXX)</t>
+		<t id="421">(XXX)</t>
+		<t id="422">(XXX)</t>
+		<t id="423">(XXX)</t>
+		<t id="424">(XXX)</t>
+		<t id="425">(XXX)</t>
+		<t id="500">(XXX)</t>
+		<t id="501">(XXX)</t>
+		<t id="502">(XXX)</t>
+		<t id="503">(XXX)</t>
+		<t id="504">(XXX)</t>
+		<t id="505">(XXX)</t>
+		<t id="506">(XXX)</t>
+		<t id="507">(XXX)</t>
+		<t id="508">(XXX)</t>
+		<t id="509">(XXX)</t>
+		<t id="510">(XXX)</t>
+		<t id="511">(XXX)</t>
+		<t id="600">(XXX)</t>
+		<t id="601">(XXX)</t>
+		<t id="602">(XXX)</t>
+		<t id="603">(XXX)</t>
+	</page>
+</language>

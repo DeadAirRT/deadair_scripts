@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<diff>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate028To041" ref="destination" path="../Cluster_28_connection/Cluster_28_Sector001_connection/ZoneDAG3_Cluster_28_Sector001_connection/connection_ClusterGate028To041">
+			<macro connection="destination" path="../../../../../Cluster_41_connection/Cluster_41_Sector001_connection/ZoneDAG6_Cluster_41_Sector001_connection/connection_ClusterGate041To028"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate046To008" ref="destination" path="../Cluster_46_connection/Cluster_46_Sector001_connection/ZoneDAG3_Cluster_46_Sector001_connection/connection_ClusterGate046To008">
+			<macro connection="destination" path="../../../../../Cluster_08_connection/Cluster_08_Sector001_connection/ZoneDAG6_Cluster_08_Sector001_connection/connection_ClusterGate008To046"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate015To043" ref="destination" path="../Cluster_15_connection/Cluster_15_Sector001_connection/ZoneDAG5_Cluster_15_Sector001_connection/connection_ClusterGate015To043">
+			<macro connection="destination" path="../../../../../Cluster_43_connection/Cluster_43_Sector001_connection/ZoneDAG2_Cluster_43_Sector001_connection/connection_ClusterGate043To015"/>
+		</connection>
+	</add>
+	<remove sel="//connection[@name='ClusterGate018To019']"/>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate009To019" ref="destination" path="../Cluster_09_connection/Cluster_09_Sector001_connection/ZoneDAG3_Cluster_09_Sector001_connection/connection_ClusterGate009To019">
+			<macro connection="destination" path="../../../../../Cluster_19_connection/Cluster_19_Sector001_connection/ZoneDAG6_Cluster_19_Sector001_connection/connection_ClusterGate019To009"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate405To418" ref="destination" path="../Cluster_405_connection/Cluster_405_Sector001_connection/ZoneDAG5_Cluster_405_Sector001_connection/connection_ClusterGate405To418">
+			<macro connection="destination" path="../../../../../Cluster_418_connection/Cluster_418_Sector001_connection/ZoneDAG2_Cluster_418_Sector001_connection/connection_ClusterGate418To405"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGateDAG112ATo112B" ref="destination" path="../Cluster_112_connection/Cluster_112_Sector001_connection/ZoneDAG1_Cluster_112_Sector001_connection/connection_ClusterGateDAG112ATo112B">
+			<macro connection="destination" path="../../../../../Cluster_112_connection/Cluster_112_Sector002_connection/ZoneDAG1_Cluster_112_Sector002_connection/connection_ClusterGateDAG112BTo112A"/>
+		</connection>
+	</add>
+</diff>

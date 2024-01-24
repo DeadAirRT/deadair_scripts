@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<diff>
+	<add sel="//macro[@name='Cluster_405_Sector001_macro']/connections">
+		<connection name="ZoneDAG5_Cluster_405_Sector001_connection" ref="zones">
+			<offset>
+				<position x="-150000" y="0" z="-126000"/>
+			</offset>
+			<macro ref="ZoneDAG5_Cluster_405_Sector001_macro" connection="sector"/>
+		</connection>
+	</add>
+	<add sel="//macro[@name='Cluster_418_Sector001_macro']/connections">
+		<connection name="ZoneDAG2_Cluster_418_Sector001_connection" ref="zones">
+			<offset>
+				<position x="145000" y="0" z="50000"/>
+			</offset>
+			<macro ref="ZoneDAG2_Cluster_418_Sector001_macro" connection="sector"/>
+		</connection>
+	</add>
+</diff>

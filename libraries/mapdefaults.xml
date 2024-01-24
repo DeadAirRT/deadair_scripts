@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<diff>
+	<!-- daxenoncore -->
+	<add sel="/defaults/dataset[@macro='Cluster_17_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_17_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_21_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_21_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_26_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_26_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_33_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_33_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_415_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_415_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_424_Sector002_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_424_Sector002_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<add sel="/defaults/dataset[@macro='Cluster_112_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenoncore"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_112_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenoncore</add>
+	<!-- daxenonuseless -->
+	<add sel="/defaults/dataset[@macro='Cluster_413_Sector001_macro']/properties[count(./area)=0]" silent="true">
+		<area tags="daxenonuseless"/>
+	</add>
+	<add sel="/defaults/dataset[@macro='Cluster_413_Sector001_macro']/properties[count(./area)=1]/area" type="@tags" silent="true">daxenonuseless</add>
+	<!-- TY Mysterial for teaching me count -->
+</diff>
