@@ -100,6 +100,7 @@
 				<set_value name="$DADVT.$DAEvolutionDetailedDebug" exact="true"/>
 				<set_value name="$DADVT.$DAEvolutionTotalShipsBuilt" exact="0"/>
 				<set_value name="$DADVT.$DAEvolutionEnableUpgradeStations" exact="true"/>
+				<set_value name="$DADVT.$DAEvolutionEnableFastOrder" exact="true"/>
 				<!-- Fill -->
 				<set_value name="$DADVT.$DAFillShipModsEnable" exact="true"/>
 				<set_value name="$DAFillDelayAlpha" exact="2s"/>
@@ -2253,51 +2254,63 @@
 									</find_station_by_true_owner>
 									<debug_text text="'MOD: DAEvolution -- %s -- Xenon shipyards: %s'.[player.age,$DAEvolutionLocShipyards.count]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
 									<do_if value="$DAEvolutionLocShipyards.count">
-										<set_value name="$DAEvolutionLocSelectedShipyard" exact="$DAEvolutionLocShipyards.random"/>
-										<!-- find closest sector bordering with relation le killmilitary -->
-										<get_factions_by_relation result="$DAEvolutionLocXenonEnemies" faction="faction.xenon" relation="killmilitary"/>
-										<find_sector name="$DAEvolutionLocHostileSectors" space="player.galaxy" owner="$DAEvolutionLocXenonEnemies" reachablefrom="$DAEvolutionLocSelectedShipyard.sector" sortbygatedistanceto="$DAEvolutionLocSelectedShipyard" sortdescending="false" multiple="true"/>
-										<!-- get closest Xenon sector from hostile sectors -->
-										<do_for_each name="$DAEvolutionLocHostileSector" in="$DAEvolutionLocHostileSectors">
-											<find_sector_in_range name="$DAEvolutionLocSectorsInRange" object="$DAEvolutionLocHostileSector" maxdistance="1" owner="faction.xenon" multiple="true"/>
-											<do_if value="$DAEvolutionLocSectorsInRange.count" min="1">
-												<sort_list list="$DAEvolutionLocSectorsInRange" sortbyvalue="loop.element.gatedistance.{$DAEvolutionLocSelectedShipyard}"/>
-												<set_value name="$DAEvolutionLocSelectedSector" exact="$DAEvolutionLocSectorsInRange.{1}"/>
-												<find_gate name="$DAEvolutionLocGate" space="$DAEvolutionLocSelectedSector" active="true" multiple="false" required="true" append="false"/>
-												<find_zone name="$DAEvolutionLocZone" space="$DAEvolutionLocSelectedSector" normalzone="true" multiple="false" append="false">
-													<match_child class="[class.station, class.gate, class.highwayentrygate, class.highwayexitgate]" checkoperational="true"/>
-												</find_zone>
-												<do_if value="$DAEvolutionLocGate">
-													<debug_text text="'MOD: DAEvolution -- %s -- Selected Shipyard in: %s -- Selected Xenon sector: %s'.[player.age,$DAEvolutionLocSelectedShipyard.sector.knownname,$DAEvolutionLocSelectedSector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
-													<break/>
-												</do_if>
-											</do_if>
-										</do_for_each>
-										<do_if value="@$DAEvolutionLocGate">
-											<!-- We have the job, sector, gate for zone -->
-											<set_value name="$LocEvoJob" exact="[$DAEvolutionXenonCarrierFleetJob,$DAEvolutionXenonDestroyerFleetJob].random"/>
-											<!-- event.param = [$JobID,$Shipyard,$JobMainZone] -->
-											<signal_cue_instantly cue="EventEvolutionRequestJobShip" param="[$LocEvoJob,$DAEvolutionLocSelectedSector,$DAEvolutionLocGate.zone]"/>
-											<debug_text text="'MOD: DAEvolution -- %s -- Requested %s ship with gate -- ShipyardSector: %s -- JobMainSector: %s.'.[player.age,$LocEvoJob,$DAEvolutionLocSelectedSector.knownname,$DAEvolutionLocGate.sector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
-											<remove_value name="$LocEvoJob"/>
+										<do_if value="$DADVT.$DAEvolutionEnableFastOrder">
+											<!-- Order multiple at a time -->
+											<set_value name="$DAEvolutionLocNumberOfShipsToBuild" exact="[($DADVT.$DAEvolutionMaxXenonJobs - ($DADVT.$DAEvolutionXenonFleetJobNumbers.count + $DADVT.$DAEvolutionXenonShipGroup.count + $DADVT.$DAEvolutionXenonShipTempList.count)),$DAEvolutionLocShipyards.count].min"/>
 										</do_if>
-										<do_elseif value="@$DAEvolutionLocZone">
-											<!-- We do not have the gate for zone -->
-											<set_value name="$LocEvoJob" exact="[$DAEvolutionXenonCarrierFleetJob,$DAEvolutionXenonDestroyerFleetJob].random"/>
-											<!-- event.param = [$JobID,$Shipyard,$JobMainZone] -->
-											<signal_cue_instantly cue="EventEvolutionRequestJobShip" param="[$LocEvoJob,$DAEvolutionLocSelectedSector,$DAEvolutionLocZone]"/>
-											<debug_text text="'MOD: DAEvolution -- %s -- Requested %s ship with sector and zone -- ShipyardSector: %s -- JobMainSector: %s.'.[player.age,$LocEvoJob,$DAEvolutionLocSelectedSector.knownname,$DAEvolutionLocZone.sector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
-											<remove_value name="$LocEvoJob"/>
-										</do_elseif>
-										<remove_value name="$DAEvolutionLocSelectedShipyard"/>
-										<remove_value name="$DAEvolutionLocXenonEnemies"/>
-										<remove_value name="$DAEvolutionLocHostileSectors"/>
-										<remove_value name="$DAEvolutionLocHostileSector"/>
-										<remove_value name="$DAEvolutionLocSectorsInRange"/>
-										<remove_value name="$DAEvolutionLocSelectedSector"/>
-										<remove_value name="$DAEvolutionLocGate"/>
-										<remove_value name="$DAEvolutionLocZones"/>
+										<do_else>
+											<!-- Order one -->
+											<set_value name="$DAEvolutionLocNumberOfShipsToBuild" exact="1"/>
+										</do_else>
+										<shuffle_list list="$DAEvolutionLocShipyards"/>
+										<get_factions_by_relation result="$DAEvolutionLocXenonEnemies" faction="faction.xenon" relation="killmilitary"/>
+										<do_all exact="$DAEvolutionLocNumberOfShipsToBuild" counter="$S">
+											<set_value name="$DAEvolutionLocSelectedShipyard" exact="$DAEvolutionLocShipyards.{$S}"/>
+											<!-- find closest sector bordering with relation le killmilitary -->
+											<find_sector name="$DAEvolutionLocHostileSectors" space="player.galaxy" owner="$DAEvolutionLocXenonEnemies" reachablefrom="$DAEvolutionLocSelectedShipyard.sector" sortbygatedistanceto="$DAEvolutionLocSelectedShipyard" sortdescending="false" multiple="true"/>
+											<!-- get closest Xenon sector from hostile sectors -->
+											<do_for_each name="$DAEvolutionLocHostileSector" in="$DAEvolutionLocHostileSectors">
+												<find_sector_in_range name="$DAEvolutionLocSectorsInRange" object="$DAEvolutionLocHostileSector" maxdistance="1" owner="faction.xenon" multiple="true"/>
+												<do_if value="$DAEvolutionLocSectorsInRange.count" min="1">
+													<sort_list list="$DAEvolutionLocSectorsInRange" sortbyvalue="loop.element.gatedistance.{$DAEvolutionLocSelectedShipyard}"/>
+													<set_value name="$DAEvolutionLocSelectedSector" exact="$DAEvolutionLocSectorsInRange.{1}"/>
+													<find_gate name="$DAEvolutionLocGate" space="$DAEvolutionLocSelectedSector" active="true" multiple="false" required="true" append="false"/>
+													<find_zone name="$DAEvolutionLocZone" space="$DAEvolutionLocSelectedSector" normalzone="true" multiple="false" append="false">
+														<match_child class="[class.station, class.gate, class.highwayentrygate, class.highwayexitgate]" checkoperational="true"/>
+													</find_zone>
+													<do_if value="$DAEvolutionLocGate">
+														<debug_text text="'MOD: DAEvolution -- %s -- Selected Shipyard in: %s -- Selected Xenon sector: %s'.[player.age,$DAEvolutionLocSelectedShipyard.sector.knownname,$DAEvolutionLocSelectedSector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
+														<break/>
+													</do_if>
+												</do_if>
+											</do_for_each>
+											<do_if value="@$DAEvolutionLocGate">
+												<!-- We have the job, sector, gate for zone -->
+												<set_value name="$LocEvoJob" exact="[$DAEvolutionXenonCarrierFleetJob,$DAEvolutionXenonDestroyerFleetJob].random"/>
+												<!-- event.param = [$JobID,$Shipyard,$JobMainZone] -->
+												<signal_cue_instantly cue="EventEvolutionRequestJobShip" param="[$LocEvoJob,$DAEvolutionLocSelectedSector,$DAEvolutionLocGate.zone]"/>
+												<debug_text text="'MOD: DAEvolution -- %s -- Requested %s ship with gate -- ShipyardSector: %s -- JobMainSector: %s.'.[player.age,$LocEvoJob,$DAEvolutionLocSelectedSector.knownname,$DAEvolutionLocGate.sector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
+												<remove_value name="$LocEvoJob"/>
+											</do_if>
+											<do_elseif value="@$DAEvolutionLocZone">
+												<!-- We do not have the gate for zone -->
+												<set_value name="$LocEvoJob" exact="[$DAEvolutionXenonCarrierFleetJob,$DAEvolutionXenonDestroyerFleetJob].random"/>
+												<!-- event.param = [$JobID,$Shipyard,$JobMainZone] -->
+												<signal_cue_instantly cue="EventEvolutionRequestJobShip" param="[$LocEvoJob,$DAEvolutionLocSelectedSector,$DAEvolutionLocZone]"/>
+												<debug_text text="'MOD: DAEvolution -- %s -- Requested %s ship with sector and zone -- ShipyardSector: %s -- JobMainSector: %s.'.[player.age,$LocEvoJob,$DAEvolutionLocSelectedSector.knownname,$DAEvolutionLocZone.sector.knownname]" context="false" filter="scripts" chance="$DADVT.$DAEvolutionDetailedDebug * 100"/>
+												<remove_value name="$LocEvoJob"/>
+											</do_elseif>
+											<remove_value name="$DAEvolutionLocSelectedShipyard"/>
+											<remove_value name="$DAEvolutionLocHostileSectors"/>
+											<remove_value name="$DAEvolutionLocHostileSector"/>
+											<remove_value name="$DAEvolutionLocSectorsInRange"/>
+											<remove_value name="$DAEvolutionLocSelectedSector"/>
+											<remove_value name="$DAEvolutionLocGate"/>
+											<remove_value name="$DAEvolutionLocZone"/>
+										</do_all>
+										<remove_value name="$DAEvolutionLocNumberOfShipsToBuild"/>
 									</do_if>
+									<remove_value name="$DAEvolutionLocXenonEnemies"/>
 									<remove_value name="$DAEvolutionLocShipyards"/>
 								</do_if>
 								<do_else>
@@ -2312,8 +2325,6 @@
 							<remove_value name="$DAEvolutionXenonDestroyerFleetJob"/>
 							<remove_value name="$DAEvolutionXenonCarrierFleetJobNumbers"/>
 							<remove_value name="$DAEvolutionXenonDestroyerFleetJobNumbers"/>
-							<!-- Signal cue to build more -->
-							<!-- Handle orders? -->
 						</do_if>
 						<do_else>
 							<debug_text text="'MOD: DAEvolution -- %s -- ERROR: Missing Var for Xenon Jobs. $DADVT.$DAEvolutionMaxXenonJobs %s -- $DAEvolutionXenonFleetSizeSmall %s -- $DAEvolutionXenonFleetSizeMedium %s -- $DAEvolutionXenonFleetSizeLarge %s'.[player.age,$DADVT.$DAEvolutionMaxXenonJobs,$DAEvolutionXenonFleetSizeSmall,$DAEvolutionXenonFleetSizeMedium,$DAEvolutionXenonFleetSizeLarge]" context="false" filter="error"/>
@@ -2453,6 +2464,10 @@
 						</do_if>
 						<do_if value="not $DADVT.$DAEvolutionEnableUpgradeStations?">
 							<set_value name="$DADVT.$DAEvolutionEnableUpgradeStations" exact="true"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DADVT.$DAEvolutionEnableFastOrder?">
+							<set_value name="$DADVT.$DAEvolutionEnableFastOrder" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
@@ -3491,7 +3506,6 @@
 					</actions>
 					<cues>
 						<cue name="JobsSSTCheckSectorsLoop">
-							<!-- TODO: Reset to 2s -->
 							<delay exact="1s"/>
 							<actions>
 								<do_if value="$DAJobsSSTAllSectorList.count">
@@ -3526,7 +3540,6 @@
 					</actions>
 					<cues>
 						<cue name="JobsSSTCheckSectorTagsLoop">
-							<!-- TODO: Reset to 2s -->
 							<delay exact="1s"/>
 							<actions>
 								<do_if value="$DAJobsSSTAllSectorList2.count">
