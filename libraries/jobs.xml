@@ -1069,6 +1069,156 @@
 		</job>
 	</add>
 	<add sel="/jobs">
+		<job id="argon_DALTraderTagargon_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_argon_da"/>
+			<category faction="argon" tags="[DALTraderTagargon, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="argon_DAMTraderTagargon_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_argon_da"/>
+			<category faction="argon" tags="[DAMTraderTagargon, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="argon_DALMinerTagargon_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="argon" tags="[DALMinerTagargon, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="argon_DAMMinerTagargon_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="argon" tags="[DAMMinerTagargon, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="argon_DALGasMinerTagargon_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="argon" tags="[DALGasMinerTagargon, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="argon_DAMGasMinerTagargon_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="argon" tags="[DAMGasMinerTagargon, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagargon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="argon" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="argon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
 		<job id="antigone_DACriticalTagantigone_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
 			<modifiers commandeerable="true"/>
 			<orders>
@@ -1574,6 +1724,156 @@
 			<modifiers subordinate="true"/>
 			<ship>
 				<select faction="antigone" tags="[military, fighter]" size="ship_s"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DALTraderTagantigone_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_argon_da"/>
+			<category faction="antigone" tags="[DALTraderTagantigone, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DAMTraderTagantigone_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_argon_da"/>
+			<category faction="antigone" tags="[DAMTraderTagantigone, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DALMinerTagantigone_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="antigone" tags="[DALMinerTagantigone, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DAMMinerTagantigone_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="antigone" tags="[DAMMinerTagantigone, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DALGasMinerTagantigone_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="antigone" tags="[DALGasMinerTagantigone, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="antigone" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="antigone_DAMGasMinerTagantigone_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="antigone" tags="[DAMGasMinerTagantigone, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagantigone"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="antigone" tags="[miner, liquid]" size="ship_m"/>
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
@@ -2095,6 +2395,156 @@
 		</job>
 	</add>
 	<add sel="/jobs">
+		<job id="paranid_DALTraderTagparanid_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="paranid" tags="[DALTraderTagparanid, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="paranid_DAMTraderTagparanid_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="paranid" tags="[DAMTraderTagparanid, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="paranid_DALMinerTagparanid_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="paranid" tags="[DALMinerTagparanid, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="paranid_DAMMinerTagparanid_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="paranid" tags="[DAMMinerTagparanid, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="paranid_DALGasMinerTagparanid_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="paranid" tags="[DALGasMinerTagparanid, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="paranid_DAMGasMinerTagparanid_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="paranid" tags="[DAMGasMinerTagparanid, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagparanid"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="paranid" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="paranid" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
 		<job id="holyorder_DACriticalTagholyorder_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
 			<modifiers commandeerable="true"/>
 			<orders>
@@ -2600,6 +3050,156 @@
 			<modifiers subordinate="true"/>
 			<ship>
 				<select faction="holyorder" tags="[military, fighter]" size="ship_s"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DALTraderTagholyorder_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="holyorder" tags="[DALTraderTagholyorder, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DAMTraderTagholyorder_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="holyorder" tags="[DAMTraderTagholyorder, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DALMinerTagholyorder_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="holyorder" tags="[DALMinerTagholyorder, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DAMMinerTagholyorder_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="holyorder" tags="[DAMMinerTagholyorder, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DALGasMinerTagholyorder_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="holyorder" tags="[DALGasMinerTagholyorder, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="holyorder" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="holyorder_DAMGasMinerTagholyorder_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="holyorder" tags="[DAMGasMinerTagholyorder, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagholyorder"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="holyorder" tags="[miner, liquid]" size="ship_m"/>
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
@@ -3121,6 +3721,156 @@
 		</job>
 	</add>
 	<add sel="/jobs">
+		<job id="trinity_DALTraderTagtrinity_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="trinity" tags="[DALTraderTagtrinity, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="trinity_DAMTraderTagtrinity_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_paranid_da"/>
+			<category faction="trinity" tags="[DAMTraderTagtrinity, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="trinity_DALMinerTagtrinity_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="trinity" tags="[DALMinerTagtrinity, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="trinity_DAMMinerTagtrinity_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="trinity" tags="[DAMMinerTagtrinity, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="trinity_DALGasMinerTagtrinity_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="trinity" tags="[DALGasMinerTagtrinity, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="trinity_DAMGasMinerTagtrinity_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="trinity" tags="[DAMGasMinerTagtrinity, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagtrinity"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="trinity" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="trinity" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
 		<job id="teladi_DACriticalTagteladi_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
 			<modifiers commandeerable="true"/>
 			<orders>
@@ -3626,6 +4376,156 @@
 			<modifiers subordinate="true"/>
 			<ship>
 				<select faction="teladi" tags="[military, fighter]" size="ship_s"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DALTraderTagteladi_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_teladi_da"/>
+			<category faction="teladi" tags="[DALTraderTagteladi, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DAMTraderTagteladi_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_teladi_da"/>
+			<category faction="teladi" tags="[DAMTraderTagteladi, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DALMinerTagteladi_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="teladi" tags="[DALMinerTagteladi, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DAMMinerTagteladi_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="teladi" tags="[DAMMinerTagteladi, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DALGasMinerTagteladi_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="teladi" tags="[DALGasMinerTagteladi, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="teladi" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="teladi_DAMGasMinerTagteladi_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="teladi" tags="[DAMGasMinerTagteladi, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagteladi"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="teladi" tags="[miner, liquid]" size="ship_m"/>
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
@@ -4147,6 +5047,306 @@
 		</job>
 	</add>
 	<add sel="/jobs">
+		<job id="split_DALTraderTagsplit_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="split" tags="[DALTraderTagsplit, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="split_DAMTraderTagsplit_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="split" tags="[DAMTraderTagsplit, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="split_DALMinerTagsplit_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="split" tags="[DALMinerTagsplit, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="split_DAMMinerTagsplit_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="split" tags="[DAMMinerTagsplit, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="split_DALGasMinerTagsplit_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="split" tags="[DALGasMinerTagsplit, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="split_DAMGasMinerTagsplit_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="split" tags="[DAMGasMinerTagsplit, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagsplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="split" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="split" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DALTraderTagfreesplit_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="freesplit" tags="[DALTraderTagfreesplit, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DAMTraderTagfreesplit_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="freesplit" tags="[DAMTraderTagfreesplit, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DALMinerTagfreesplit_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="freesplit" tags="[DALMinerTagfreesplit, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DAMMinerTagfreesplit_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="freesplit" tags="[DAMMinerTagfreesplit, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DALGasMinerTagfreesplit_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="freesplit" tags="[DALGasMinerTagfreesplit, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="freesplit_DAMGasMinerTagfreesplit_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="freesplit" tags="[DAMGasMinerTagfreesplit, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagfreesplit"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="freesplit" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="freesplit" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
 		<job id="court_DACriticalTagcourt_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
 			<modifiers commandeerable="true"/>
 			<orders>
@@ -4652,6 +5852,156 @@
 			<modifiers subordinate="true"/>
 			<ship>
 				<select faction="court" tags="[military, fighter]" size="ship_s"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DALTraderTagcourt_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="court" tags="[DALTraderTagcourt, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DAMTraderTagcourt_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_split_da"/>
+			<category faction="court" tags="[DAMTraderTagcourt, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DALMinerTagcourt_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="court" tags="[DALMinerTagcourt, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DAMMinerTagcourt_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="court" tags="[DAMMinerTagcourt, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DALGasMinerTagcourt_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="court" tags="[DALGasMinerTagcourt, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="court" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="court_DAMGasMinerTagcourt_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="court" tags="[DAMGasMinerTagcourt, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagcourt"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="court" tags="[miner, liquid]" size="ship_m"/>
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
@@ -5173,6 +6523,156 @@
 		</job>
 	</add>
 	<add sel="/jobs">
+		<job id="terran_DALTraderTagterran_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_terran"/>
+			<category faction="terran" tags="[DALTraderTagterran, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="terran_DAMTraderTagterran_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_terran"/>
+			<category faction="terran" tags="[DAMTraderTagterran, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="terran_DALMinerTagterran_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="terran" tags="[DALMinerTagterran, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="terran_DAMMinerTagterran_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="terran" tags="[DAMMinerTagterran, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="terran_DALGasMinerTagterran_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="terran" tags="[DALGasMinerTagterran, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="terran_DAMGasMinerTagterran_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="terran" tags="[DAMGasMinerTagterran, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagterran"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="terran" tags="[miner, liquid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="terran" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
 		<job id="pioneers_DACriticalTagpioneers_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
 			<modifiers commandeerable="true"/>
 			<orders>
@@ -5678,6 +7178,156 @@
 			<modifiers subordinate="true"/>
 			<ship>
 				<select faction="pioneers" tags="[military, fighter]" size="ship_s"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DALTraderTagpioneers_L_job" name="{33232474,2255}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_terran"/>
+			<category faction="pioneers" tags="[DALTraderTagpioneers, factionlogic, freighter, trader]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[trader, container]" size="ship_l"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DAMTraderTagpioneers_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="all_container_terran"/>
+			<category faction="pioneers" tags="[DAMTraderTagpioneers, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[trader, container]" size="ship_m"/>
+				<loadout>
+					<level min="0.3" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DALMinerTagpioneers_L_job" name="{33232474,2257}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="pioneers" tags="[DALMinerTagpioneers, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[miner, solid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DAMMinerTagpioneers_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals"/>
+			<category faction="pioneers" tags="[DAMMinerTagpioneers, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[miner, solid]" size="ship_m"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DALGasMinerTagpioneers_L_job" name="{33232474,2259}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="pioneers" tags="[DALGasMinerTagpioneers, factionlogic, freighter, miner]" size="ship_l"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[miner, liquid]" size="ship_l"/>
+				<loadout>
+					<level min="0.5" max="1.0"/>
+				</loadout>
+				<owner exact="pioneers" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="pioneers_DAMGasMinerTagpioneers_M_job" name="{33232474,2260}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="gases"/>
+			<category faction="pioneers" tags="[DAMGasMinerTagpioneers, factionlogic, freighter, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagpioneers"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="pioneers" tags="[miner, liquid]" size="ship_m"/>
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
@@ -6194,6 +7844,50 @@
 				<loadout>
 					<level min="0.5" max="1.0"/>
 				</loadout>
+				<owner exact="xenon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="xenon_DAMTraderTagxenon_M_job" name="{33232474,2256}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="TradeRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="energycells"/>
+			<category faction="xenon" tags="[DAMTraderTagxenon, factionlogic, freighter, trader]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagxenon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="xenon" tags="[miner, solid]" size="class.ship_m"/>
+				<owner exact="xenon" overridenpc="true"/>
+			</ship>
+		</job>
+	</add>
+	<add sel="/jobs">
+		<job id="xenon_DAMMinerTagxenon_M_job" name="{33232474,2258}">
+			<modifiers commandeerable="true"/>
+			<orders>
+				<order order="MiningRoutine" default="true">
+					<param name="minbuy" value="0"/>
+					<param name="maxbuy" value="5"/>
+					<param name="minsell" value="0"/>
+					<param name="maxsell" value="5"/>
+				</order>
+			</orders>
+			<basket basket="minerals_xenon"/>
+			<category faction="xenon" tags="[DAMMinerTagxenon, factionlogic, miner]" size="ship_m"/>
+			<quota galaxy="0" maxgalaxy="100"/>
+			<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals_xenon" tags="DAMMinerTagxenon"/>
+			<environment buildatshipyard="true"/>
+			<ship>
+				<select faction="xenon" tags="[miner, solid]" size="class.ship_m"/>
 				<owner exact="xenon" overridenpc="true"/>
 			</ship>
 		</job>
