@@ -272,8 +272,8 @@
 		<t id="2245">(Frigate Escort){20221,3011} {1001,7817}</t>
 		<t id="2246">(Fighter Escort){20204,2601}</t>
 		<t id="2247">Fleet Size</t>
-		<t id="2248">(XXX)</t>
-		<t id="2249">(XXX)</t>
+		<t id="2248">{33232474,245} menu available once {33232474,241} is set to true.</t>
+		<t id="2249">Could not find appropriate faction jobs, check for poorly written diffs to jobs.xml.</t>
 		<t id="2250">(XXX)</t>
 		<t id="2251">(XXX)</t>
 		<t id="2252">(XXX)</t>
@@ -364,7 +364,7 @@
 		<t id="2295">%s stations expanded</t>
 		<!-- $NUMBER$ stations started -->
 		<t id="2296">%s stations started</t>
-		<t id="2297">(XXX)</t>
+		<t id="2297">{33232474,112} menu available once {33232474,280} and {33232474,283} are set to true.</t>
 		<t id="2298">(XXX)</t>
 		<t id="2299">(XXX)</t>
 		<!-- Gate Menu Entries -->

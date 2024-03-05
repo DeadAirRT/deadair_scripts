@@ -212,13 +212,13 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_dynamicwar_options']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,110}, $id='menu_dynamicwar_increaserelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,111}, $id='menu_dynamicwar_decreaserelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,113}, $id='menu_dynamicwar_milstrength']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,114}, $id='menu_dynamicwar_econstrength']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,115}, $id='menu_dynamicwar_econdetails']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,116}, $id='menu_dynamicwar_resourcefullness']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_dynamicwar_options']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,118}, $id='menu_dynamicwar_unlockrelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,119}, $id='menu_dynamicwar_ignoredfactions']"/>
 					</actions>
@@ -2337,6 +2337,15 @@
 						<do_if value="$DADVT.$DADynamicNewsEnable and $DADVT.$DADynamicNewsEnableNewsStorage">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,112}, $id='menu_dynamicnews_recentnews']"/>
 						</do_if>
+						<do_elseif value="(not $DADVT.$DADynamicNewsEnable) or (not $DADVT.$DADynamicNewsEnableNewsStorage)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = event.param.$columns,
+									$text = {33232474,2297},
+									$halign = 'center'
+								]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<cue name="Menu_DynamicNews_Options" instantiate="true">
@@ -3512,8 +3521,28 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,245}, $id='menu_jobs_quotas']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_jobs_options']"/>
+						<do_if value="$DADVT.$DAJobsSSTEnable and $DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,245}, $id='menu_jobs_quotas']"/>
+						</do_if>
+						<do_elseif value="not $DADVT.$DAJobsSSTEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2248},
+								$halign = 'center',
+							]"/>
+						</do_elseif>
+						<do_elseif value="not $DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2249},
+								$halign = 'center',
+							]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<cue name="Menu_Jobs_Quotas" instantiate="true">
@@ -4199,19 +4228,24 @@
 											$halign = 'left'
 										]"/>
 									<do_if value="$LocFaction.isactive">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-												$col = 5, 
-												$colSpan = 4,
-												$text = table[
-												  $text   =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then {1001,4825} else {1001,8942}, 
-												  $color  =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then 'Helper.color.green' else 'Helper.color.red',
-												  $halign = 'center',
-												],
-												$mouseOverText = {33232474,1342},
-												$onClick = ExecuteOption_GodFactionEnable,
-												$onRightClick = ExecuteOption_GodFactionEnable,
-												$echo = $LocFaction
-											]"/>
+										<do_if value="not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}">
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+													$col = 5, 
+													$colSpan = 4,
+													$text = table[
+													  $text   =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then {1001,4825} else {1001,8942}, 
+													  $color  =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then 'Helper.color.green' else 'Helper.color.red',
+													  $halign = 'center',
+													],
+													$mouseOverText = {33232474,1342},
+													$onClick = ExecuteOption_GodFactionEnable,
+													$onRightClick = ExecuteOption_GodFactionEnable,
+													$echo = $LocFaction
+												]"/>
+										</do_if>
+										<do_else>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {33232474,346}, $mouseOverText = {33232474,1346}]" comment="Already Activated"/>
+										</do_else>
 									</do_if>
 									<do_else>
 										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,43} + ' ' + {1001,12208}]" comment="Faction Inactive"/>
