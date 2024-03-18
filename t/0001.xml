@@ -18,8 +18,8 @@
 		<t id="110">Increase Relations</t>
 		<t id="111">Decrease Relations</t>
 		<t id="112">Recent News</t>
-		<t id="113">Military Strength</t>
-		<t id="114">Economic Strength</t>
+		<t id="113">Military Ship Count</t>
+		<t id="114">Economic Ship/Station Count</t>
 		<t id="115">(Ware Stored/Wanted){1001,45} {1001,1406}\/{1001,2903}</t>
 		<t id="116">Station Storage</t>
 		<t id="117">(Options Menu){1001,2600}</t>
@@ -49,6 +49,7 @@
 		<t id="141">Ignored</t>
 		<t id="142">Enable AI Relations Cap</t>
 		<t id="143">Maximum Factions to Check</t>
+		<t id="144">Production Module Count</t>
 		<!-- Dynamic War Menu Entry Descriptions -->
 		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
 		<t id="1111">Allows the player to use credits or favors to increase relations between two factions. Decreasing relation between two factions requires a certain level of trust (reputation) with the faction.</t>
@@ -84,12 +85,13 @@
 		<t id="1141">This faction will not be selected by the Dynamic War script.</t>
 		<t id="1142">Changes whether a script that limits and corrects faction relations will run. This script prevents AI to AI relations above 27 to avoid meeting the "Self" condition. It also corrects {20203,701} relations to match {20203,601} to avoid civil war.</t>
 		<t id="1143">The number of factions the script will have as potential second faction during an event. Increasing this value can potentially cause an impact to performance as there is a large amount of calculations for determining faction strength. Default = 4</t>
+		<t id="1144">Shows a general overview of a faction's amount of production modules.</t>
 		<!-- Dynamic War Misc -->
-		<t id="2110">(FACTION) Relations Locked.</t>
+		<t id="2110">(FACTION)Relations Locked.</t>
 		<t id="2111">Blue = Stored</t>
 		<t id="2112">Green = Excess</t>
 		<t id="2113">Red = Shortage</t>
-		<t id="2114">(XXX)</t>
+		<t id="2114">Relation too high.</t>
 		<t id="2115">(XXX)</t>
 		<t id="2116">(XXX)</t>
 		<t id="2117">(XXX)</t>
@@ -137,7 +139,7 @@
 		<t id="1167">1{1001,48}(XL) - 3{1001,48}(XL) {1001,7817}(Escort) - 9{1001,50}(M) {1001,7817}(Escort) - 18{1001,51}(S) {1001,7817}(Escort)</t>
 		<t id="1168">1{1001,48}(XL) - 5{1001,48}(XL) {1001,7817}(Escort) - 15{1001,50}(M) {1001,7817}(Escort) - 30{1001,51}(S) {1001,7817}(Escort)</t>
 		<t id="1169">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1170">Changes whether Xenon shipyards will expand at evolution levels 1,3, and 5. At each of these tiers they will add two additional storage modules, an additional XL ship builder, and an additional defense module.</t>
+		<t id="1170">Changes whether Xenon shipyards and wharves will expand at evolution levels 1,3, and 5. At each of these tiers shipyards will add two additional storage modules, an additional XL ship builder, and an additional defense module. Wharves will add one additional storage module and one energy cell module.</t>
 		<t id="1171">Changes whether Xenon will order one or multiple Evolution fleets at a time. If enabled, Xenon will order one fleet at each shipyard. If disabled, Xenon will order one fleet at one shipyard. Fleets ordered will respect Maximum Xenon Fleets Added amount.</t>
 		<t id="1172">(XXX)</t>
 		<t id="1173">(XXX)</t>
@@ -210,6 +212,27 @@
 		<t id="1217">(XXX)</t>
 		<t id="1218">(XXX)</t>
 		<t id="1219">(XXX)</t>
+		<!-- Fill Misc -->
+		<t id="2200">Added</t>
+		<t id="2201">Removed</t>
+		<t id="2202">Modified</t>
+		<t id="2203">(XXX)</t>
+		<t id="2204">(XXX)</t>
+		<t id="2205">(XXX)</t>
+		<t id="2206">(XXX)</t>
+		<t id="2207">(XXX)</t>
+		<t id="2208">(XXX)</t>
+		<t id="2209">(XXX)</t>
+		<t id="2210">(XXX)</t>
+		<t id="2211">(XXX)</t>
+		<t id="2212">(XXX)</t>
+		<t id="2213">(XXX)</t>
+		<t id="2214">(XXX)</t>
+		<t id="2215">(XXX)</t>
+		<t id="2216">(XXX)</t>
+		<t id="2217">(XXX)</t>
+		<t id="2218">(XXX)</t>
+		<t id="2219">(XXX)</t>
 		<!-- Jobs Menu Entries -->
 		<t id="240">Enable Expeditions</t>
 		<t id="241">Enable Smart Sector Tags</t>
@@ -438,10 +461,10 @@
 		<t id="344">Additional Modules to Build</t>
 		<t id="345">Activate DA God for %s</t>
 		<t id="346">Already Activated</t>
-		<t id="347">(XXX)</t>
-		<t id="348">(XXX)</t>
-		<t id="349">(XXX)</t>
-		<t id="350">(XXX)</t>
+		<t id="347">Enable God Extra Debug</t>
+		<t id="348">(Options Menu){1001,2600}</t>
+		<t id="349">God Quotas</t>
+		<t id="350">Allow Build in Player Owned Sector</t>
 		<t id="351">(XXX)</t>
 		<t id="352">(XXX)</t>
 		<t id="353">(XXX)</t>
@@ -459,10 +482,10 @@
 		<t id="1344">The number of modules that will be built by the DA God script. Stations will each have up to 20 modules each when requested. Each ware and increment of 20 would result in an additional station so be aware that this may affect performance. The default values are from the old DA God and will result in a strong and balanced economy.</t>
 		<t id="1345">This will trigger the script to run for this faction when this button is clicked. It will use the numbers set above on the sliders and is not reversible.</t>
 		<t id="1346">The script for this faction has already been activated. Multiple runs for the same faction is not yet supported.</t>
-		<t id="1347">(XXX)</t>
+		<t id="1347">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode. These debugs are extremely detailed and extensive.</t>
 		<t id="1348">(XXX)</t>
 		<t id="1349">(XXX)</t>
-		<t id="1350">(XXX)</t>
+		<t id="1350">Changes whether the DA God script can order stations in a player owned sector if the faction has no sectors and has at least 20 relation with player. This does not alter normal vanilla station ordering behaviour.</t>
 		<t id="1351">(XXX)</t>
 		<t id="1352">(XXX)</t>
 		<t id="1353">(XXX)</t>
@@ -475,7 +498,7 @@
 		<!-- God Misc -->
 		<t id="2340">Production Ware</t>
 		<t id="2341">Additional Modules to Build</t>
-		<t id="2342">(XXX)</t>
+		<t id="2342">{33232474,349} menu available once {33232474,340} is set to true.</t>
 		<t id="2343">(XXX)</t>
 		<t id="2344">(XXX)</t>
 		<t id="2345">(XXX)</t>
