@@ -50,6 +50,7 @@
 		<t id="142">Enable AI Relations Cap</t>
 		<t id="143">Maximum Factions to Check</t>
 		<t id="144">Production Module Count</t>
+		<t id="145">Sector Faction Logic Menu</t>
 		<!-- Dynamic War Menu Entry Descriptions -->
 		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
 		<t id="1111">Allows the player to use credits or favors to increase relations between two factions. Decreasing relation between two factions requires a certain level of trust (reputation) with the faction.</t>
@@ -86,14 +87,15 @@
 		<t id="1142">Changes whether a script that limits and corrects faction relations will run. This script prevents AI to AI relations above 27 to avoid meeting the "Self" condition. It also corrects {20203,701} relations to match {20203,601} to avoid civil war.</t>
 		<t id="1143">The number of factions the script will have as potential second faction during an event. Increasing this value can potentially cause an impact to performance as there is a large amount of calculations for determining faction strength. Default = 4</t>
 		<t id="1144">Shows a general overview of a faction's amount of production modules.</t>
+		<t id="1145">Allows the player to change whether faction logic in Clusters and their child Sectors is enabled. This menu will force the cluster and child sectors to be on the same setting if changed to avoid problems with AI. This may cause issues with certain storyline missions.</t>
 		<!-- Dynamic War Misc -->
 		<t id="2110">(FACTION)Relations Locked.</t>
 		<t id="2111">Blue = Stored</t>
 		<t id="2112">Green = Excess</t>
 		<t id="2113">Red = Shortage</t>
 		<t id="2114">Relation too high.</t>
-		<t id="2115">(XXX)</t>
-		<t id="2116">(XXX)</t>
+		<t id="2115">Diplomatic Favor</t>
+		<t id="2116">Cluster</t>
 		<t id="2117">(XXX)</t>
 		<t id="2118">(XXX)</t>
 		<t id="2119">(XXX)</t>
@@ -181,8 +183,8 @@
 		<t id="207">Adjusted Min {20102,1071}/{20102,1081} Ware %</t>
 		<t id="208">Enable Fill Ship Mods</t>
 		<t id="209">Enable Fill Debug</t>
-		<t id="210">(XXX)</t>
-		<t id="211">(XXX)</t>
+		<t id="210">Enable Fill Fleet Ship Mods</t>
+		<t id="211">Enable Fill Ship Paint Mods</t>
 		<t id="212">(XXX)</t>
 		<t id="213">(XXX)</t>
 		<t id="214">(XXX)</t>
@@ -202,8 +204,8 @@
 		<t id="1207">The percentage capacity a ware will be after adding cargo at the {20102,1071}/{20102,1081}. Default=10.</t>
 		<t id="1208">Changes whether the Fill script will add ship mods to a random XL/L ship of the station owner when resources are drained.</t>
 		<t id="1209">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1210">(XXX)</t>
-		<t id="1211">(XXX)</t>
+		<t id="1210">Changes whether the Fill script will add ship mods to all subordinates of the selected Military ship.</t>
+		<t id="1211">Changes whether the Fill script will paint ships that have mods added to them.</t>
 		<t id="1212">(XXX)</t>
 		<t id="1213">(XXX)</t>
 		<t id="1214">(XXX)</t>
@@ -216,7 +218,7 @@
 		<t id="2200">Added</t>
 		<t id="2201">Removed</t>
 		<t id="2202">Modified</t>
-		<t id="2203">(XXX)</t>
+		<t id="2203">Net</t>
 		<t id="2204">(XXX)</t>
 		<t id="2205">(XXX)</t>
 		<t id="2206">(XXX)</t>
@@ -465,8 +467,8 @@
 		<t id="348">(Options Menu){1001,2600}</t>
 		<t id="349">God Quotas</t>
 		<t id="350">Allow Build in Player Owned Sector</t>
-		<t id="351">(XXX)</t>
-		<t id="352">(XXX)</t>
+		<t id="351">Attempt Recovery</t>
+		<t id="352">Allow Build in Friendly Owned Sector</t>
 		<t id="353">(XXX)</t>
 		<t id="354">(XXX)</t>
 		<t id="355">(XXX)</t>
@@ -486,8 +488,8 @@
 		<t id="1348">(XXX)</t>
 		<t id="1349">(XXX)</t>
 		<t id="1350">Changes whether the DA God script can order stations in a player owned sector if the faction has no sectors and has at least 20 relation with player. This does not alter normal vanilla station ordering behaviour.</t>
-		<t id="1351">(XXX)</t>
-		<t id="1352">(XXX)</t>
+		<t id="1351">Changes whether the DA God script will attempt to reorder/rebuild destroyed or failed stations that contain production modules from this mod. This does not attempt to rebuild modules not added by this mod.</t>
+		<t id="1352">Changes whether the DA God script can order stations in friendly owned sector if the faction has no sectors and has at least 20 relation with faction. This does not alter normal vanilla station ordering behaviour.</t>
 		<t id="1353">(XXX)</t>
 		<t id="1354">(XXX)</t>
 		<t id="1355">(XXX)</t>

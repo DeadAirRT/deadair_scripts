@@ -9,7 +9,7 @@
 				<!-- DONE: Gate menu -->
 				<!-- TODO: Menu for tater lifetime profit -->
 				<!-- TODO: Faction production estimation -->
-				<!-- TODO: Test fill m3 removed, added, ships modded -->
+				<!-- DONE: Test fill m3 removed, added, ships modded -->
 				<!-- TODO: Improve handling of prices/favors for increase/decrease relations menus -->
 				<!-- DONE: Jobs menu using md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction} -->
 				<set_value name="md.$DAMenuVarTable" exact="table[]"/>
@@ -19,8 +19,9 @@
 				<!-- Debug Var -->
 				<set_value name="$DAMVT.$DAMenuDebugEnable" exact="true"/>
 				<!-- Dynamic War -->
-				<set_value name="$IncreaseRelationsCostTable" exact="table[]"/>
-				<set_value name="$DecreaseRelationsCostTable" exact="table[]"/>
+				<set_value name="$DAMVT.$DWMilStrengthHistory" exact="table[]"/>
+				<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
+				<!-- 20240402 Improved handling of relation change costs -->
 				<set_value name="$WhatFactions" exact="'All'"/>
 				<include_actions ref="Library_DAMenuGetFactions"/>
 			</actions>
@@ -29,6 +30,47 @@
 					<actions>
 						<set_value name="$DAMVT.$DAMenuSelectedFaction" exact="$FactionList.{1}"/>
 						<!-- This cue runs after init and is primarily used for variable storage for options selection -->
+					</actions>
+				</cue>
+				<cue name="VerifyVariablesExist" instantiate="true">
+					<conditions>
+						<check_any>
+							<event_universe_generated/>
+							<event_game_loaded/>
+							<event_cue_signalled/>
+						</check_any>
+					</conditions>
+					<actions>
+						<set_value name="$MissingVarCount" exact="0"/>
+						<do_if value="not md.$DAMenuVarTable?">
+							<set_value name="md.$DAMenuVarTable" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DADVT?">
+							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT?">
+							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$DAMenuDebugEnable?">
+							<set_value name="$DAMVT.$DAMenuDebugEnable" exact="true"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$DWMilStrengthHistory?">
+							<set_value name="$DAMVT.$DWMilStrengthHistory" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$DWEcoStrengthHistory?">
+							<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<!-- Print only if missing -->
+						<do_if value="$MissingVarCount">
+							<debug_text text="'MOD: DAMenus -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+						</do_if>
+						<remove_value name="$MissingVarCount"/>
 					</actions>
 				</cue>
 				<!--
@@ -46,7 +88,7 @@
 						<event_cue_signalled cue="md.Simple_Menu_API.Reloaded"/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[$id = 'da_mod_menu', $columns = 2, $title   = {33232474,100}, $onOpen  = DA_Mod_Menu ]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[$id = 'da_mod_menu', $columns = 2, $title = {33232474,100}, $onOpen  = DA_Mod_Menu ]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
 								$id      = 'da_dynamicwar_menu',
 								$columns = 8, 
@@ -167,6 +209,13 @@
 								$onOpen  = Menu_DynamicWar_ProductionCount,
 								$private = 1,
 							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_dynamicwar_spacefactionlogic',
+								$columns = 8, 
+								$title   = {33232474,145},
+								$onOpen  = Menu_DynamicWar_SpaceFactionLogic,
+								$private = 1,
+							]"/>
 						<!-- Dynamic News Menus -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
 								$id      = 'menu_dynamicnews_options',
@@ -222,6 +271,7 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<signal_cue_instantly cue="VerifyVariablesExist"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,101}, $id='da_dynamicwar_menu']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,102}, $id='da_dynamicnews_menu']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,103}, $id='da_evolution_menu']"/>
@@ -247,6 +297,7 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,144}, $id='menu_dynamicwar_productioncount']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,118}, $id='menu_dynamicwar_unlockrelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,119}, $id='menu_dynamicwar_ignoredfactions']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,145}, $id='menu_dynamicwar_spacefactionlogic']"/>
 					</actions>
 				</cue>
 				<cue name="Menu_DynamicWar_IncreaseRelations" instantiate="true">
@@ -257,9 +308,9 @@
 						<set_value name="$WhatFactions" exact="'ChangeRelations'"/>
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='center', $text = {1001,43}]" comment="Faction"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=4,	$halign='center', $text = {1001,9928}]" comment="Relations"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=2,	$halign='center', $text = {1001,2926}]" comment="Price"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'center', $text = {1001,43}]" comment="Faction"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 4, $halign = 'center', $text = {1001,9928}]" comment="Relations"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {1001,2926}]" comment="Price"/>
 						<do_if value="$DAMVT.$DAMenuSelectedFaction != null">
 							<do_all exact="$FactionList.count" counter="$A">
 								<set_value name="$DADynamicWarFactionOne" exact="$DAMVT.$DAMenuSelectedFaction"/>
@@ -269,7 +320,7 @@
 									<!-- Faction name - Current Relations - Increase Relations Option - Cost - Buy +5 -->
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
 									<!-- $col 1 + 2 + 3 -->
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='left', $text = $DADynamicWarFactionTwo.knownname]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'left', $text = $DADynamicWarFactionTwo.knownname]"/>
 									<!-- $col 4 & $col 5 + 6 + 7 -->
 									<include_actions ref="Library_FactionRelationBar"/>
 									<!-- 20240309 reworking section to account for relfix and be easier to read
@@ -282,44 +333,67 @@
 										<!-- $col 8 + 9 + 10 + 11 + 12 -->
 										<!-- Relation locked -->
 										<do_if value="$DADynamicWarFactionOne.isrelationlocked">
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionOne.knownname,{33232474,2110}]]" comment="Relation Locked"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionOne.knownname,{33232474,2110}]]" comment="Relation Locked"/>
 										</do_if>
 										<do_elseif value="$DADynamicWarFactionTwo.isrelationlocked">
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionTwo.knownname,{33232474,2110}]]" comment="Relation Locked"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionTwo.knownname,{33232474,2110}]]" comment="Relation Locked"/>
 										</do_elseif>
 									</do_if>
 									<do_elseif value="($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 5 gt 30) or ((not $DADynamicWarPlayerInvolved) and $DADVT.$DADynamicWarRelationsFixEnable and ($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 5 gt $DADynamicWarFactionOne.relation.{$DADVT.$DADynamicWarRelationsAILimit}.uivalue))">
 										<!-- $col 8 + 9 + 10 + 11 + 12 -->
 										<!-- Too high -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = {33232474,2114}]" comment="Relation too high."/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {33232474,2114}]" comment="Relation too high."/>
 									</do_elseif>
 									<do_elseif value="($DADynamicWarPlayerInvolved and ($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 5 le 30)) or ((not $DADynamicWarPlayerInvolved) and $DADVT.$DADynamicWarRelationsFixEnable and ($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 5 le $DADynamicWarFactionOne.relation.{$DADVT.$DADynamicWarRelationsAILimit}.uivalue)) or ((not $DADynamicWarPlayerInvolved) and (not $DADVT.$DADynamicWarRelationsFixEnable) and ($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 5 le 30))">
+										<!-- 20240402 Rewrite Cost Calc -->
+										<!-- $col 8 + 9 + 10 + 11 + 12 -->
+										<!-- Library_RelationIncreaseCost Input: $DADynamicWarFactionOne and $DADynamicWarFactionTwo Output: $IncCost -->
 										<include_actions ref="Library_RelationIncreaseCost"/>
-										<!-- $col 8 + 9 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=2, $halign='right', $text = '%1 %2'.[($IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo} / 100),{1001,101}]]"/>
-										<do_if value="player.money ge $IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}">
-											<!-- $col 10 + 11 + 12 -->
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-												$col = 10,
-												$colSpan=3,
-												$text = table[
-												  $text   =  {1001,2701} + ' +5', 
-												  $color  = 'Helper.color.green',
-												  $halign = 'center',
-												],
-												$onClick = ExecuteOption_RelationsIncrease,
-												$onRightClick = ExecuteOption_RelationsIncrease,
-												$echo = [$DAMVT.$DAMenuSelectedFaction, $FactionList.{$A}],
-												]"/>
+										<do_if value="$IncCost?">
+											<!-- Determine if using a favor -->
+											<set_value name="$UseFavor" exact="false"/>
+											<do_if value="($IncCost == 0) and @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne}">
+												<set_value name="$UseFavor" exact="$DADynamicWarFactionOne"/>
+											</do_if>
+											<do_elseif value="($IncCost == 0) and @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionTwo}">
+												<set_value name="$UseFavor" exact="$DADynamicWarFactionTwo"/>
+											</do_elseif>
+											<!-- Set text for button -->
+											<do_if value="typeof $UseFavor == datatype.faction">
+												<set_value name="$LocText" exact="'%s +5 %s (1 %s %s)'.[{1001,2701},{1001,7749},$UseFavor.shortname,{33232474,2115}]" comment="Buy +5 Relation (1 FAC Diplomatic Favor)"/>
+											</do_if>
+											<do_elseif value="player.money ge $IncCost">
+												<set_value name="$LocText" exact="'%s +5 %s (%s)'.[{1001,2701},{1001,7749},$IncCost.formatted.{'%s %Cr'}]" comment="Buy +5 Relation (Cost)"/>
+											</do_elseif>
+											<do_elseif value="player.money lt $IncCost">
+												<set_value name="$LocText" exact="null"/>
+											</do_elseif>
+											<!-- Button if valid, Text if invalid -->
+											<do_if value="$LocText? and ($LocText != null)">
+												<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+													$col = 8,
+													$colSpan = 5,
+													$text = table[
+													  $text   =  $LocText, 
+													  $color  = 'Helper.color.green',
+													  $halign = 'center',
+													],
+													$onClick = ExecuteOption_RelationsIncrease,
+													$onRightClick = ExecuteOption_RelationsIncrease,
+													$echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$IncCost],
+													]"/>
+											</do_if>
+											<do_else>
+												<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {1015,28}]" comment="Insufficient funds"/>
+											</do_else>
+											<remove_value name="$UseFavor"/>
+											<remove_value name="$LocText"/>
 										</do_if>
-										<do_else>
-											<!-- $col 10 + 11 + 12 -->
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan=3, $halign = 'center', $text = {1015,28}]" comment="Insufficient funds"/>
-										</do_else>
+										<remove_value name="$IncCost"/>
 									</do_elseif>
 									<do_else>
 										<!-- $col 8 + 9 + 10 + 11 + 12 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = {1037,3006}]" comment="Impossible"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {1037,3006}]" comment="Impossible"/>
 									</do_else>
 								</do_if>
 								<remove_value name="$DADynamicWarFactionOne"/>
@@ -337,9 +411,9 @@
 						<set_value name="$WhatFactions" exact="'ChangeRelations'"/>
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='center', $text = {1001,43}]" comment="Faction"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=4,	$halign='center', $text = {1001,9928}]" comment="Relations"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=2,	$halign='center', $text = {1001,2926}]" comment="Price"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'center', $text = {1001,43}]" comment="Faction"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 4, $halign = 'center', $text = {1001,9928}]" comment="Relations"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 2, $halign = 'center', $text = {1001,2926}]" comment="Price"/>
 						<do_if value="$DAMVT.$DAMenuSelectedFaction != null">
 							<do_all exact="$FactionList.count" counter="$A">
 								<set_value name="$DADynamicWarFactionOne" exact="$DAMVT.$DAMenuSelectedFaction"/>
@@ -348,51 +422,78 @@
 									<!-- Faction name - Current Relations - Decrease Relations Option - Cost - Buy -5 -->
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
 									<!-- $col 1 + 2 + 3 -->
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='left', $text = $DADynamicWarFactionTwo.knownname]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'left', $text = $DADynamicWarFactionTwo.knownname]"/>
 									<!-- $col 4 & $col 5 + 6 + 7 -->
 									<include_actions ref="Library_FactionRelationBar"/>
 									<do_if value="($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue - 5 ge -30) and (($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue * -1) le $DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{faction.player}}.uivalue) and (not ($DADynamicWarFactionOne.isrelationlocked or $DADynamicWarFactionTwo.isrelationlocked))">
+										<!-- 20240402 Rewrite Cost Calc -->
+										<!-- $col 8 + 9 + 10 + 11 + 12 -->
+										<!-- Library_RelationDecreaseCost Input: $DADynamicWarFactionOne and $DADynamicWarFactionTwo Output: $DecCost -->
 										<include_actions ref="Library_RelationDecreaseCost"/>
-										<!-- $col 8 + 9 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=2, $halign='right', $text = '%1 %2'.[($DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo} / 100),{1001,101}]]"/>
-										<do_if value="player.money ge $DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}">
-											<!-- $col 10 + 11 + 12 -->
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-												$col = 10,
-												$colSpan=3,
-												$text = table[
-												  $text   =  {1001,2701} + ' -5', 
-												  $color  = 'Helper.color.green',
-												  $halign = 'center',
-												],
-												$onClick = ExecuteOption_RelationsDecrease,
-												$onRightClick = ExecuteOption_RelationsDecrease,
-												$echo = [$DAMVT.$DAMenuSelectedFaction, $FactionList.{$A}],
-												]"/>
+										<do_if value="$DecCost?">
+											<!-- Determine if using a favor -->
+											<set_value name="$UseFavor" exact="false"/>
+											<do_if value="($DecCost == 0) and (($DADynamicWarFactionOne == faction.player) or ($DADynamicWarFactionTwo == faction.player))">
+												<set_value name="$UseFavor" exact="false"/>
+											</do_if>
+											<do_elseif value="($DecCost == 0) and @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne}">
+												<set_value name="$UseFavor" exact="$DADynamicWarFactionOne"/>
+											</do_elseif>
+											<do_elseif value="($DecCost == 0) and @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionTwo}">
+												<set_value name="$UseFavor" exact="$DADynamicWarFactionTwo"/>
+											</do_elseif>
+											<!-- Set text for button -->
+											<do_if value="typeof $UseFavor == datatype.faction">
+												<set_value name="$LocText" exact="'%s -5 %s (1 %s %s)'.[{1001,2701},{1001,7749},$UseFavor.shortname,{33232474,2115}]" comment="Buy -5 Relation (1 FAC Diplomatic Favor)"/>
+											</do_if>
+											<do_elseif value="player.money ge $DecCost">
+												<set_value name="$LocText" exact="'%s -5 %s (%s)'.[{1001,2701},{1001,7749},$DecCost.formatted.{'%s %Cr'}]" comment="Buy -5 Relation (Cost)"/>
+											</do_elseif>
+											<do_elseif value="player.money lt $DecCost">
+												<set_value name="$LocText" exact="null"/>
+											</do_elseif>
+											<!-- Button if valid, Text if invalid -->
+											<do_if value="$LocText? and ($LocText != null)">
+												<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+													$col = 8,
+													$colSpan = 5,
+													$text = table[
+													  $text   =  $LocText, 
+													  $color  = 'Helper.color.green',
+													  $halign = 'center',
+													],
+													$onClick = ExecuteOption_RelationsDecrease,
+													$onRightClick = ExecuteOption_RelationsDecrease,
+													$echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$DecCost],
+													]"/>
+											</do_if>
+											<do_else>
+												<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {1015,28}]" comment="Insufficient funds"/>
+											</do_else>
+											<remove_value name="$UseFavor"/>
+											<remove_value name="$LocText"/>
 										</do_if>
-										<do_else>
-											<!-- $col 10 + 11 + 12 -->
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan=3, $halign = 'center', $text = {1015,28}]" comment="Insufficient funds"/>
-										</do_else>
+										<remove_value name="$DecCost"/>
 									</do_if>
 									<do_elseif value="($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue - 5 ge -30) and (not (($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue * -1) le $DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{faction.player}}.uivalue)) and (not ($DADynamicWarFactionOne.isrelationlocked or $DADynamicWarFactionTwo.isrelationlocked))">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = {33232474,120}, $mouseOverText = {33232474,1120} + $DADynamicWarFactionOne.knownname]" comment="Insufficient Relation"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {33232474,120}, $mouseOverText = {33232474,1120} + $DADynamicWarFactionOne.knownname]" comment="Insufficient Relation"/>
 									</do_elseif>
 									<do_elseif value="($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue - 5 ge -30) and ($DADynamicWarFactionOne.isrelationlocked)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionOne.knownname,{33232474,2110}]]" comment="Relation Locked"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionOne.knownname,{33232474,2110}]]" comment="Relation Locked"/>
 									</do_elseif>
 									<do_elseif value="($DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue - 5 ge -30) and ($DADynamicWarFactionTwo.isrelationlocked)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionTwo.knownname,{33232474,2110}]]" comment="Relation Locked"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = '%s %s'.[$DADynamicWarFactionTwo.knownname,{33232474,2110}]]" comment="Relation Locked"/>
 									</do_elseif>
 									<do_else>
 										<!-- $col 8 + 9 + 10 + 11 + 12 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan=5, $halign = 'center', $text = {1037,3006}]" comment="Impossible"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 5, $halign = 'center', $text = {1037,3006}]" comment="Impossible"/>
 									</do_else>
 								</do_if>
 							</do_all>
 						</do_if>
 					</actions>
 				</cue>
+				<!-- Done: Store previous value at menu open, add text showing change +- if value was stored. Maybe add a time check for at least a couple minutes in between? -->
 				<cue name="Menu_DynamicWar_MilStrength" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -403,50 +504,50 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=1,
-							$colSpan=3,
+							$col = 1,
+							$colSpan = 3,
 							$text = {1001,43},
 							$halign = 'left',
 							]"/>
 						<!-- Total: # -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=4,
-							$colSpan=1,
+							$col = 4,
+							$colSpan = 1,
 							$text = {1001,2637},
 							$halign = 'center',
 							]"/>
 						<!-- XL: # -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=5,
-							$colSpan=1,
+							$col = 5,
+							$colSpan = 1,
 							$text = {1001,48},
 							$halign = 'center',
 							]"/>
 						<!-- L: # -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=6,
-							$colSpan=1,
+							$col = 6,
+							$colSpan = 1,
 							$text = {1001,49},
 							$halign = 'center',
 							]"/>
 						<!-- M: # -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=7,
-							$colSpan=1,
+							$col = 7,
+							$colSpan = 1,
 							$text = {1001,50},
 							$halign = 'center',
 							]"/>
 						<!-- S: # -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=8,
-							$colSpan=1,
+							$col = 8,
+							$colSpan = 1,
 							$text = {1001,51},
 							$halign = 'center',
 							]"/>
 						<!-- Threat Assessment -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=9,
-							$colSpan=2,
+							$col = 9,
+							$colSpan = 2,
 							$text = {30211,150801},
 							$halign = 'center',
 							]"/>
@@ -459,18 +560,25 @@
 								$fontsize = 1,
 								$cellBGColor = 'Helper.color.grey',
 							]"/>
+						<!-- TODO: Add row with text saying values in parenthesis are from time -->
+						<!-- TODO: Improve text layout, getting clipping -->
 						<!-- Adding galaxy totals -->
 						<set_value name="$LocGalaxyTotal" exact="0"/>
 						<set_value name="$LocGalaxyTotalXL" exact="0"/>
 						<set_value name="$LocGalaxyTotalL" exact="0"/>
 						<set_value name="$LocGalaxyTotalM" exact="0"/>
 						<set_value name="$LocGalaxyTotalS" exact="0"/>
+						<set_value name="$LocGalaxyTotalTS" exact="0"/>
 						<do_all exact="$FactionList.count" counter="$DADynamicWarFactionOneCounter">
 							<set_value name="$DADynamicWarFactionOne" exact="$FactionList.{$DADynamicWarFactionOneCounter}"/>
 							<do_if value="($DADynamicWarFactionOne.isactive)">
 								<include_actions ref="Library_AddFactionMilStrengthRows"/>
 							</do_if>
 						</do_all>
+						<do_if value="not $DAMVT.$DWMilStrengthHistory.$Galaxy?">
+							<set_value name="$DAMVT.$DWMilStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalTS]"/>
+							<debug_text text="'MOD: DAMenus DynamicWar -- New $DAMVT.$DWMilStrengthHistory.$Galaxy -- Age: %s -- $TotalShips: %s -- XL: %s -- L: %s -- M: %s -- S: %s -- TS: %s'.[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalTS]" context="false" filter="scripts" chance="0"/>
+						</do_if>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -481,56 +589,113 @@
 								$cellBGColor = 'Helper.color.grey',
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<!-- Faction knownname -->
+						<!-- Galaxy-wide -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=1,
-							$colSpan=3,
+							$col = 1,
+							$colSpan = 3,
 							$text = {1001,9191},
 							$halign = 'left',
 							]"/>
 						<!-- Total: # -->
+						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal]"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal)">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} gt $LocGalaxyTotal">
+								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} - $LocGalaxyTotal]" operation="add"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} - $LocGalaxyTotal]" operation="add"/>
+							</do_else>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=4,
-							$colSpan=1,
-							$text = [@$LocGalaxyTotal,0].max,
+							$col = 4,
+							$colSpan = 1,
+							$text = $LocText,
 							$halign = 'center',
 							]"/>
+						<remove_value name="$LocText"/>
 						<!-- XL: # -->
+						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalXL]"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{3} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{3} != $LocGalaxyTotalXL)">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} gt $LocGalaxyTotalXL">
+								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} - $LocGalaxyTotalXL]" operation="add"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} - $LocGalaxyTotalXL]" operation="add"/>
+							</do_else>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=5,
-							$colSpan=1,
-							$text = [@$LocGalaxyTotalXL,0].max,
+							$col = 5,
+							$colSpan = 1,
+							$text = $LocText,
 							$halign = 'center',
 							]"/>
+						<remove_value name="$LocText"/>
 						<!-- L: # -->
+						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalL]"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{4} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{4} != $LocGalaxyTotalL)">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} gt $LocGalaxyTotalL">
+								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} - $LocGalaxyTotalL]" operation="add"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} - $LocGalaxyTotalL]" operation="add"/>
+							</do_else>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=6,
-							$colSpan=1,
-							$text = [@$LocGalaxyTotalL,0].max,
+							$col = 6,
+							$colSpan = 1,
+							$text = $LocText,
 							$halign = 'center',
 							]"/>
+						<remove_value name="$LocText"/>
 						<!-- M: # -->
+						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalM]"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{5} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{5} != $LocGalaxyTotalM)">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} gt $LocGalaxyTotalM">
+								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} - $LocGalaxyTotalM]" operation="add"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} - $LocGalaxyTotalM]" operation="add"/>
+							</do_else>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=7,
-							$colSpan=1,
-							$text = [@$LocGalaxyTotalM,0].max,
+							$col = 7,
+							$colSpan = 1,
+							$text = $LocText,
 							$halign = 'center',
 							]"/>
+						<remove_value name="$LocText"/>
 						<!-- S: # -->
+						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalS]"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{6} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{6} != $LocGalaxyTotalS)">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} gt $LocGalaxyTotalS">
+								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} - $LocGalaxyTotalS]" operation="add"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} - $LocGalaxyTotalS]" operation="add"/>
+							</do_else>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=8,
-							$colSpan=1,
-							$text = [@$LocGalaxyTotalS,0].max,
+							$col = 8,
+							$colSpan = 1,
+							$text = $LocText,
 							$halign = 'center',
 							]"/>
+						<remove_value name="$LocText"/>
+						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and (($DAMVT.$DWMilStrengthHistory.$Galaxy.{1} + 5s) le player.age)">
+							<set_value name="$DAMVT.$DWMilStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalTS]"/>
+							<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DAMVT.$DWMilStrengthHistory.$Galaxy -- Age: %s -- $TotalShips: %s -- XL: %s -- L: %s -- M: %s -- S: %s -- TS: %s'.[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalTS]" context="false" filter="scripts" chance="0"/>
+						</do_if>
 						<!-- Cleanup -->
 						<remove_value name="$LocGalaxyTotal"/>
 						<remove_value name="$LocGalaxyTotalXL"/>
 						<remove_value name="$LocGalaxyTotalL"/>
 						<remove_value name="$LocGalaxyTotalM"/>
 						<remove_value name="$LocGalaxyTotalS"/>
+						<remove_value name="$LocGalaxyTotalTS"/>
+						<remove_value name="$LocText"/>
 					</actions>
 				</cue>
+				<!-- TODO: Store previous value at menu open, add text showing change +- if value was stored. Maybe add a time check for at least a couple minutes in between? -->
 				<cue name="Menu_DynamicWar_EconStrength" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -541,50 +706,50 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=1,
-							$colSpan=3,
+							$col = 1,
+							$colSpan = 3,
 							$text = {1001,43},
 							$halign = 'left',
 							]"/>
 						<!-- Total -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=4,
-							$colSpan=1,
+							$col = 4,
+							$colSpan = 1,
 							$text = {1001,2637},
 							$halign = 'center',
 							]"/>
 						<!-- XL -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=5,
-							$colSpan=1,
+							$col = 5,
+							$colSpan = 1,
 							$text = {1001,48},
 							$halign = 'center',
 							]"/>
 						<!-- L -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=6,
-							$colSpan=1,
+							$col = 6,
+							$colSpan = 1,
 							$text = {1001,49},
 							$halign = 'center',
 							]"/>
 						<!-- M -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=7,
-							$colSpan=1,
+							$col = 7,
+							$colSpan = 1,
 							$text = {1001,50},
 							$halign = 'center',
 							]"/>
 						<!-- S -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=8,
-							$colSpan=1,
+							$col = 8,
+							$colSpan = 1,
 							$text = {1001,51},
 							$halign = 'center',
 							]"/>
 						<!-- Stations -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col=9,
-							$colSpan=2,
+							$col = 9,
+							$colSpan = 2,
 							$text = {1001,4},
 							$halign = 'center',
 							]"/>
@@ -728,9 +893,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=4, $text = {1001,45}, $halign = 'left']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan=6, $text = ('%s / %s / %s'.[{33232474,2111},{33232474,2112},{33232474,2113}]), $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = ('%s / %s / %s'.[{33232474,2111},{33232474,2112},{33232474,2113}]), $halign = 'center']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -743,7 +908,7 @@
 						<do_for_each name="$ware" valuename="$wanted" in="$wares_wanted">
 							<set_value name="$exists" exact="$wares_existing.{$ware}"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=4, $text = $ware.name, $halign = 'left']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left']"/>
 							<set_value name="$LocStart" exact="$wanted"/>
 							<set_value name="$LocCurrent" exact="$exists"/>
 							<set_value name="$LocMax" exact="[$exists,$wanted].max"/>
@@ -758,7 +923,7 @@
 							<do_else>
 								<set_value name="$LocPercent" exact="{1001,19}"/>
 							</do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=2, $text = $LocPercent, $halign = 'center']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocPercent, $halign = 'center']"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
 									$col			= 7, 
 									$colSpan		= 6,
@@ -832,11 +997,11 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=4, $text = {1001,45}, $halign = 'left']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left']"/>
 						<!-- Ware -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4, $text = {33232474,121}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,121}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
 						<!--Production-->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan=4, $text = {33232474,122}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,122}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
 						<!--Consumption-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -853,7 +1018,7 @@
 							<set_value name="$pro_output" exact="$pro_existing.{$ware}"/>
 							<set_value name="$procap_output" exact="$pro_wanted.{$ware}"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=4, $text = $ware.name, $halign = 'left']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left']"/>
 							<!-- Production -->
 							<do_if value="$procap_output == 0">
 								<set_value name="$vcolor" exact="'Helper.color.transparent'"/>
@@ -884,7 +1049,7 @@
 								]"/>
 							</do_if>
 							<do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4, $halign = 'center', $text = {1001,9}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,9}]"/>
 							</do_else>
 							<!-- Consumption -->
 							<do_if value="$rescap_output == 0">
@@ -916,7 +1081,7 @@
 								]"/>
 							</do_if>
 							<do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan=4, $halign = 'center', $text = {1001,9}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $halign = 'center', $text = {1001,9}]"/>
 							</do_else>
 						</do_for_each>
 					</actions>
@@ -964,9 +1129,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=4, $text = {1001,56}, $halign = 'left']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4, $text = {1001,1311}, $halign = 'center']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan=4, $text = {1001,8433}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,56}, $halign = 'left']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,1311}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {1001,8433}, $halign = 'center']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -986,7 +1151,7 @@
 								<do_else>
 									<set_value name="$OperationalCount" exact="0"/>
 								</do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4, $text = ('%s %s'.[$OperationalCount,{1001,1311}]), $halign = 'center']" comment="Number Operational"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = ('%s %s'.[$OperationalCount,{1001,1311}]), $halign = 'center']" comment="Number Operational"/>
 								<do_if value="$ModuleTable.{$Macro}? and $PlannedModuleTable.{$Macro}?">
 									<do_if value="$ModuleTable.{$Macro} ge $PlannedModuleTable.{$Macro}">
 										<set_value name="$PlannedCount" exact="0"/>
@@ -1001,7 +1166,7 @@
 								<do_else>
 									<set_value name="$PlannedCount" exact="0"/>
 								</do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan=4, $text = ('%s %s'.[$PlannedCount,{1001,8433}]), $halign = 'center']" comment="Number Planned Modules"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = ('%s %s'.[$PlannedCount,{1001,8433}]), $halign = 'center']" comment="Number Planned Modules"/>
 								<remove_value name="$OperationalCount"/>
 								<remove_value name="$PlannedCount"/>
 							</do_if>
@@ -1496,15 +1661,15 @@
 						<set_value name="$WhatFactions" exact="'All'"/>
 						<include_actions ref="Library_DAMenuGetFactions"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='center', $text = {1001,43}]" comment="Faction"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {33232474,138} + ' / ' + {33232474,139}]" comment="Locked / Unlocked"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'center', $text = {1001,43}]" comment="Faction"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {33232474,138} + ' / ' + {33232474,139}]" comment="Locked / Unlocked"/>
 						<do_if value="$FactionList.count">
 							<do_for_each name="$DARelUnlFaction" in="$FactionList">
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='left', $text = $DARelUnlFaction.knownname, $mouseOverText = {33232474,1118}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'left', $text = $DARelUnlFaction.knownname, $mouseOverText = {33232474,1118}]"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 									$col = 4,
-									$colSpan=5,
+									$colSpan = 5,
 									$text = table[
 									  $text   =  if $DARelUnlFaction.isrelationlocked then {33232474,138} else {33232474,139}, 
 									  $color  =  if $DARelUnlFaction.isrelationlocked then 'Helper.color.red' else 'Helper.color.green',
@@ -1528,16 +1693,16 @@
 						<include_actions ref="Library_DAMenuGetFactions"/>
 						<!-- $DADVT.$DADynamicWarDisabledFactions // $DADVT.$DADynamicWarPermaExcludedFactions -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='center', $text = {1001,43}]" comment="Faction"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {33232474,140} + ' / ' + {33232474,141}]" comment="Allowed / Ignored"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'center', $text = {1001,43}]" comment="Faction"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {33232474,140} + ' / ' + {33232474,141}]" comment="Allowed / Ignored"/>
 						<do_if value="$FactionList.count">
 							<do_for_each name="$DAIgnFaction" in="$FactionList">
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=3,	$halign='left', $text = $DAIgnFaction.knownname, $mouseOverText = {33232474,1119}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $halign = 'left', $text = $DAIgnFaction.knownname, $mouseOverText = {33232474,1119}]"/>
 								<do_if value="(not $DADVT.$DADynamicWarPermaExcludedFactions.indexof.{$DAIgnFaction}) and (not $DAIgnFaction.isrelationlocked) and ($DAIgnFaction.isactive) and ($DAIgnFaction.willclaimspace)">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 										$col = 4,
-										$colSpan=5,
+										$colSpan = 5,
 										$text = table[
 										  $text   =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then {33232474,141} else {33232474,140}, 
 										  $color  =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then 'Helper.color.red' else 'Helper.color.green',
@@ -1551,20 +1716,61 @@
 								</do_if>
 								<do_elseif value="(not $DADVT.$DADynamicWarPermaExcludedFactions.indexof.{$DAIgnFaction})">
 									<do_if value="(not $DAIgnFaction.isactive)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {1001,43} + ' ' + {1001,12208}]" comment="Faction Inactive"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {1001,43} + ' ' + {1001,12208}]" comment="Faction Inactive"/>
 									</do_if>
 									<do_elseif value="($DAIgnFaction.isrelationlocked)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {1001,9928} + ' ' + {33232474,138}, $mouseOverText = {33232474,1138}]" comment="Relations Locked"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {1001,9928} + ' ' + {33232474,138}, $mouseOverText = {33232474,1138}]" comment="Relations Locked"/>
 									</do_elseif>
 									<do_elseif value="(not $DAIgnFaction.willclaimspace)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {1001,7784}]" comment="This faction does not seek to claim sector ownership."/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {1001,7784}]" comment="This faction does not seek to claim sector ownership."/>
 									</do_elseif>
 								</do_elseif>
 								<do_else>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan=5,	$halign='center', $text = {1001,39}]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 5, $halign = 'center', $text = {1001,39}]"/>
 								</do_else>
 							</do_for_each>
 						</do_if>
+					</actions>
+				</cue>
+				<cue name="Menu_DynamicWar_SpaceFactionLogic" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $halign = 'center', $text = {1001,11284}]" comment="Sector"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $halign = 'center', $text = {1001,4825} + ' / ' + {1001,8942}]" comment="Enabled / Disabled"/>
+						<find_sector name="$DAFLSectors" space="player.galaxy" multiple="true"/>
+						<do_if value="$DAFLSectors.count">
+							<sort_list list="$DAFLSectors" sortbyvalue="loop.element.knownname"/>
+							<do_for_each name="$DAFLSector" in="$DAFLSectors">
+								<set_value name="$FLAllowed" exact="true"/>
+								<do_if value="not $DAFLSector.cluster.factionlogic">
+									<set_value name="$FLAllowed" exact="false"/>
+								</do_if>
+								<do_if value="not $DAFLSector.factionlogic">
+									<set_value name="$FLAllowed" exact="false"/>
+								</do_if>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $halign = 'left', $text = $DAFLSector.knownname, $mouseOverText = {33232474,1145}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 6,
+									$colSpan = 3,
+									$text = table[
+									  $text   =  if $FLAllowed then {1001,4825} else {1001,8942}, 
+									  $color  =  if $FLAllowed then 'Helper.color.green' else 'Helper.color.red',
+									  $halign = 'center',
+									],
+									$mouseOverText = {33232474,1145},
+									$onClick = ExecuteOption_ToggleFactionLogic,
+									$onRightClick = ExecuteOption_ToggleFactionLogic,
+									$echo = [$DAFLSector,$FLAllowed],
+									]"/>
+								<remove_value name="$FLAllowed"/>
+								<remove_value name="$LocText"/>
+							</do_for_each>
+						</do_if>
+						<remove_value name="$DAFLSectors"/>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_RelationsIncrease" instantiate="true">
@@ -1572,19 +1778,26 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- $echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$IncCost] -->
 						<set_value name="$DARelSelectedFactionOne" exact="event.param.$echo.{1}"/>
 						<set_value name="$DARelSelectedFactionTwo" exact="event.param.$echo.{2}"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- ExecuteOption_RelationsIncrease -- %2 -- %3 -- %4'.[player.age,$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$IncreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<set_value name="$DARelUseFavor" exact="event.param.$echo.{3}"/>
+						<set_value name="$DARelIncCost" exact="event.param.$echo.{4}"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsIncrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- IncCost: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelIncCost]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<set_value name="$UIRelationChange" exact="5"/>
 						<include_actions ref="Library_CalculateUiValueRepChange"/>
 						<!-- Returns $NewAbsoluteRepValue and $AbsoluteRepValueChange -->
-						<reward_player money="$IncreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} * -1"/>
-						<do_if value="($IncreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} == 0) and (@$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} gt 0) and ($DARelSelectedFactionOne != faction.player)">
-							<set_value name="$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne}" exact="[$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} - 1,0].max"/>
-							<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Used Favor -- %2 -- Favors: %3 -- %4'.[player.age,$DARelSelectedFactionOne.knownname,$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne},$IncreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<do_if value="typeof $DARelUseFavor == datatype.faction">
+							<do_if value="$DADVT.$DADynamicWarFavors.{$DARelUseFavor}? and $DADVT.$DADynamicWarFavors.{$DARelUseFavor}">
+								<set_value name="$DADVT.$DADynamicWarFavors.{$DARelUseFavor}" exact="[$DADVT.$DADynamicWarFavors.{$DARelUseFavor} - 1,0].max"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsIncrease -- Used Favor -- Faction: %s -- Favors After: %s'.[$DARelUseFavor.knownname,$DADVT.$DADynamicWarFavors.{$DARelUseFavor}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+							</do_if>
 						</do_if>
-						<set_faction_relation faction="$DARelSelectedFactionOne" otherfaction="$DARelSelectedFactionTwo" value="([$NewAbsoluteRepValue, 1].min)"/>
-						<set_faction_relation faction="$DARelSelectedFactionTwo" otherfaction="$DARelSelectedFactionOne" value="([$NewAbsoluteRepValue, 1].min)"/>
+						<do_else>
+							<reward_player money="$DARelIncCost * -1"/>
+						</do_else>
+						<set_faction_relation faction="$DARelSelectedFactionOne" otherfaction="$DARelSelectedFactionTwo" value="([$NewAbsoluteRepValue, 1.0].min)"/>
+						<set_faction_relation faction="$DARelSelectedFactionTwo" otherfaction="$DARelSelectedFactionOne" value="([$NewAbsoluteRepValue, 1.0].min)"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1593,18 +1806,24 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- $echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$DecCost] -->
 						<set_value name="$DARelSelectedFactionOne" exact="event.param.$echo.{1}"/>
 						<set_value name="$DARelSelectedFactionTwo" exact="event.param.$echo.{2}"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- ExecuteOption_RelationsDecrease -- %2 -- %3 -- %4'.[player.age,$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<set_value name="$DARelUseFavor" exact="event.param.$echo.{3}"/>
+						<set_value name="$DARelDecCost" exact="event.param.$echo.{4}"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsDecrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- IncCost: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelDecCost]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<set_value name="$UIRelationChange" exact="-5"/>
 						<include_actions ref="Library_CalculateUiValueRepChange"/>
 						<!-- Returns $NewAbsoluteRepValue and $AbsoluteRepValueChange -->
-						<reward_player money="$DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} * -1"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- ($DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} * -1): %2 -- @$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne}: %3 -- $DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}: %4 -- @$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} gt 0: %5'.[player.age,($DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} * -1),@$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne},$DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo},@$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} gt 0]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
-						<do_if value="($DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo} == 0) and (@$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} gt 0) and ($DARelSelectedFactionOne != faction.player) and ($DARelSelectedFactionTwo != faction.player)">
-							<set_value name="$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne}" exact="[$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne} - 1,0].max"/>
-							<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Used Favor -- %2 -- Favors: %3 -- %4'.[player.age,$DARelSelectedFactionOne.knownname,$DADVT.$DADynamicWarFavors.{$DARelSelectedFactionOne},$DecreaseRelationsCostTable.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<do_if value="typeof $DARelUseFavor == datatype.faction">
+							<do_if value="$DADVT.$DADynamicWarFavors.{$DARelUseFavor}? and $DADVT.$DADynamicWarFavors.{$DARelUseFavor}">
+								<set_value name="$DADVT.$DADynamicWarFavors.{$DARelUseFavor}" exact="[$DADVT.$DADynamicWarFavors.{$DARelUseFavor} - 1,0].max"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsDecrease -- Used Favor -- Faction: %s -- Favors After: %s'.[$DARelUseFavor.knownname,$DADVT.$DADynamicWarFavors.{$DARelUseFavor}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+							</do_if>
 						</do_if>
+						<do_else>
+							<reward_player money="$DARelDecCost * -1"/>
+						</do_else>
 						<set_faction_relation faction="$DARelSelectedFactionOne" otherfaction="$DARelSelectedFactionTwo" value="([$NewAbsoluteRepValue, -1].max)"/>
 						<set_faction_relation faction="$DARelSelectedFactionTwo" otherfaction="$DARelSelectedFactionOne" value="([$NewAbsoluteRepValue, -1].max)"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
@@ -1812,6 +2031,27 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_ToggleFactionLogic" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<!-- $echo = [$DAFLSector,$FLAllowed] -->
+						<set_value name="$LocSector" exact="event.param.$echo.{1}"/>
+						<set_value name="$FLAllowed" exact="event.param.$echo.{2}"/>
+						<set_value name="$LocString" exact="'%s logic before: %s'.[$LocSector.cluster.knownname,$LocSector.cluster.factionlogic]"/>
+						<set_space_faction_logic_allowed space="$LocSector.cluster" allow="not $FLAllowed"/>
+						<set_value name="$LocString" exact="', after: %s'.[$LocSector.cluster.factionlogic]" operation="add"/>
+						<set_value name="$LocString" exact="'\n %s logic before: %s'.[$LocSector.knownname,$LocSector.factionlogic]" operation="add"/>
+						<set_space_faction_logic_allowed space="$LocSector" allow="not $FLAllowed"/>
+						<set_value name="$LocString" exact="', after: %s'.[$LocSector.factionlogic]" operation="add"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Enable/Disable Logic\n%s'.[$LocString]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<remove_value name="$LocSector"/>
+						<remove_value name="$FLAllowed"/>
+						<remove_value name="$LocString"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_DynamicWarRelationsFixEnable" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -1872,9 +2112,9 @@
 								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.transparent'"/>
 							</do_elseif>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=4,
-								$colSpan=1,
-								$halign='center',
+								$col = 4,
+								$colSpan = 1,
+								$halign = 'center',
 								$text = $DARelBarCurrentUIRelation,
 								]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
@@ -1895,61 +2135,35 @@
 				</library>
 				<library name="Library_RelationIncreaseCost">
 					<actions>
-						<!-- Uses $DADynamicWarFactionOne and $DADynamicWarFactionTwo -->
-						<!-- This library will create a table with [$DADynamicWarFactionOne, $DADynamicWarFactionTwo, $Cost] -->
-						<set_value name="$DARelIncCostFound" exact="false"/>
+						<!-- Library_RelationIncreaseCost Input: $DADynamicWarFactionOne and $DADynamicWarFactionTwo Output: $IncCost -->
 						<do_if value="$DADynamicWarFactionOne and $DADynamicWarFactionTwo">
-							<do_if value="$IncreaseRelationsCostTable.{$DADynamicWarFactionOne}? and $IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}?">
-								<!-- Update our entry -->
-								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}" exact="if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost"/>
-								<set_value name="$DARelIncCostFound" exact="true"/>
+							<do_if value="@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} or @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionTwo}">
+								<set_value name="$IncCost" exact="0Cr"/>
 							</do_if>
-							<do_elseif value="$IncreaseRelationsCostTable.{$DADynamicWarFactionOne}? and (not $IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}?)">
-								<!-- We have the top level table, but not the specific entry -->
-								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$IncreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}" exact="if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost"/>
-								<set_value name="$DARelIncCostFound" exact="true"/>
-							</do_elseif>
 							<do_else>
-								<!-- We have nothing sadface -->
 								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$IncreaseRelationsCostTable.{$DADynamicWarFactionOne}" exact="table[{$DADynamicWarFactionTwo}=(if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost)]"/>
-								<set_value name="$DARelIncCostFound" exact="true"/>
+								<set_value name="$IncCost" exact="$Cost"/>
+								<remove_value name="$Cost"/>
 							</do_else>
 						</do_if>
 					</actions>
 				</library>
 				<library name="Library_RelationDecreaseCost">
 					<actions>
-						<!-- Uses $DADynamicWarFactionOne and $DADynamicWarFactionTwo -->
-						<!-- This library will create a table with [$DADynamicWarFactionOne, $DADynamicWarFactionTwo, $Cost] -->
-						<set_value name="$DARelDecCostFound" exact="false"/>
+						<!-- Library_RelationDecreaseCost Input: $DADynamicWarFactionOne and $DADynamicWarFactionTwo Output: $DecCost -->
 						<do_if value="$DADynamicWarFactionOne and $DADynamicWarFactionTwo">
-							<set_value name="$DARelDecPlayerChange" exact="false"/>
 							<do_if value="($DADynamicWarFactionOne == faction.player) or ($DADynamicWarFactionTwo == faction.player)">
-								<set_value name="$DARelDecPlayerChange" exact="true"/>
+								<set_value name="$DecCost" exact="0Cr"/>
 							</do_if>
-							<do_if value="$DecreaseRelationsCostTable.{$DADynamicWarFactionOne}? and $DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}?">
-								<!-- Update our entry -->
-								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}" exact="if ($DARelDecPlayerChange) then 0Cr else (if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost)"/>
-								<set_value name="$DARelDecCostFound" exact="true"/>
-							</do_if>
-							<do_elseif value="$DecreaseRelationsCostTable.{$DADynamicWarFactionOne}? and (not $DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}?)">
-								<!-- We have the top level table, but not the specific entry -->
-								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$DecreaseRelationsCostTable.{$DADynamicWarFactionOne}.{$DADynamicWarFactionTwo}" exact="if ($DARelDecPlayerChange) then 0Cr else (if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost)"/>
-								<set_value name="$DARelDecCostFound" exact="true"/>
+							<do_elseif value="@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} or @$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionTwo}">
+								<set_value name="$DecCost" exact="0Cr"/>
 							</do_elseif>
 							<do_else>
-								<!-- We have nothing sadface -->
 								<include_actions ref="Library_CalculateCost"/>
-								<set_value name="$DecreaseRelationsCostTable.{$DADynamicWarFactionOne}" exact="table[{$DADynamicWarFactionTwo}=(if ($DARelDecPlayerChange) then 0Cr else (if (@$DADVT.$DADynamicWarFavors.{$DADynamicWarFactionOne} gt 0) then 0Cr else $Cost))]"/>
-								<set_value name="$DARelDecCostFound" exact="true"/>
+								<set_value name="$DecCost" exact="$Cost"/>
+								<remove_value name="$Cost"/>
 							</do_else>
 						</do_if>
-						<remove_value name="$DARelDecPlayerChange"/>
 					</actions>
 				</library>
 				<library name="Library_CalculateUiValueRepChange">
@@ -2153,15 +2367,18 @@
 									<match primarypurpose="purpose.fight"/>
 									<match primarypurpose="purpose.auxiliary"/>
 								</match_any>
+								<match shiptype="shiptype.lasertower" negate="true"/>
 							</find_ship_by_true_owner>
 							<find_ship_by_true_owner name="$SDockedShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true">
 								<match_any>
 									<match primarypurpose="purpose.fight"/>
 									<match primarypurpose="purpose.auxiliary"/>
 								</match_any>
+								<match shiptype="shiptype.lasertower" negate="true"/>
 							</find_ship_by_true_owner>
 							<remove_from_list name="$SDockedShips" list="$SShips" multiple="true"/>
 							<append_list_elements name="$SShips" other="$SDockedShips"/>
+							<create_group groupname="$AllShips"/>
 							<add_to_group groupname="$AllShips" list="$XLShips"/>
 							<add_to_group groupname="$AllShips" list="$LShips"/>
 							<add_to_group groupname="$AllShips" list="$MShips"/>
@@ -2172,7 +2389,7 @@
 							<set_value name="$LocGalaxyTotalL" exact="$LShips.count" operation="add"/>
 							<set_value name="$LocGalaxyTotalM" exact="$MShips.count" operation="add"/>
 							<set_value name="$LocGalaxyTotalS" exact="$SShips.count" operation="add"/>
-							<do_if value="@$AllShips.count != @$TotalShips">
+							<do_if value="$AllShips.count != $TotalShips">
 								<debug_text text="'MOD: DAMenus DynamicWar -- %s -- Mismatched ship counts -- $Faction: %s -- $TotalShips: %s -- $AllShips.count: %s.'.[player.age,$DADynamicWarFactionOne,$TotalShips,$AllShips.count]" context="false" filter="error"/>
 							</do_if>
 							<set_value name="$TotalThreatScore" exact="0"/>
@@ -2181,54 +2398,123 @@
 									<set_value name="$TotalThreatScore" exact="$LocShip.threatscore" operation="add"/>
 								</do_for_each>
 							</do_if>
+							<do_if value="not $DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}?">
+								<set_value name="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}" exact="[player.age,$TotalShips,[@$XLShips.count,0].max,[@$LShips.count,0].max,[@$MShips.count,0].max,[@$SShips.count,0].max,$TotalThreatScore]"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- New $DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne} -- $Faction: %s -- Age: %s -- $TotalShips: %s -- XL: %s -- L: %s -- M: %s -- S: %s -- TS: %s'.[$DADynamicWarFactionOne,player.age,$TotalShips,$XLShips.count,$LShips.count,$MShips.count,$SShips.count,$TotalThreatScore]" context="false" filter="scripts" chance="0"/>
+							</do_if>
 							<!-- Faction knownname -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=1,
-								$colSpan=3,
+								$col = 1,
+								$colSpan = 3,
 								$text = $DADynamicWarFactionOne.knownname,
 								$halign = 'left',
 								]"/>
 							<!-- Total: # -->
+							<set_value name="$LocText" exact="'%s'.[$TotalShips]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} != $TotalShips)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} gt $TotalShips">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} - $TotalShips]" operation="add"/>
+								</do_if>
+								<do_elseif value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} lt $TotalShips">
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} - $TotalShips]" operation="add"/>
+								</do_elseif>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=4,
-								$colSpan=1,
-								$text = [@$TotalShips,0].max,
+								$col = 4,
+								$colSpan = 1,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
 							<!-- XL: # -->
+							<set_value name="$LocText" exact="'%s'.[$XLShips.count]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} != $XLShips.count)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} gt $XLShips.count">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} - $XLShips.count]" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} - $XLShips.count]" operation="add"/>
+								</do_else>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=5,
-								$colSpan=1,
-								$text = [@$XLShips.count,0].max,
+								$col = 5,
+								$colSpan = 1,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
 							<!-- L: # -->
+							<set_value name="$LocText" exact="'%s'.[$LShips.count]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} != $LShips.count)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} gt $LShips.count">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} - $LShips.count]" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} - $LShips.count]" operation="add"/>
+								</do_else>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=6,
-								$colSpan=1,
-								$text = [@$LShips.count,0].max,
+								$col = 6,
+								$colSpan = 1,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
 							<!-- M: # -->
+							<set_value name="$LocText" exact="'%s'.[$MShips.count]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} != $MShips.count)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} gt $MShips.count">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} - $MShips.count]" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} - $MShips.count]" operation="add"/>
+								</do_else>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=7,
-								$colSpan=1,
-								$text = [@$MShips.count,0].max,
+								$col = 7,
+								$colSpan = 1,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
 							<!-- S: # -->
+							<set_value name="$LocText" exact="'%s'.[$SShips.count]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} != $SShips.count)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} gt $SShips.count">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} - $SShips.count]" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} - $SShips.count]" operation="add"/>
+								</do_else>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=8,
-								$colSpan=1,
-								$text = [@$SShips.count,0].max,
+								$col = 8,
+								$colSpan = 1,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
+							<!-- Threatscore: # -->
+							<set_value name="$LocText" exact="'%s'.[$TotalThreatScore]"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} != $TotalThreatScore)">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} gt $TotalThreatScore">
+									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} - $TotalThreatScore]" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} - $TotalThreatScore]" operation="add"/>
+								</do_else>
+							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col=9,
-								$colSpan=2,
-								$text = $TotalThreatScore,
+								$col = 9,
+								$colSpan = 2,
+								$text = $LocText,
 								$halign = 'center',
 								]"/>
+							<remove_value name="$LocText"/>
+							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and (($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{1} + 5s) le player.age)">
+								<set_value name="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}" exact="[player.age,$TotalShips,[@$XLShips.count,0].max,[@$LShips.count,0].max,[@$MShips.count,0].max,[@$SShips.count,0].max,$TotalThreatScore]"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne} -- $Faction: %s -- Age: %s -- $TotalShips: %s -- XL: %s -- L: %s -- M: %s -- S: %s -- TS: %s'.[$DADynamicWarFactionOne,player.age,$TotalShips,$XLShips.count,$LShips.count,$MShips.count,$SShips.count,$TotalThreatScore]" context="false" filter="scripts" chance="0"/>
+							</do_if>
 							<remove_value name="$XLShips"/>
 							<remove_value name="$XLDockedShips"/>
 							<remove_value name="$LShips"/>
@@ -2240,6 +2526,7 @@
 							<remove_value name="$AllShips"/>
 							<remove_value name="$TotalShips"/>
 							<remove_value name="$TotalThreatScore"/>
+							<remove_value name="$LocText"/>
 						</do_if>
 					</actions>
 				</library>
@@ -2479,18 +2766,7 @@
 					</conditions>
 					<actions>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_dynamicnews_options']"/>
-						<do_if value="$DADVT.$DADynamicNewsEnable and $DADVT.$DADynamicNewsEnableNewsStorage">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,112}, $id='menu_dynamicnews_recentnews']"/>
-						</do_if>
-						<do_elseif value="(not $DADVT.$DADynamicNewsEnable) or (not $DADVT.$DADynamicNewsEnableNewsStorage)">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = event.param.$columns,
-									$text = {33232474,2297},
-									$halign = 'center'
-								]"/>
-						</do_elseif>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,112}, $id='menu_dynamicnews_recentnews']"/>
 					</actions>
 				</cue>
 				<cue name="Menu_DynamicNews_Options" instantiate="true">
@@ -2756,40 +3032,51 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=2,	$halign='center', $text = {1001,24}]" comment="Time"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan=2,	$halign='center', $text = {1041,10172}]" comment="Origin"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4,	$halign='center', $text = {1001,5721}]" comment="News"/>
-						<!-- $DADVT.$DADynamicNewsTable.{Index} == [Player.age,Source,Message] -->
-						<do_if value="$DADVT.$DADynamicNewsTable.{1}?">
-							<do_all exact="$DADVT.$DADynamicNewsTable.keys.count" counter="$index">
-								<set_value name="$Time" exact="$DADVT.$DADynamicNewsTable.{$index}.{1}"/>
-								<set_value name="$Source" exact="$DADVT.$DADynamicNewsTable.{$index}.{2}"/>
-								<set_value name="$Message" exact="$DADVT.$DADynamicNewsTable.{$index}.{3}"/>
-								<do_if value="($Time != null) and ($Source != null) and ($Message != null)">
-									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-									<!-- Relative Time - Source - Message -->
-									<!-- $col 1 + 2 -->
-									<!-- This is in seconds ago for now -->
-									<set_value name="$RelativeTime" exact="player.age - $Time"/>
-									<set_value name="$RelativeTimeFormatted" exact="$RelativeTime.formatted.{'%dd:%Hh:%Mm'}"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=2,	$halign='left', $wordwrap = true, $text = $RelativeTimeFormatted]"/>
-									<!-- $col 3 - 4 -->
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan=2,	$halign='left', $wordwrap = true, $text = $Source]"/>
-									<!-- $col 5 - 8 -->
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan=4, $halign='left', $wordwrap = true, $text = $Message]"/>
-									<remove_value name="$Time"/>
-									<remove_value name="$Source"/>
-									<remove_value name="$Message"/>
-									<remove_value name="$RelativeTime"/>
-									<remove_value name="$RelativeTimeFormatted"/>
-								</do_if>
-							</do_all>
-						</do_if>
-						<do_else>
+						<do_if value="$DADVT.$DADynamicNewsEnable and $DADVT.$DADynamicNewsEnableNewsStorage">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan=8,	$halign='center', $text = {1099,16}]"/>
-						</do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'center', $text = {1001,24}]" comment="Time"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'center', $text = {1041,10172}]" comment="Origin"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,5721}]" comment="News"/>
+							<!-- $DADVT.$DADynamicNewsTable.{Index} == [Player.age,Source,Message] -->
+							<do_if value="$DADVT.$DADynamicNewsTable.{1}?">
+								<do_all exact="$DADVT.$DADynamicNewsTable.keys.count" counter="$index">
+									<set_value name="$Time" exact="$DADVT.$DADynamicNewsTable.{$index}.{1}"/>
+									<set_value name="$Source" exact="$DADVT.$DADynamicNewsTable.{$index}.{2}"/>
+									<set_value name="$Message" exact="$DADVT.$DADynamicNewsTable.{$index}.{3}"/>
+									<do_if value="($Time != null) and ($Source != null) and ($Message != null)">
+										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+										<!-- Relative Time - Source - Message -->
+										<!-- $col 1 + 2 -->
+										<!-- This is in seconds ago for now -->
+										<set_value name="$RelativeTime" exact="player.age - $Time"/>
+										<set_value name="$RelativeTimeFormatted" exact="$RelativeTime.formatted.{'%dd:%Hh:%Mm'}"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $RelativeTimeFormatted]"/>
+										<!-- $col 3 - 4 -->
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $Source]"/>
+										<!-- $col 5 - 8 -->
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'left', $wordwrap = true, $text = $Message]"/>
+										<remove_value name="$Time"/>
+										<remove_value name="$Source"/>
+										<remove_value name="$Message"/>
+										<remove_value name="$RelativeTime"/>
+										<remove_value name="$RelativeTimeFormatted"/>
+									</do_if>
+								</do_all>
+							</do_if>
+							<do_else>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {1099,16}]"/>
+							</do_else>
+						</do_if>
+						<do_elseif value="(not $DADVT.$DADynamicNewsEnable) or (not $DADVT.$DADynamicNewsEnableNewsStorage)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = event.param.$columns,
+									$text = {33232474,2297},
+									$halign = 'center'
+								]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<!-- Evolution -->
@@ -2868,15 +3155,15 @@
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col=1,
-									$colSpan=4,
+									$col = 1,
+									$colSpan = 4,
 									$text = {33232474,162},
 									$mouseOverText = {33232474,1162},
 								]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col=5,
-									$colSpan=4,
+									$col = 5,
+									$colSpan = 4,
 									$text = '%s: %s / %s: %s'.[{1001,7899},$DADVT.$DAEvolutionCurrentLevel,{1001,19},$DADVT.$DAEvolutionMaxLevel],
 									$mouseOverText = {33232474,1162},
 									$halign = 'right',
@@ -3480,6 +3767,64 @@
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+										$col = 1,
+										$colSpan = 6,
+										$text = {33232474,210},
+										$mouseOverText = {33232474,1210},
+									]"/>
+						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipModsEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+										$col = 7, 
+										$colSpan = 2,
+										$text = table[
+										  $text   =  if $DADVT.$DAFillShipModFleetEnable then {1001,4825} else {1001,8942}, 
+										  $color  =  if $DADVT.$DAFillShipModFleetEnable then 'Helper.color.green' else 'Helper.color.red',
+										  $halign = 'center',
+										],
+										$mouseOverText = {33232474,1210},
+										$onClick = ExecuteOption_FillShipModFleetEnable,
+										$onRightClick = ExecuteOption_FillShipModFleetEnable,
+									]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 7,
+									$colSpan = 2,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+										$col = 1,
+										$colSpan = 6,
+										$text = {33232474,211},
+										$mouseOverText = {33232474,1211},
+									]"/>
+						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipModsEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+										$col = 7, 
+										$colSpan = 2,
+										$text = table[
+										  $text   =  if $DADVT.$DAFillShipModPaintEnable then {1001,4825} else {1001,8942}, 
+										  $color  =  if $DADVT.$DAFillShipModPaintEnable then 'Helper.color.green' else 'Helper.color.red',
+										  $halign = 'center',
+										],
+										$mouseOverText = {33232474,1211},
+										$onClick = ExecuteOption_FillShipModPaintEnable,
+										$onRightClick = ExecuteOption_FillShipModPaintEnable,
+									]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 7,
+									$colSpan = 2,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
 									$colSpan = 6,
 									$text = {33232474,209},
@@ -3516,11 +3861,12 @@
 									$fontsize = 1,
 									$cellBGColor = 'Helper.color.grey',
 								]"/>
-							<!-- 1+2 = Ware.name, 3+4+5 Added Amount/Volume, 6+7+8 Removed Amount/Volume -->
+							<!-- 1+2 = Ware.name, 3+4+5 Added Amount, 6+7+8 Removed Amount -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,45}, $halign = 'left']" comment="Ware"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ('%s %s/%s'.[{33232474,2200},{1041,10173},{1001,1407}]), $halign = 'center']" comment="Added Number/Volume"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ('%s %s/%s'.[{33232474,2201},{1041,10173},{1001,1407}]), $halign = 'center']" comment="Removed Number/Volume"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ('%s %s'.[{33232474,2200},{1041,10173}]), $halign = 'center']" comment="Added Number"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s %s'.[{33232474,2201},{1041,10173}]), $halign = 'center']" comment="Removed Number"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ('%s %s'.[{33232474,2203},{1041,10173}]), $halign = 'center']" comment="Net Number"/>
 							<set_value name="$LocWares" exact="[]"/>
 							<append_list_elements name="$LocWares" other="$DADVT.$DAFillWareStatistics.keys.list"/>
 							<sort_list list="$LocWares" sortbyvalue="loop.element.name"/>
@@ -3528,10 +3874,12 @@
 								<do_if value="$DADVT.$DAFillWareStatistics.{$LocWare}? and $DADVT.$DAFillWareStatistics.{$LocWare}.{1}? and $DADVT.$DAFillWareStatistics.{$LocWare}.{2}?">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocWare.name, $halign = 'left']" comment="Ware"/>
-									<set_value name="$LocText" exact="'%s/%s%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{1},$LocWare.volume * $DADVT.$DAFillWareStatistics.{$LocWare}.{1},{1001,110}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ($LocText), $halign = 'center']" comment="Number/Volume"/>
-									<set_value name="$LocText" exact="'%s/%s%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{2},$LocWare.volume * $DADVT.$DAFillWareStatistics.{$LocWare}.{2},{1001,110}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ($LocText), $halign = 'center']" comment="Number/Volume"/>
+									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{1}]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
+									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{2}]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
+									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{1} - $DADVT.$DAFillWareStatistics.{$LocWare}.{2}]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
 									<remove_value name="$LocText"/>
 								</do_if>
 							</do_for_each>
@@ -3705,6 +4053,36 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_FillShipModFleetEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAFillShipModFleetEnable">
+							<set_value name="$DADVT.$DAFillShipModFleetEnable" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAFillShipModFleetEnable" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillShipModFleetEnable to %2'.[player.age,$DADVT.$DAFillShipModFleetEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_FillShipModPaintEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAFillShipModPaintEnable">
+							<set_value name="$DADVT.$DAFillShipModPaintEnable" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAFillShipModPaintEnable" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillShipModPaintEnable to %2'.[player.age,$DADVT.$DAFillShipModPaintEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_FillDebugEnable" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -3727,27 +4105,7 @@
 					</conditions>
 					<actions>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_jobs_options']"/>
-						<do_if value="$DADVT.$DAJobsSSTEnable and $DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,245}, $id='menu_jobs_quotas']"/>
-						</do_if>
-						<do_elseif value="not $DADVT.$DAJobsSSTEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = {33232474,2248},
-								$halign = 'center',
-							]"/>
-						</do_elseif>
-						<do_elseif value="not $DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = {33232474,2249},
-								$halign = 'center',
-							]"/>
-						</do_elseif>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,245}, $id='menu_jobs_quotas']"/>
 					</actions>
 				</cue>
 				<cue name="Menu_Jobs_Quotas" instantiate="true">
@@ -3938,6 +4296,24 @@
 							</do_for_each>
 							<remove_value name="$DAJobsSSTLocFactionsList"/>
 						</do_if>
+						<do_elseif value="not $DADVT.$DAJobsSSTEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2248},
+								$halign = 'center',
+							]"/>
+						</do_elseif>
+						<do_elseif value="not $DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2249},
+								$halign = 'center',
+							]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<cue name="Menu_Jobs_Options" instantiate="true">
@@ -4363,18 +4739,8 @@
 					</conditions>
 					<actions>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,348}, $id='menu_god_options']"/>
-						<do_if value="$DADVT.$DAGodEnable and $DADVT.$DAGodFactionModuleQuotas? and $DADVT.$DAGodFactionModuleQuotas.keys.list.count">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,349}, $id='menu_god_quotas']"/>
-						</do_if>
-						<do_elseif value="not $DADVT.$DAGodEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = {33232474,2342},
-								$halign = 'center',
-							]"/>
-						</do_elseif>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,349}, $id='menu_god_quotas']"/>
+						<!-- TODO: Special ordering -->
 					</actions>
 				</cue>
 				<cue name="Menu_God_Options" instantiate="true">
@@ -4405,10 +4771,39 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
 								$colSpan = 6,
+								$text = {33232474,352},
+								$mouseOverText = {33232474,1352},
+							]"/>
+						<do_if value="$DADVT.$DAGodEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 7, 
+									$colSpan = 2,
+									$text = table[
+									  $text   =  if $DADVT.$DAGodAllowBuildInFriendly then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAGodAllowBuildInFriendly then 'Helper.color.green' else 'Helper.color.red',
+									  $halign = 'center',
+									],
+									$mouseOverText = {33232474,1350},
+									$onClick = ExecuteOption_GodAllowBuildInFriendlyEnable,
+									$onRightClick = ExecuteOption_GodAllowBuildInFriendlyEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 7,
+									$colSpan = 2,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 6,
 								$text = {33232474,350},
 								$mouseOverText = {33232474,1350},
 							]"/>
-						<do_if value="$DADVT.$DAGodEnable">
+						<do_if value="$DADVT.$DAGodEnable and $DADVT.$DAGodAllowBuildInFriendly">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 									$col = 7, 
 									$colSpan = 2,
@@ -4420,6 +4815,35 @@
 									$mouseOverText = {33232474,1350},
 									$onClick = ExecuteOption_GodAllowBuildInPlayerEnable,
 									$onRightClick = ExecuteOption_GodAllowBuildInPlayerEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 7,
+									$colSpan = 2,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 6,
+								$text = {33232474,351},
+								$mouseOverText = {33232474,1351},
+							]"/>
+						<do_if value="$DADVT.$DAGodEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 7, 
+									$colSpan = 2,
+									$text = table[
+									  $text   =  if $DADVT.$DAGodAttemptRecovery then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAGodAttemptRecovery then 'Helper.color.green' else 'Helper.color.red',
+									  $halign = 'center',
+									],
+									$mouseOverText = {33232474,1351},
+									$onClick = ExecuteOption_GodAttemptRecoveryEnable,
+									$onRightClick = ExecuteOption_GodAttemptRecoveryEnable,
 								]"/>
 						</do_if>
 						<do_else>
@@ -4490,13 +4914,12 @@
 						</do_else>
 					</actions>
 				</cue>
-				
 				<cue name="Menu_God_Quotas" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<do_if value="$DADVT.$DAGodFactionModuleQuotas? and $DADVT.$DAGodFactionModuleQuotas.keys.list.count and $DADVT.$DAGodEnable">
+						<do_if value="$DADVT.$DAGodEnable and $DADVT.$DAGodFactionModuleQuotas? and $DADVT.$DAGodFactionModuleQuotas.keys.list.count">
 							<!-- DONE: Sort by faction knownname -->
 							<set_value name="$DAGodLocFactionsList" exact="[]"/>
 							<append_list_elements name="$DAGodLocFactionsList" other="$DADVT.$DAGodFactionModuleQuotas.keys.list"/>
@@ -4643,6 +5066,15 @@
 							</do_for_each>
 							<remove_value name="$DAGodLocFactionsList"/>
 						</do_if>
+						<do_elseif value="not $DADVT.$DAGodEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2342},
+								$halign = 'center',
+							]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_GodEnable" instantiate="true">
@@ -4661,6 +5093,21 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_GodAllowBuildInFriendlyEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAGodAllowBuildInFriendly">
+							<set_value name="$DADVT.$DAGodAllowBuildInFriendly" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAGodAllowBuildInFriendly" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAllowBuildInFriendly to %2'.[player.age,$DADVT.$DAGodAllowBuildInFriendly]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_GodAllowBuildInPlayerEnable" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -4673,6 +5120,21 @@
 							<set_value name="$DADVT.$DAGodAllowBuildInPlayer" exact="true"/>
 						</do_else>
 						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAllowBuildInPlayer to %2'.[player.age,$DADVT.$DAGodAllowBuildInPlayer]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_GodAttemptRecoveryEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAGodAttemptRecovery">
+							<set_value name="$DADVT.$DAGodAttemptRecovery" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAGodAttemptRecovery" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAttemptRecovery to %2'.[player.age,$DADVT.$DAGodAttemptRecovery]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
