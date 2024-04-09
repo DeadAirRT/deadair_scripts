@@ -599,7 +599,7 @@
 						<!-- Total: # -->
 						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal]"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal)">
-							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} gt $LocGalaxyTotal">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} lt $LocGalaxyTotal">
 								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{2} - $LocGalaxyTotal]" operation="add"/>
 							</do_if>
 							<do_else>
@@ -616,7 +616,7 @@
 						<!-- XL: # -->
 						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalXL]"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{3} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{3} != $LocGalaxyTotalXL)">
-							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} gt $LocGalaxyTotalXL">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} lt $LocGalaxyTotalXL">
 								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{3} - $LocGalaxyTotalXL]" operation="add"/>
 							</do_if>
 							<do_else>
@@ -633,7 +633,7 @@
 						<!-- L: # -->
 						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalL]"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{4} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{4} != $LocGalaxyTotalL)">
-							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} gt $LocGalaxyTotalL">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} lt $LocGalaxyTotalL">
 								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{4} - $LocGalaxyTotalL]" operation="add"/>
 							</do_if>
 							<do_else>
@@ -650,7 +650,7 @@
 						<!-- M: # -->
 						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalM]"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{5} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{5} != $LocGalaxyTotalM)">
-							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} gt $LocGalaxyTotalM">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} lt $LocGalaxyTotalM">
 								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{5} - $LocGalaxyTotalM]" operation="add"/>
 							</do_if>
 							<do_else>
@@ -667,7 +667,7 @@
 						<!-- S: # -->
 						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalS]"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{6} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{6} != $LocGalaxyTotalS)">
-							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} gt $LocGalaxyTotalS">
+							<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} lt $LocGalaxyTotalS">
 								<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.$Galaxy.{6} - $LocGalaxyTotalS]" operation="add"/>
 							</do_if>
 							<do_else>
@@ -2412,12 +2412,12 @@
 							<!-- Total: # -->
 							<set_value name="$LocText" exact="'%s'.[$TotalShips]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} != $TotalShips)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} gt $TotalShips">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} lt $TotalShips">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} - $TotalShips]" operation="add"/>
 								</do_if>
-								<do_elseif value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} lt $TotalShips">
+								<do_else>
 									<set_value name="$LocText" exact="'(%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{2} - $TotalShips]" operation="add"/>
-								</do_elseif>
+								</do_else>
 							</do_if>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 4,
@@ -2429,7 +2429,7 @@
 							<!-- XL: # -->
 							<set_value name="$LocText" exact="'%s'.[$XLShips.count]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} != $XLShips.count)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} gt $XLShips.count">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} lt $XLShips.count">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{3} - $XLShips.count]" operation="add"/>
 								</do_if>
 								<do_else>
@@ -2446,7 +2446,7 @@
 							<!-- L: # -->
 							<set_value name="$LocText" exact="'%s'.[$LShips.count]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} != $LShips.count)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} gt $LShips.count">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} lt $LShips.count">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{4} - $LShips.count]" operation="add"/>
 								</do_if>
 								<do_else>
@@ -2463,7 +2463,7 @@
 							<!-- M: # -->
 							<set_value name="$LocText" exact="'%s'.[$MShips.count]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} != $MShips.count)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} gt $MShips.count">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} lt $MShips.count">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{5} - $MShips.count]" operation="add"/>
 								</do_if>
 								<do_else>
@@ -2480,7 +2480,7 @@
 							<!-- S: # -->
 							<set_value name="$LocText" exact="'%s'.[$SShips.count]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} != $SShips.count)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} gt $SShips.count">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} lt $SShips.count">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{6} - $SShips.count]" operation="add"/>
 								</do_if>
 								<do_else>
@@ -2497,7 +2497,7 @@
 							<!-- Threatscore: # -->
 							<set_value name="$LocText" exact="'%s'.[$TotalThreatScore]"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} != $TotalThreatScore)">
-								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} gt $TotalThreatScore">
+								<do_if value="$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} lt $TotalThreatScore">
 									<set_value name="$LocText" exact="'(+%s)'.[$DAMVT.$DWMilStrengthHistory.{$DADynamicWarFactionOne}.{7} - $TotalThreatScore]" operation="add"/>
 								</do_if>
 								<do_else>
