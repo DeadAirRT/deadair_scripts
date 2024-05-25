@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <diff>
-	<replace sel="/modules/module[@id='prod_gen_refinedmetals']/category[@faction='[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]'][@race='[argon, paranid, split, teladi]'][@ware='refinedmetals']/@race">[argon, paranid, split]</replace>
-	<replace sel="/modules/module[@id='prod_gen_refinedmetals']/category[@faction='[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]'][@race='[argon, paranid, split]'][@ware='refinedmetals']/@faction">[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]</replace>
+  <replace sel="/modules/module[@id='prod_gen_refinedmetals']/category[@faction='[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]'][@race='[argon, paranid, split, teladi]'][@ware='refinedmetals']/@race">[argon, paranid, split]</replace>
+  <replace sel="/modules/module[@id='prod_gen_refinedmetals']/category[@faction='[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]'][@race='[argon, paranid, split]'][@ware='refinedmetals']/@faction">[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]</replace>
 </diff>

@@ -12,22 +12,22 @@
 		<t id="105">DA Jobs</t>
 		<t id="106">DA Gate</t>
 		<t id="107">DA God</t>
-		<t id="108">(XXX)</t>
+		<t id="108">DA Blueprint Analysis</t>
 		<t id="109">(XXX)</t>
 		<!-- Dynamic War Menu Entries -->
 		<t id="110">Increase Relations</t>
 		<t id="111">Decrease Relations</t>
 		<t id="112">Recent News</t>
-		<t id="113">Military Ship Count</t>
-		<t id="114">Economic Ship/Station Count</t>
-		<t id="115">(Ware Stored/Wanted){1001,45} {1001,1406}\/{1001,2903}</t>
-		<t id="116">Station Storage</t>
+		<t id="113">(XXX)</t>
+		<t id="114">(XXX)</t>
+		<t id="115">(XXX)</t>
+		<t id="116">(XXX)</t>
 		<t id="117">(Options Menu){1001,2600}</t>
 		<t id="118">Unlock Relations</t>
 		<t id="119">DW Ignored Factions</t>
 		<t id="120">Insufficient Relation</t>
-		<t id="121">Producer</t>
-		<t id="122">Consumer</t>
+		<t id="121">(XXX)</t>
+		<t id="122">(XXX)</t>
 		<t id="123">Enable Dynamic War</t>
 		<t id="124">Enable DW Favors</t>
 		<t id="125">Dynamic War Interval</t>
@@ -49,7 +49,7 @@
 		<t id="141">Ignored</t>
 		<t id="142">Enable AI Relations Cap</t>
 		<t id="143">Maximum Factions to Check</t>
-		<t id="144">Production Module Count</t>
+		<t id="144">(XXX)</t>
 		<t id="145">Sector Faction Logic Menu</t>
 		<!-- Dynamic War Menu Entry Descriptions -->
 		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
@@ -86,17 +86,17 @@
 		<t id="1141">This faction will not be selected by the Dynamic War script.</t>
 		<t id="1142">Changes whether a script that limits and corrects faction relations will run. This script prevents AI to AI relations above 27 to avoid meeting the "Self" condition. It also corrects {20203,701} relations to match {20203,601} to avoid civil war.</t>
 		<t id="1143">The number of factions the script will have as potential second faction during an event. Increasing this value can potentially cause an impact to performance as there is a large amount of calculations for determining faction strength. Default = 4</t>
-		<t id="1144">Shows a general overview of a faction's amount of production modules.</t>
+		<t id="1144">(XXX)</t>
 		<t id="1145">Allows the player to change whether faction logic in Clusters and their child Sectors is enabled. This menu will force the cluster and child sectors to be on the same setting if changed to avoid problems with AI. This may cause issues with certain storyline missions.</t>
 		<!-- Dynamic War Misc -->
 		<t id="2110">(FACTION)Relations Locked.</t>
-		<t id="2111">Blue = Stored</t>
-		<t id="2112">Green = Excess</t>
-		<t id="2113">Red = Shortage</t>
+		<t id="2111">(XXX)</t>
+		<t id="2112">(XXX)</t>
+		<t id="2113">(XXX)</t>
 		<t id="2114">Relation too high.</t>
 		<t id="2115">Diplomatic Favor</t>
 		<t id="2116">Cluster</t>
-		<t id="2117">(XXX)</t>
+		<t id="2117">Change in count compared to %s minutes ago.</t>
 		<t id="2118">(XXX)</t>
 		<t id="2119">(XXX)</t>
 		<t id="2120">(XXX)</t>
@@ -257,9 +257,9 @@
 		<t id="258">{1001,50}(M) {20204,5601}(Mineral Miner)</t>
 		<t id="259">{1001,49}(L) {20204,5701}(Gas Miner)</t>
 		<t id="260">{1001,50}(M) {20204,5701}(Gas Miner)</t>
-		<t id="261">(XXX)</t>
-		<t id="262">(XXX)</t>
-		<t id="263">(XXX)</t>
+		<t id="261">Vanilla Spawned Jobs Menu</t>
+		<t id="262">Job ID</t>
+		<t id="263">Remove Space Job Exclusivity</t>
 		<t id="264">(XXX)</t>
 		<t id="265">(XXX)</t>
 		<t id="266">(XXX)</t>
@@ -288,6 +288,9 @@
 		<t id="1258">This job mines assorted minerals using a medium sized ship.</t>
 		<t id="1259">This job mines assorted gasses using a large sized ship.</t>
 		<t id="1260">This job mines assorted gasses using a medium sized ship.</t>
+		<t id="1261">(XXX)</t>
+		<t id="1262">This is the internal name of the job that spawns these ships under unmodified circumstances. There is no way to tell if the job has been changed to be built via scripting.</t>
+		<t id="1263">This option when toggled will remove the exlusive attribute from sectors that have been set-up to only allow jobs added by that extension. This is primarily used in the Boron DLC to prevent other jobs. When disabled, settings will be reset to default.</t>
 		<!-- Jobs Misc -->
 		<t id="2240">Strategic Patrol</t>
 		<t id="2241">Interior Patrol</t>
@@ -395,7 +398,7 @@
 		<!-- Gate Menu Entries -->
 		<t id="300">Enable DA Gate</t>
 		<t id="301">Enable Gate Debug</t>
-		<t id="302">(XXX)</t>
+		<t id="302">Show All Gates</t>
 		<t id="303">(XXX)</t>
 		<t id="304">(XXX)</t>
 		<t id="305">(XXX)</t>
@@ -416,7 +419,7 @@
 		<!-- Gate Menu Entry Descriptions -->
 		<t id="1300">Changes whether the DA Gate script will continue to run. This only affects the scripts that find the gates, it does not revert gate status.</t>
 		<t id="1301">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1302">(XXX)</t>
+		<t id="1302">Changes whether the DA Gate script will show all gates in this menu or just predefined gates from list.</t>
 		<t id="1303">(XXX)</t>
 		<t id="1304">(XXX)</t>
 		<t id="1305">(XXX)</t>
@@ -469,8 +472,8 @@
 		<t id="350">Allow Build in Player Owned Sector</t>
 		<t id="351">Attempt Recovery</t>
 		<t id="352">Allow Build in Friendly Owned Sector</t>
-		<t id="353">(XXX)</t>
-		<t id="354">(XXX)</t>
+		<t id="353">Enable Ship Building Station Upgrades</t>
+		<t id="354">Station Build Interval Multiplier</t>
 		<t id="355">(XXX)</t>
 		<t id="356">(XXX)</t>
 		<t id="357">(XXX)</t>
@@ -481,8 +484,8 @@
 		<t id="1341">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
 		<t id="1342">Changes whether the amount of modules set in the options for this faction will apply when the script is triggered.</t>
 		<t id="1343">The ware produced by the station ordered by the DA God script.</t>
-		<t id="1344">The number of modules that will be built by the DA God script. Stations will each have up to 20 modules each when requested. Each ware and increment of 20 would result in an additional station so be aware that this may affect performance. The default values are from the old DA God and will result in a strong and balanced economy.</t>
-		<t id="1345">This will trigger the script to run for this faction when this button is clicked. It will use the numbers set above on the sliders and is not reversible.</t>
+		<t id="1344">The number of modules that will be built by the DA God script. Stations will each have up to 25 modules each when requested. Each ware and increment of 25 would result in an additional station so be aware that this may affect performance. The default values are calculated from several hundred hours of accumulated data for a strong and balanced economy.</t>
+		<t id="1345">This will trigger the script to run for this faction when this button is clicked. It will use the numbers set above on the sliders and is not reversible. The faction will attempt to maintain the number of modules set not including vanilla module count.</t>
 		<t id="1346">The script for this faction has already been activated. Multiple runs for the same faction is not yet supported.</t>
 		<t id="1347">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode. These debugs are extremely detailed and extensive.</t>
 		<t id="1348">(XXX)</t>
@@ -490,8 +493,8 @@
 		<t id="1350">Changes whether the DA God script can order stations in a player owned sector if the faction has no sectors and has at least 20 relation with player. This does not alter normal vanilla station ordering behaviour.</t>
 		<t id="1351">Changes whether the DA God script will attempt to reorder/rebuild destroyed or failed stations that contain production modules from this mod. This does not attempt to rebuild modules not added by this mod.</t>
 		<t id="1352">Changes whether the DA God script can order stations in friendly owned sector if the faction has no sectors and has at least 20 relation with faction. This does not alter normal vanilla station ordering behaviour.</t>
-		<t id="1353">(XXX)</t>
-		<t id="1354">(XXX)</t>
+		<t id="1353">Changes whether the DA God script can order upgrades for a shipyard or wharf. Each station will only be upgraded once but the script will continue to check for new stations.</t>
+		<t id="1354">Adjusts the time between ordering stations for each faction. This is a multiplier to the coded time min max values. Default time between ordering stations is 20-25 minutes for initial stations and 25-30 minutes for recovery. Increasing this value will slow down the build up of stations.</t>
 		<t id="1355">(XXX)</t>
 		<t id="1356">(XXX)</t>
 		<t id="1357">(XXX)</t>
@@ -518,12 +521,78 @@
 		<t id="2357">(XXX)</t>
 		<t id="2358">(XXX)</t>
 		<t id="2359">(XXX)</t>
-		
-		<t id="403">(XXX)</t>
-		<t id="404">(XXX)</t>
-		<t id="405">(XXX)</t>
-		<t id="406">(XXX)</t>
-		<t id="407">(XXX)</t>
+		<!-- BP Menu Entries -->
+		<t id="380">(Options Menu){1001,2600}</t>
+		<t id="381">(Progress Menus){1001,9513} {1001,4836}</t>
+		<t id="382">(Station Modules){1001,9610}</t>
+		<t id="383">(Ships){1001,6}</t>
+		<t id="384">(Equipment){1001,7935}</t>
+		<t id="385">Enable DA Blueprint Analysis</t>
+		<t id="386">Adjust Scan Requirements</t>
+		<t id="387">Enable BP Debug</t>
+		<t id="388">(Misc){1001,2664}</t>
+		<t id="389">(XXX)</t>
+		<t id="390">(XXX)</t>
+		<t id="391">(XXX)</t>
+		<t id="392">(XXX)</t>
+		<t id="393">(XXX)</t>
+		<t id="394">(XXX)</t>
+		<t id="395">(XXX)</t>
+		<t id="396">(XXX)</t>
+		<t id="397">(XXX)</t>
+		<t id="398">(XXX)</t>
+		<t id="399">(XXX)</t>
+		<!-- BP Menu Entry Descriptions -->
+		<t id="1380">This is a category for object classes not coded into the mod that are scanned.</t>
+		<t id="1381">(XXX)</t>
+		<t id="1382">(XXX)</t>
+		<t id="1383">(XXX)</t>
+		<t id="1384">(XXX)</t>
+		<t id="1385">Changes whether the Blueprint Analysis script will capture ship and station scans to award progress for unlocking blueprints.</t>
+		<t id="1386">Changes the number of scans for a class of objects required to unlock the blueprint. Change takes effect on the next scan of an object.</t>
+		<t id="1387">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
+		<t id="1388">(XXX)</t>
+		<t id="1389">(XXX)</t>
+		<t id="1390">(XXX)</t>
+		<t id="1391">(XXX)</t>
+		<t id="1392">(XXX)</t>
+		<t id="1393">(XXX)</t>
+		<t id="1394">(XXX)</t>
+		<t id="1395">(XXX)</t>
+		<t id="1396">(XXX)</t>
+		<t id="1397">(XXX)</t>
+		<t id="1398">(XXX)</t>
+		<t id="1399">(XXX)</t>
+		<!-- BP Misc -->
+		<t id="2380">(Unknown Object Class){1001,9002} {1001,9197}</t>
+		<t id="2381">The original mod that inspired this was made by Jack the Stripper and permission to continue the mod was granted.</t>
+		<t id="2382">(XS Ships){1001,52} {1001,6}</t>
+		<t id="2383">(S Ships){1001,51} {1001,6}</t>
+		<t id="2384">(M Ships){1001,50} {1001,6}</t>
+		<t id="2385">(L Ships){1001,49} {1001,6}</t>
+		<t id="2386">(XL Ships){1001,48} {1001,6}</t>
+		<t id="2387">(XXX)</t>
+		<t id="2388">(XXX)</t>
+		<t id="2389">(XXX)</t>
+		<t id="2390">(XXX)</t>
+		<t id="2391">(XXX)</t>
+		<t id="2392">(XXX)</t>
+		<t id="2393">(XXX)</t>
+		<t id="2394">(XXX)</t>
+		<t id="2395">(XXX)</t>
+		<t id="2396">(XXX)</t>
+		<t id="2397">(XXX)</t>
+		<t id="2398">(XXX)</t>
+		<t id="2399">(XXX)</t>
+		<!-- Info Menu Entries -->
+		<t id="400">DA Information Menus</t>
+		<t id="401">Military Ship Count</t>
+		<t id="402">Economic Ship/Station Count</t>
+		<t id="403">(Ware Stored/Wanted){1001,45} {1001,1406}\/{1001,2903}</t>
+		<t id="404">Station Storage</t>
+		<t id="405">Production Module Count</t>
+		<t id="406">Trader Profit Menu</t>
+		<t id="407">Enable DA Trader Profit Tracking</t>
 		<t id="408">(XXX)</t>
 		<t id="409">(XXX)</t>
 		<t id="410">(XXX)</t>
@@ -536,27 +605,47 @@
 		<t id="417">(XXX)</t>
 		<t id="418">(XXX)</t>
 		<t id="419">(XXX)</t>
-		<t id="420">(XXX)</t>
-		<t id="421">(XXX)</t>
-		<t id="422">(XXX)</t>
-		<t id="423">(XXX)</t>
-		<t id="424">(XXX)</t>
-		<t id="425">(XXX)</t>
-		<t id="500">(XXX)</t>
-		<t id="501">(XXX)</t>
-		<t id="502">(XXX)</t>
-		<t id="503">(XXX)</t>
-		<t id="504">(XXX)</t>
-		<t id="505">(XXX)</t>
-		<t id="506">(XXX)</t>
-		<t id="507">(XXX)</t>
-		<t id="508">(XXX)</t>
-		<t id="509">(XXX)</t>
-		<t id="510">(XXX)</t>
-		<t id="511">(XXX)</t>
-		<t id="600">(XXX)</t>
-		<t id="601">(XXX)</t>
-		<t id="602">(XXX)</t>
-		<t id="603">(XXX)</t>
+		<!-- Info Menu Entry Descriptions -->
+		<t id="1400">Information Menus</t>
+		<t id="1401">Shows the amount of military ships that each supported faction has.</t>
+		<t id="1402">Shows the amount of economic ships and stations that each supported faction has.</t>
+		<t id="1403">Shows a general overview of a faction's amount of wares stored compared to amount desired.</t>
+		<t id="1404">Shows a general overview of a faction's station storage split between stations that produce a ware and stations that consume a ware.</t>
+		<t id="1405">Shows a general overview of a faction's amount of production modules.</t>
+		<t id="1406">Shows a general overview of DeadTater and TaterTrader profits.</t>
+		<t id="1407">Changes whether the Trader Profit script will continue to track player owned traders. Disabling this option will reset tracked data.</t>
+		<t id="1408">(XXX)</t>
+		<t id="1409">(XXX)</t>
+		<t id="1410">(XXX)</t>
+		<t id="1411">(XXX)</t>
+		<t id="1412">(XXX)</t>
+		<t id="1413">(XXX)</t>
+		<t id="1414">(XXX)</t>
+		<t id="1415">(XXX)</t>
+		<t id="1416">(XXX)</t>
+		<t id="1417">(XXX)</t>
+		<t id="1418">(XXX)</t>
+		<t id="1419">(XXX)</t>
+		<!-- Info Menu Misc -->
+		<t id="2400">Change in count compared to %s ago.</t>
+		<t id="2401">Blue = Stored</t>
+		<t id="2402">Green = Excess</t>
+		<t id="2403">Red = Shortage</t>
+		<t id="2404">Producer</t>
+		<t id="2405">Consumer</t>
+		<t id="2406">Total lifetime estimated profit</t>
+		<t id="2407">Lifetime estimated profits are not completely accurate due to the effects of discounts and commissions at this time.</t>
+		<t id="2408">Estimated profit per hour</t>
+		<t id="2409">Hourly estimated profit is based on start time of the default behaviour for the ship and does not account for interruptions.</t>
+		<t id="2410">Number of ships</t>
+		<t id="2411">Change in number of ships since last viewed</t>
+		<t id="2412">(XXX)</t>
+		<t id="2413">(XXX)</t>
+		<t id="2414">(XXX)</t>
+		<t id="2415">(XXX)</t>
+		<t id="2416">(XXX)</t>
+		<t id="2417">(XXX)</t>
+		<t id="2418">(XXX)</t>
+		<t id="2419">(XXX)</t>
 	</page>
 </language>

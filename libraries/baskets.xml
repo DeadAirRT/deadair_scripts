@@ -1,137 +1,178 @@
 <?xml version='1.0' encoding='utf-8'?>
 <diff>
-	<add sel="/baskets">
-		<basket id="all_container_argon_da" name="All Container Wares Argon DA">
-			<wares>
-				<ware ware="advancedelectronics"/>
-				<ware ware="antimattercells"/>
-				<ware ware="antimatterconverters"/>
-				<ware ware="advancedcomposites"/>
-				<ware ware="claytronics"/>
-				<ware ware="dronecomponents"/>
-				<ware ware="energycells"/>
-				<ware ware="engineparts"/>
-				<ware ware="fieldcoils"/>
-				<ware ware="foodrations"/>
-				<ware ware="graphene"/>
-				<ware ware="hullparts"/>
-				<ware ware="meat"/>
-				<ware ware="medicalsupplies"/>
-				<ware ware="microchips"/>
-				<ware ware="missilecomponents"/>
-				<ware ware="plasmaconductors"/>
-				<ware ware="quantumtubes"/>
-				<ware ware="refinedmetals"/>
-				<ware ware="scanningarrays"/>
-				<ware ware="shieldcomponents"/>
-				<ware ware="siliconwafers"/>
-				<ware ware="smartchips"/>
-				<ware ware="spices"/>
-				<ware ware="superfluidcoolant"/>
-				<ware ware="turretcomponents"/>
-				<ware ware="weaponcomponents"/>
-				<ware ware="wheat"/>
-			</wares>
-		</basket>
-	</add>
-	<add sel="/baskets">
-		<basket id="all_container_paranid_da" name="All Container Wares Paranid DA">
-			<wares>
-				<ware ware="advancedelectronics"/>
-				<ware ware="antimattercells"/>
-				<ware ware="antimatterconverters"/>
-				<ware ware="advancedcomposites"/>
-				<ware ware="claytronics"/>
-				<ware ware="dronecomponents"/>
-				<ware ware="energycells"/>
-				<ware ware="engineparts"/>
-				<ware ware="fieldcoils"/>
-				<ware ware="graphene"/>
-				<ware ware="hullparts"/>
-				<ware ware="majasnails"/>
-				<ware ware="medicalsupplies"/>
-				<ware ware="microchips"/>
-				<ware ware="missilecomponents"/>
-				<ware ware="plasmaconductors"/>
-				<ware ware="quantumtubes"/>
-				<ware ware="refinedmetals"/>
-				<ware ware="scanningarrays"/>
-				<ware ware="shieldcomponents"/>
-				<ware ware="siliconwafers"/>
-				<ware ware="smartchips"/>
-				<ware ware="sojabeans"/>
-				<ware ware="sojahusk"/>
-				<ware ware="spices"/>
-				<ware ware="superfluidcoolant"/>
-				<ware ware="turretcomponents"/>
-				<ware ware="weaponcomponents"/>
-			</wares>
-		</basket>
-	</add>
-	<add sel="/baskets">
-		<basket id="all_container_teladi_da" name="All Container Wares Teladi DA">
-			<wares>
-				<ware ware="advancedelectronics"/>
-				<ware ware="antimattercells"/>
-				<ware ware="antimatterconverters"/>
-				<ware ware="advancedcomposites"/>
-				<ware ware="claytronics"/>
-				<ware ware="dronecomponents"/>
-				<ware ware="energycells"/>
-				<ware ware="engineparts"/>
-				<ware ware="fieldcoils"/>
-				<ware ware="graphene"/>
-				<ware ware="hullparts"/>
-				<ware ware="medicalsupplies"/>
-				<ware ware="microchips"/>
-				<ware ware="missilecomponents"/>
-				<ware ware="plasmaconductors"/>
-				<ware ware="quantumtubes"/>
-				<ware ware="scanningarrays"/>
-				<ware ware="shieldcomponents"/>
-				<ware ware="siliconwafers"/>
-				<ware ware="smartchips"/>
-				<ware ware="spices"/>
-				<ware ware="sunriseflowers"/>
-				<ware ware="superfluidcoolant"/>
-				<ware ware="swampplant"/>
-				<ware ware="teladianium"/>
-				<ware ware="turretcomponents"/>
-				<ware ware="weaponcomponents"/>
-			</wares>
-		</basket>
-	</add>
-	<add sel="/baskets">
-		<basket id="all_container_split_da" name="All Container Wares Split DA">
-			<wares>
-				<ware ware="advancedelectronics"/>
-				<ware ware="antimattercells"/>
-				<ware ware="antimatterconverters"/>
-				<ware ware="advancedcomposites"/>
-				<ware ware="claytronics"/>
-				<ware ware="dronecomponents"/>
-				<ware ware="energycells"/>
-				<ware ware="engineparts"/>
-				<ware ware="fieldcoils"/>
-				<ware ware="graphene"/>
-				<ware ware="hullparts"/>
-				<ware ware="medicalsupplies"/>
-				<ware ware="microchips"/>
-				<ware ware="missilecomponents"/>
-				<ware ware="plasmaconductors"/>
-				<ware ware="quantumtubes"/>
-				<ware ware="refinedmetals"/>
-				<ware ware="scanningarrays"/>
-				<ware ware="shieldcomponents"/>
-				<ware ware="siliconwafers"/>
-				<ware ware="smartchips"/>
-				<ware ware="spices"/>
-				<ware ware="superfluidcoolant"/>
-				<ware ware="turretcomponents"/>
-				<ware ware="weaponcomponents"/>
-				<ware ware="cheltmeat"/>
-				<ware ware="scruffinfruits"/>
-			</wares>
-		</basket>
-	</add>
+  <add sel="/baskets">
+    <basket id="all_container_argon_da" name="All Container Wares Argon DA">
+      <wares>
+        <ware ware="advancedelectronics"/>
+        <ware ware="antimattercells"/>
+        <ware ware="antimatterconverters"/>
+        <ware ware="advancedcomposites"/>
+        <ware ware="claytronics"/>
+        <ware ware="dronecomponents"/>
+        <ware ware="energycells"/>
+        <ware ware="engineparts"/>
+        <ware ware="fieldcoils"/>
+        <ware ware="foodrations"/>
+        <ware ware="graphene"/>
+        <ware ware="hullparts"/>
+        <ware ware="meat"/>
+        <ware ware="medicalsupplies"/>
+        <ware ware="microchips"/>
+        <ware ware="missilecomponents"/>
+        <ware ware="plasmaconductors"/>
+        <ware ware="quantumtubes"/>
+        <ware ware="refinedmetals"/>
+        <ware ware="scanningarrays"/>
+        <ware ware="shieldcomponents"/>
+        <ware ware="siliconwafers"/>
+        <ware ware="smartchips"/>
+        <ware ware="spices"/>
+        <ware ware="superfluidcoolant"/>
+        <ware ware="turretcomponents"/>
+        <ware ware="water"/>
+        <ware ware="weaponcomponents"/>
+        <ware ware="wheat"/>
+      </wares>
+    </basket>
+  </add>
+  <add sel="/baskets">
+    <basket id="all_container_paranid_da" name="All Container Wares Paranid DA">
+      <wares>
+        <ware ware="advancedelectronics"/>
+        <ware ware="antimattercells"/>
+        <ware ware="antimatterconverters"/>
+        <ware ware="advancedcomposites"/>
+        <ware ware="claytronics"/>
+        <ware ware="dronecomponents"/>
+        <ware ware="energycells"/>
+        <ware ware="engineparts"/>
+        <ware ware="fieldcoils"/>
+        <ware ware="graphene"/>
+        <ware ware="hullparts"/>
+        <ware ware="majasnails"/>
+        <ware ware="medicalsupplies"/>
+        <ware ware="microchips"/>
+        <ware ware="missilecomponents"/>
+        <ware ware="plasmaconductors"/>
+        <ware ware="quantumtubes"/>
+        <ware ware="refinedmetals"/>
+        <ware ware="scanningarrays"/>
+        <ware ware="shieldcomponents"/>
+        <ware ware="siliconwafers"/>
+        <ware ware="smartchips"/>
+        <ware ware="sojabeans"/>
+        <ware ware="sojahusk"/>
+        <ware ware="spices"/>
+        <ware ware="superfluidcoolant"/>
+        <ware ware="turretcomponents"/>
+        <ware ware="water"/>
+        <ware ware="weaponcomponents"/>
+      </wares>
+    </basket>
+  </add>
+  <add sel="/baskets">
+    <basket id="all_container_teladi_da" name="All Container Wares Teladi DA">
+      <wares>
+        <ware ware="advancedelectronics"/>
+        <ware ware="antimattercells"/>
+        <ware ware="antimatterconverters"/>
+        <ware ware="advancedcomposites"/>
+        <ware ware="claytronics"/>
+        <ware ware="dronecomponents"/>
+        <ware ware="energycells"/>
+        <ware ware="engineparts"/>
+        <ware ware="fieldcoils"/>
+        <ware ware="graphene"/>
+        <ware ware="hullparts"/>
+        <ware ware="medicalsupplies"/>
+        <ware ware="microchips"/>
+        <ware ware="missilecomponents"/>
+        <ware ware="nostropoil"/>
+        <ware ware="plasmaconductors"/>
+        <ware ware="quantumtubes"/>
+        <ware ware="scanningarrays"/>
+        <ware ware="shieldcomponents"/>
+        <ware ware="siliconwafers"/>
+        <ware ware="smartchips"/>
+        <ware ware="spaceweed"/>
+        <ware ware="spices"/>
+        <ware ware="sunriseflowers"/>
+        <ware ware="superfluidcoolant"/>
+        <ware ware="swampplant"/>
+        <ware ware="teladianium"/>
+        <ware ware="turretcomponents"/>
+        <ware ware="water"/>
+        <ware ware="weaponcomponents"/>
+      </wares>
+    </basket>
+  </add>
+  <add sel="/baskets">
+    <basket id="all_container_split_da" name="All Container Wares Split DA">
+      <wares>
+        <ware ware="advancedelectronics"/>
+        <ware ware="antimattercells"/>
+        <ware ware="antimatterconverters"/>
+        <ware ware="advancedcomposites"/>
+        <ware ware="claytronics"/>
+        <ware ware="dronecomponents"/>
+        <ware ware="energycells"/>
+        <ware ware="engineparts"/>
+        <ware ware="fieldcoils"/>
+        <ware ware="graphene"/>
+        <ware ware="hullparts"/>
+        <ware ware="medicalsupplies"/>
+        <ware ware="microchips"/>
+        <ware ware="missilecomponents"/>
+        <ware ware="plasmaconductors"/>
+        <ware ware="quantumtubes"/>
+        <ware ware="refinedmetals"/>
+        <ware ware="scanningarrays"/>
+        <ware ware="shieldcomponents"/>
+        <ware ware="siliconwafers"/>
+        <ware ware="smartchips"/>
+        <ware ware="spices"/>
+        <ware ware="superfluidcoolant"/>
+        <ware ware="turretcomponents"/>
+        <ware ware="water"/>
+        <ware ware="weaponcomponents"/>
+        <ware ware="cheltmeat"/>
+        <ware ware="scruffinfruits"/>
+      </wares>
+    </basket>
+  </add>
+  <add sel="/baskets">
+    <basket id="all_container_boron_da" name="All Container Wares Boron DA">
+      <wares>
+        <ware ware="advancedelectronics"/>
+        <ware ware="antimattercells"/>
+        <ware ware="antimatterconverters"/>
+        <ware ware="advancedcomposites"/>
+        <ware ware="claytronics"/>
+        <ware ware="dronecomponents"/>
+        <ware ware="energycells"/>
+        <ware ware="engineparts"/>
+        <ware ware="fieldcoils"/>
+        <ware ware="graphene"/>
+        <ware ware="hullparts"/>
+        <ware ware="medicalsupplies"/>
+        <ware ware="microchips"/>
+        <ware ware="missilecomponents"/>
+        <ware ware="plasmaconductors"/>
+        <ware ware="quantumtubes"/>
+        <ware ware="refinedmetals"/>
+        <ware ware="scanningarrays"/>
+        <ware ware="shieldcomponents"/>
+        <ware ware="siliconwafers"/>
+        <ware ware="smartchips"/>
+        <ware ware="spices"/>
+        <ware ware="superfluidcoolant"/>
+        <ware ware="turretcomponents"/>
+        <ware ware="water"/>
+        <ware ware="weaponcomponents"/>
+        <ware ware="bofu"/>
+        <ware ware="bogas"/>
+        <ware ware="plankton"/>
+      </wares>
+    </basket>
+  </add>
 </diff>

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<diff>
+  <replace sel="/aiscript/order[@id='Recycle'][@name='{1041, 721}']/params/param[@name='usecover']/@default">(not this.ship.isplayerowned) and (not (this.ship.trueowner.iseconomic or this.ship.trueowner.willclaimspace))</replace>
+</diff>

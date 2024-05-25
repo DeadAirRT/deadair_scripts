@@ -15,7 +15,6 @@
 			<macro connection="destination" path="../../../../../Cluster_43_connection/Cluster_43_Sector001_connection/ZoneDAG2_Cluster_43_Sector001_connection/connection_ClusterGate043To015"/>
 		</connection>
 	</add>
-	<remove sel="//connection[@name='ClusterGate018To019']"/>
 	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
 		<connection name="ClusterGate009To019" ref="destination" path="../Cluster_09_connection/Cluster_09_Sector001_connection/ZoneDAG3_Cluster_09_Sector001_connection/connection_ClusterGate009To019">
 			<macro connection="destination" path="../../../../../Cluster_19_connection/Cluster_19_Sector001_connection/ZoneDAG6_Cluster_19_Sector001_connection/connection_ClusterGate019To009"/>
@@ -29,6 +28,16 @@
 	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
 		<connection name="ClusterGateDAG112ATo112B" ref="destination" path="../Cluster_112_connection/Cluster_112_Sector001_connection/ZoneDAG1_Cluster_112_Sector001_connection/connection_ClusterGateDAG112ATo112B">
 			<macro connection="destination" path="../../../../../Cluster_112_connection/Cluster_112_Sector002_connection/ZoneDAG1_Cluster_112_Sector002_connection/connection_ClusterGateDAG112BTo112A"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate018to023" ref="destination" path="../Cluster_18_connection/Cluster_18_Sector001_connection/ZoneDAG4_Cluster_18_Sector001_connection/connection_ClusterGate018to023">
+			<macro connection="destination" path="../../../../../Cluster_23_connection/Cluster_23_Sector001_connection/ZoneDAG1_Cluster_23_Sector001_connection/connection_ClusterGate023to018"/>
+		</connection>
+	</add>
+	<add sel="/macros/macro[@name='XU_EP2_universe_macro']/connections">
+		<connection name="ClusterGate014to006" ref="destination" path="../Cluster_14_connection/Cluster_14_Sector001_connection/ZoneDAG3_Cluster_14_Sector001_connection/connection_ClusterGate014to006">
+			<macro connection="destination" path="../../../../../Cluster_06_connection/Cluster_06_Sector001_connection/ZoneDAG1_Cluster_06_Sector001_connection/connection_ClusterGate006to014"/>
 		</connection>
 	</add>
 </diff>

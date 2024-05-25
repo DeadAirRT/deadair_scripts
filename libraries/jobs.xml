@@ -1069,7 +1069,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DALTraderTagargon_L_job" name="{33232474,2255}">
+    <job id="argon_DALTraderTagargon_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -1077,6 +1077,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_argon_da"/>
@@ -1094,7 +1096,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DAMTraderTagargon_M_job" name="{33232474,2256}">
+    <job id="argon_DAMTraderTagargon_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -1102,6 +1104,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_argon_da"/>
@@ -1119,7 +1123,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DALMinerTagargon_L_job" name="{33232474,2257}">
+    <job id="argon_DALMinerTagargon_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1144,7 +1148,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DAMMinerTagargon_M_job" name="{33232474,2258}">
+    <job id="argon_DAMMinerTagargon_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1169,7 +1173,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DALGasMinerTagargon_L_job" name="{33232474,2259}">
+    <job id="argon_DALGasMinerTagargon_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1194,7 +1198,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="argon_DAMGasMinerTagargon_M_job" name="{33232474,2260}">
+    <job id="argon_DAMGasMinerTagargon_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1732,7 +1736,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DALTraderTagantigone_L_job" name="{33232474,2255}">
+    <job id="antigone_DALTraderTagantigone_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -1740,6 +1744,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_argon_da"/>
@@ -1757,7 +1763,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DAMTraderTagantigone_M_job" name="{33232474,2256}">
+    <job id="antigone_DAMTraderTagantigone_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -1765,6 +1771,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_argon_da"/>
@@ -1782,7 +1790,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DALMinerTagantigone_L_job" name="{33232474,2257}">
+    <job id="antigone_DALMinerTagantigone_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1807,7 +1815,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DAMMinerTagantigone_M_job" name="{33232474,2258}">
+    <job id="antigone_DAMMinerTagantigone_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1832,7 +1840,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DALGasMinerTagantigone_L_job" name="{33232474,2259}">
+    <job id="antigone_DALGasMinerTagantigone_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -1857,7 +1865,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="antigone_DAMGasMinerTagantigone_M_job" name="{33232474,2260}">
+    <job id="antigone_DAMGasMinerTagantigone_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -2395,7 +2403,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DALTraderTagparanid_L_job" name="{33232474,2255}">
+    <job id="paranid_DALTraderTagparanid_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -2403,6 +2411,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -2420,7 +2430,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DAMTraderTagparanid_M_job" name="{33232474,2256}">
+    <job id="paranid_DAMTraderTagparanid_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -2428,6 +2438,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -2445,7 +2457,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DALMinerTagparanid_L_job" name="{33232474,2257}">
+    <job id="paranid_DALMinerTagparanid_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -2470,7 +2482,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DAMMinerTagparanid_M_job" name="{33232474,2258}">
+    <job id="paranid_DAMMinerTagparanid_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -2495,7 +2507,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DALGasMinerTagparanid_L_job" name="{33232474,2259}">
+    <job id="paranid_DALGasMinerTagparanid_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -2520,7 +2532,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="paranid_DAMGasMinerTagparanid_M_job" name="{33232474,2260}">
+    <job id="paranid_DAMGasMinerTagparanid_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3058,7 +3070,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DALTraderTagholyorder_L_job" name="{33232474,2255}">
+    <job id="holyorder_DALTraderTagholyorder_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -3066,6 +3078,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -3083,7 +3097,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DAMTraderTagholyorder_M_job" name="{33232474,2256}">
+    <job id="holyorder_DAMTraderTagholyorder_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -3091,6 +3105,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -3108,7 +3124,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DALMinerTagholyorder_L_job" name="{33232474,2257}">
+    <job id="holyorder_DALMinerTagholyorder_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3133,7 +3149,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DAMMinerTagholyorder_M_job" name="{33232474,2258}">
+    <job id="holyorder_DAMMinerTagholyorder_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3158,7 +3174,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DALGasMinerTagholyorder_L_job" name="{33232474,2259}">
+    <job id="holyorder_DALGasMinerTagholyorder_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3183,7 +3199,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="holyorder_DAMGasMinerTagholyorder_M_job" name="{33232474,2260}">
+    <job id="holyorder_DAMGasMinerTagholyorder_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3721,7 +3737,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DALTraderTagtrinity_L_job" name="{33232474,2255}">
+    <job id="trinity_DALTraderTagtrinity_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -3729,6 +3745,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -3746,7 +3764,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DAMTraderTagtrinity_M_job" name="{33232474,2256}">
+    <job id="trinity_DAMTraderTagtrinity_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -3754,6 +3772,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_paranid_da"/>
@@ -3771,7 +3791,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DALMinerTagtrinity_L_job" name="{33232474,2257}">
+    <job id="trinity_DALMinerTagtrinity_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3796,7 +3816,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DAMMinerTagtrinity_M_job" name="{33232474,2258}">
+    <job id="trinity_DAMMinerTagtrinity_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3821,7 +3841,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DALGasMinerTagtrinity_L_job" name="{33232474,2259}">
+    <job id="trinity_DALGasMinerTagtrinity_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -3846,7 +3866,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="trinity_DAMGasMinerTagtrinity_M_job" name="{33232474,2260}">
+    <job id="trinity_DAMGasMinerTagtrinity_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -4384,7 +4404,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DALTraderTagteladi_L_job" name="{33232474,2255}">
+    <job id="teladi_DALTraderTagteladi_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -4392,6 +4412,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_teladi_da"/>
@@ -4409,7 +4431,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DAMTraderTagteladi_M_job" name="{33232474,2256}">
+    <job id="teladi_DAMTraderTagteladi_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -4417,6 +4439,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_teladi_da"/>
@@ -4434,7 +4458,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DALMinerTagteladi_L_job" name="{33232474,2257}">
+    <job id="teladi_DALMinerTagteladi_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -4459,7 +4483,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DAMMinerTagteladi_M_job" name="{33232474,2258}">
+    <job id="teladi_DAMMinerTagteladi_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -4484,7 +4508,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DALGasMinerTagteladi_L_job" name="{33232474,2259}">
+    <job id="teladi_DALGasMinerTagteladi_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -4509,7 +4533,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="teladi_DAMGasMinerTagteladi_M_job" name="{33232474,2260}">
+    <job id="teladi_DAMGasMinerTagteladi_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5047,7 +5071,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DALTraderTagsplit_L_job" name="{33232474,2255}">
+    <job id="split_DALTraderTagsplit_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5055,6 +5079,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5072,7 +5098,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DAMTraderTagsplit_M_job" name="{33232474,2256}">
+    <job id="split_DAMTraderTagsplit_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5080,6 +5106,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5097,7 +5125,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DALMinerTagsplit_L_job" name="{33232474,2257}">
+    <job id="split_DALMinerTagsplit_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5122,7 +5150,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DAMMinerTagsplit_M_job" name="{33232474,2258}">
+    <job id="split_DAMMinerTagsplit_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5147,7 +5175,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DALGasMinerTagsplit_L_job" name="{33232474,2259}">
+    <job id="split_DALGasMinerTagsplit_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5172,7 +5200,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="split_DAMGasMinerTagsplit_M_job" name="{33232474,2260}">
+    <job id="split_DAMGasMinerTagsplit_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5197,7 +5225,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DALTraderTagfreesplit_L_job" name="{33232474,2255}">
+    <job id="freesplit_DALTraderTagfreesplit_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5205,6 +5233,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5222,7 +5252,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DAMTraderTagfreesplit_M_job" name="{33232474,2256}">
+    <job id="freesplit_DAMTraderTagfreesplit_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5230,6 +5260,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5247,7 +5279,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DALMinerTagfreesplit_L_job" name="{33232474,2257}">
+    <job id="freesplit_DALMinerTagfreesplit_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5272,7 +5304,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DAMMinerTagfreesplit_M_job" name="{33232474,2258}">
+    <job id="freesplit_DAMMinerTagfreesplit_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5297,7 +5329,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DALGasMinerTagfreesplit_L_job" name="{33232474,2259}">
+    <job id="freesplit_DALGasMinerTagfreesplit_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5322,7 +5354,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="freesplit_DAMGasMinerTagfreesplit_M_job" name="{33232474,2260}">
+    <job id="freesplit_DAMGasMinerTagfreesplit_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5860,7 +5892,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DALTraderTagcourt_L_job" name="{33232474,2255}">
+    <job id="court_DALTraderTagcourt_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5868,6 +5900,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5885,7 +5919,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DAMTraderTagcourt_M_job" name="{33232474,2256}">
+    <job id="court_DAMTraderTagcourt_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -5893,6 +5927,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_split_da"/>
@@ -5910,7 +5946,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DALMinerTagcourt_L_job" name="{33232474,2257}">
+    <job id="court_DALMinerTagcourt_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5935,7 +5971,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DAMMinerTagcourt_M_job" name="{33232474,2258}">
+    <job id="court_DAMMinerTagcourt_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5960,7 +5996,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DALGasMinerTagcourt_L_job" name="{33232474,2259}">
+    <job id="court_DALGasMinerTagcourt_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -5985,7 +6021,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="court_DAMGasMinerTagcourt_M_job" name="{33232474,2260}">
+    <job id="court_DAMGasMinerTagcourt_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -6523,7 +6559,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DALTraderTagterran_L_job" name="{33232474,2255}">
+    <job id="terran_DALTraderTagterran_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -6531,6 +6567,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_terran"/>
@@ -6548,7 +6586,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DAMTraderTagterran_M_job" name="{33232474,2256}">
+    <job id="terran_DAMTraderTagterran_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -6556,6 +6594,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_terran"/>
@@ -6573,7 +6613,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DALMinerTagterran_L_job" name="{33232474,2257}">
+    <job id="terran_DALMinerTagterran_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -6598,7 +6638,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DAMMinerTagterran_M_job" name="{33232474,2258}">
+    <job id="terran_DAMMinerTagterran_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -6623,7 +6663,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DALGasMinerTagterran_L_job" name="{33232474,2259}">
+    <job id="terran_DALGasMinerTagterran_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -6648,7 +6688,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="terran_DAMGasMinerTagterran_M_job" name="{33232474,2260}">
+    <job id="terran_DAMGasMinerTagterran_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7186,7 +7226,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DALTraderTagpioneers_L_job" name="{33232474,2255}">
+    <job id="pioneers_DALTraderTagpioneers_L_job" name="{33232474,2255}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -7194,6 +7234,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_terran"/>
@@ -7211,7 +7253,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DAMTraderTagpioneers_M_job" name="{33232474,2256}">
+    <job id="pioneers_DAMTraderTagpioneers_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -7219,6 +7261,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="all_container_terran"/>
@@ -7236,7 +7280,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DALMinerTagpioneers_L_job" name="{33232474,2257}">
+    <job id="pioneers_DALMinerTagpioneers_L_job" name="{33232474,2257}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7261,7 +7305,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DAMMinerTagpioneers_M_job" name="{33232474,2258}">
+    <job id="pioneers_DAMMinerTagpioneers_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7286,7 +7330,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DALGasMinerTagpioneers_L_job" name="{33232474,2259}">
+    <job id="pioneers_DALGasMinerTagpioneers_L_job" name="{33232474,2259}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7311,7 +7355,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="pioneers_DAMGasMinerTagpioneers_M_job" name="{33232474,2260}">
+    <job id="pioneers_DAMGasMinerTagpioneers_M_job" name="{33232474,2260}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7849,7 +7893,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="xenon_DAMTraderTagxenon_M_job" name="{33232474,2256}">
+    <job id="xenon_DAMTraderTagxenon_M_job" name="{33232474,2256}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="TradeRoutine" default="true">
@@ -7857,6 +7901,8 @@
           <param name="maxbuy" value="5"/>
           <param name="minsell" value="0"/>
           <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
         </order>
       </orders>
       <basket basket="energycells"/>
@@ -7871,7 +7917,7 @@
     </job>
   </add>
   <add sel="/jobs">
-    <job id="xenon_DAMMinerTagxenon_M_job" name="{33232474,2258}">
+    <job id="xenon_DAMMinerTagxenon_M_job" name="{33232474,2258}" startactive="false">
       <modifiers commandeerable="true"/>
       <orders>
         <order order="MiningRoutine" default="true">
@@ -7889,6 +7935,673 @@
       <ship>
         <select faction="xenon" tags="[miner, solid]" size="class.ship_m"/>
         <owner exact="xenon" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACriticalTagboron_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACriticalTagboron,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="20"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DASmallFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DASmallFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DASmallFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACoreTagboron_l_job_DASmallFleet" name="{33232474,2241}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACoreTagboron,DASmallFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DASmallFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DASmallFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DASmallFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DABorderTagboron_l_job_DASmallFleet" name="{33232474,2242}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DABorderTagboron,DASmallFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DASmallFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DASmallFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DASmallFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAContestedTagboron_xl_job_DASmallFleet" name="{33232474,2243}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DAContestedTagboron,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="16"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DASmallFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DASmallFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DASmallFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_l_DASmallFleet" name="{33232474,2244}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshape"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military, destroyer]" size="ship_l"/>
+      <quota wing="1"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_m_DASmallFleet" name="{33232474,2245}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshapeback"/>
+          <param name="formationparam" value="2500m"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military]" size="ship_m"/>
+      <quota wing="3"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, medium]" size="ship_m"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_s_DASmallFleet" name="{33232474,2246}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.crossback"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <quota wing="6"/>
+      <category faction="boron" tags="[military, fighter]" size="ship_s"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, fighter]" size="ship_s"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACriticalTagboron_xl_job_DAMediumFleet" name="{33232474,2240}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACriticalTagboron,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="20"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DAMediumFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DAMediumFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DAMediumFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACoreTagboron_l_job_DAMediumFleet" name="{33232474,2241}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACoreTagboron,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DAMediumFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DAMediumFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DAMediumFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DABorderTagboron_l_job_DAMediumFleet" name="{33232474,2242}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DABorderTagboron,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DAMediumFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DAMediumFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DAMediumFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAContestedTagboron_xl_job_DAMediumFleet" name="{33232474,2243}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DAContestedTagboron,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="16"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DAMediumFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DAMediumFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DAMediumFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_l_DAMediumFleet" name="{33232474,2244}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshape"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military, destroyer]" size="ship_l"/>
+      <quota wing="3"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_m_DAMediumFleet" name="{33232474,2245}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshapeback"/>
+          <param name="formationparam" value="2500m"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military]" size="ship_m"/>
+      <quota wing="9"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, medium]" size="ship_m"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_s_DAMediumFleet" name="{33232474,2246}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.crossback"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <quota wing="18"/>
+      <category faction="boron" tags="[military, fighter]" size="ship_s"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, fighter]" size="ship_s"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACriticalTagboron_xl_job_DALargeFleet" name="{33232474,2240}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACriticalTagboron,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="20"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DALargeFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DALargeFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DALargeFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DACoreTagboron_l_job_DALargeFleet" name="{33232474,2241}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DACoreTagboron,DALargeFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DALargeFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DALargeFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DALargeFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DABorderTagboron_l_job_DALargeFleet" name="{33232474,2242}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DABorderTagboron,DALargeFleet,factionlogic]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="40"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DALargeFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DALargeFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DALargeFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAContestedTagboron_xl_job_DALargeFleet" name="{33232474,2243}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[DAContestedTagboron,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <quota galaxy="0" maxgalaxy="16"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_escort_l_DALargeFleet" assignment="attack" group="1"/>
+        <subordinate job="boron_escort_m_DALargeFleet" assignment="defence" group="2"/>
+        <subordinate job="boron_escort_s_DALargeFleet" assignment="interception" group="3"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_l_DALargeFleet" name="{33232474,2244}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshape"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military, destroyer]" size="ship_l"/>
+      <quota wing="5"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_m_DALargeFleet" name="{33232474,2245}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshapeback"/>
+          <param name="formationparam" value="2500m"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[military]" size="ship_m"/>
+      <quota wing="15"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, medium]" size="ship_m"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_escort_s_DALargeFleet" name="{33232474,2246}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.crossback"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <quota wing="30"/>
+      <category faction="boron" tags="[military, fighter]" size="ship_s"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="boron" tags="[military, fighter]" size="ship_s"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DALTraderTagboron_L_job" name="{33232474,2255}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="TradeRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
+        </order>
+      </orders>
+      <basket basket="all_container_boron_da"/>
+      <category faction="boron" tags="[DALTraderTagboron, factionlogic, freighter, trader]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DALTraderTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[trader, container]" size="ship_l"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAMTraderTagboron_M_job" name="{33232474,2256}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="TradeRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+          <param name="buyfromfactions" value="['own']"/>
+          <param name="selltofactions" value="['own']"/>
+        </order>
+      </orders>
+      <basket basket="all_container_boron_da"/>
+      <category faction="boron" tags="[DAMTraderTagboron, factionlogic, freighter, trader]" size="ship_m"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAMTraderTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[trader, container]" size="ship_m"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DALMinerTagboron_L_job" name="{33232474,2257}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="MiningRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+        </order>
+      </orders>
+      <basket basket="minerals"/>
+      <category faction="boron" tags="[DALMinerTagboron, factionlogic, freighter, miner]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DALMinerTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[miner, solid]" size="ship_l"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAMMinerTagboron_M_job" name="{33232474,2258}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="MiningRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+        </order>
+      </orders>
+      <basket basket="minerals"/>
+      <category faction="boron" tags="[DAMMinerTagboron, factionlogic, freighter, miner]" size="ship_m"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="minerals" tags="DAMMinerTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[miner, solid]" size="ship_m"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DALGasMinerTagboron_L_job" name="{33232474,2259}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="MiningRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+        </order>
+      </orders>
+      <basket basket="gases"/>
+      <category faction="boron" tags="[DALGasMinerTagboron, factionlogic, freighter, miner]" size="ship_l"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DALGasMinerTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[miner, liquid]" size="ship_l"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_DAMGasMinerTagboron_M_job" name="{33232474,2260}" startactive="false">
+      <modifiers commandeerable="true"/>
+      <orders>
+        <order order="MiningRoutine" default="true">
+          <param name="minbuy" value="0"/>
+          <param name="maxbuy" value="5"/>
+          <param name="minsell" value="0"/>
+          <param name="maxsell" value="5"/>
+        </order>
+      </orders>
+      <basket basket="gases"/>
+      <category faction="boron" tags="[DAMGasMinerTagboron, factionlogic, freighter, miner]" size="ship_m"/>
+      <quota galaxy="0" maxgalaxy="100"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" regionbasket="gases" tags="DAMGasMinerTagboron"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[miner, liquid]" size="ship_m"/>
+        <loadout>
+          <level min="0.5" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
       </ship>
     </job>
   </add>
