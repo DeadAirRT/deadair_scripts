@@ -3272,7 +3272,6 @@
 											$col = 1,
 											$colSpan = event.param.$columns,
 											$text = {1001,2942},
-											$mouseOverText = $LocHoverText,
 											$halign = 'center',
 										]"/>
 									<!-- Horizontal Bar by SirNukes -->
