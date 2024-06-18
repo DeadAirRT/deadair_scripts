@@ -315,7 +315,7 @@
         </order>
       </orders>
       <category faction="argon" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="argon" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -327,8 +327,10 @@
       </ship>
       <subordinates>
         <subordinate job="argon_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="argon_fighter_escort_s_carrier" assignment="attack" group="4"/>
+        <subordinate job="argon_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="argon_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="argon_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="argon_fighter_escort_s_carrier" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -341,7 +343,7 @@
         </order>
       </orders>
       <category faction="antigone" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="antigone" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -353,8 +355,10 @@
       </ship>
       <subordinates>
         <subordinate job="antigone_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="antigone_fighter_escort_s_carrier_DA" assignment="attack" group="4"/>
+        <subordinate job="antigone_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="antigone_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="antigone_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="antigone_fighter_escort_s_carrier_DA" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -367,7 +371,7 @@
         </order>
       </orders>
       <category faction="paranid" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="paranid" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -379,8 +383,10 @@
       </ship>
       <subordinates>
         <subordinate job="paranid_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="paranid_fighter_escort_s_carrier" assignment="attack" group="4"/>
+        <subordinate job="paranid_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="paranid_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="paranid_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="paranid_fighter_escort_s_carrier" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -393,7 +399,7 @@
         </order>
       </orders>
       <category faction="holyorder" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="holyorder" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -405,8 +411,38 @@
       </ship>
       <subordinates>
         <subordinate job="holyorder_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="holyorder_fighter_escort_s_carrier_DA" assignment="attack" group="4"/>
+        <subordinate job="holyorder_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="holyorder_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="holyorder_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="holyorder_fighter_escort_s_carrier_DA" assignment="interception" group="4"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="trinity_expedition_DA" name="{20204,6301}" startactive="false">
+      <modifiers commandeerable="true" rebuild="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="trinity" tags="[daexpedition]" size="ship_xl"/>
+      <quota galaxy="1" maxgalaxy="1"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" faction="trinity" relation="self" comparison="exact" matchextension="false"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="trinity" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="trinity" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="trinity_destroyer_escort_l_hop" assignment="attack" group="1"/>
+        <subordinate job="trinity_destroyer_escort_l_par" assignment="attack" group="1"/>
+        <subordinate job="trinity_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="trinity_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="trinity_fighter_escort_s_carrier" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -419,7 +455,7 @@
         </order>
       </orders>
       <category faction="teladi" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="teladi" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -431,8 +467,10 @@
       </ship>
       <subordinates>
         <subordinate job="teladi_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="teladi_fighter_escort_s_carrier" assignment="attack" group="4"/>
+        <subordinate job="teladi_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="teladi_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="teladi_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="teladi_fighter_escort_s_carrier" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -445,7 +483,7 @@
         </order>
       </orders>
       <category faction="split" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="split" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -457,8 +495,38 @@
       </ship>
       <subordinates>
         <subordinate job="zyarth_destroyer_escort_l_noescort" assignment="attack" group="1"/>
-        <subordinate job="zyarth_escort_s_carrier" assignment="attack" group="4"/>
+        <subordinate job="zyarth_destroyer_escort_l_noescort" assignment="attack" group="1"/>
         <subordinate job="zyarth_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="zyarth_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="zyarth_escort_s_carrier" assignment="interception" group="4"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="court_expedition_DA" name="{20204,6301}" startactive="false">
+      <modifiers commandeerable="true" rebuild="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="court" tags="[daexpedition]" size="ship_xl"/>
+      <quota galaxy="1" maxgalaxy="1"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" faction="court" relation="self" comparison="exact" matchextension="false"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="court" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="court" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="court_destroyer_escort_l_noescort" assignment="attack" group="1"/>
+        <subordinate job="court_destroyer_escort_l_noescort" assignment="attack" group="1"/>
+        <subordinate job="court_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="court_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="court_escort_s_carrier" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -471,7 +539,7 @@
         </order>
       </orders>
       <category faction="terran" tags="[daexpedition]" size="ship_xl"/>
-      <quota galaxy="2" maxgalaxy="2"/>
+      <quota galaxy="1" maxgalaxy="1"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" faction="terran" relation="self" comparison="exact" matchextension="false"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
       <ship>
@@ -483,8 +551,38 @@
       </ship>
       <subordinates>
         <subordinate job="terran_destroyer_escort_l" assignment="attack" group="1"/>
-        <subordinate job="terran_escort_s_carrier" assignment="attack" group="4"/>
+        <subordinate job="terran_destroyer_escort_l" assignment="attack" group="1"/>
         <subordinate job="terran_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="terran_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="terran_escort_s_carrier" assignment="interception" group="4"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="pioneers_expedition_DA" name="{20204,6301}" startactive="false">
+      <modifiers commandeerable="true" rebuild="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="pioneers" tags="[daexpedition]" size="ship_xl"/>
+      <quota galaxy="1" maxgalaxy="1"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" faction="pioneers" relation="self" comparison="exact" matchextension="false"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="pioneers" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="pioneers" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="pioneers_destroyer_escort_l_DA" assignment="attack" group="1"/>
+        <subordinate job="pioneers_destroyer_escort_l_DA" assignment="attack" group="1"/>
+        <subordinate job="pioneers_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="pioneers_corvette_escort_m" assignment="attack" group="2"/>
+        <subordinate job="pioneers_fighter_escort_s_carrier_DA" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -507,7 +605,36 @@
       <subordinates>
         <subordinate job="xenon_destroyer_escort_xl" assignment="attack" group="1"/>
         <subordinate job="xenon_frigate_escort_m" assignment="attack" group="2"/>
-        <subordinate job="xenon_fighter_escort_s_frigate" assignment="attack" group="4"/>
+        <subordinate job="xenon_frigate_escort_m" assignment="attack" group="2"/>
+        <subordinate job="xenon_fighter_escort_s_frigate" assignment="interception" group="4"/>
+      </subordinates>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="boron_expedition_DA" name="{20204,6301}" startactive="false">
+      <modifiers commandeerable="true" rebuild="true"/>
+      <orders>
+        <order order="Patrol" default="true">
+          <param name="range" value="class.sector"/>
+        </order>
+      </orders>
+      <category faction="boron" tags="[daexpedition]" size="ship_xl"/>
+      <quota galaxy="1" maxgalaxy="1"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro" faction="boron" relation="self" comparison="exact" matchextension="false"/>
+      <environment buildatshipyard="true" preferbuilding="true"/>
+      <ship>
+        <select faction="boron" tags="[military]" size="ship_xl"/>
+        <loadout>
+          <level min="0.7" max="1.0"/>
+        </loadout>
+        <owner exact="boron" overridenpc="true"/>
+      </ship>
+      <subordinates>
+        <subordinate job="boron_destroyer_escort_l" assignment="attack" group="1"/>
+        <subordinate job="boron_carrier_escort_l_argon" assignment="attack" group="2"/>
+        <subordinate job="boron_carrier_escort_l_argon" assignment="attack" group="2"/>
+        <subordinate job="boron_carrier_escort_l_argon" assignment="attack" group="2"/>
+        <subordinate job="boron_fighter_escort_s_carrier_flagship" assignment="interception" group="4"/>
       </subordinates>
     </job>
   </add>
@@ -552,6 +679,50 @@
           <level min="0.25" max="1.0"/>
         </loadout>
         <owner exact="antigone" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="pioneers_destroyer_escort_l_DA" name="{20204,3301}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.xshapeforward"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <category faction="pioneers" tags="[military, destroyer]" size="ship_l"/>
+      <quota wing="2"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="pioneers" tags="[military, destroyer]" size="ship_l"/>
+        <loadout>
+          <level min="0.1" max="0.7"/>
+        </loadout>
+        <owner exact="pioneers" overridenpc="true"/>
+      </ship>
+    </job>
+  </add>
+  <add sel="/jobs">
+    <job id="pioneers_fighter_escort_s_carrier_DA" name="{20204,2901}" startactive="false">
+      <orders>
+        <order order="Escort" default="true">
+          <param name="formation" value="formationshape.pointguard"/>
+          <param name="overrideformationskill" value="true"/>
+        </order>
+      </orders>
+      <quota wing="14"/>
+      <category faction="pioneers" tags="[military, fighter]" size="ship_s"/>
+      <location class="galaxy" macro="xu_ep2_universe_macro"/>
+      <environment buildatshipyard="true"/>
+      <modifiers subordinate="true"/>
+      <ship>
+        <select faction="pioneers" tags="[military, fighter]" size="ship_s"/>
+        <loadout>
+          <level min="0.1" max="0.7"/>
+        </loadout>
+        <owner exact="pioneers" overridenpc="true"/>
       </ship>
     </job>
   </add>

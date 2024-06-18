@@ -3259,14 +3259,31 @@
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 											$col = 1, 
-											$colSpan = 8,
+											$colSpan = event.param.$columns,
 											$height = 2,
 											$fontsize = 1,
 											$cellBGColor = 'Helper.color.grey',
 										]"/>
 								</do_if>
 								<do_else>
-									<!-- ERROR -->
+									<!-- ERROR or no jobs added for faction -->
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+											$col = 1,
+											$colSpan = event.param.$columns,
+											$text = {1001,2942},
+											$mouseOverText = $LocHoverText,
+											$halign = 'center',
+										]"/>
+									<!-- Horizontal Bar by SirNukes -->
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+											$col = 1, 
+											$colSpan = event.param.$columns,
+											$height = 2,
+											$fontsize = 1,
+											$cellBGColor = 'Helper.color.grey',
+										]"/>
 								</do_else>
 							</do_for_each>
 							<remove_value name="$DAJobsSSTLocFactionsList"/>
@@ -3606,8 +3623,13 @@
 						<do_else>
 							<set_value name="$DADVT.$DAJobsSSTRemoveExclusivity" exact="true"/>
 							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventJobsSSTToggleSpaceExclusivity" param="$DADVT.$DAJobsSSTRemoveExclusivity"/>
-							<do_if value="faction.boron? and $DADVT.$DAJobsSSTUnsupportedFactions.indexof.{faction.boron}">
-								<remove_from_list name="$DADVT.$DAJobsSSTUnsupportedFactions" exact="faction.boron" multiple="true"/>
+							<do_if value="faction.boron?">
+								<do_if value="$DADVT.$DAJobsSSTUnsupportedFactions.indexof.{faction.boron}">
+									<remove_from_list name="$DADVT.$DAJobsSSTUnsupportedFactions" exact="faction.boron" multiple="true"/>
+								</do_if>
+								<do_if value="$DADVT.$DAJobsEXPEnable">
+									<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventJobsEXPInitialChecks" param="true"/>
+								</do_if>
 							</do_if>
 						</do_else>
 						<!-- EventJobsSSTInitializeTables will remove if faction is on Unsupported -->
@@ -6060,7 +6082,7 @@
 							<set_value name="$MilStrengthTable.{$LocFaction}.{6}" exact="$TotalThreatScore" operation="add"/>
 							<!-- Strength History -->
 							<do_if value="not $DAMVT.$DWMilStrengthHistory.{$LocFaction}?">
-								<set_value name="$DAMVT.$DWMilStrengthHistory.{$LocFaction}" exact="[player.age,$AllShips.count,$XLShips.count,LShips.count,$MShips.count,$SShips.count,$TotalThreatScore]"/>
+								<set_value name="$DAMVT.$DWMilStrengthHistory.{$LocFaction}" exact="[player.age,$AllShips.count,$XLShips.count,$LShips.count,$MShips.count,$SShips.count,$TotalThreatScore]"/>
 							</do_if>
 							<remove_value name="$XLShips"/>
 							<remove_value name="$LShips"/>

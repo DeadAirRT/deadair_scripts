@@ -3253,32 +3253,50 @@
 						</do_if>
 						<get_factions_by_tag tag="tag.claimspace" result="$DAJobsEXPLocFactionsToCheck"/>
 						<do_for_each name="$DAJobsEXPLocFactionToCheck" in="$DAJobsEXPLocFactionsToCheck">
-							<get_suitable_job result="$DAJobsEXPLocJobs" tags="$DAJobsEXPTags" faction="$DAJobsEXPLocFactionToCheck" includeinactive="true" multiple="true"/>
-							<do_if value="$DAJobsEXPLocJobs.count" min="1">
-								<do_for_each name="$DAJobsEXPLocJob" in="$DAJobsEXPLocJobs">
-									<check_job_active result="$DAJobsEXPLocIsActive" job="$DAJobsEXPLocJob"/>
+							<do_if value="(not $DAJobsEXPLocFactionToCheck.isactive) or (not $DADVT.$DAJobsEXPEnable) or (($DAJobsEXPLocFactionToCheck == faction.boron) and (not $DADVT.$DAJobsSSTRemoveExclusivity))">
+								<get_suitable_job result="$DAJobsEXPLocJobs" tags="$DAJobsEXPTags" faction="$DAJobsEXPLocFactionToCheck" includeinactive="true" multiple="true"/>
+								<do_if value="$DADVT.$DAJobsEXPFactions.indexof.{$DAJobsEXPLocFactionToCheck}">
+									<remove_from_list name="$DADVT.$DAJobsEXPFactions" exact="DAJobsEXPLocFactionToCheck" multiple="true"/>
+								</do_if>
+								<do_if value="$DAJobsEXPLocJobs.count" min="1">
+									<do_for_each name="$DAJobsEXPLocJob" in="$DAJobsEXPLocJobs">
+										<do_if value="$DAJobsEXPExpeditionJobs.indexof.{$DAJobsEXPLocJob}">
+											<remove_from_list name="$DAJobsEXPExpeditionJobs" exact="$DAJobsEXPLocJob" multiple="true"/>
+										</do_if>
+										<check_job_active result="$DAJobsEXPLocIsActive" job="$DAJobsEXPLocJob"/>
+										<do_if value="$DAJobsEXPLocIsActive">
+											<set_job_active activate="false" job="$DAJobsEXPLocJob"/>
+											<do_if value="$DADVT.$DAJobsEXPDetailedDebug">
+												<debug_text text="'MOD: DAJobsEXP -- Deactivating %s.'.[$DAJobsEXPLocJob]" context="false" filter="scripts"/>
+											</do_if>
+										</do_if>
+										<remove_value name="$DAJobsEXPLocIsActive"/>
+									</do_for_each>
+								</do_if>
+								<remove_value name="$DAJobsEXPLocJobs"/>
+							</do_if>
+							<do_elseif value="$DAJobsEXPLocFactionToCheck.isactive and $DADVT.$DAJobsEXPEnable">
+								<get_suitable_job result="$DAJobsEXPLocJobs" tags="$DAJobsEXPTags" faction="$DAJobsEXPLocFactionToCheck" includeinactive="true" multiple="true"/>
+								<do_if value="$DAJobsEXPLocJobs.count" min="1">
 									<do_if value="not $DADVT.$DAJobsEXPFactions.indexof.{$DAJobsEXPLocFactionToCheck}">
 										<append_to_list name="$DADVT.$DAJobsEXPFactions" exact="$DAJobsEXPLocFactionToCheck"/>
 									</do_if>
-									<do_if value="not $DAJobsEXPExpeditionJobs.indexof.{$DAJobsEXPLocJob}">
-										<append_to_list name="$DAJobsEXPExpeditionJobs" exact="$DAJobsEXPLocJob"/>
-									</do_if>
-									<do_if value="(not $DAJobsEXPLocIsActive) and ($DAJobsEXPLocFactionToCheck.isactive) and ($DADVT.$DAJobsEXPEnable)">
-										<set_job_active activate="true" job="$DAJobsEXPLocJob"/>
-										<do_if value="$DADVT.$DAJobsEXPDetailedDebug or @$LocDebug">
-											<debug_text text="'MOD: DAJobsEXP -- Activating %s.'.[$DAJobsEXPLocJob]" context="false" filter="scripts"/>
+									<do_for_each name="$DAJobsEXPLocJob" in="$DAJobsEXPLocJobs">
+										<check_job_active result="$DAJobsEXPLocIsActive" job="$DAJobsEXPLocJob"/>
+										<do_if value="not $DAJobsEXPLocIsActive">
+											<set_job_active activate="true" job="$DAJobsEXPLocJob"/>
+											<do_if value="$DADVT.$DAJobsEXPDetailedDebug">
+												<debug_text text="'MOD: DAJobsEXP -- Activating %s.'.[$DAJobsEXPLocJob]" context="false" filter="scripts"/>
+											</do_if>
 										</do_if>
-									</do_if>
-									<do_elseif value="($DAJobsEXPLocIsActive) and ((not $DAJobsEXPLocFactionToCheck.isactive) or (not $DADVT.$DAJobsEXPEnable))">
-										<set_job_active activate="false" job="$DAJobsEXPLocJob"/>
-										<do_if value="$DADVT.$DAJobsEXPDetailedDebug or @$LocDebug">
-											<debug_text text="'MOD: DAJobsEXP -- Deactivating %s.'.[$DAJobsEXPLocJob]" context="false" filter="scripts"/>
+										<do_if value="not $DAJobsEXPExpeditionJobs.indexof.{$DAJobsEXPLocJob}">
+											<append_to_list name="$DAJobsEXPExpeditionJobs" exact="$DAJobsEXPLocJob"/>
 										</do_if>
-									</do_elseif>
-									<remove_value name="$DAJobsEXPLocIsActive"/>
-								</do_for_each>
-							</do_if>
-							<remove_value name="$DAJobsEXPLocJobs"/>
+										<remove_value name="$DAJobsEXPLocIsActive"/>
+									</do_for_each>
+								</do_if>
+								<remove_value name="$DAJobsEXPLocJobs"/>
+							</do_elseif>
 						</do_for_each>
 						<remove_value name="$DAJobsEXPLocFactionsToCheck"/>
 						<get_suitable_job result="$DAJobsEXPLocActiveJobs" tags="$DAJobsEXPTags" includeinactive="false" multiple="true"/>
@@ -8097,7 +8115,7 @@
 								<!-- Find possible connection module macros for construction plan -->
 								<get_module_definition macro="this.$DAGodLocConnectionModules" faction="this.$DAGodLocStation.owner" tags="[tag.connection, tag.module]" set="this.$DAGodLocStation.modulesets.{1}" multiple="true"/>
 								<do_if value="this.$DAGodLocConnectionModules.count" min="1">
-									<do_if value="this.$DAGodLocStation.owner.primaryrace == race.argon">
+									<do_if value="this.$DAGodLocStation.owner.primaryrace != race.xenon">
 										<create_construction_sequence station="this.$DAGodLocStation" base="this.$DAGodLocStation.plannedconstruction.sequence" macros="this.$DAGodLocNewModules" connectors="this.$DAGodLocConnectionModules" constructionbias="5.0"/>
 									</do_if>
 									<do_else>
@@ -8446,7 +8464,7 @@
 									<!-- Find possible connection module macros for construction plan -->
 									<get_module_definition macro="this.$LocConnectionModules" faction="this.$LocOwner" tags="[tag.connection, tag.module]" set="this.$LocStation.modulesets.{1}" multiple="true"/>
 									<do_if value="this.$LocConnectionModules.count" min="1">
-										<do_if value="this.$LocStation.owner.primaryrace == race.argon">
+										<do_if value="this.$LocStation.owner.primaryrace != race.xenon">
 											<create_construction_sequence station="this.$LocStation" base="this.$LocStation.plannedconstruction.sequence" macros="this.$LocNewModules" connectors="this.$LocConnectionModules" constructionbias="5.0"/>
 										</do_if>
 										<do_else>
