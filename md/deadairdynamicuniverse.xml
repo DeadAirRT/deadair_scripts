@@ -3314,9 +3314,13 @@
 						<!-- Find visitor factions -->
 						<set_value name="$DAJobsEXPVisitorList" exact="[]"/>
 						<get_factions_by_tag tag="tag.visitor" result="$DAJobsEXPVisitorList"/>
+						<!-- Find peaceful factions -->
+						<set_value name="$DAJobsEXPPeacefulList" exact="[]"/>
+						<get_factions_by_tag tag="tag.peaceful" result="$DAJobsEXPPeacefulList"/>
 						<!-- Remove excluded, peaceful, and visitors from claimspace list -->
 						<remove_from_list name="$DAJobsEXPClaimspaceList" list="$DAJobsEXPExcludedFactions" multiple="true"/>
 						<remove_from_list name="$DAJobsEXPClaimspaceList" list="$DAJobsEXPVisitorList" multiple="true"/>
+						<remove_from_list name="$DAJobsEXPClaimspaceList" list="$DAJobsEXPPeacefulList" multiple="true"/>
 						<set_value name="$DAJobsEXPLocFactionList" exact="[]"/>
 						<!-- Check for errors instead of nesting -->
 						<do_for_each name="$DAJobsEXPLocExpeditionFaction" in="$DADVT.$DAJobsEXPFactions">
@@ -3396,6 +3400,7 @@
 						<remove_value name="$DAJobsEXPLocSectors"/>
 						<remove_value name="$DAJobsEXPClaimspaceList"/>
 						<remove_value name="$DAJobsEXPVisitorList"/>
+						<remove_value name="$DAJobsEXPPeacefulList"/>
 					</actions>
 				</library>
 				<library name="LibraryJobsEXPCheckForSurvivor">
