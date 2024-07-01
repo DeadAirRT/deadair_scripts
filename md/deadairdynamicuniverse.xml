@@ -9383,7 +9383,7 @@
 						<set_value name="$Seller" exact="$Trade.seller"/>
 						<set_value name="$Price" exact="$Trade.unitprice * $Trade.transferredamount"/>
 						<do_if value="$Buyer.isoperational and $Buyer.trueowner == faction.player and $Buyer.isclass.ship and $Buyer.defaultorder?">
-							<do_if value="((['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{$Buyer.defaultorder.id}) or (($Buyer.defaultorder.id == 'Assist') and (['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{$Buyer.commander.defaultorder.id})))">
+							<do_if value="((['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{@$Buyer.defaultorder.id}) or ((@$Buyer.defaultorder.id == 'Assist') and (['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{@$Buyer.commander.defaultorder.id})))">
 								<do_if value="$DAGVT.$DATPTraderTable.{$Buyer}?">
 									<set_value name="$DAGVT.$DATPTraderTable.{$Buyer}.{1}" exact="$Price" operation="subtract"/>
 								</do_if>
@@ -9401,7 +9401,7 @@
 							</do_elseif>
 						</do_elseif>
 						<do_if value="$Seller.isoperational and $Seller.trueowner == faction.player and $Seller.isclass.ship and $Seller.defaultorder?">
-							<do_if value="((['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{$Seller.defaultorder.id}) or (($Seller.defaultorder.id == 'Assist') and (['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{$Seller.commander.defaultorder.id})))">
+							<do_if value="((['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{@$Seller.defaultorder.id}) or ((@$Seller.defaultorder.id == 'Assist') and (['TradeRoutine','TradeRoutine_Basic','TradeRoutine_Advanced','Middleman','MiningRoutine','MiningRoutine_Advanced','MiningRoutine_Expert','MiningRoutine_Basic'].indexof.{@$Seller.commander.defaultorder.id})))">
 								<do_if value="$DAGVT.$DATPTraderTable.{$Seller}?">
 									<set_value name="$DAGVT.$DATPTraderTable.{$Seller}.{1}" exact="$Price" operation="add"/>
 								</do_if>
