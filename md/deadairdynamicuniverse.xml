@@ -155,6 +155,7 @@
 				<set_value name="$DADVT.$DAJobsSSTUnsupportedFactions" exact="[faction.boron,faction.player]"/>
 				<set_value name="$DADVT.$DAJobsSSTDetailedDebug" exact="false"/>
 				<set_value name="$DADVT.$DAJobsSSTXtremelyDetailedDebug" exact="false"/>
+				<set_value name="$DAJSST.$OverrideDefaultExecuted" exact="false"/>
 				<!-- Gate -->
 				<set_value name="$DADVT.$DAGateTrackedGates" exact="[]"/>
 				<set_value name="$DADVT.$DAGateZoneMacros" exact="[macro.ZoneDAG3_Cluster_28_Sector001_macro,macro.ZoneDAG6_Cluster_41_Sector001_macro,
@@ -197,6 +198,7 @@
 				<set_value name="$DADVT.$DAGodStationUpgradeEnable" exact="true"/>
 				<create_group groupname="$DADVT.$DAGodStationsUpgraded"/>
 				<set_value name="$DADVT.$DAGodMaxModuleSetting" exact="25"/>
+				<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="false"/>
 				<create_group groupname="$DADVT.$DAGodTrackedStations"/>
 				<set_value name="$DADVT.$DAGodTrackedStationsInfo" exact="table[]"/>
 				<set_value name="$DADVT.$DAGodStationRequestInterval" exact="1"/>
@@ -3876,6 +3878,16 @@
 					</conditions>
 					<actions>
 						<set_value name="$LocDebug" exact="if event.param? then event.param else false"/>
+						<do_if value="not $DAJSST?">
+							<set_value name="$DAJSST" exact="md.$DAJSSTTable"/>
+						</do_if>
+						<do_if value="not $DADVT?">
+							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						</do_if>
+						<!-- Adding tracking variable for initial value overrides. This will prevent it from overriding potentially changed player values this instance -->
+						<do_if value="not $DAJSST.$OverrideDefaultExecuted?">
+							<set_value name="$DAJSST.$OverrideDefaultExecuted" exact="false"/>
+						</do_if>
 						<!-- DONE: Make partial tables for certain factions (like freesplit with no military) -->
 						<!-- DONE: Signal table set up via menu, check for job to determine if tag is applicable -->
 						<!-- DONE: Cue now handles deactivating jobs if JobsSST is deactivated -->
@@ -3907,36 +3919,36 @@
 						<set_value name="$LocDebugString" exact="'MOD: DAJobsSST -- $DAJobsSSTJobSizeQuotas Report:'"/>
 						<do_for_each name="$LocFaction" in="$LocClaimspaceList" counter="$A">
 							<set_value name="$LocDebugString" exact="'\n  (%s) %s:'.[$A,$LocFaction.id]" operation="add"/>
-							<do_if value="$LocFaction.isactive and $LocFaction.willclaimspace and (not md.$DADynamicVarTable.$DAJobsSSTUnsupportedFactions.indexof.{$LocFaction})">
+							<do_if value="$LocFaction.isactive and $LocFaction.willclaimspace and (not $DADVT.$DAJobsSSTUnsupportedFactions.indexof.{$LocFaction})">
 								<!-- Only setting up new entries for factions, cleaning up would revert user settings -->
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}?)">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}" exact="table[]"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}?)">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}" exact="table[]"/>
 								</do_if>
 								<!-- Critical Tag -->
 								<set_value name="$LocCriticalTagText" exact="'DACriticalTag' + $LocFaction.id"/>
 								<set_value name="$LocCriticalTag" exact="tag.{$LocCriticalTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocCriticalTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<do_if value="$LocFaction == faction.xenon">
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag" exact="[$LocCriticalTag,2,14,2,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag" exact="[$LocCriticalTag,2,14,2,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag.{7}"/>
 									</do_if>
 									<do_else>
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag" exact="[$LocCriticalTag,2,1,1,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag" exact="[$LocCriticalTag,2,1,1,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag.{7}"/>
 									</do_else>
 									<set_value name="$LocDebugString" exact="' $CriticalTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $CriticalTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CriticalTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $CriticalTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -3952,21 +3964,21 @@
 								<set_value name="$LocCoreTagText" exact="'DACoreTag' + $LocFaction.id"/>
 								<set_value name="$LocCoreTag" exact="tag.{$LocCoreTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocCoreTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag" exact="[$LocCoreTag,2,20,1,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag" exact="[$LocCoreTag,2,20,1,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $CoreTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $CoreTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$CoreTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $CoreTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -3982,21 +3994,21 @@
 								<set_value name="$LocBorderTagText" exact="'DABorderTag' + $LocFaction.id"/>
 								<set_value name="$LocBorderTag" exact="tag.{$LocBorderTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocBorderTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag" exact="[$LocBorderTag,2,20,2,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag" exact="[$LocBorderTag,2,20,2,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $BorderTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $BorderTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$BorderTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $BorderTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4012,21 +4024,21 @@
 								<set_value name="$LocContestedTagText" exact="'DAContestedTag' + $LocFaction.id"/>
 								<set_value name="$LocContestedTag" exact="tag.{$LocContestedTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocContestedTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag" exact="[$LocContestedTag,2,8,2,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag" exact="[$LocContestedTag,2,8,2,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $ContestedTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $ContestedTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$ContestedTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $ContestedTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4043,21 +4055,21 @@
 								<set_value name="$LocLTraderTagText" exact="'DALTraderTag' + $LocFaction.id"/>
 								<set_value name="$LocLTraderTag" exact="tag.{$LocLTraderTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocLTraderTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag" exact="[$LocLTraderTag,2,20,2,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag" exact="[$LocLTraderTag,2,20,2,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $LTraderTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $LTraderTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LTraderTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $LTraderTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4074,27 +4086,27 @@
 								<set_value name="$LocMTraderTagText" exact="'DAMTraderTag' + $LocFaction.id"/>
 								<set_value name="$LocMTraderTag" exact="tag.{$LocMTraderTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocMTraderTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<do_if value="$LocFaction == faction.xenon">
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag" exact="[$LocMTraderTag,2,15,1,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag" exact="[$LocMTraderTag,2,15,1,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag.{7}"/>
 									</do_if>
 									<do_else>
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag" exact="[$LocMTraderTag,2,20,2,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag" exact="[$LocMTraderTag,2,20,2,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag.{7}"/>
 									</do_else>
 									<set_value name="$LocDebugString" exact="' $MTraderTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $MTraderTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MTraderTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $MTraderTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4110,21 +4122,21 @@
 								<set_value name="$LocLMinerTagText" exact="'DALMinerTag' + $LocFaction.id"/>
 								<set_value name="$LocLMinerTag" exact="tag.{$LocLMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocLMinerTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag" exact="[$LocLMinerTag,2,10,5,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag" exact="[$LocLMinerTag,2,10,5,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $LMinerTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $LMinerTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $LMinerTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4140,27 +4152,27 @@
 								<set_value name="$LocMMinerTagText" exact="'DAMMinerTag' + $LocFaction.id"/>
 								<set_value name="$LocMMinerTag" exact="tag.{$LocMMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocMMinerTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<do_if value="$LocFaction == faction.xenon">
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,45,3,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,45,3,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
 									</do_if>
 									<do_else>
-										<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,20,10,null,[],null,[]]"/>
-										<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,20,10,null,[],null,[]]"/>
+										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
 									</do_else>
 									<set_value name="$LocDebugString" exact="' $MMinerTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $MMinerTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $MMinerTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4176,21 +4188,21 @@
 								<set_value name="$LocLGasMinerTagText" exact="'DALGasMinerTag' + $LocFaction.id"/>
 								<set_value name="$LocLGasMinerTag" exact="tag.{$LocLGasMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocLGasMinerTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag" exact="[$LocLGasMinerTag,2,10,5,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag" exact="[$LocLGasMinerTag,2,10,5,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $LGasMinerTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $LGasMinerTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $LGasMinerTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4206,21 +4218,21 @@
 								<set_value name="$LocMGasMinerTagText" exact="'DAMGasMinerTag' + $LocFaction.id"/>
 								<set_value name="$LocMGasMinerTag" exact="tag.{$LocMGasMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocMGasMinerTag" includeinactive="true" force="true" multiple="true"/>
-								<do_if value="(not md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag?) and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
-									<set_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag" exact="[$LocMGasMinerTag,2,20,10,null,[],null,[]]"/>
-									<create_group groupname="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag.{7}"/>
+								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag" exact="[$LocMGasMinerTag,2,20,10,null,[],null,[]]"/>
+									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $MGasMinerTag,'" operation="add"/>
 								</do_if>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag? and @$LocJobs.count and md.$DADynamicVarTable.$DAJobsSSTEnable">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag? and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
 									<set_value name="$LocDebugString" exact="' $MGasMinerTag,'" operation="add"/>
 								</do_elseif>
-								<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag? and (not @$LocJobs.count)">
-									<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag"/>
-									<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+								<do_elseif value="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag? and (not @$LocJobs.count)">
+									<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag"/>
+									<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
 										<debug_text text="'MOD: DAJobsSST -- %s -- Removed $MGasMinerTag'.[$LocFaction.id]" context="false" filter="scripts"/>
 									</do_if>
 								</do_elseif>
-								<do_elseif value="@$LocJobs.count and (not md.$DADynamicVarTable.$DAJobsSSTEnable)">
+								<do_elseif value="@$LocJobs.count and (not $DADVT.$DAJobsSSTEnable)">
 									<do_for_each name="$LocJob" in="$LocJobs">
 										<check_job_active result="$LocJobisActive" job="$LocJob"/>
 										<do_if value="$LocJobisActive">
@@ -4233,13 +4245,17 @@
 								<remove_value name="$LocMGasMinerTag"/>
 								<remove_value name="$LocJobs"/>
 							</do_if>
-							<do_elseif value="md.$DADynamicVarTable.$DAJobsSSTUnsupportedFactions.indexof.{$LocFaction} and md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}?">
-								<remove_value name="md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}"/>
+							<do_elseif value="$DADVT.$DAJobsSSTUnsupportedFactions.indexof.{$LocFaction} and $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}?">
+								<remove_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}"/>
 							</do_elseif>
 						</do_for_each>
-						<do_if value="md.$DADynamicVarTable.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
-							<debug_text text="'MOD: DAJobsSST -- Initial Faction Check Complete -- SST Factions: %s -- Claimspace Factions: %s'.[md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.keys.list.count,$LocClaimspaceList.count]" context="false" filter="scripts"/>
+						<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug or $LocDebug">
+							<debug_text text="'MOD: DAJobsSST -- Initial Faction Check Complete -- SST Factions: %s -- Claimspace Factions: %s'.[$DADVT.$DAJobsSSTJobSizeQuotas.keys.list.count,$LocClaimspaceList.count]" context="false" filter="scripts"/>
 							<debug_text text="$LocDebugString" context="false" filter="scripts"/>
+						</do_if>
+						<!-- Inlcude default override library for easy diff changes -->
+						<do_if value="$DAJSST.$OverrideDefaultExecuted? and ($DAJSST.$OverrideDefaultExecuted == false)">
+							<include_actions ref="LibraryJobsSSTOverrideDefault"/>
 						</do_if>
 						<remove_value name="$LocClaimspaceList"/>
 						<remove_value name="$LocDebugString"/>
@@ -5629,6 +5645,18 @@
 								<create_group groupname="$LocStationGroup"/>
 								<find_station groupname="$LocStationGroup" space="$LocSector" functional="true" multiple="true">
 									<match owner="faction.player" negate="true"/>
+									<match_any>
+										<match shipyard="true"/>
+										<match wharf="true"/>
+										<match tradestation="true"/>
+										<match equipmentdock="true"/>
+										<match defencestation="true"/>
+										<match factionheadquarters="true"/>
+									</match_any>
+								</find_station>
+								<find_station groupname="$LocStationGroup" space="$LocSector" functional="true" multiple="true">
+									<match owner="faction.player" negate="true"/>
+									<match_child class="class.production" checkoperational="true"/>
 								</find_station>
 								<set_value name="$LocOwnerOccupied" exact="false"/>
 								<set_value name="$LocHostileOccupied" exact="false"/>
@@ -5815,7 +5843,7 @@
 								<do_for_each name="$LocFaction" in="$DAJSST.$ClaimspaceFactions">
 									<do_if value="($LocSector.owner == $LocFaction) and $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}?">
 										<find_station_by_true_owner name="$LocStation" space="$LocSector" faction="$LocFaction" functional="true" multiple="false">
-											<match_child class="class.production"/>
+											<match_child class="class.production" checkoperational="true"/>
 										</find_station_by_true_owner>
 									</do_if>
 									<do_if value="@$LocStation">
@@ -7044,6 +7072,33 @@
 						</do_else>
 					</actions>
 				</library>
+				<library name="LibraryJobsSSTOverrideDefault">
+					<actions>
+						<!--	md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction} // 
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'CriticalTag' == [$LocCriticalTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'CoreTag' == [$LocCoreTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'BorderTag' == [$LocBorderTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'ContestedTag' == [$LocContestedTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								Special handling required for Eco tags
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'LTraderTag' == [$LocLTraderTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'MTraderTag' == [$LocMTraderTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'LMinerTag' == [$LocLMinerTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'MMinerTag' == [$LocMMinerTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'LGasMinerTag' == [$LocLGasMinerTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+								md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$+'MGasMinerTag' == [$LocMGasMinerTag,$FleetSize,$GalaxyQuota,$SectorQuota,$JobName,$PendingJobShips,$JobShipsGroup,$SectorsWithRequested]
+						-->
+						<do_if value="true" comment="EasyDiffAddMarker">
+							<!-- Example code for diff add to change value of default value for a faction.
+								<do_if value="$DADVT.$DAJobsSSTJobSizeQuotas.{faction.xenon}?">
+									<do_if value="$DADVT.$DAJobsSSTJobSizeQuotas.{faction.xenon}.$CriticalTag? and $DADVT.$DAJobsSSTJobSizeQuotas.{faction.xenon}.$CriticalTag.count">
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{faction.xenon}.$CriticalTag.{2}" exact="1" comment="Example of changing xenon strategic patrol size to small"/>
+										<debug_text text="'MOD: DAJobsSST - ExampleMod changed faction.xenon $CriticalTag.{2} to 1: %s'.[$DADVT.$DAJobsSSTJobSizeQuotas.{faction.xenon}.$CriticalTag.{2}]" context="false" filter="scripts"/>
+									</do_if>
+								</do_if>
+							-->
+						</do_if>
+					</actions>
+				</library>
 				<!-- Jobs - SmartSectorTags // Variable Check Libraries -->
 				<library name="LibraryCheckJobsSSTVariables">
 					<actions>
@@ -7130,6 +7185,10 @@
 						</do_if>
 						<do_if value="not $DADVT.$DAJobsSSTXtremelyDetailedDebug?">
 							<set_value name="$DADVT.$DAJobsSSTXtremelyDetailedDebug" exact="false"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAJSST.$OverrideDefaultExecuted?">
+							<set_value name="$DAJSST.$OverrideDefaultExecuted" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
@@ -7373,6 +7432,7 @@
 						<include_actions ref="LibraryGodSetDefaultQuota"/>
 						<include_actions ref="LibraryGodGetWares"/>
 						<include_actions ref="LibraryGodFactionOverrides"/>
+						<include_actions ref="LibraryGodCheckForEco"/>
 						<remove_value name="$LocDebug"/>
 					</actions>
 				</cue>
@@ -7455,6 +7515,7 @@
 						<!-- event.param = [$DAGodFaction,$DAGodWare,$DAGodDelay,null/quota] -->
 						<!-- 20240328 If a previous attempt fails or is destroyed, then signal this cue with the number of modules in event.param.{4} -->
 						<!-- 20240420 Removing build plot reduction has solved the station design error problem, increasing size to 25 modules -->
+						<!-- 20240626 Changing hard coded module limit to adjustable variable: $DADVT.$DAGodMaxModuleSetting. -->
 						<set_value name="this.$DAGodLocFaction" exact="event.param.{1}"/>
 						<set_value name="this.$DAGodLocWare" exact="event.param.{2}"/>
 						<set_value name="this.$LocPriority" exact="false"/>
@@ -8801,6 +8862,19 @@
 						</do_if>
 					</actions>
 				</library>
+				<library name="LibraryGodCheckForEco">
+					<actions>
+						<do_if value="$DADVT.$DAGodMaxModuleSetting? and $DADVT.$DAGodMaxModuleSetting gt 10">
+							<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="true"/>
+							<do_if value="md.$DAEco? and md.$DAEco">
+								<!-- Proper station plot default setting should exist -->
+								<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="false"/>
+							</do_if>
+							<do_if value="true" comment="EasyDiffAddMarker">
+							</do_if>
+						</do_if>
+					</actions>
+				</library>
 				<!-- God // Variable Check Libraries -->
 				<library name="LibraryCheckGodVariables">
 					<actions>
@@ -8871,6 +8945,10 @@
 						</do_if>
 						<do_if value="not $DADVT.$DAGodMaxModuleSetting?">
 							<set_value name="$DADVT.$DAGodMaxModuleSetting" exact="25"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DADVT.$DAGodMaxModuleWarning?">
+							<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodTrackedStations?">

@@ -461,7 +461,7 @@
 		<!-- God Menu Entries -->
 		<t id="340">Enable DA God</t>
 		<t id="341">Enable God Debug</t>
-		<t id="342">Apply Quota</t>
+		<t id="342">Show Quota Settings</t>
 		<t id="343">Production Ware</t>
 		<t id="344">Additional Modules to Build</t>
 		<t id="345">Activate DA God for %s</t>
@@ -474,7 +474,7 @@
 		<t id="352">Allow Build in Friendly Owned Sector</t>
 		<t id="353">Enable Ship Building Station Upgrades</t>
 		<t id="354">Station Build Interval Multiplier</t>
-		<t id="355">(XXX)</t>
+		<t id="355">Station Max Module Setting</t>
 		<t id="356">(XXX)</t>
 		<t id="357">(XXX)</t>
 		<t id="358">(XXX)</t>
@@ -482,7 +482,7 @@
 		<!-- God Menu Entry Descriptions -->
 		<t id="1340">Changes whether the DA God options are available in the menu. This does not run the script or change anything in the game on it's own.</t>
 		<t id="1341">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1342">Changes whether the amount of modules set in the options for this faction will apply when the script is triggered.</t>
+		<t id="1342">Displays the quota settings for this faction. No settings are applied until the Activate DA God for Faction button has been selected.</t>
 		<t id="1343">The ware produced by the station ordered by the DA God script.</t>
 		<t id="1344">The number of modules that will be built by the DA God script. Stations will each have up to 25 modules each when requested. Each ware and increment of 25 would result in an additional station so be aware that this may affect performance. The default values are calculated from several hundred hours of accumulated data for a strong and balanced economy.</t>
 		<t id="1345">This will trigger the script to run for this faction when this button is clicked. It will use the numbers set above on the sliders and is not reversible. The faction will attempt to maintain the number of modules set not including vanilla module count.</t>
@@ -495,7 +495,7 @@
 		<t id="1352">Changes whether the DA God script can order stations in friendly owned sector if the faction has no sectors and has at least 20 relation with faction. This does not alter normal vanilla station ordering behaviour.</t>
 		<t id="1353">Changes whether the DA God script can order upgrades for a shipyard or wharf. Each station will only be upgraded once but the script will continue to check for new stations.</t>
 		<t id="1354">Adjusts the time between ordering stations for each faction. This is a multiplier to the coded time min max values. Default time between ordering stations is 20-25 minutes for initial stations and 25-30 minutes for recovery. Increasing this value will slow down the build up of stations.</t>
-		<t id="1355">(XXX)</t>
+		<t id="1355">Adjusts the amount of modules that the script will attempt to place on a single station.</t>
 		<t id="1356">(XXX)</t>
 		<t id="1357">(XXX)</t>
 		<t id="1358">(XXX)</t>
@@ -504,7 +504,7 @@
 		<t id="2340">Production Ware</t>
 		<t id="2341">Additional Modules to Build</t>
 		<t id="2342">{33232474,349} menu available once {33232474,340} is set to true.</t>
-		<t id="2343">(XXX)</t>
+		<t id="2343">Warning: Did not detect a mod that increases plot size and prevents reduction. This may cause issues with station generation due to space constraints. Recommend using a value at or below 10.</t>
 		<t id="2344">(XXX)</t>
 		<t id="2345">(XXX)</t>
 		<t id="2346">(XXX)</t>

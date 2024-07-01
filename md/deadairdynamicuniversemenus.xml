@@ -1243,7 +1243,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicWarEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEnable to %2'.[player.age,$DADVT.$DADynamicWarEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEnable to %s'.[$DADVT.$DADynamicWarEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1258,7 +1258,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicWarFavorsEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarFavorsEnable to %2'.[player.age,$DADVT.$DADynamicWarFavorsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarFavorsEnable to %s'.[$DADVT.$DADynamicWarFavorsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1268,7 +1268,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarInterval" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarInterval to %2'.[player.age,$DADVT.$DADynamicWarInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarInterval to %s'.[$DADVT.$DADynamicWarInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1278,7 +1278,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{1}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{1} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{1}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{1} to %s'.[$DADVT.$DADynamicWarEventWeights.{1}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1288,7 +1288,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{2}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{2} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{2} to %s'.[$DADVT.$DADynamicWarEventWeights.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1298,7 +1298,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{3}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{3} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{3}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{3} to %s'.[$DADVT.$DADynamicWarEventWeights.{3}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1308,7 +1308,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{4}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{4} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{4}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{4} to %s'.[$DADVT.$DADynamicWarEventWeights.{4}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1318,7 +1318,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{5}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{5} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{5}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{5} to %s'.[$DADVT.$DADynamicWarEventWeights.{5}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1328,7 +1328,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{6}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{6} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{6}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{6} to %s'.[$DADVT.$DADynamicWarEventWeights.{6}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1338,7 +1338,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarEventWeights.{7}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarEventWeights.{7} to %2'.[player.age,$DADVT.$DADynamicWarEventWeights.{7}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarEventWeights.{7} to %s'.[$DADVT.$DADynamicWarEventWeights.{7}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1348,7 +1348,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarPrimaryRaceModifier" exact="(event.param.$value / 100.0)"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarPrimaryRaceModifier to %2'.[player.age,$DADVT.$DADynamicWarPrimaryRaceModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarPrimaryRaceModifier to %s'.[$DADVT.$DADynamicWarPrimaryRaceModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1358,7 +1358,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarCurrentRelationsModifier" exact="(event.param.$value / 100.0)"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarCurrentRelationsModifier to %2'.[player.age,$DADVT.$DADynamicWarCurrentRelationsModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarCurrentRelationsModifier to %s'.[$DADVT.$DADynamicWarCurrentRelationsModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1368,7 +1368,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarCollectiveRelationsModifier" exact="(event.param.$value / 100.0)"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarCollectiveRelationsModifier to %2'.[player.age,$DADVT.$DADynamicWarCollectiveRelationsModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarCollectiveRelationsModifier to %s'.[$DADVT.$DADynamicWarCollectiveRelationsModifier]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1383,7 +1383,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicWarFlavorEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarFlavorEnable to %2'.[player.age,$DADVT.$DADynamicWarFlavorEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarFlavorEnable to %s'.[$DADVT.$DADynamicWarFlavorEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1398,7 +1398,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicWarDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarDetailedDebug to %2'.[player.age,$DADVT.$DADynamicWarDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarDetailedDebug to %s'.[$DADVT.$DADynamicWarDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1430,7 +1430,7 @@
 						<do_elseif value="($DAIgnSelectedFactionOne.isactive) and ($DAIgnSelectedFactionOne.willclaimspace) and (not $DAIgnSelectedFactionOne.isrelationlocked) and (not $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnSelectedFactionOne})">
 							<append_to_list name="$DADVT.$DADynamicWarDisabledFactions" exact="$DAIgnSelectedFactionOne"/>
 						</do_elseif>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Allowed/Ignored %2 -- Ignored: %2'.[player.age,$DAIgnSelectedFactionOne.knownname,$DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnSelectedFactionOne}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Allowed/Ignored %s -- Ignored: %s'.[$DAIgnSelectedFactionOne.knownname,$DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnSelectedFactionOne}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1466,7 +1466,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicWarRelationsFixEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarRelationsFixEnable to %2'.[player.age,$DADVT.$DADynamicWarRelationsFixEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarRelationsFixEnable to %s'.[$DADVT.$DADynamicWarRelationsFixEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1476,7 +1476,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarPossibleFactionsPerEvent" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- Updated $DADVT.$DADynamicWarPossibleFactionsPerEvent to %2'.[player.age,$DADVT.$DADynamicWarPossibleFactionsPerEvent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarPossibleFactionsPerEvent to %s'.[$DADVT.$DADynamicWarPossibleFactionsPerEvent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1687,7 +1687,7 @@
 							</do_elseif>
 							<do_else>
 								<set_value name="$Cost" exact="[500000Cr, ($DACalcCostNetWorth * 1 / 1000)].max"/>
-								<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- ERROR calculating cost -- %2 -- %3 -- %4'.[player.age,$DADynamicWarFactionOne.knownname,$DADynamicWarFactionTwo.knownname,$DACalcCostCurrentRelation]" context="false" filter="error" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- ERROR calculating cost -- %s -- %s -- %s'.[$DADynamicWarFactionOne.knownname,$DADynamicWarFactionTwo.knownname,$DACalcCostCurrentRelation]" context="false" filter="error" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 							</do_else>
 						</do_if>
 						<do_else>
@@ -1714,7 +1714,7 @@
 							</do_elseif>
 							<do_else>
 								<set_value name="$Cost" exact="[5000000Cr, ($DACalcCostNetWorth * 1 / 1000)].max"/>
-								<debug_text text="'MOD: DAMenus DynamicWar -- %1 -- ERROR calculating cost -- %2 -- %3 -- %4'.[player.age,$DADynamicWarFactionOne.knownname,$DADynamicWarFactionTwo.knownname,$DACalcCostCurrentRelation]" context="false" filter="error" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+								<debug_text text="'MOD: DAMenus DynamicWar -- ERROR calculating cost -- %s -- %s -- %s'.[$DADynamicWarFactionOne.knownname,$DADynamicWarFactionTwo.knownname,$DACalcCostCurrentRelation]" context="false" filter="error" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 							</do_else>
 						</do_else>
 					</actions>
@@ -1917,7 +1917,7 @@
 							<set_value name="$DADVT.$DADynamicNewsEnable" exact="true"/>
 							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsFindSectorsandStations"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsEnable to %2'.[player.age,$DADVT.$DADynamicNewsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsEnable to %s'.[$DADVT.$DADynamicNewsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1932,7 +1932,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicNewsEnableNotifications" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsEnableNotifications to %2'.[player.age,$DADVT.$DADynamicNewsEnableNotifications]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsEnableNotifications to %s'.[$DADVT.$DADynamicNewsEnableNotifications]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1947,7 +1947,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicNewsEnableLogbook" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsEnableLogbook to %2'.[player.age,$DADVT.$DADynamicNewsEnableLogbook]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsEnableLogbook to %s'.[$DADVT.$DADynamicNewsEnableLogbook]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1962,7 +1962,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicNewsEnableNewsStorage" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsEnableNewsStorage to %2'.[player.age,$DADVT.$DADynamicNewsEnableNewsStorage]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsEnableNewsStorage to %s'.[$DADVT.$DADynamicNewsEnableNewsStorage]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1972,7 +1972,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DADynamicNewsInterval" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsInterval to %2'.[player.age,$DADVT.$DADynamicNewsInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsInterval to %s'.[$DADVT.$DADynamicNewsInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -1987,7 +1987,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DADynamicNewsDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus DynamicNews -- %1 -- Updated $DADVT.$DADynamicNewsDetailedDebug to %2'.[player.age,$DADVT.$DADynamicNewsDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus DynamicNews -- Updated $DADVT.$DADynamicNewsDetailedDebug to %s'.[$DADVT.$DADynamicNewsDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2353,7 +2353,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAEvolutionEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionEnable to %2'.[player.age,$DADVT.$DAEvolutionEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionEnable to %s'.[$DADVT.$DAEvolutionEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2363,7 +2363,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionInterval" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionInterval to %2'.[player.age,$DADVT.$DAEvolutionInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionInterval to %s'.[$DADVT.$DAEvolutionInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2378,7 +2378,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAEvolutionEnableJobs" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionEnableJobs to %2'.[player.age,$DADVT.$DAEvolutionEnableJobs]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionEnableJobs to %s'.[$DADVT.$DAEvolutionEnableJobs]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2388,7 +2388,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionMaxXenonJobs" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionMaxXenonJobs to %2'.[player.age,$DADVT.$DAEvolutionMaxXenonJobs]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionMaxXenonJobs to %s'.[$DADVT.$DAEvolutionMaxXenonJobs]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_EvolutionXenFleetSmall" instantiate="true">
@@ -2398,7 +2398,7 @@
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSize" exact="1"/>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSizeName" exact="'daevoxen_small'"/>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionXenonFleetSize to %2'.[player.age,$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionXenonFleetSize to %s'.[$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2409,7 +2409,7 @@
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSize" exact="2"/>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSizeName" exact="'daevoxen_medium'"/>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionXenonFleetSize to %2'.[player.age,$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionXenonFleetSize to %s'.[$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2420,7 +2420,7 @@
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSize" exact="3"/>
 						<set_value name="$DADVT.$DAEvolutionXenonFleetSizeName" exact="'daevoxen_large'"/>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionXenonFleetSize to %2'.[player.age,$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionXenonFleetSize to %s'.[$DADVT.$DAEvolutionXenonFleetSize]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2435,7 +2435,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAEvolutionEnableUpgradeStations" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionEnableUpgradeStations to %2'.[player.age,$DADVT.$DAEvolutionEnableUpgradeStations]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionEnableUpgradeStations to %s'.[$DADVT.$DAEvolutionEnableUpgradeStations]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2450,7 +2450,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAEvolutionEnableFastOrder" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionEnableFastOrder to %2'.[player.age,$DADVT.$DAEvolutionEnableFastOrder]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionEnableFastOrder to %s'.[$DADVT.$DAEvolutionEnableFastOrder]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2465,7 +2465,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAEvolutionDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Evolution -- %1 -- Updated $DADVT.$DAEvolutionDetailedDebug to %2'.[player.age,$DADVT.$DAEvolutionDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionDetailedDebug to %s'.[$DADVT.$DAEvolutionDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2898,7 +2898,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAFillEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillEnable to %2'.[player.age,$DADVT.$DAFillEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillEnable to %s'.[$DADVT.$DAFillEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2908,7 +2908,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillCheckInterval" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillCheckInterval to %2'.[player.age,$DADVT.$DAFillCheckInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillCheckInterval to %s'.[$DADVT.$DAFillCheckInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -2918,10 +2918,10 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMaxTSWarePercent" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMaxTSWarePercent to %2'.[player.age,$DADVT.$DAFillMaxTSWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMaxTSWarePercent to %s'.[$DADVT.$DAFillMaxTSWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMaxTSWarePercentAfter ge event.param.$value">
 							<set_value name="$DADVT.$DAFillMaxTSWarePercentAfter" exact="[event.param.$value - 5.0,0.0].max"/>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %s'.[$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="error"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -2932,14 +2932,14 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMaxTSWarePercentAfter" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %s'.[$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMaxTSWarePercent le event.param.$value">
 							<set_value name="$DADVT.$DAFillMaxTSWarePercent" exact="[event.param.$value + 5.0,100.0].min"/>
 							<do_if value="$DADVT.$DAFillMaxTSWarePercentAfter gt 95">
 								<set_value name="$DADVT.$DAFillMaxTSWarePercentAfter" exact="95"/>
-								<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="error"/>
+								<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMaxTSWarePercentAfter to %s'.[$DADVT.$DAFillMaxTSWarePercentAfter]" context="false" filter="error"/>
 							</do_if>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMaxTSWarePercent to %2'.[player.age,$DADVT.$DAFillMaxTSWarePercent]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMaxTSWarePercent to %s'.[$DADVT.$DAFillMaxTSWarePercent]" context="false" filter="error"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -2950,10 +2950,10 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMinTSWarePercent" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinTSWarePercent to %2'.[player.age,$DADVT.$DAFillMinTSWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinTSWarePercent to %s'.[$DADVT.$DAFillMinTSWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMinTSWarePercentAfter le event.param.$value">
 							<set_value name="$DADVT.$DAFillMinTSWarePercentAfter" exact="[event.param.$value + 5.0,100.0].min"/>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %s'.[$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="error"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -2964,14 +2964,14 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMinTSWarePercentAfter" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %s'.[$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMinTSWarePercent ge event.param.$value">
 							<set_value name="$DADVT.$DAFillMinTSWarePercent" exact="[event.param.$value - 5.0,0.0].max"/>
 							<do_if value="$DADVT.$DAFillMinTSWarePercentAfter lt 5">
 								<set_value name="$DADVT.$DAFillMinTSWarePercentAfter" exact="5"/>
-								<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="error"/>
+								<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinTSWarePercentAfter to %s'.[$DADVT.$DAFillMinTSWarePercentAfter]" context="false" filter="error"/>
 							</do_if>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinTSWarePercent to %2'.[player.age,$DADVT.$DAFillMinTSWarePercent]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinTSWarePercent to %s'.[$DADVT.$DAFillMinTSWarePercent]" context="false" filter="error"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -2982,10 +2982,10 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMinSYWarePercent" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinSYWarePercent to %2'.[player.age,$DADVT.$DAFillMinSYWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinSYWarePercent to %s'.[$DADVT.$DAFillMinSYWarePercent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMinSYWarePercentAfter le event.param.$value">
 							<set_value name="$DADVT.$DAFillMinSYWarePercentAfter" exact="[event.param.$value + 5.0,100.0].min"/>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %s'.[$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="error"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -2996,14 +2996,14 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAFillMinSYWarePercentAfter" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %s'.[$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<do_if value="$DADVT.$DAFillMinSYWarePercent ge event.param.$value">
 							<set_value name="$DADVT.$DAFillMinSYWarePercent" exact="[event.param.$value - 5.0,0.0].max"/>
 							<do_if value="$DADVT.$DAFillMinSYWarePercentAfter lt 5">
 								<set_value name="$DADVT.$DAFillMinSYWarePercentAfter" exact="5"/>
-								<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %2'.[player.age,$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="error"/>
+								<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinSYWarePercentAfter to %s'.[$DADVT.$DAFillMinSYWarePercentAfter]" context="false" filter="error"/>
 							</do_if>
-							<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillMinSYWarePercent to %2'.[player.age,$DADVT.$DAFillMinSYWarePercent]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillMinSYWarePercent to %s'.[$DADVT.$DAFillMinSYWarePercent]" context="false" filter="error"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 						</do_if>
 					</actions>
@@ -3019,7 +3019,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAFillShipModsEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillShipModsEnable to %2'.[player.age,$DADVT.$DAFillShipModsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillShipModsEnable to %s'.[$DADVT.$DAFillShipModsEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3034,7 +3034,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAFillShipModFleetEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillShipModFleetEnable to %2'.[player.age,$DADVT.$DAFillShipModFleetEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillShipModFleetEnable to %s'.[$DADVT.$DAFillShipModFleetEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3049,7 +3049,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAFillShipModPaintEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillShipModPaintEnable to %2'.[player.age,$DADVT.$DAFillShipModPaintEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillShipModPaintEnable to %s'.[$DADVT.$DAFillShipModPaintEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3064,7 +3064,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAFillDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Fill -- %1 -- Updated $DADVT.$DAFillDetailedDebug to %2'.[player.age,$DADVT.$DAFillDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillDetailedDebug to %s'.[$DADVT.$DAFillDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3350,7 +3350,6 @@
 								$onClick = ExecuteOption_JobsSSTEnable,
 								$onRightClick = ExecuteOption_JobsSSTEnable,
 							]"/>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
@@ -3380,7 +3379,6 @@
 									$halign = 'right',
 								]"/>
 						</do_else>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
@@ -3546,7 +3544,7 @@
 					<actions>
 						<!-- $echo = [$LocFaction,$LocWhichTag,1-3] -->
 						<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}" exact="event.param.$echo.{3}"/>
-						<debug_text text="'MOD: DAMenus JobsSST -- %s -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{2}($FleetSize) to %s'.[player.age,event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{2}($FleetSize) to %s'.[event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3557,7 +3555,7 @@
 					<actions>
 						<!-- $echo = [$LocFaction,$LocWhichTag] -->
 						<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{3}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus JobsSST -- %s -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{3}($GalaxyQuota) to %s'.[player.age,event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{3}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{3}($GalaxyQuota) to %s'.[event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{3}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3568,7 +3566,7 @@
 					<actions>
 						<!-- $echo = [$LocFaction,$LocWhichTag] -->
 						<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{4}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus JobsSST -- %s -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{4}($SectorQuota) to %s'.[player.age,event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{4}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTJobSizeQuotas.{%s}.{%s}.{4}($SectorQuota) to %s'.[event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAJobsSSTJobSizeQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{4}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3585,7 +3583,7 @@
 							<set_value name="$DADVT.$DAJobsEXPEnable" exact="true"/>
 						</do_else>
 						<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventJobsEXPInitialChecks" param="true"/>
-						<debug_text text="'MOD: DAMenus JobsEXP -- %1 -- Updated $DADVT.$DAJobsEXPEnable to %2'.[player.age,$DADVT.$DAJobsEXPEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsEXP -- Updated $DADVT.$DAJobsEXPEnable to %s'.[$DADVT.$DAJobsEXPEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3603,7 +3601,7 @@
 							<set_value name="$DADVT.$DAJobsSSTEnable" exact="true"/>
 						</do_else>
 						<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventJobsSSTInitializeTables" param="true"/>
-						<debug_text text="'MOD: DAMenus JobsSST -- %1 -- Updated $DADVT.$DAJobsSSTEnable to %2'.[player.age,$DADVT.$DAJobsSSTEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTEnable to %s'.[$DADVT.$DAJobsSSTEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3633,7 +3631,7 @@
 						</do_else>
 						<!-- EventJobsSSTInitializeTables will remove if faction is on Unsupported -->
 						<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventJobsSSTInitializeTables" param="true"/>
-						<debug_text text="'MOD: DAMenus JobsSST -- %1 -- Updated $DADVT.$DAJobsSSTRemoveExclusivity to %2'.[player.age,$DADVT.$DAJobsSSTRemoveExclusivity]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTRemoveExclusivity to %s'.[$DADVT.$DAJobsSSTRemoveExclusivity]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3648,7 +3646,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAJobsEXPDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus JobsEXP -- %1 -- Updated $DADVT.$DAJobsEXPDetailedDebug to %2'.[player.age,$DADVT.$DAJobsEXPDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsEXP -- Updated $DADVT.$DAJobsEXPDetailedDebug to %s'.[$DADVT.$DAJobsEXPDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3663,7 +3661,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAJobsSSTDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus JobsSST -- %1 -- Updated $DADVT.$DAJobsSSTDetailedDebug to %2'.[player.age,$DADVT.$DAJobsSSTDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTDetailedDebug to %s'.[$DADVT.$DAJobsSSTDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3678,7 +3676,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAJobsSSTXtremelyDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus JobsSST -- %1 -- Updated $DADVT.$DAJobsSSTXtremelyDetailedDebug to %2'.[player.age,$DADVT.$DAJobsSSTXtremelyDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus JobsSST -- Updated $DADVT.$DAJobsSSTXtremelyDetailedDebug to %s'.[$DADVT.$DAJobsSSTXtremelyDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3863,7 +3861,7 @@
 									<append_to_list name="$LocTrackedGates" exact="$LocGate.exit"/>
 								</do_if>
 								<do_elseif value="(not $LocTrackedGates.indexof.{$LocGate}) or (not $LocTrackedGates.indexof.{$LocGate.exit})">
-									<debug_text text="'MOD: DAMenus Gate -- %s -- PROBLEM WITH GATE TRACKING -- $LocTrackedGates.indexof.{$LocGate}: %s -- $LocTrackedGates.indexof.{$LocGate.exit}: %s'.[player.age,$LocTrackedGates.indexof.{$LocGate},$LocTrackedGates.indexof.{$LocGate.exit}]" context="false" filter="error"/>
+									<debug_text text="'MOD: DAMenus Gate -- PROBLEM WITH GATE TRACKING -- $LocTrackedGates.indexof.{$LocGate}: %s -- $LocTrackedGates.indexof.{$LocGate.exit}: %s'.[$LocTrackedGates.indexof.{$LocGate},$LocTrackedGates.indexof.{$LocGate.exit}]" context="false" filter="error"/>
 								</do_elseif>
 							</do_for_each>
 							<remove_value name="$LocTrackedGates"/>
@@ -3882,7 +3880,7 @@
 							<set_value name="$DADVT.$DAGateEnable" exact="true"/>
 							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventGateFindGates" param="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Gate -- %1 -- Updated $DADVT.$DAGateEnable to %2'.[player.age,$DADVT.$DAGateEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Gate -- Updated $DADVT.$DAGateEnable to %s'.[$DADVT.$DAGateEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3899,7 +3897,7 @@
 							<set_value name="$DADVT.$DAGateShowAllGates" exact="true"/>
 						</do_else>
 						<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventGateFindGates" param="true"/>
-						<debug_text text="'MOD: DAMenus Gate -- %1 -- Updated $DADVT.$DAGateShowAllGates to %2'.[player.age,$DADVT.$DAGateShowAllGates]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Gate -- Updated $DADVT.$DAGateShowAllGates to %s'.[$DADVT.$DAGateShowAllGates]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3914,7 +3912,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGateDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus Gate -- %1 -- Updated $DADVT.$DAGateDetailedDebug to %2'.[player.age,$DADVT.$DAGateDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Gate -- Updated $DADVT.$DAGateDetailedDebug to %s'.[$DADVT.$DAGateDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3933,7 +3931,7 @@
 							<set_object_active object="$DAGateLocGate" activate="true"/>
 							<set_object_active object="$DAGateLocGateExit" activate="true"/>
 						</do_elseif>
-						<debug_text text="'MOD: DAMenus Gate -- %s -- Set %s.%s.%s to active: %s -- Set %s.%s.%s to active: %s'.[player.age,$DAGateLocGate.sector.macro,$DAGateLocGate.zone.macro,$DAGateLocGate.knownname,$DAGateLocGate.isactive,$DAGateLocGateExit.sector.macro,$DAGateLocGateExit.zone.macro,$DAGateLocGateExit.knownname,$DAGateLocGateExit.isactive]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus Gate -- Set %s.%s.%s to active: %s -- Set %s.%s.%s to active: %s'.[$DAGateLocGate.sector.macro,$DAGateLocGate.zone.macro,$DAGateLocGate.knownname,$DAGateLocGate.isactive,$DAGateLocGateExit.sector.macro,$DAGateLocGateExit.zone.macro,$DAGateLocGateExit.knownname,$DAGateLocGateExit.isactive]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3972,7 +3970,6 @@
 								$onClick = ExecuteOption_GodEnable,
 								$onRightClick = ExecuteOption_GodEnable
 							]"/>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -4004,7 +4001,6 @@
 									$halign = 'right',
 								]"/>
 						</do_else>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -4092,7 +4088,6 @@
 									$halign = 'right',
 								]"/>
 						</do_else>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -4122,7 +4117,46 @@
 									$halign = 'right',
 								]"/>
 						</do_else>
-						
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,355},
+								$mouseOverText = {33232474,1355},
+							]"/>
+						<do_if value="$DADVT.$DAGodEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_GodMaxModuleSetting,
+									$min = 0,
+									$minSelect = 1,
+									$max = 25,
+									$maxSelect = 25,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DAGodMaxModuleSetting,
+									$step = 1
+								]"/>
+							<do_if value="$DADVT.$DAGodMaxModuleWarning?">
+								<include_actions ref="md.DeadAirDynamicUniverse.LibraryGodCheckForEco"/>
+								<do_if value="$DADVT.$DAGodMaxModuleWarning">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+											$col = 1,
+											$colSpan = event.param.$columns,
+											$text = {33232474,2343},
+										]"/>
+								</do_if>
+							</do_if>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -4204,7 +4238,7 @@
 										]"/>
 									<do_if value="$LocFaction.isactive and (not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction})">
 										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-										<!-- Apply Quota -->
+										<!-- Show Quota Settings -->
 										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 												$col = 1,
 												$colSpan = 4,
@@ -4366,7 +4400,7 @@
 							<set_value name="$DADVT.$DAGodEnable" exact="true"/>
 							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventGodSetUpTables" param="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodEnable to %2'.[player.age,$DADVT.$DAGodEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodEnable to %s'.[$DADVT.$DAGodEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4376,7 +4410,7 @@
 					</conditions>
 					<actions>
 						<set_value name="$DADVT.$DAGodStationRequestInterval" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodStationRequestInterval to %2'.[player.age,$DADVT.$DAGodStationRequestInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodStationRequestInterval to %s'.[$DADVT.$DAGodStationRequestInterval]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4391,7 +4425,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodAllowBuildInFriendly" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAllowBuildInFriendly to %2'.[player.age,$DADVT.$DAGodAllowBuildInFriendly]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodAllowBuildInFriendly to %s'.[$DADVT.$DAGodAllowBuildInFriendly]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4406,7 +4440,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodAllowBuildInPlayer" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAllowBuildInPlayer to %2'.[player.age,$DADVT.$DAGodAllowBuildInPlayer]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodAllowBuildInPlayer to %s'.[$DADVT.$DAGodAllowBuildInPlayer]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4421,7 +4455,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodAttemptRecovery" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodAttemptRecovery to %2'.[player.age,$DADVT.$DAGodAttemptRecovery]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodAttemptRecovery to %s'.[$DADVT.$DAGodAttemptRecovery]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4436,7 +4470,17 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodStationUpgradeEnable" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodStationUpgradeEnable to %2'.[player.age,$DADVT.$DAGodStationUpgradeEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodStationUpgradeEnable to %s'.[$DADVT.$DAGodStationUpgradeEnable]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_GodMaxModuleSetting" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT.$DAGodMaxModuleSetting" exact="event.param.$value"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodMaxModuleSetting to %s'.[$DADVT.$DAGodMaxModuleSetting]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4451,7 +4495,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodDetailedDebug to %2'.[player.age,$DADVT.$DAGodDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodDetailedDebug to %s'.[$DADVT.$DAGodDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4466,7 +4510,7 @@
 						<do_else>
 							<set_value name="$DADVT.$DAGodXtremelyDetailedDebug" exact="true"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodXtremelyDetailedDebug to %2'.[player.age,$DADVT.$DAGodXtremelyDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodXtremelyDetailedDebug to %s'.[$DADVT.$DAGodXtremelyDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4484,9 +4528,9 @@
 							</do_else>
 						</do_if>
 						<do_else>
-							<debug_text text="'MOD: DAMenus God -- %1 -- Unable to find $DADVT.$DAGodFactionModuleQuotas.{%s}.$Enabled'.[player.age,event.param.$echo]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus God -- Unable to find $DADVT.$DAGodFactionModuleQuotas.{%s}.$Enabled'.[event.param.$echo]" context="false" filter="error"/>
 						</do_else>
-						<debug_text text="'MOD: DAMenus God -- %1 -- Updated $DADVT.$DAGodFactionModuleQuotas.{%s}.$Enabled to %s'.[player.age,event.param.$echo,$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo}.$Enabled]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodFactionModuleQuotas.{%s}.$Enabled to %s'.[event.param.$echo,$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo}.$Enabled]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4497,7 +4541,7 @@
 					<actions>
 						<!-- $echo = [$LocFaction,$LocWare] -->
 						<set_value name="$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}" exact="event.param.$value"/>
-						<debug_text text="'MOD: DAMenus God -- %s -- Updated $DADVT.$DAGodFactionModuleQuotas.{%s}.{%s}.{2}($Quota) to %s'.[player.age,event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<debug_text text="'MOD: DAMenus God -- Updated $DADVT.$DAGodFactionModuleQuotas.{%s}.{%s}.{2}($Quota) to %s'.[event.param.$echo.{1},event.param.$echo.{2},$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo.{1}}.{event.param.$echo.{2}}.{2}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4509,10 +4553,10 @@
 						<do_if value="$DADVT.$DAGodFactionModuleQuotas.{event.param.$echo}.$Enabled?">
 							<append_to_list name="$DADVT.$DAGodFactionsTriggered" exact="event.param.$echo"/>
 							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventGodSignalledActive" param="event.param.$echo"/>
-							<debug_text text="'MOD: DAMenus God -- %s -- %s -- Faction triggered.'.[player.age,event.param.$echo]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+							<debug_text text="'MOD: DAMenus God -- %s -- Faction triggered.'.[event.param.$echo]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						</do_if>
 						<do_else>
-							<debug_text text="'MOD: DAMenus God -- %s -- %s -- Faction triggered but not enabled.'.[player.age,event.param.$echo]" context="false" filter="error"/>
+							<debug_text text="'MOD: DAMenus God -- %s -- Faction triggered but not enabled.'.[event.param.$echo]" context="false" filter="error"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
@@ -4600,14 +4644,14 @@
 								]"/>
 						</do_else>
 						<do_if value="$DADVT.$DABPEnable">
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
 								$colSpan = 3,
 								$text = {1001,9197},
 								$halign = 'left',
 							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 4,
 								$colSpan = 5,
 								$text = {33232474,386},
@@ -5795,7 +5839,6 @@
 								$onClick = ExecuteOption_TPEnable,
 								$onRightClick = ExecuteOption_TPEnable
 							]"/>
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
