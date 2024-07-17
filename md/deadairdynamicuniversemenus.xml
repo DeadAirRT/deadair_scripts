@@ -29,6 +29,27 @@
 				<!-- 20240402 Improved handling of relation change costs -->
 				<set_value name="$WhatFactions" exact="'All'"/>
 				<include_actions ref="Library_DAMenuGetFactions"/>
+				<!-- 20240717 Updating for new colors. Properly adding should allow user to change -->
+				<set_value name="$DAMVT.$TextGreen" exact="'Color.da_text_green'"/>
+				<set_value name="$DAMVT.$TextRed" exact="'Color.da_text_red'"/>
+				<set_value name="$DAMVT.$TextBlue" exact="'Color.da_text_blue'"/>
+				<set_value name="$DAMVT.$MarkerTransparent" exact="'Color.da_marker_transparent'"/>
+				<set_value name="$DAMVT.$FillTransparent" exact="'Color.da_transparent'"/>
+				<set_value name="$DAMVT.$FillRedDark" exact="'Color.da_red_dark'"/>
+				<set_value name="$DAMVT.$FillRed" exact="'Color.da_red'"/>
+				<set_value name="$DAMVT.$FillRedBright" exact="'Color.da_red_bright'"/>
+				<set_value name="$DAMVT.$FillGreenDark" exact="'Color.da_green_dark'"/>
+				<set_value name="$DAMVT.$FillGreen" exact="'Color.da_green'"/>
+				<set_value name="$DAMVT.$FillGreenBright" exact="'Color.da_green_bright'"/>
+				<set_value name="$DAMVT.$FillYellowDark" exact="'Color.da_yellow_dark'"/>
+				<set_value name="$DAMVT.$FillYellow" exact="'Color.da_yellow'"/>
+				<set_value name="$DAMVT.$FillYellowBright" exact="'Color.da_yellow_bright'"/>
+				<set_value name="$DAMVT.$FillBlueDark" exact="'Color.da_blue_dark'"/>
+				<set_value name="$DAMVT.$FillBlue" exact="'Color.da_blue'"/>
+				<set_value name="$DAMVT.$FillBlueBright" exact="'Color.da_blue_bright'"/>
+				<set_value name="$DAMVT.$FillOrangeDark" exact="'Color.da_orange_dark'"/>
+				<set_value name="$DAMVT.$FillOrange" exact="'Color.da_orange'"/>
+				<set_value name="$DAMVT.$FillOrangeBright" exact="'Color.da_orange_bright'"/>
 			</actions>
 			<cues>
 				<cue name="DeadAirMenu">
@@ -77,6 +98,29 @@
 						</do_if>
 						<do_if value="not $DAMVT.$DWEcoStrengthHistory?">
 							<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$TextGreen?">
+							<set_value name="$DAMVT.$TextGreen" exact="'Color.da_text_green'"/>
+							<set_value name="$DAMVT.$TextRed" exact="'Color.da_text_red'"/>
+							<set_value name="$DAMVT.$TextBlue" exact="'Color.da_text_blue'"/>
+							<set_value name="$DAMVT.$MarkerTransparent" exact="'Color.da_marker_transparent'"/>
+							<set_value name="$DAMVT.$FillTransparent" exact="'Color.da_transparent'"/>
+							<set_value name="$DAMVT.$FillRedDark" exact="'Color.da_red_dark'"/>
+							<set_value name="$DAMVT.$FillRed" exact="'Color.da_red'"/>
+							<set_value name="$DAMVT.$FillRedBright" exact="'Color.da_red_bright'"/>
+							<set_value name="$DAMVT.$FillGreenDark" exact="'Color.da_green_dark'"/>
+							<set_value name="$DAMVT.$FillGreen" exact="'Color.da_green'"/>
+							<set_value name="$DAMVT.$FillGreenBright" exact="'Color.da_green_bright'"/>
+							<set_value name="$DAMVT.$FillYellowDark" exact="'Color.da_yellow_dark'"/>
+							<set_value name="$DAMVT.$FillYellow" exact="'Color.da_yellow'"/>
+							<set_value name="$DAMVT.$FillYellowBright" exact="'Color.da_yellow_bright'"/>
+							<set_value name="$DAMVT.$FillBlueDark" exact="'Color.da_blue_dark'"/>
+							<set_value name="$DAMVT.$FillBlue" exact="'Color.da_blue'"/>
+							<set_value name="$DAMVT.$FillBlueBright" exact="'Color.da_blue_bright'"/>
+							<set_value name="$DAMVT.$FillOrangeDark" exact="'Color.da_orange_dark'"/>
+							<set_value name="$DAMVT.$FillOrange" exact="'Color.da_orange'"/>
+							<set_value name="$DAMVT.$FillOrangeBright" exact="'Color.da_orange_bright'"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
@@ -457,7 +501,7 @@
 													$colSpan = 5,
 													$text = table[
 													  $text   =  $LocText, 
-													  $color  = 'Helper.color.green',
+													  $color  = $DAMVT.$TextGreen,
 													  $halign = 'center',
 													],
 													$onClick = ExecuteOption_RelationsIncrease,
@@ -541,7 +585,7 @@
 													$colSpan = 5,
 													$text = table[
 													  $text   =  $LocText, 
-													  $color  = 'Helper.color.green',
+													  $color  = $DAMVT.$TextGreen,
 													  $halign = 'center',
 													],
 													$onClick = ExecuteOption_RelationsDecrease,
@@ -595,7 +639,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicWarEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicWarEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1123},
@@ -614,7 +658,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicWarFavorsEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarFavorsEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicWarFavorsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1124},
@@ -633,7 +677,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicWarRelationsFixEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarRelationsFixEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicWarRelationsFixEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1142},
@@ -977,8 +1021,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DADynamicWarFlavorEnable == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DADynamicWarFlavorEnable == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DADynamicWarFlavorEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarFlavorEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1136},
@@ -1006,8 +1050,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DADynamicWarDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DADynamicWarDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DADynamicWarDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1137},
@@ -1073,7 +1117,7 @@
 									$colSpan = 5,
 									$text = table[
 									  $text   =  if $DARelUnlFaction.isrelationlocked then {33232474,138} else {33232474,139}, 
-									  $color  =  if $DARelUnlFaction.isrelationlocked then 'Helper.color.red' else 'Helper.color.green',
+									  $color  =  if $DARelUnlFaction.isrelationlocked then $DAMVT.$TextRed else $DAMVT.$TextGreen,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1118},
@@ -1106,7 +1150,7 @@
 										$colSpan = 5,
 										$text = table[
 										  $text   =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then {33232474,141} else {33232474,140}, 
-										  $color  =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then 'Helper.color.red' else 'Helper.color.green',
+										  $color  =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then $DAMVT.$TextRed else $DAMVT.$TextGreen,
 										  $halign = 'center',
 										],
 										$mouseOverText = {33232474,1119},
@@ -1159,7 +1203,7 @@
 									$colSpan = 3,
 									$text = table[
 									  $text   =  if $FLAllowed then {1001,4825} else {1001,8942}, 
-									  $color  =  if $FLAllowed then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $FLAllowed then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1145},
@@ -1485,35 +1529,59 @@
 						<do_if value="$DADynamicWarFactionOne and $DADynamicWarFactionTwo">
 							<set_value name="$DARelBarCurrentRelationAdjusted" exact="$DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue + 30"/>
 							<set_value name="$DARelBarCurrentUIRelation" exact="$DADynamicWarFactionOne.relation.{$DADynamicWarFactionOne.relationto.{$DADynamicWarFactionTwo}}.uivalue"/>
-							<set_value name="$DARelBarRelationColor" exact="'Helper.color.transparent'"/>
-							<do_if value="$DARelBarCurrentUIRelation le (-20)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.transparent'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.red'"/>
+							<set_value name="$DARelBarRelationColor" exact="$DAMVT.$MarkerTransparent"/>
+							<do_if value="$DARelBarCurrentUIRelation le (-25)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillRedDark"/>
 							</do_if>
-							<do_elseif value="$DARelBarCurrentUIRelation le (-10) and $DARelBarCurrentUIRelation gt (-20)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.transparent'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.orange'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (-20)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillRed"/>
 							</do_elseif>
-							<do_elseif value="$DARelBarCurrentUIRelation le (-1) and $DARelBarCurrentUIRelation gt (-10)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.transparent'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.yellow'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (-15)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillRedBright"/>
 							</do_elseif>
-							<do_elseif value="$DARelBarCurrentUIRelation le (1) and $DARelBarCurrentUIRelation gt (-1)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.yellow'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.transparent'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (-10)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillOrangeDark"/>
 							</do_elseif>
-							<do_elseif value="$DARelBarCurrentUIRelation le (10) and $DARelBarCurrentUIRelation gt (1)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.playergreen'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.transparent'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (-5)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillOrange"/>
 							</do_elseif>
-							<do_elseif value="$DARelBarCurrentUIRelation lt (20) and $DARelBarCurrentUIRelation gt (10)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.lightgreen'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.transparent'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (-1)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillOrangeBright"/>
 							</do_elseif>
-							<do_elseif value="$DARelBarCurrentUIRelation ge (20)">
-								<set_value name="$DARelBarPositiveColor" exact="'Helper.color.green'"/>
-								<set_value name="$DARelBarNegativeColor" exact="'Helper.color.transparent'"/>
+							<do_elseif value="$DARelBarCurrentUIRelation le (1)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillYellowDark"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
 							</do_elseif>
+							<do_elseif value="$DARelBarCurrentUIRelation le (5)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillYellow"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_elseif>
+							<do_elseif value="$DARelBarCurrentUIRelation le (10)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillYellowBright"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_elseif>
+							<do_elseif value="$DARelBarCurrentUIRelation le (15)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillGreenDark"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_elseif>
+							<do_elseif value="$DARelBarCurrentUIRelation le (20)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillGreen"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_elseif>
+							<do_elseif value="$DARelBarCurrentUIRelation gt (20)">
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillGreenBright"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_elseif>
+							<do_else>
+								<set_value name="$DARelBarPositiveColor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$DARelBarNegativeColor" exact="$DAMVT.$FillTransparent"/>
+							</do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 4,
 								$colSpan = 1,
@@ -1531,7 +1599,7 @@
 								$valueColor		= $DARelBarRelationColor,
 								$posChangeColor	= $DARelBarPositiveColor,
 								$negChangeColor	= $DARelBarNegativeColor,
-								$markerColor	= 'Helper.color.transparent',
+								$markerColor	= $DAMVT.$MarkerTransparent,
 								]"/>
 						</do_if>
 					</actions>
@@ -1746,7 +1814,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicNewsEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicNewsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1280},
@@ -1766,7 +1834,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableNotifications then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicNewsEnableNotifications then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicNewsEnableNotifications then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1281},
@@ -1795,7 +1863,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableLogbook then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicNewsEnableLogbook then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicNewsEnableLogbook then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1282},
@@ -1824,7 +1892,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableNewsStorage then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicNewsEnableNewsStorage then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicNewsEnableNewsStorage then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1283},
@@ -1883,7 +1951,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsDetailedDebug then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicNewsDetailedDebug then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DADynamicNewsDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1285},
@@ -2061,7 +2129,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAEvolutionEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAEvolutionEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAEvolutionEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1160},
@@ -2080,7 +2148,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAEvolutionEnableJobs then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAEvolutionEnableJobs then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAEvolutionEnableJobs then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1163},
@@ -2213,7 +2281,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   = {1001,2853}, 
-									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 1) then 'Helper.color.green' else 'Helper.color.red',
+									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 1) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1166},
@@ -2225,7 +2293,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   = {1001,2854}, 
-									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 2) then 'Helper.color.green' else 'Helper.color.red',
+									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 2) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1167},
@@ -2237,7 +2305,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   = {1001,2855}, 
-									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 3) then 'Helper.color.green' else 'Helper.color.red',
+									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 3) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1168},
@@ -2265,8 +2333,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAEvolutionEnableUpgradeStations == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAEvolutionEnableUpgradeStations == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAEvolutionEnableUpgradeStations then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAEvolutionEnableUpgradeStations then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1170},
@@ -2294,8 +2362,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAEvolutionEnableFastOrder == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAEvolutionEnableFastOrder == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAEvolutionEnableFastOrder then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAEvolutionEnableFastOrder then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1171},
@@ -2323,8 +2391,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAEvolutionDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAEvolutionDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAEvolutionDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAEvolutionDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1169},
@@ -2487,7 +2555,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAFillEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAFillEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAFillEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1200},
@@ -2719,7 +2787,7 @@
 										$colSpan = 2,
 										$text = table[
 										  $text   =  if $DADVT.$DAFillShipModsEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModsEnable then 'Helper.color.green' else 'Helper.color.red',
+										  $color  =  if $DADVT.$DAFillShipModsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
 										$mouseOverText = {33232474,1208},
@@ -2748,7 +2816,7 @@
 										$colSpan = 2,
 										$text = table[
 										  $text   =  if $DADVT.$DAFillShipModFleetEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModFleetEnable then 'Helper.color.green' else 'Helper.color.red',
+										  $color  =  if $DADVT.$DAFillShipModFleetEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
 										$mouseOverText = {33232474,1210},
@@ -2777,7 +2845,7 @@
 										$colSpan = 2,
 										$text = table[
 										  $text   =  if $DADVT.$DAFillShipModPaintEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModPaintEnable then 'Helper.color.green' else 'Helper.color.red',
+										  $color  =  if $DADVT.$DAFillShipModPaintEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
 										$mouseOverText = {33232474,1211},
@@ -2805,8 +2873,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAFillDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAFillDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAFillDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1209},
@@ -2829,7 +2897,7 @@
 									$colSpan = 8,
 									$height = 2,
 									$fontsize = 1,
-									$cellBGColor = 'Helper.color.grey',
+									$cellBGColor = 'Color.row_separator',
 								]"/>
 							<!-- 1+2 = Ware.name, 3+4+5 Added Amount, 6+7+8 Removed Amount -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -2862,7 +2930,7 @@
 									$colSpan = 8,
 									$height = 2,
 									$fontsize = 1,
-									$cellBGColor = 'Helper.color.grey',
+									$cellBGColor = 'Color.row_separator',
 								]"/>
 							<!-- 1+2 = Faction.knownname, 3+4+5 Total Military Ships Modded, 6+7+8 Total Civilian Ships Modded -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -3157,7 +3225,7 @@
 														$colSpan = 2,
 														$text = table[
 														  $text   = {33232474,250}, 
-														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 1) then 'Helper.color.green' else 'Helper.color.red',
+														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 1) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
 														$mouseOverText = $LocHoverText,
@@ -3171,7 +3239,7 @@
 														$colSpan = 2,
 														$text = table[
 														  $text   = {33232474,251}, 
-														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 2) then 'Helper.color.green' else 'Helper.color.red',
+														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 2) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
 														$mouseOverText = $LocHoverText,
@@ -3185,7 +3253,7 @@
 														$colSpan = 2,
 														$text = table[
 														  $text   = {33232474,252}, 
-														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 3) then 'Helper.color.green' else 'Helper.color.red',
+														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 3) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
 														$mouseOverText = $LocHoverText,
@@ -3262,7 +3330,7 @@
 											$colSpan = event.param.$columns,
 											$height = 2,
 											$fontsize = 1,
-											$cellBGColor = 'Helper.color.grey',
+											$cellBGColor = 'Color.row_separator',
 										]"/>
 								</do_if>
 								<do_else>
@@ -3281,7 +3349,7 @@
 											$colSpan = event.param.$columns,
 											$height = 2,
 											$fontsize = 1,
-											$cellBGColor = 'Helper.color.grey',
+											$cellBGColor = 'Color.row_separator',
 										]"/>
 								</do_else>
 							</do_for_each>
@@ -3324,7 +3392,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAJobsEXPEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAJobsEXPEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAJobsEXPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1240},
@@ -3343,7 +3411,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAJobsSSTEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAJobsSSTEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAJobsSSTEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1241},
@@ -3362,8 +3430,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTRemoveExclusivity == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTRemoveExclusivity == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAJobsSSTRemoveExclusivity then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTRemoveExclusivity then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1263},
@@ -3391,8 +3459,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAJobsEXPDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsEXPDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAJobsEXPDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsEXPDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1242},
@@ -3420,8 +3488,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAJobsSSTDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1243},
@@ -3449,8 +3517,8 @@
 									$col = 7, 
 									$colSpan = 2,
 									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug == true then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug == true then 'Helper.color.green' else 'Helper.color.red',
+									  $text   =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1244},
@@ -3520,7 +3588,7 @@
 											$colSpan = 2,
 											$text = table[
 											  $text   =  if @$LocIsActive then {1001,4825} else {1001,8942}, 
-											  $color  =  if @$LocIsActive then 'Helper.color.green' else 'Helper.color.red',
+											  $color  =  if @$LocIsActive then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 											  $halign = 'center',
 											],
 											$onClick = ExecuteOption_JobsToggleSpawned,
@@ -3734,7 +3802,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAGateEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAGateEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAGateEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1300},
@@ -3754,7 +3822,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGateShowAllGates then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGateShowAllGates then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGateShowAllGates then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1302},
@@ -3783,7 +3851,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGateDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGateDetailedDebug then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGateDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1301},
@@ -3826,7 +3894,7 @@
 									$colSpan = event.param.$columns,
 									$height = 2,
 									$fontsize = 1,
-									$cellBGColor = 'Helper.color.grey',
+									$cellBGColor = 'Color.row_separator',
 								]"/>
 							<set_value name="$LocTrackedGates" exact="[]"/>
 							<sort_list list="$DADVT.$DAGateTrackedGates" sortbyvalue="loop.element.sector.knownname"/>
@@ -3850,7 +3918,7 @@
 										$colSpan = 2,
 										$text = table[
 										  $text   =  if $LocGate.isactive then {1001,12207} else {1001,12208}, 
-										  $color  =  if $LocGate.isactive then 'Helper.color.green' else 'Helper.color.red',
+										  $color  =  if $LocGate.isactive then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
 										$onClick = ExecuteOption_GateTriggerGate,
@@ -3963,7 +4031,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DAGodEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAGodEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DAGodEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1340},
@@ -4014,7 +4082,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAllowBuildInFriendly then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodAllowBuildInFriendly then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodAllowBuildInFriendly then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1352},
@@ -4043,7 +4111,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAllowBuildInPlayer then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodAllowBuildInPlayer then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodAllowBuildInPlayer then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1350},
@@ -4072,7 +4140,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAttemptRecovery then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodAttemptRecovery then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodAttemptRecovery then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1351},
@@ -4101,7 +4169,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodStationUpgradeEnable then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodStationUpgradeEnable then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodStationUpgradeEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1353},
@@ -4170,7 +4238,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodDetailedDebug then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1341},
@@ -4199,7 +4267,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodXtremelyDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGodXtremelyDetailedDebug then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DAGodXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1347},
@@ -4252,7 +4320,7 @@
 												$colSpan = 4,
 												$text = table[
 												  $text   =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then {1001,4825} else {1001,8942}, 
-												  $color  =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then 'Helper.color.green' else 'Helper.color.red',
+												  $color  =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 												  $halign = 'center',
 												],
 												$mouseOverText = {33232474,1342},
@@ -4345,7 +4413,7 @@
 												$colSpan = 8,
 												$text = table[
 												  $text   = {33232474,345}.[$LocFaction.knownname], 
-												  $color  = 'Helper.color.green',
+												  $color  = $DAMVT.$TextGreen,
 												  $halign = 'center',
 												],
 												$mouseOverText = {33232474,1345},
@@ -4365,7 +4433,7 @@
 											$colSpan = event.param.$columns,
 											$height = 2,
 											$fontsize = 1,
-											$cellBGColor = 'Helper.color.grey',
+											$cellBGColor = 'Color.row_separator',
 										]"/>
 								</do_if>
 							</do_for_each>
@@ -4607,7 +4675,7 @@
 								$colSpan = 2,
 								$text = table[
 								  $text   =  if $DADVT.$DABPEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DABPEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DADVT.$DABPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1385},
@@ -4627,7 +4695,7 @@
 									$colSpan = 2,
 									$text = table[
 									  $text   =  if $DADVT.$DABPDebugEnable then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DABPDebugEnable then 'Helper.color.green' else 'Helper.color.red',
+									  $color  =  if $DADVT.$DABPDebugEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
 									$mouseOverText = {33232474,1387},
@@ -4728,7 +4796,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 								<set_value name="$LocString" exact="'%s'.[$LocClassesNames.{$Str}]"/>
@@ -4760,7 +4828,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<remove_value name="$LocString"/>
 								<do_for_each name="$LocWare" in="$LocWareList">
@@ -4806,7 +4874,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 								<set_value name="$LocString" exact="'%s'.[$LocClassesNames.{$Str}]"/>
@@ -4838,7 +4906,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<remove_value name="$LocString"/>
 								<do_for_each name="$LocWare" in="$LocWareList">
@@ -4884,7 +4952,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 								<set_value name="$LocString" exact="'%s'.[$LocClassesNames.{$Str}]"/>
@@ -4916,7 +4984,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<remove_value name="$LocString"/>
 								<do_for_each name="$LocWare" in="$LocWareList">
@@ -4969,7 +5037,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<do_if value="$DADVT.$DABPTracking.keys.list.count">
 							<set_value name="$LocWareList" exact="[]"/>
@@ -5082,7 +5150,7 @@
 									$current		= $LocCurrent,
 									$max			= $LocRequired,
 									$mouseOverText	= $LocText,
-									$markerColor	= 'Helper.color.transparent',
+									$markerColor	= $DAMVT.$MarkerTransparent,
 								]"/>
 							<remove_value name="$LocRequired"/>
 							<remove_value name="$LocCurrent"/>
@@ -5118,7 +5186,7 @@
 								$colSpan = event.param.$columns,
 								$text = table[
 								  $text   =  [{33232474,2410},{33232474,2411}].{$DAMVT.$InfoMilDisplayOption}, 
-								  $color  =  'Helper.color.green',
+								  $color  =  $DAMVT.$TextGreen,
 								  $halign = 'center',
 								],
 								$onClick = ExecuteOption_InfoMilStrengthDisplay,
@@ -5131,7 +5199,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
@@ -5190,7 +5258,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!-- LocGalaxyTotal = [Total,TotalXL,TotalL,TotalM,TotalS,TotalTS] -->
 						<set_value name="$LocGalaxyTotal" exact="[0,0,0,0,0,0]"/>
@@ -5302,7 +5370,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!-- Adding galaxy totals -->
 						<set_value name="$LocGalaxyTotal" exact="0"/>
@@ -5327,7 +5395,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -5501,7 +5569,8 @@
 							<!--Go through products.-->
 							<do_for_each name="$ware" in="$cont.products.list">
 								<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$wares_wanted.{$ware}" exact="0" operation="add"/>
+								<!-- 20240717 Adding half of target amount for production stations better represents the goal of producers having 50% stock -->
+								<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target / 2" operation="add"/>
 							</do_for_each>
 							<!--Tradewares are those that are not product or resource.-->
 							<do_for_each name="$ware" in="$cont.tradewares.list">
@@ -5532,7 +5601,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!--Create the menu rows.-->
 						<do_for_each name="$ware" valuename="$wanted" in="$wares_wanted">
@@ -5543,10 +5612,10 @@
 							<set_value name="$LocCurrent" exact="$exists"/>
 							<set_value name="$LocMax" exact="[$exists,$wanted].max"/>
 							<!-- Colors by deadair -->
-							<set_value name="$vcolor" exact="'Helper.color.blue'"/>
-							<set_value name="$pcolor" exact="'Helper.color.green'"/>
-							<set_value name="$ncolor" exact="'Helper.color.red'"/>
-							<set_value name="$mcolor" exact="'Helper.color.transparent'"/>
+							<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
+							<set_value name="$pcolor" exact="$DAMVT.$FillGreen"/>
+							<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+							<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							<do_if value="$wanted gt 0">
 								<set_value name="$LocPercent" exact="'%,s%%'.[((($exists)f / ([$wanted,1.0].max)f) * 100.0)]"/>
 							</do_if>
@@ -5639,7 +5708,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!--Create the menu rows.-->
 						<do_for_each name="$ware" in="$res_wanted">
@@ -5651,16 +5720,16 @@
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left']"/>
 							<!-- Production -->
 							<do_if value="$procap_output == 0">
-								<set_value name="$vcolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$pcolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$ncolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$mcolor" exact="'Helper.color.transparent'"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_if>
 							<do_else>
-								<set_value name="$vcolor" exact="'Helper.color.blue'"/>
-								<set_value name="$pcolor" exact="'Helper.color.blue'"/>
-								<set_value name="$ncolor" exact="'Helper.color.red'"/>
-								<set_value name="$mcolor" exact="'Helper.color.transparent'"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillBlue"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_else>
 							<do_if value="$procap_output">
 								<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
@@ -5683,16 +5752,16 @@
 							</do_else>
 							<!-- Consumption -->
 							<do_if value="$rescap_output == 0">
-								<set_value name="$vcolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$pcolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$ncolor" exact="'Helper.color.transparent'"/>
-								<set_value name="$mcolor" exact="'Helper.color.transparent'"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillTransparent"/>
+								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_if>
 							<do_else>
-								<set_value name="$vcolor" exact="'Helper.color.blue'"/>
-								<set_value name="$pcolor" exact="'Helper.color.blue'"/>
-								<set_value name="$ncolor" exact="'Helper.color.red'"/>
-								<set_value name="$mcolor" exact="'Helper.color.transparent'"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillBlue"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_else>
 							<do_if value="$rescap_output">
 								<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
@@ -5768,7 +5837,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!--Create the menu rows.-->
 						<do_for_each name="$Macro" in="$MacroList">
@@ -5832,7 +5901,7 @@
 								$colSpan = 3,
 								$text = table[
 								  $text   =  if $DAGVT.$DATPEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DAGVT.$DATPEnable then 'Helper.color.green' else 'Helper.color.red',
+								  $color  =  if $DAGVT.$DATPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
 								$mouseOverText = {33232474,1407},
@@ -5851,7 +5920,7 @@
 									$colSpan = 3,
 									$text = table[
 									  $text   =  if $DAMVT.$TPSortByName then {1001,2809} else {33232474,2406}, 
-									  $color  =  if $DAMVT.$TPSortByName then 'Helper.color.blue' else 'Helper.color.green',
+									  $color  =  $DAMVT.$TextGreen,
 									  $halign = 'center',
 									],
 									$onClick = ExecuteOption_TPSortByNameEnable,
@@ -5872,7 +5941,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<do_if value="$DAGVT.$DATPEnable and (($DAGVT.$DATPTraderTable? and $DAGVT.$DATPTraderTable.keys.count) or (global.$DALifetimeGrofit? and global.$DALifetimeGrofit.keys.count))">
 							<!-- Calculations first, then menu -->
@@ -5932,7 +6001,7 @@
 										$colSpan = event.param.$columns,
 										$height = 2,
 										$fontsize = 1,
-										$cellBGColor = 'Helper.color.grey',
+										$cellBGColor = 'Color.row_separator',
 									]"/>
 								<do_if value="$DAMVT.$TPSortByName">
 									<sort_list list="$LocKeyList" sortbyvalue="loop.element.knownname" sortdescending="false"/>
@@ -5950,14 +6019,14 @@
 									<remove_value name="$LocName"/>
 									<set_value name="$LocText" exact="$OutputTable.{$LocObject}.{1}.formatted.default"/>
 									<do_if value="$OutputTable.{$LocObject}.{1} gt 0">
-										<set_value name="$VColor" exact="'Helper.color.transparent'"/>
-										<set_value name="$PColor" exact="'Helper.color.green'"/>
-										<set_value name="$NColor" exact="'Helper.color.red'"/>
+										<set_value name="$VColor" exact="$DAMVT.$FillTransparent"/>
+										<set_value name="$PColor" exact="$DAMVT.$FillGreen"/>
+										<set_value name="$NColor" exact="$DAMVT.$FillRed"/>
 									</do_if>
 									<do_else>
-										<set_value name="$VColor" exact="'Helper.color.transparent'"/>
-										<set_value name="$PColor" exact="'Helper.color.transparent'"/>
-										<set_value name="$NColor" exact="'Helper.color.red'"/>
+										<set_value name="$VColor" exact="$DAMVT.$FillTransparent"/>
+										<set_value name="$PColor" exact="$DAMVT.$FillTransparent"/>
+										<set_value name="$NColor" exact="$DAMVT.$FillRed"/>
 									</do_else>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
 											$col			= 5, 
@@ -5971,7 +6040,7 @@
 											$valueColor		= $VColor,
 											$posChangeColor	= $PColor,
 											$negChangeColor	= $NColor,
-											$markerColor	= 'Helper.color.transparent',
+											$markerColor	= $DAMVT.$MarkerTransparent,
 										]"/>
 									<remove_value name="$LocText"/>
 									<remove_value name="$VColor"/>
@@ -6200,7 +6269,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<!-- Galaxy-wide -->
@@ -6379,7 +6448,7 @@
 								$colSpan = event.param.$columns,
 								$height = 2,
 								$fontsize = 1,
-								$cellBGColor = 'Helper.color.grey',
+								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<!-- Galaxy-wide -->

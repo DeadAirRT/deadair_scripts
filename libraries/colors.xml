@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diff>
+	<add sel="/colormap/mappings">
+		<mapping id="da_text_green" ref="green_glow"/>
+		<mapping id="da_text_red" ref="red_moderate_glow"/>
+		<mapping id="da_text_blue" ref="azure_bright_moderate_glow"/>
+		<mapping id="da_marker_transparent" ref="black_alpha_0"/>
+		<mapping id="da_transparent" ref="black_alpha_0"/>
+		<mapping id="da_red_dark" ref="red_dark"/>
+		<mapping id="da_red" ref="red_weak_glow"/>
+		<mapping id="da_red_bright" ref="red_bright_weak_glow"/>
+		<mapping id="da_green_dark" ref="green_dark"/>
+		<mapping id="da_green" ref="green_weak_glow"/>
+		<mapping id="da_green_bright" ref="green_bright_weak_glow"/>
+		<mapping id="da_yellow_dark" ref="yellow_dark"/>
+		<mapping id="da_yellow" ref="yellow_moderate_glow"/>
+		<mapping id="da_yellow_bright" ref="yellow_bright_glow"/>
+		<mapping id="da_blue_dark" ref="azure_dark"/>
+		<mapping id="da_blue" ref="azure_weak_glow"/>
+		<mapping id="da_blue_bright" ref="azure_bright_weak_glow"/>
+		<mapping id="da_orange_dark" ref="orange_dark"/>
+		<mapping id="da_orange" ref="orange_weak_glow"/>
+		<mapping id="da_orange_bright" ref="orange_bright_weak_glow"/>
+	</add>
+</diff>

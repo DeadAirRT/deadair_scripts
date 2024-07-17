@@ -201,7 +201,7 @@
 				<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="false"/>
 				<create_group groupname="$DADVT.$DAGodTrackedStations"/>
 				<set_value name="$DADVT.$DAGodTrackedStationsInfo" exact="table[]"/>
-				<set_value name="$DADVT.$DAGodStationRequestInterval" exact="1"/>
+				<set_value name="$DADVT.$DAGodStationRequestInterval" exact="2"/>
 				<set_value name="$DADVT.$DAGodDetailedDebug" exact="false"/>
 				<set_value name="$DADVT.$DAGodXtremelyDetailedDebug" exact="false"/>
 				<!-- Jobs - Misc -->
@@ -7638,428 +7638,481 @@
 						<!-- DONE: Filter sectors for resources if $Ware is a first stage production -->
 						<!-- DONE: Test lower zone limits. Working. -->
 						<!-- DONE: implement position placement method -->
-						<set_value name="this.$DAGodLocFaction" exact="event.param.{1}"/>
-						<set_value name="this.$DAGodLocWare" exact="event.param.{2}"/>
-						<set_value name="this.$DAGodLocModCount" exact="event.param.{3}"/>
-						<set_value name="this.$DAGodLocMaxStations" exact="2" comment="Max amount of existing stations in a zone to consider building in"/>
-						<get_factions_by_relation result="this.$DAGodLocEnemies" faction="this.$DAGodLocFaction" relation="killmilitary"/>
+						<set_value name="$DAGodLocFaction" exact="event.param.{1}"/>
+						<set_value name="$DAGodLocWare" exact="event.param.{2}"/>
+						<set_value name="$DAGodLocModCount" exact="event.param.{3}"/>
+						<set_value name="$DAGodLocMaxStations" exact="2" comment="Max amount of existing stations in a zone to consider building in"/>
+						<get_factions_by_relation result="$DAGodLocEnemies" faction="$DAGodLocFaction" relation="killmilitary"/>
 						<do_if value="md.$DADynamicVarTable.$DAGodAllowBuildInFriendly">
-							<get_factions_by_relation result="this.$DAGodLocFriends" faction="this.$DAGodLocFaction" relation="member"/>
+							<get_factions_by_relation result="$DAGodLocFriends" faction="$DAGodLocFaction" relation="member"/>
 						</do_if>
-						<find_sector name="this.$DAGodLocSectors" space="player.galaxy" owner="this.$DAGodLocFaction" contested="false" multiple="true"/>
-						<do_if value="not this.$DAGodLocFaction.isactive">
-							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR FACTION INACTIVE -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount]" context="true" filter="error"/>
+						<find_sector name="$DAGodLocSectors" space="player.galaxy" owner="$DAGodLocFaction" contested="false" multiple="true"/>
+						<do_if value="not $DAGodLocFaction.isactive">
+							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR FACTION INACTIVE -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount]" context="true" filter="error"/>
 							<!-- TODO: Cancel requests? Since inactive factions are filtered in menu, this should only trigger on factions that go inactive -->
 						</do_if>
-						<do_elseif value="this.$DAGodLocFaction.isactive and this.$DAGodLocSectors.count">
+						<do_elseif value="$DAGodLocFaction.isactive and $DAGodLocSectors.count">
 							<!-- Request in owned sector -->
 							<!-- Applies special logic for wares that require minable or energycells, then checks safe/core sectors before danger/border sectors -->
-							<set_value name="this.$DAGodLocSafeSectors" exact="[]"/>
-							<set_value name="this.$DAGodLocDangerSectors" exact="[]"/>
-							<set_value name="this.$LocCheckSunlight" exact="false"/>
-							<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSectors">
-								<find_sector_in_range name="this.$DAGodEnemySectors" object="this.$DAGodLocSector" maxdistance="1" owner="this.$DAGodLocEnemies" multiple="true"/>
-								<do_if value="not @this.$DAGodEnemySectors.count">
-									<append_to_list name="this.$DAGodLocSafeSectors" exact="this.$DAGodLocSector"/>
+							<set_value name="$DAGodLocSafeSectors" exact="[]"/>
+							<set_value name="$DAGodLocDangerSectors" exact="[]"/>
+							<set_value name="$LocCheckSunlight" exact="false"/>
+							<set_value name="$LocResourceSectors" exact="[]"/>
+							<set_value name="$LocSunlightSectors" exact="[]"/>
+							<do_for_each name="$DAGodLocSector" in="$DAGodLocSectors">
+								<find_sector_in_range name="$DAGodEnemySectors" object="$DAGodLocSector" maxdistance="1" owner="$DAGodLocEnemies" multiple="true"/>
+								<do_if value="not @$DAGodEnemySectors.count">
+									<append_to_list name="$DAGodLocSafeSectors" exact="$DAGodLocSector"/>
 								</do_if>
 								<do_else>
-									<append_to_list name="this.$DAGodLocDangerSectors" exact="this.$DAGodLocSector"/>
+									<append_to_list name="$DAGodLocDangerSectors" exact="$DAGodLocSector"/>
 								</do_else>
-								<remove_value name="this.$DAGodEnemySectors"/>
+								<remove_value name="$DAGodEnemySectors"/>
 							</do_for_each>
-							<set_value name="this.$LocResourcesNeeded" exact="[]"/>
-							<do_if value="this.$DAGodLocWare.raceresources.{this.$DAGodLocFaction.primaryrace}.count" min="1">
-								<do_for_each name="this.$LocWareResource" in="this.$DAGodLocWare.raceresources.{this.$DAGodLocFaction.primaryrace}.list">
-									<do_if value="this.$LocWareResource.hastag.{tag.minable}">
-										<append_to_list name="this.$LocResourcesNeeded" exact="this.$LocWareResource"/>
+							<set_value name="$LocResourcesNeeded" exact="[]"/>
+							<do_if value="$DAGodLocWare.raceresources.{$DAGodLocFaction.primaryrace}.count" min="1">
+								<do_for_each name="$LocWareResource" in="$DAGodLocWare.raceresources.{$DAGodLocFaction.primaryrace}.list">
+									<do_if value="$LocWareResource.hastag.{tag.minable}">
+										<append_to_list name="$LocResourcesNeeded" exact="$LocWareResource"/>
 									</do_if>
 								</do_for_each>
 							</do_if>
-							<do_if value="this.$DAGodLocWare == ware.energycells">
-								<set_value name="this.$LocCheckSunlight" exact="true"/>
+							<do_if value="$DAGodLocWare == ware.energycells">
+								<set_value name="$LocCheckSunlight" exact="true"/>
 							</do_if>
 							<!-- 20240424 Improved resource check to check safe then danger, will proceed to normal logic if no zone found -->
-							<do_if value="not @this.$DAGodLocZone and this.$LocResourcesNeeded.count" comment="requires minable resources">
-								<shuffle_list list="this.$DAGodLocSafeSectors"/>
-								<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-									<do_if value="this.$DAGodLocSector.resources.count" min="1">
-										<do_for_each name="this.$LocSectorResource" in="this.$DAGodLocSector.resources.list">
-											<do_if value="this.$LocResourcesNeeded.indexof.{this.$LocSectorResource}">
-												<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-													<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
-												</find_zone>
-												<do_if value="@this.$DAGodLocZone">
-													<break/>
-												</do_if>
-											</do_if>
-										</do_for_each>
-									</do_if>
-									<do_if value="@this.$DAGodLocZone">
-										<break/>
-									</do_if>
-								</do_for_each>
-								<do_if value="not @this.$DAGodLocZone">
-									<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-										<do_if value="this.$DAGodLocSector.resources.count" min="1">
-											<do_for_each name="this.$LocSectorResource" in="this.$DAGodLocSector.resources.list">
-												<do_if value="this.$LocResourcesNeeded.indexof.{this.$LocSectorResource}">
-													<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-														<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
-														<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
+							<!-- 20240709 Wares requiring resources will now use position based logic before choosing sectors normally if no desired zones are found in Safe/Danger sectors -->
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $LocResourcesNeeded.count and ($DAGodLocSafeSectors.count or $DAGodLocDangerSectors.count)" comment="requires minable resources">
+								<do_if value="$DAGodLocSafeSectors.count" min="1">
+									<shuffle_list list="$DAGodLocSafeSectors"/>
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+										<do_if value="$DAGodLocSector.resources.count" min="1">
+											<do_for_each name="$LocSectorResource" in="$DAGodLocSector.resources.list">
+												<do_if value="$LocResourcesNeeded.indexof.{$LocSectorResource}">
+													<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+														<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 													</find_zone>
-													<do_if value="@this.$DAGodLocZone">
+													<do_if value="@$DAGodLocZone">
+														<clear_list list="$LocResourceSectors"/>
 														<break/>
+													</do_if>
+													<do_if value="not $LocResourceSectors.indexof.{$DAGodLocSector}">
+														<append_to_list name="$LocResourceSectors" exact="$DAGodLocSector"/>
 													</do_if>
 												</do_if>
 											</do_for_each>
 										</do_if>
-										<do_if value="@this.$DAGodLocZone">
+										<do_if value="@$DAGodLocZone">
+											<clear_list list="$LocResourceSectors"/>
 											<break/>
 										</do_if>
 									</do_for_each>
+								</do_if>
+								<do_if value="(not @$DAGodLocZone) and $DAGodLocDangerSectors.count">
+									<shuffle_list list="$DAGodLocDangerSectors"/>
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+										<do_if value="$DAGodLocSector.resources.count" min="1">
+											<do_for_each name="$LocSectorResource" in="$DAGodLocSector.resources.list">
+												<do_if value="$LocResourcesNeeded.indexof.{$LocSectorResource}">
+													<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+														<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
+														<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
+													</find_zone>
+													<do_if value="@$DAGodLocZone">
+														<clear_list list="$LocResourceSectors"/>
+														<break/>
+													</do_if>
+													<do_if value="not $LocResourceSectors.indexof.{$DAGodLocSector}">
+														<append_to_list name="$LocResourceSectors" exact="$DAGodLocSector"/>
+													</do_if>
+												</do_if>
+											</do_for_each>
+										</do_if>
+										<do_if value="@$DAGodLocZone">
+											<clear_list list="$LocResourceSectors"/>
+											<break/>
+										</do_if>
+									</do_for_each>
+								</do_if>
+								<do_if value="(not @$DAGodLocZone) and $LocResourceSectors.count">
+									<!-- 20240709 Position logic -->
+									<set_value name="$DAGodLocSector" exact="$LocResourceSectors.random"/>
+									<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+									<set_value name="$Yaw" min="0deg" max="360deg"/>
+									<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+									<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+									<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+									<remove_value name="$SectorCenter"/>
+									<remove_value name="$Yaw"/>
+									<remove_value name="$Y"/>
+									<remove_value name="$PlacementDist"/>
 								</do_if>
 							</do_if>
 							<!-- 20240424 Added logic for energycell production to check safe then danger, will proceed to normal logic if no zone found -->
-							<do_if value="not @this.$DAGodLocZone and this.$LocCheckSunlight" comment="energycells">
-								<shuffle_list list="this.$DAGodLocSafeSectors"/>
-								<do_if value="this.$LocCheckSunlight">
-									<sort_list list="this.$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
-								</do_if>
-								<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-									<do_if value="this.$DAGodLocSector.sunlight ge 1.0">
-										<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-											<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
-										</find_zone>
-										<do_if value="@this.$DAGodLocZone">
-											<break/>
-										</do_if>
-									</do_if>
-								</do_for_each>
-								<do_if value="not @this.$DAGodLocZone">
-									<sort_list list="this.$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
-									<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-										<do_if value="this.$DAGodLocSector.sunlight ge 1.0">
-											<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-												<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
-												<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
+							<!-- 20240709 EC will now use position based logic before choosing sectors normally if no desired zones are found in Safe/Danger sectors -->
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $LocCheckSunlight and ($DAGodLocSafeSectors.count or $DAGodLocDangerSectors.count)" comment="energycells">
+								<do_if value="$DAGodLocSafeSectors.count" min="1">
+									<shuffle_list list="$DAGodLocSafeSectors"/>
+									<sort_list list="$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+										<do_if value="$DAGodLocSector.sunlight ge 1.0">
+											<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+												<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 											</find_zone>
-											<do_if value="@this.$DAGodLocZone">
+											<do_if value="@$DAGodLocZone">
+												<clear_list list="$LocSunlightSectors"/>
 												<break/>
+											</do_if>
+											<do_if value="not $LocSunlightSectors.indexof.{$DAGodLocSector}">
+												<append_to_list name="$LocSunlightSectors" exact="$DAGodLocSector"/>
 											</do_if>
 										</do_if>
 									</do_for_each>
 								</do_if>
+								<do_if value="(not @$DAGodLocZone) and $DAGodLocDangerSectors.count">
+									<shuffle_list list="$DAGodLocDangerSectors"/>
+									<sort_list list="$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+										<do_if value="$DAGodLocSector.sunlight ge 1.0">
+											<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+												<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
+												<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
+											</find_zone>
+											<do_if value="@$DAGodLocZone">
+												<clear_list list="$LocSunlightSectors"/>
+												<break/>
+											</do_if>
+											<do_if value="not $LocSunlightSectors.indexof.{$DAGodLocSector}">
+												<append_to_list name="$LocSunlightSectors" exact="$DAGodLocSector"/>
+											</do_if>
+										</do_if>
+									</do_for_each>
+								</do_if>
+								<do_if value="(not @$DAGodLocZone) and $LocSunlightSectors.count">
+									<!-- 20240709 Position logic -->
+									<sort_list list="$LocSunlightSectors.count" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<set_value name="$DAGodLocSector" exact="$LocSunlightSectors.{1}"/>
+									<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+									<set_value name="$Yaw" min="0deg" max="360deg"/>
+									<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+									<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+									<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+									<remove_value name="$SectorCenter"/>
+									<remove_value name="$Yaw"/>
+									<remove_value name="$Y"/>
+									<remove_value name="$PlacementDist"/>
+								</do_if>
 							</do_if>
-							<do_if value="not @this.$DAGodLocZone" comment="safe sectors">
-								<shuffle_list list="this.$DAGodLocSafeSectors"/>
-								<do_all exact="this.$DAGodLocMaxStations" counter="$A">
-									<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-										<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $DAGodLocSafeSectors.count" comment="safe sectors">
+								<shuffle_list list="$DAGodLocSafeSectors"/>
+								<do_all exact="$DAGodLocMaxStations" counter="$A">
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+										<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
 											<match_child class="class.station" min="0" max="$A" checkoperational="false"/>
 										</find_zone>
-										<do_if value="@this.$DAGodLocZone">
+										<do_if value="@$DAGodLocZone">
 											<break/>
 										</do_if>
 									</do_for_each>
-									<do_if value="@this.$DAGodLocZone">
+									<do_if value="@$DAGodLocZone">
 										<break/>
 									</do_if>
 								</do_all>
 							</do_if>
-							<do_if value="not @this.$DAGodLocZone" comment="danger sectors">
-								<shuffle_list list="this.$DAGodLocDangerSectors"/>
-								<do_all exact="this.$DAGodLocMaxStations" counter="$A">
-									<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-										<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $DAGodLocDangerSectors.count" comment="danger sectors">
+								<shuffle_list list="$DAGodLocDangerSectors"/>
+								<do_all exact="$DAGodLocMaxStations" counter="$A">
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+										<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
 											<match_child class="class.station" min="0" max="$A" checkoperational="false"/>
 											<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
 										</find_zone>
-										<do_if value="@this.$DAGodLocZone">
+										<do_if value="@$DAGodLocZone">
 											<break/>
 										</do_if>
 									</do_for_each>
-									<do_if value="@this.$DAGodLocZone">
+									<do_if value="@$DAGodLocZone">
 										<break/>
 									</do_if>
 								</do_all>
 							</do_if>
-							<do_if value="not @this.$DAGodLocZone and this.$DAGodLocSafeSectors.count" comment="position based logic">
-								<do_if value="this.$LocCheckSunlight">
-									<sort_list list="this.$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
-									<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocSafeSectors.{1}"/>
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $DAGodLocSafeSectors.count" comment="position based logic">
+								<do_if value="$LocCheckSunlight">
+									<sort_list list="$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<set_value name="$DAGodLocSector" exact="$DAGodLocSafeSectors.{1}"/>
 								</do_if>
 								<do_else>
-									<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocSafeSectors.random"/>
+									<set_value name="$DAGodLocSector" exact="$DAGodLocSafeSectors.random"/>
 								</do_else>
-								<set_value name="this.$SectorCenter" exact="this.$DAGodLocSector.coreposition"/>
-								<set_value name="this.$Yaw" min="0deg" max="360deg"/>
-								<set_value name="this.$Y" min="this.$SectorCenter.y - 10km" max="this.$SectorCenter.y + 10km"/>
-								<set_value name="this.$PlacementDist" min="this.$DAGodLocSector.coresize / 8" max="this.$DAGodLocSector.coresize / 2"/>
-								<create_position name="this.$DAGodStationPosition" space="this.$DAGodLocSector" x="this.$SectorCenter.x + sin(this.$Yaw) * this.$PlacementDist" y="this.$Y" z="this.$SectorCenter.z + cos(this.$Yaw) * this.$PlacementDist"/>
-								<remove_value name="this.$SectorCenter"/>
-								<remove_value name="this.$Yaw"/>
-								<remove_value name="this.$Y"/>
-								<remove_value name="this.$PlacementDist"/>
+								<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+								<set_value name="$Yaw" min="0deg" max="360deg"/>
+								<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+								<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+								<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+								<remove_value name="$SectorCenter"/>
+								<remove_value name="$Yaw"/>
+								<remove_value name="$Y"/>
+								<remove_value name="$PlacementDist"/>
 							</do_if>
-							<do_if value="(not (@this.$DAGodLocZone or (@this.$DAGodLocSector and @this.$DAGodStationPosition))) and this.$DAGodLocDangerSectors.count" comment="position based logic">
-								<do_if value="this.$LocCheckSunlight">
-									<sort_list list="this.$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
-									<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocDangerSectors.{1}"/>
+							<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $DAGodLocDangerSectors.count" comment="position based logic">
+								<do_if value="$LocCheckSunlight">
+									<sort_list list="$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<set_value name="$DAGodLocSector" exact="$DAGodLocDangerSectors.{1}"/>
 								</do_if>
 								<do_else>
-									<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocDangerSectors.random"/>
+									<set_value name="$DAGodLocSector" exact="$DAGodLocDangerSectors.random"/>
 								</do_else>
-								<set_value name="this.$SectorCenter" exact="this.$DAGodLocSector.coreposition"/>
-								<set_value name="this.$Yaw" min="0deg" max="360deg"/>
-								<set_value name="this.$Y" min="this.$SectorCenter.y - 10km" max="this.$SectorCenter.y + 10km"/>
-								<set_value name="this.$PlacementDist" min="this.$DAGodLocSector.coresize / 8" max="this.$DAGodLocSector.coresize / 2"/>
-								<create_position name="this.$DAGodStationPosition" space="this.$DAGodLocSector" x="this.$SectorCenter.x + sin(this.$Yaw) * this.$PlacementDist" y="this.$Y" z="this.$SectorCenter.z + cos(this.$Yaw) * this.$PlacementDist"/>
-								<remove_value name="this.$SectorCenter"/>
-								<remove_value name="this.$Yaw"/>
-								<remove_value name="this.$Y"/>
-								<remove_value name="this.$PlacementDist"/>
+								<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+								<set_value name="$Yaw" min="0deg" max="360deg"/>
+								<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+								<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+								<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+								<remove_value name="$SectorCenter"/>
+								<remove_value name="$Yaw"/>
+								<remove_value name="$Y"/>
+								<remove_value name="$PlacementDist"/>
 							</do_if>
-							<remove_value name="this.$DAGodLocSectors"/>
-							<remove_value name="this.$DAGodLocSafeSectors"/>
-							<remove_value name="this.$DAGodLocDangerSectors"/>
-							<remove_value name="this.$LocResourcesNeeded"/>
-							<remove_value name="this.$LocCheckSunlight"/>
+							<remove_value name="$DAGodLocSectors"/>
+							<remove_value name="$DAGodLocSafeSectors"/>
+							<remove_value name="$DAGodLocDangerSectors"/>
+							<remove_value name="$LocResourcesNeeded"/>
+							<remove_value name="$LocCheckSunlight"/>
 						</do_elseif>
-						<!-- 20240410 @this.$DAGodLocFriends.count will be null if option to build in friendly is disabled -->
-						<do_if value="not this.$DAGodLocFaction.isactive">
-							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR FACTION INACTIVE -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount]" context="true" filter="error"/>
+						<!-- 20240410 @$DAGodLocFriends.count will be null if option to build in friendly is disabled -->
+						<do_if value="not $DAGodLocFaction.isactive">
+							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR FACTION INACTIVE -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount]" context="true" filter="error"/>
 							<!-- TODO: Cancel requests? Since inactive factions are filtered in menu, this should only trigger on factions that go inactive -->
 						</do_if>
-						<do_elseif value="this.$DAGodLocFaction.isactive and @this.$DAGodLocFriends.count and (not (@this.$DAGodLocZone or (@this.$DAGodLocSector and @this.$DAGodStationPosition)))">
+						<do_elseif value="$DAGodLocFaction.isactive and @$DAGodLocFriends.count and (not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition)))">
 							<!-- Option for allowing AI to build in player sector, default false -->
-							<do_if value="(not md.$DADynamicVarTable.$DAGodAllowBuildInPlayer) and this.$DAGodLocFriends.indexof.{faction.player}">
-								<remove_from_list name="this.$DAGodLocFriends" exact="faction.player" multiple="true"/>
+							<do_if value="(not md.$DADynamicVarTable.$DAGodAllowBuildInPlayer) and $DAGodLocFriends.indexof.{faction.player}">
+								<remove_from_list name="$DAGodLocFriends" exact="faction.player" multiple="true"/>
 							</do_if>
 							<!-- Request in ally sector if no owned -->
-							<do_if value="this.$DAGodLocFriends.count" min="1">
-								<find_sector name="this.$DAGodLocSectors" space="player.galaxy" owner="this.$DAGodLocFriends" contested="false" multiple="true"/>
-								<do_if value="this.$DAGodLocSectors.count" min="1">
+							<do_if value="$DAGodLocFriends.count" min="1">
+								<find_sector name="$DAGodLocSectors" space="player.galaxy" owner="$DAGodLocFriends" contested="false" multiple="true"/>
+								<do_if value="$DAGodLocSectors.count" min="1">
 									<!-- Request in ally owned sector -->
-									<set_value name="this.$DAGodLocSafeSectors" exact="[]"/>
-									<set_value name="this.$DAGodLocDangerSectors" exact="[]"/>
-									<set_value name="this.$LocCheckSunlight" exact="false"/>
-									<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSectors">
-										<find_sector_in_range name="this.$DAGodEnemySectors" object="this.$DAGodLocSector" maxdistance="1" owner="this.$DAGodLocEnemies" multiple="true"/>
-										<do_if value="not @this.$DAGodEnemySectors.count">
-											<append_to_list name="this.$DAGodLocSafeSectors" exact="this.$DAGodLocSector"/>
+									<set_value name="$DAGodLocSafeSectors" exact="[]"/>
+									<set_value name="$DAGodLocDangerSectors" exact="[]"/>
+									<set_value name="$LocCheckSunlight" exact="false"/>
+									<do_for_each name="$DAGodLocSector" in="$DAGodLocSectors">
+										<find_sector_in_range name="$DAGodEnemySectors" object="$DAGodLocSector" maxdistance="1" owner="$DAGodLocEnemies" multiple="true"/>
+										<do_if value="not @$DAGodEnemySectors.count">
+											<append_to_list name="$DAGodLocSafeSectors" exact="$DAGodLocSector"/>
 										</do_if>
 										<do_else>
-											<append_to_list name="this.$DAGodLocDangerSectors" exact="this.$DAGodLocSector"/>
+											<append_to_list name="$DAGodLocDangerSectors" exact="$DAGodLocSector"/>
 										</do_else>
-										<remove_value name="this.$DAGodEnemySectors"/>
+										<remove_value name="$DAGodEnemySectors"/>
 									</do_for_each>
-									<set_value name="this.$LocResourcesNeeded" exact="[]"/>
-									<do_if value="this.$DAGodLocWare.raceresources.{this.$DAGodLocFaction.primaryrace}.count" min="1">
-										<do_for_each name="this.$LocWareResource" in="this.$DAGodLocWare.raceresources.{this.$DAGodLocFaction.primaryrace}.list">
-											<do_if value="this.$LocWareResource.hastag.{tag.minable}">
-												<append_to_list name="this.$LocResourcesNeeded" exact="this.$LocWareResource"/>
+									<set_value name="$LocResourcesNeeded" exact="[]"/>
+									<do_if value="$DAGodLocWare.raceresources.{$DAGodLocFaction.primaryrace}.count" min="1">
+										<do_for_each name="$LocWareResource" in="$DAGodLocWare.raceresources.{$DAGodLocFaction.primaryrace}.list">
+											<do_if value="$LocWareResource.hastag.{tag.minable}">
+												<append_to_list name="$LocResourcesNeeded" exact="$LocWareResource"/>
 											</do_if>
 										</do_for_each>
 									</do_if>
-									<do_if value="this.$DAGodLocWare == ware.energycells">
-										<set_value name="this.$LocCheckSunlight" exact="true"/>
+									<do_if value="$DAGodLocWare == ware.energycells">
+										<set_value name="$LocCheckSunlight" exact="true"/>
 									</do_if>
 									<!-- 20240424 Improved resource check to check safe then danger, will proceed to normal logic if no zone found -->
-									<do_if value="not @this.$DAGodLocZone and this.$LocResourcesNeeded.count" comment="requires minable resources">
-										<shuffle_list list="this.$DAGodLocSafeSectors"/>
-										<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-											<do_if value="this.$DAGodLocSector.resources.count" min="1">
-												<do_for_each name="this.$LocSectorResource" in="this.$DAGodLocSector.resources.list">
-													<do_if value="this.$LocResourcesNeeded.indexof.{this.$LocSectorResource}">
-														<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-															<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
+									<do_if value="not @$DAGodLocZone and $LocResourcesNeeded.count" comment="requires minable resources">
+										<shuffle_list list="$DAGodLocSafeSectors"/>
+										<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+											<do_if value="$DAGodLocSector.resources.count" min="1">
+												<do_for_each name="$LocSectorResource" in="$DAGodLocSector.resources.list">
+													<do_if value="$LocResourcesNeeded.indexof.{$LocSectorResource}">
+														<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+															<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 														</find_zone>
-														<do_if value="@this.$DAGodLocZone">
+														<do_if value="@$DAGodLocZone">
 															<break/>
 														</do_if>
 													</do_if>
 												</do_for_each>
 											</do_if>
-											<do_if value="@this.$DAGodLocZone">
+											<do_if value="@$DAGodLocZone">
 												<break/>
 											</do_if>
 										</do_for_each>
-										<do_if value="not @this.$DAGodLocZone">
-											<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-												<do_if value="this.$DAGodLocSector.resources.count" min="1">
-													<do_for_each name="this.$LocSectorResource" in="this.$DAGodLocSector.resources.list">
-														<do_if value="this.$LocResourcesNeeded.indexof.{this.$LocSectorResource}">
-															<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-																<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
+										<do_if value="not @$DAGodLocZone">
+											<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+												<do_if value="$DAGodLocSector.resources.count" min="1">
+													<do_for_each name="$LocSectorResource" in="$DAGodLocSector.resources.list">
+														<do_if value="$LocResourcesNeeded.indexof.{$LocSectorResource}">
+															<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+																<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 																<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
 															</find_zone>
-															<do_if value="@this.$DAGodLocZone">
+															<do_if value="@$DAGodLocZone">
 																<break/>
 															</do_if>
 														</do_if>
 													</do_for_each>
 												</do_if>
-												<do_if value="@this.$DAGodLocZone">
+												<do_if value="@$DAGodLocZone">
 													<break/>
 												</do_if>
 											</do_for_each>
 										</do_if>
 									</do_if>
 									<!-- 20240424 Added logic for energycell production to check safe then danger, will proceed to normal logic if no zone found -->
-									<do_if value="not @this.$DAGodLocZone and this.$LocCheckSunlight" comment="energycells">
-										<shuffle_list list="this.$DAGodLocSafeSectors"/>
-										<do_if value="this.$LocCheckSunlight">
-											<sort_list list="this.$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+									<do_if value="not @$DAGodLocZone and $LocCheckSunlight" comment="energycells">
+										<shuffle_list list="$DAGodLocSafeSectors"/>
+										<do_if value="$LocCheckSunlight">
+											<sort_list list="$DAGodLocSafeSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
 										</do_if>
-										<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-											<do_if value="this.$DAGodLocSector.sunlight ge 1.0">
-												<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-													<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
+										<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+											<do_if value="$DAGodLocSector.sunlight ge 1.0">
+												<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+													<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 												</find_zone>
-												<do_if value="@this.$DAGodLocZone">
+												<do_if value="@$DAGodLocZone">
 													<break/>
 												</do_if>
 											</do_if>
 										</do_for_each>
-										<do_if value="not @this.$DAGodLocZone">
-											<sort_list list="this.$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
-											<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-												<do_if value="this.$DAGodLocSector.sunlight ge 1.0">
-													<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
-														<match_child class="class.station" min="0" max="this.$DAGodLocMaxStations" checkoperational="false"/>
+										<do_if value="not @$DAGodLocZone">
+											<sort_list list="$DAGodLocDangerSectors" sortbyvalue="loop.element.sunlight" sortdescending="true"/>
+											<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+												<do_if value="$DAGodLocSector.sunlight ge 1.0">
+													<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+														<match_child class="class.station" min="0" max="$DAGodLocMaxStations" checkoperational="false"/>
 														<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
 													</find_zone>
-													<do_if value="@this.$DAGodLocZone">
+													<do_if value="@$DAGodLocZone">
 														<break/>
 													</do_if>
 												</do_if>
 											</do_for_each>
 										</do_if>
 									</do_if>
-									<do_if value="not @this.$DAGodLocZone" comment="safe sectors">
-										<shuffle_list list="this.$DAGodLocSafeSectors"/>
-										<do_all exact="this.$DAGodLocMaxStations" counter="$A">
-											<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocSafeSectors">
-												<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+									<do_if value="not @$DAGodLocZone" comment="safe sectors">
+										<shuffle_list list="$DAGodLocSafeSectors"/>
+										<do_all exact="$DAGodLocMaxStations" counter="$A">
+											<do_for_each name="$DAGodLocSector" in="$DAGodLocSafeSectors">
+												<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
 													<match_child class="class.station" min="0" max="$A" checkoperational="false"/>
 												</find_zone>
-												<do_if value="@this.$DAGodLocZone">
+												<do_if value="@$DAGodLocZone">
 													<break/>
 												</do_if>
 											</do_for_each>
-											<do_if value="@this.$DAGodLocZone">
+											<do_if value="@$DAGodLocZone">
 												<break/>
 											</do_if>
 										</do_all>
 									</do_if>
-									<do_if value="not @this.$DAGodLocZone" comment="danger sectors">
-										<shuffle_list list="this.$DAGodLocDangerSectors"/>
-										<do_all exact="this.$DAGodLocMaxStations" counter="$A">
-											<do_for_each name="this.$DAGodLocSector" in="this.$DAGodLocDangerSectors">
-												<find_zone name="this.$DAGodLocZone" space="this.$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
+									<do_if value="not @$DAGodLocZone" comment="danger sectors">
+										<shuffle_list list="$DAGodLocDangerSectors"/>
+										<do_all exact="$DAGodLocMaxStations" counter="$A">
+											<do_for_each name="$DAGodLocSector" in="$DAGodLocDangerSectors">
+												<find_zone name="$DAGodLocZone" space="$DAGodLocSector" normalzone="true" tempzone="false" multiple="false">
 													<match_child class="class.station" min="0" max="$A" checkoperational="false"/>
 													<match_child class="[class.gate, class.highwayentrygate, class.highwayexitgate]" negate="true"/>
 												</find_zone>
-												<do_if value="@this.$DAGodLocZone">
+												<do_if value="@$DAGodLocZone">
 													<break/>
 												</do_if>
 											</do_for_each>
-											<do_if value="@this.$DAGodLocZone">
+											<do_if value="@$DAGodLocZone">
 												<break/>
 											</do_if>
 										</do_all>
 									</do_if>
-									<do_if value="not @this.$DAGodLocZone and this.$DAGodLocSafeSectors.count" comment="position based logic">
-										<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocSafeSectors.random"/>
-										<set_value name="this.$SectorCenter" exact="this.$DAGodLocSector.coreposition"/>
-										<set_value name="this.$Yaw" min="0deg" max="360deg"/>
-										<set_value name="this.$Y" min="this.$SectorCenter.y - 10km" max="this.$SectorCenter.y + 10km"/>
-										<set_value name="this.$PlacementDist" min="this.$DAGodLocSector.coresize / 8" max="this.$DAGodLocSector.coresize / 2"/>
-										<create_position name="this.$DAGodStationPosition" space="this.$DAGodLocSector" x="this.$SectorCenter.x + sin(this.$Yaw) * this.$PlacementDist" y="this.$Y" z="this.$SectorCenter.z + cos(this.$Yaw) * this.$PlacementDist"/>
-										<remove_value name="this.$SectorCenter"/>
-										<remove_value name="this.$Yaw"/>
-										<remove_value name="this.$Y"/>
-										<remove_value name="this.$PlacementDist"/>
+									<do_if value="not @$DAGodLocZone and $DAGodLocSafeSectors.count" comment="position based logic">
+										<set_value name="$DAGodLocSector" exact="$DAGodLocSafeSectors.random"/>
+										<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+										<set_value name="$Yaw" min="0deg" max="360deg"/>
+										<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+										<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+										<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+										<remove_value name="$SectorCenter"/>
+										<remove_value name="$Yaw"/>
+										<remove_value name="$Y"/>
+										<remove_value name="$PlacementDist"/>
 									</do_if>
-									<do_if value="(not (@this.$DAGodLocZone or (@this.$DAGodLocSector and @this.$DAGodStationPosition))) and this.$DAGodLocDangerSectors.count" comment="position based logic">
-										<set_value name="this.$DAGodLocSector" exact="this.$DAGodLocDangerSectors.random"/>
-										<set_value name="this.$SectorCenter" exact="this.$DAGodLocSector.coreposition"/>
-										<set_value name="this.$Yaw" min="0deg" max="360deg"/>
-										<set_value name="this.$Y" min="this.$SectorCenter.y - 10km" max="this.$SectorCenter.y + 10km"/>
-										<set_value name="this.$PlacementDist" min="this.$DAGodLocSector.coresize / 8" max="this.$DAGodLocSector.coresize / 2"/>
-										<create_position name="this.$DAGodStationPosition" space="this.$DAGodLocSector" x="this.$SectorCenter.x + sin(this.$Yaw) * this.$PlacementDist" y="this.$Y" z="this.$SectorCenter.z + cos(this.$Yaw) * this.$PlacementDist"/>
-										<remove_value name="this.$SectorCenter"/>
-										<remove_value name="this.$Yaw"/>
-										<remove_value name="this.$Y"/>
-										<remove_value name="this.$PlacementDist"/>
+									<do_if value="(not (@$DAGodLocZone or (@$DAGodLocSector and @$DAGodStationPosition))) and $DAGodLocDangerSectors.count" comment="position based logic">
+										<set_value name="$DAGodLocSector" exact="$DAGodLocDangerSectors.random"/>
+										<set_value name="$SectorCenter" exact="$DAGodLocSector.coreposition"/>
+										<set_value name="$Yaw" min="0deg" max="360deg"/>
+										<set_value name="$Y" min="$SectorCenter.y - 10km" max="$SectorCenter.y + 10km"/>
+										<set_value name="$PlacementDist" min="$DAGodLocSector.coresize / 8" max="$DAGodLocSector.coresize / 2"/>
+										<create_position name="$DAGodStationPosition" space="$DAGodLocSector" x="$SectorCenter.x + sin($Yaw) * $PlacementDist" y="$Y" z="$SectorCenter.z + cos($Yaw) * $PlacementDist"/>
+										<remove_value name="$SectorCenter"/>
+										<remove_value name="$Yaw"/>
+										<remove_value name="$Y"/>
+										<remove_value name="$PlacementDist"/>
 									</do_if>
-									<remove_value name="this.$DAGodLocSectors"/>
-									<remove_value name="this.$DAGodLocSafeSectors"/>
-									<remove_value name="this.$DAGodLocDangerSectors"/>
-									<remove_value name="this.$LocResourcesNeeded"/>
-									<remove_value name="this.$LocCheckSunlight"/>
+									<remove_value name="$DAGodLocSectors"/>
+									<remove_value name="$DAGodLocSafeSectors"/>
+									<remove_value name="$DAGodLocDangerSectors"/>
+									<remove_value name="$LocResourcesNeeded"/>
+									<remove_value name="$LocCheckSunlight"/>
 								</do_if>
 							</do_if>
 						</do_elseif>
-						<remove_value name="this.$DAGodLocEnemies"/>
-						<do_if value="@this.$DAGodLocZone">
+						<remove_value name="$DAGodLocEnemies"/>
+						<do_if value="@$DAGodLocZone">
 							<!-- We have a zone that meets the criteria -->
 							<!-- We know where we want to build station, time to deal with design -->
 							<!-- factionlogic_stations Find_Location_And_Build_Station has logic for creating station -->
 							<!-- DONE: Test implementation of max distance for station placement -->
 							<!-- Changing max to 30km prevented any instances of build storage being outside of zone causing mass traffic errors -->
-							<create_factory name="this.$DAGodLocFactory" modules="this.$DAGodLocModules" resultbasesequence="this.$DAGodLocBaseSequence" zone="this.$DAGodLocZone" race="this.$DAGodLocFaction.primaryrace" owner="this.$DAGodLocFaction" originalproduct="this.$DAGodLocWare">
+							<create_factory name="$DAGodLocFactory" modules="$DAGodLocModules" resultbasesequence="$DAGodLocBaseSequence" zone="$DAGodLocZone" race="$DAGodLocFaction.primaryrace" owner="$DAGodLocFaction" originalproduct="$DAGodLocWare">
 								<compatibilities>
-									<limits production="this.$DAGodLocModCount"/>
+									<limits production="$DAGodLocModCount"/>
 								</compatibilities>
-								<select ware="this.$DAGodLocWare" faction="this.$DAGodLocFaction"/>
+								<select ware="$DAGodLocWare" faction="$DAGodLocFaction"/>
 								<safepos max="30km" includeplotbox="true"/>
 							</create_factory>
 						</do_if>
-						<do_elseif value="@this.$DAGodLocSector and @this.$DAGodStationPosition">
+						<do_elseif value="@$DAGodLocSector and @$DAGodStationPosition">
 							<!-- TODO: TEST. Have yet to reach this code after 20 hours of testing -->
-							<create_factory name="this.$DAGodLocFactory" modules="this.$DAGodLocModules" resultbasesequence="this.$DAGodLocBaseSequence" sector="this.$DAGodLocSector" race="this.$DAGodLocFaction.primaryrace" owner="this.$DAGodLocFaction" originalproduct="this.$DAGodLocWare">
+							<create_factory name="$DAGodLocFactory" modules="$DAGodLocModules" resultbasesequence="$DAGodLocBaseSequence" sector="$DAGodLocSector" race="$DAGodLocFaction.primaryrace" owner="$DAGodLocFaction" originalproduct="$DAGodLocWare">
 								<compatibilities>
-									<limits production="this.$DAGodLocModCount"/>
+									<limits production="$DAGodLocModCount"/>
 								</compatibilities>
-								<select ware="this.$DAGodLocWare" faction="this.$DAGodLocFaction"/>
-								<safepos value="this.$DAGodStationPosition" includeplotbox="true"/>
+								<select ware="$DAGodLocWare" faction="$DAGodLocFaction"/>
+								<safepos value="$DAGodStationPosition" includeplotbox="true"/>
 							</create_factory>
 						</do_elseif>
 						<do_else>
-							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR NO ZONE or SECTOR+POSITION -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount]" context="true" filter="error"/>
+							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR NO ZONE or SECTOR+POSITION -- Faction: %s -- Ware: %s -- ModuleCount: %s'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount]" context="true" filter="error"/>
 						</do_else>
-						<do_if value="@this.$DAGodLocFactory">
-							<do_if value="not md.$DADynamicVarTable.$DAGodStationsStarted.{this.$DAGodLocFaction}?">
-								<set_value name="md.$DADynamicVarTable.$DAGodStationsStarted.{this.$DAGodLocFaction}" exact="1"/>
+						<do_if value="@$DAGodLocFactory">
+							<do_if value="not md.$DADynamicVarTable.$DAGodStationsStarted.{$DAGodLocFaction}?">
+								<set_value name="md.$DADynamicVarTable.$DAGodStationsStarted.{$DAGodLocFaction}" exact="1"/>
 							</do_if>
 							<do_else>
-								<set_value name="md.$DADynamicVarTable.$DAGodStationsStarted.{this.$DAGodLocFaction}" exact="1" operation="add"/>
+								<set_value name="md.$DADynamicVarTable.$DAGodStationsStarted.{$DAGodLocFaction}" exact="1" operation="add"/>
 							</do_else>
 							<signal_cue_instantly cue="md.FinaliseStations.NewStation_GenerateFactory_Signal" param="table[
-									$station = this.$DAGodLocFactory,
-									$plannedmodules = this.$DAGodLocModules,
-									$basesequence = this.$DAGodLocBaseSequence,
-									$moduleset = this.$DAGodLocFactory.modulesets.{1},
+									$station = $DAGodLocFactory,
+									$plannedmodules = $DAGodLocModules,
+									$basesequence = $DAGodLocBaseSequence,
+									$moduleset = $DAGodLocFactory.modulesets.{1},
 									$debugoutput = md.$DADynamicVarTable.$DAGodXtremelyDetailedDebug
 								]"/>
 							<do_if value="md.$DADynamicVarTable.$DAGodXtremelyDetailedDebug">
-								<do_if value="@this.$DAGodLocZone">
-									<debug_text text="'MOD: DAGod -- EventGodRequestStation -- Created Factory -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Factory: %s(%s) -- Zone(Sector): %s(%s)'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount,this.$DAGodLocFactory.knownname,this.$DAGodLocFactory.idcode,this.$DAGodLocZone.macro,this.$DAGodLocZone.sector.knownname]" context="false" filter="scripts"/>
+								<do_if value="@$DAGodLocZone">
+									<debug_text text="'MOD: DAGod -- EventGodRequestStation -- Created Factory -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Factory: %s(%s) -- Zone(Sector): %s(%s)'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount,$DAGodLocFactory.knownname,$DAGodLocFactory.idcode,$DAGodLocZone.macro,$DAGodLocZone.sector.knownname]" context="false" filter="scripts"/>
 								</do_if>
-								<do_elseif value="@this.$DAGodLocSector and @this.$DAGodStationPosition">
-									<debug_text text="'MOD: DAGod -- EventGodRequestStation -- Created Factory -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Factory: %s(%s) -- Sector: %s -- Position: %s,%s,%s'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount,this.$DAGodLocFactory.knownname,this.$DAGodLocFactory.idcode,this.$DAGodLocSector.knownname,this.$DAGodStationPosition.x,this.$DAGodStationPosition.y,this.$DAGodStationPosition.z]" context="false" filter="scripts"/>
+								<do_elseif value="@$DAGodLocSector and @$DAGodStationPosition">
+									<debug_text text="'MOD: DAGod -- EventGodRequestStation -- Created Factory -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Factory: %s(%s) -- Sector: %s -- Position: %s,%s,%s'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount,$DAGodLocFactory.knownname,$DAGodLocFactory.idcode,$DAGodLocSector.knownname,$DAGodStationPosition.x,$DAGodStationPosition.y,$DAGodStationPosition.z]" context="false" filter="scripts"/>
 								</do_elseif>
 							</do_if>
 							<!-- 20240328 Updated to handle recovery -->
-							<signal_cue_instantly cue="EventGodStationWatcher" param="[this.$DAGodLocFactory,this.$DAGodLocFaction,this.$DAGodLocWare,this.$DAGodLocModCount]"/>
+							<signal_cue_instantly cue="EventGodStationWatcher" param="[$DAGodLocFactory,$DAGodLocFaction,$DAGodLocWare,$DAGodLocModCount]"/>
 						</do_if>
 						<do_else>
 							<!-- ERROR -->
 							<!-- Signal EventGodDesignStation if factory fails. Working as intended. -->
-							<set_value name="this.$LocDelay" min="1500s * (md.$DADynamicVarTable.$DAGodStationRequestInterval)s" max="1800s * (md.$DADynamicVarTable.$DAGodStationRequestInterval)s"/>
-							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR creating factory. Recovering. -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Zone(Sector): %s(%s)'.[this.$DAGodLocFaction.id,this.$DAGodLocWare.id,this.$DAGodLocModCount,this.$DAGodLocZone.macro,this.$DAGodLocZone.sector.knownname]" context="true" filter="error"/>
-							<signal_cue_instantly cue="EventGodDesignStation" param="[this.$DAGodLocFaction,this.$DAGodLocWare,this.$LocDelay,this.$DAGodLocModCount]"/>
+							<set_value name="$LocDelay" min="1500s * (md.$DADynamicVarTable.$DAGodStationRequestInterval)s" max="1800s * (md.$DADynamicVarTable.$DAGodStationRequestInterval)s"/>
+							<debug_text text="'MOD: DAGod -- EventGodRequestStation -- ERROR creating factory. Recovering. -- Faction: %s -- Ware: %s -- ModuleCount: %s -- Zone(Sector): %s(%s)'.[$DAGodLocFaction.id,$DAGodLocWare.id,$DAGodLocModCount,$DAGodLocZone.macro,$DAGodLocZone.sector.knownname]" context="true" filter="error"/>
+							<signal_cue_instantly cue="EventGodDesignStation" param="[$DAGodLocFaction,$DAGodLocWare,$LocDelay,$DAGodLocModCount]"/>
 							<cancel_cue cue="EventGodRequestStation"/>
 						</do_else>
 					</actions>
@@ -8960,7 +9013,7 @@
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodStationRequestInterval?">
-							<set_value name="$DADVT.$DAGodStationRequestInterval" exact="1"/>
+							<set_value name="$DADVT.$DAGodStationRequestInterval" exact="2"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodDetailedDebug?">
