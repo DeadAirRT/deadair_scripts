@@ -24,6 +24,7 @@
 				<set_value name="$DAMVT.$DWMilStrengthHistory" exact="table[]"/>
 				<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
 				<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
+				<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
 				<!-- Info -->
 				<set_value name="$DAMVT.$TPSortByName" exact="false"/>
 				<!-- 20240402 Improved handling of relation change costs -->
@@ -98,6 +99,10 @@
 						</do_if>
 						<do_if value="not $DAMVT.$DWEcoStrengthHistory?">
 							<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$InfoEcoDisplayOption?">
+							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="not $DAMVT.$TextGreen?">
@@ -390,6 +395,13 @@
 								$columns = 12, 
 								$title   = {33232474,406},
 								$onOpen  = Menu_Information_TraderProfit,
+								$private = 1,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_information_shipbreakdown',
+								$columns = 8, 
+								$title   = {33232474,408},
+								$onOpen  = Menu_Information_ShipBreakdown,
 								$private = 1,
 							]"/>
 					</actions>
@@ -5170,6 +5182,7 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,404}, $id='menu_information_resourcefullness']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,405}, $id='menu_information_productioncount']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,406}, $id='menu_information_traderprofit']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,408}, $id='menu_information_shipbreakdown']"/>
 					</actions>
 				</cue>
 				<!-- Done: 20240524 Reworked again -->
@@ -5203,54 +5216,19 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,43},
-							$halign = 'left',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Total: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = {1001,2637},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- XL: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = {1001,48},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- L: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = {1001,49},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- M: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = {1001,50},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- S: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = {1001,51},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Threat Assessment -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = {30211,150801},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = {30211,150801}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -5286,7 +5264,7 @@
 							<set_value name="$DAMVT.$DWMilStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal.{1},$LocGalaxyTotal.{2},$LocGalaxyTotal.{3},$LocGalaxyTotal.{4},$LocGalaxyTotal.{5},$LocGalaxyTotal.{6}]"/>
 						</do_if>
 						<do_if value="$DAMVT.$InfoMilDisplayOption == 1" comment="Ship Counts">
-							<include_actions ref="Library_AddMilStrengthSummaryRow"/>
+							<include_actions ref="Library_AddStrengthSummaryRow"/>
 						</do_if>
 						<do_elseif value="$DAMVT.$InfoMilDisplayOption == 2" comment="Count history">
 							<include_actions ref="Library_AddMilStrengthHistorySummaryRow"/>
@@ -5305,7 +5283,7 @@
 						<remove_value name="$LocText"/>
 					</actions>
 				</cue>
-				<!-- DONE: Store previous value at menu open, add text showing change +- if value was stored. Maybe add a time check for at least a couple minutes in between? -->
+				<!-- 20240722 Reworked to match mil strength -->
 				<cue name="Menu_Information_EconStrength" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -5313,56 +5291,42 @@
 					<actions>
 						<set_value name="$WhatFactions" exact="'All'"/>
 						<include_actions ref="Library_DAMenuGetFactions"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$text = table[
+								  $text   =  [{33232474,2410},{33232474,2411}].{$DAMVT.$InfoEcoDisplayOption}, 
+								  $color  =  $DAMVT.$TextGreen,
+								  $halign = 'center',
+								],
+								$onClick = ExecuteOption_InfoEcoStrengthDisplay,
+								$onRightClick = ExecuteOption_InfoEcoStrengthDisplay
+							]"/>
+						<!-- Horizontal Line -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,43},
-							$halign = 'left',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Total -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = {1001,2637},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- XL -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = {1001,48},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- L -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = {1001,49},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- M -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = {1001,50},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- S -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = {1001,51},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Stations -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = {1001,4},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 9, $colSpan = 2, $text = {1001,4}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -5372,162 +5336,48 @@
 								$fontsize = 1,
 								$cellBGColor = 'Color.row_separator',
 							]"/>
-						<!-- Adding galaxy totals -->
-						<set_value name="$LocGalaxyTotal" exact="0"/>
-						<set_value name="$LocGalaxyTotalXL" exact="0"/>
-						<set_value name="$LocGalaxyTotalL" exact="0"/>
-						<set_value name="$LocGalaxyTotalM" exact="0"/>
-						<set_value name="$LocGalaxyTotalS" exact="0"/>
-						<set_value name="$LocGalaxyTotalStations" exact="0"/>
-						<do_all exact="$FactionList.count" counter="$DADynamicWarFactionOneCounter">
-							<set_value name="$DADynamicWarFactionOne" exact="$FactionList.{$DADynamicWarFactionOneCounter}"/>
-							<do_if value="($DADynamicWarFactionOne.isactive)">
-								<include_actions ref="Library_AddFactionEconStrengthRows"/>
+						<!-- LocGalaxyTotal = [Total,TotalXL,TotalL,TotalM,TotalS,TotalStations] -->
+						<set_value name="$LocGalaxyTotal" exact="[0,0,0,0,0,0]"/>
+						<!-- EcoStrengthTable.{$LocFaction} = [Total,TotalXL,TotalL,TotalM,TotalS,TotalStations] -->
+						<set_value name="$EcoStrengthTable" exact="table[]"/>
+						<do_for_each name="$LocFaction" in="$FactionList">
+							<do_if value="$LocFaction.isactive">
+								<set_value name="$EcoStrengthTable.{$LocFaction}" exact="[0,0,0,0,0,0]"/>
+								<include_actions ref="Library_GetEcoStrength"/>
 							</do_if>
-						</do_all>
+						</do_for_each>
+						<set_value name="$SortedFactionList" exact="$EcoStrengthTable.keys.list"/>
+						<sort_list list="$SortedFactionList" sortbyvalue="loop.element.knownname"/>
+						<do_if value="$DAMVT.$InfoEcoDisplayOption == 1" comment="Ship Counts">
+							<do_for_each name="$LocFaction" in="$SortedFactionList">
+								<include_actions ref="Library_AddEcoStrengthRow"/>
+							</do_for_each>
+						</do_if>
+						<do_elseif value="$DAMVT.$InfoEcoDisplayOption == 2" comment="Count history">
+							<do_for_each name="$LocFaction" in="$SortedFactionList">
+								<include_actions ref="Library_AddEcoStrengthHistoryRow"/>
+							</do_for_each>
+						</do_elseif>
 						<do_if value="not $DAMVT.$DWEcoStrengthHistory.$Galaxy?">
-							<set_value name="$DAMVT.$DWEcoStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalStations]"/>
+							<set_value name="$DAMVT.$DWEcoStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal.{1},$LocGalaxyTotal.{2},$LocGalaxyTotal.{3},$LocGalaxyTotal.{4},$LocGalaxyTotal.{5},$LocGalaxyTotal.{6}]"/>
 						</do_if>
-						<!-- Horizontal Line -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1, 
-								$colSpan = event.param.$columns,
-								$height = 2,
-								$fontsize = 1,
-								$cellBGColor = 'Color.row_separator',
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,9191},
-							$halign = 'left',
-							]"/>
-						<!-- Total: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} gt $LocGalaxyTotal">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotal - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2}]" operation="add"/>
+						<do_if value="$DAMVT.$InfoEcoDisplayOption == 1" comment="Ship Counts">
+							<include_actions ref="Library_AddStrengthSummaryRow"/>
+						</do_if>
+						<do_elseif value="$DAMVT.$InfoEcoDisplayOption == 2" comment="Count history">
+							<include_actions ref="Library_AddEcoStrengthHistorySummaryRow"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and (($DAMVT.$DWEcoStrengthHistory.$Galaxy.{1} + 5s) le player.age)">
+								<set_value name="$DAMVT.$DWEcoStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal.{1},$LocGalaxyTotal.{2},$LocGalaxyTotal.{3},$LocGalaxyTotal.{4},$LocGalaxyTotal.{5},$LocGalaxyTotal.{6}]"/>
 							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotal - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<!-- XL: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalXL]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} != $LocGalaxyTotalXL)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} gt $LocGalaxyTotalXL">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotalXL - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3}]" operation="add"/>
-							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotalXL - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<!-- L: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalL]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} != $LocGalaxyTotalL)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} gt $LocGalaxyTotalL">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotalL - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4}]" operation="add"/>
-							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotalL - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<!-- M: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalM]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} != $LocGalaxyTotalM)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} gt $LocGalaxyTotalM">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotalM - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5}]" operation="add"/>
-							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotalM - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<!-- S: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalS]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} != $LocGalaxyTotalS)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} gt $LocGalaxyTotalS">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotalS - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6}]" operation="add"/>
-							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotalS - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<!-- Stations: # -->
-						<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotalStations]"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} != $LocGalaxyTotalStations)">
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} gt $LocGalaxyTotalStations">
-								<set_value name="$LocText" exact="'(%s)'.[$LocGalaxyTotalStations - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7}]" operation="add"/>
-							</do_if>
-							<do_else>
-								<set_value name="$LocText" exact="'(+%s)'.[$LocGalaxyTotalStations - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7}]" operation="add"/>
-							</do_else>
-						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
-						<remove_value name="$LocText"/>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{1} lt player.age)">
-							<set_value name="$LocNumber" exact="(player.age - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{1})s"/>
-							<set_value name="$LocText" exact="{33232474,2400}.[$LocNumber.formatted.{'%m'}]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocNumber"/>
-						</do_if>
-						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and (($DAMVT.$DWEcoStrengthHistory.$Galaxy.{1} + 5s) le player.age)">
-							<set_value name="$DAMVT.$DWEcoStrengthHistory.$Galaxy" exact="[player.age,$LocGalaxyTotal,$LocGalaxyTotalXL,$LocGalaxyTotalL,$LocGalaxyTotalM,$LocGalaxyTotalS,$LocGalaxyTotalStations]"/>
-						</do_if>
-						<!-- Cleanup -->
+							<do_for_each name="$LocFaction" in="$EcoStrengthTable.keys.list">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and (($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{1} + 5s) le player.age)">
+									<set_value name="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}" exact="[player.age,$EcoStrengthTable.{$LocFaction}.{1},$EcoStrengthTable.{$LocFaction}.{2},$EcoStrengthTable.{$LocFaction}.{3},$EcoStrengthTable.{$LocFaction}.{4},$EcoStrengthTable.{$LocFaction}.{5},$EcoStrengthTable.{$LocFaction}.{6}]"/>
+								</do_if>
+							</do_for_each>
+						</do_elseif>
 						<remove_value name="$LocGalaxyTotal"/>
-						<remove_value name="$LocGalaxyTotalXL"/>
-						<remove_value name="$LocGalaxyTotalL"/>
-						<remove_value name="$LocGalaxyTotalM"/>
-						<remove_value name="$LocGalaxyTotalS"/>
-						<remove_value name="$LocGalaxyTotalStations"/>
+						<remove_value name="$EcoStrengthTable"/>
+						<remove_value name="$SortedFactionList"/>
 						<remove_value name="$LocText"/>
 					</actions>
 				</cue>
@@ -5592,9 +5442,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = ('%s / %s / %s'.[{33232474,2401},{33232474,2402},{33232474,2403}]), $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = ('%s / %s / %s'.[{33232474,2401},{33232474,2402},{33232474,2403}]), $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5696,12 +5546,12 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left']"/>
 						<!-- Ware -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,2404}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
 						<!--Production-->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,2405}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,2404}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<!--Consumption-->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,2405}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5828,9 +5678,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,56}, $halign = 'left']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,1311}, $halign = 'center']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {1001,8433}, $halign = 'center']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,56}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,1311}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {1001,8433}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -6064,6 +5914,186 @@
 						</do_else>
 					</actions>
 				</cue>
+				<cue name="Menu_Information_ShipBreakdown" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						<do_if value="$DAMVT.$DAMenuSelectedFaction == null">
+							<set_value name="$DAMVT.$DAMenuSelectedFaction" exact="$FactionList.{1}"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+						</do_if>
+						<set_value name="$PurposeTable" exact="table[]"/>
+						<set_value name="$MacroTable" exact="table[]"/>
+						<set_value name="$EquipmentTable" exact="table[]"/>
+						<!-- Owner: $DAMVT.$DAMenuSelectedFaction -->
+						<find_ship_by_true_owner groupname="$AllShips" faction="$DAMVT.$DAMenuSelectedFaction" space="player.galaxy" checkoperational="true" masstraffic="false" unit="false" docked="false" multiple="true" recursive="true">
+							<match shiptype="shiptype.lasertower" negate="true"/>
+						</find_ship_by_true_owner>
+						<find_ship_by_true_owner groupname="$AllShips" faction="$DAMVT.$DAMenuSelectedFaction" space="player.galaxy" checkoperational="true" masstraffic="false" unit="false" docked="true" multiple="true" recursive="true">
+							<match shiptype="shiptype.lasertower" negate="true"/>
+						</find_ship_by_true_owner>
+						<!-- Process data -->
+						<do_for_each name="$Ship" in="$AllShips">
+							<!-- PURPOSE -->
+							<do_if value="not $PurposeTable.{$Ship.primarypurpose}?">
+								<set_value name="$PurposeTable.{$Ship.primarypurpose}" exact="[$Ship,0,0,0,0]" comment="[$ExampleShip,XL,L,M,S]"/>
+							</do_if>
+							<do_if value="$PurposeTable.{$Ship.primarypurpose}?">
+								<do_if value="$Ship.isclass.ship_xl">
+									<set_value name="$PurposeTable.{$Ship.primarypurpose}.{2}" exact="1" operation="add"/>
+								</do_if>
+								<do_elseif value="$Ship.isclass.ship_l">
+									<set_value name="$PurposeTable.{$Ship.primarypurpose}.{3}" exact="1" operation="add"/>
+								</do_elseif>
+								<do_elseif value="$Ship.isclass.ship_m">
+									<set_value name="$PurposeTable.{$Ship.primarypurpose}.{4}" exact="1" operation="add"/>
+								</do_elseif>
+								<do_elseif value="$Ship.isclass.ship_s">
+									<set_value name="$PurposeTable.{$Ship.primarypurpose}.{5}" exact="1" operation="add"/>
+								</do_elseif>
+							</do_if>
+							<!-- MACRO -->
+							<do_if value="not $MacroTable.{$Ship.macro}?">
+								<set_value name="$MacroTable.{$Ship.macro}" exact="[$Ship,1]" comment="[$ExampleShip,count]"/>
+							</do_if>
+							<do_elseif value="$MacroTable.{$Ship.macro}?">
+								<set_value name="$MacroTable.{$Ship.macro}.{2}" exact="1" operation="add"/>
+							</do_elseif>
+							<!-- Will add equipment info later -->
+						</do_for_each>
+						<set_value name="$WhatFactions" exact="'DetailView'"/>
+						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
+						<!-- PURPOSE HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,86}, $halign = 'center', $cellBGColor = 'Color.row_title_background']" comment="Specialisation"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<!-- 1-3,4,5,6,7,8 -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9199}, $halign = 'left']" comment="Object Purpose"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center']" comment="Total"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center']" comment="XL"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center']" comment="L"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center']" comment="M"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center']" comment="S"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- PURPOSE BODY -->
+						<set_value name="$PurposeKeys" exact="[purpose.fight,purpose.auxiliary,purpose.trade,purpose.build,purpose.mine,purpose.salvage,purpose.dismantling]"/>
+						<set_value name="$PurposeKeysText" exact="[300,1500,200,400,500,1800,1900]" comment="Page 20213"/>
+						<do_for_each name="$PurposeKey" in="$PurposeKeys" counter="$A">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<set_value name="$LocText" exact="readtext.{20213}.{$PurposeKeysText.{$A}}"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText, $halign = 'left']"/>
+							<do_if value="$PurposeTable.{$PurposeKey}?">
+								<set_value name="$LocTotal" exact="$PurposeTable.{$PurposeKey}.{2} + $PurposeTable.{$PurposeKey}.{3} + $PurposeTable.{$PurposeKey}.{4} + $PurposeTable.{$PurposeKey}.{5}"/>
+								<do_if value="$LocTotal gt 0">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocTotal, $halign = 'center']" comment="Total"/>
+									<do_all exact="4" counter="$B">
+										<do_if value="$PurposeTable.{$PurposeKey}.{$B + 1}? and ($PurposeTable.{$PurposeKey}.{$B + 1} gt 0)">
+											<set_value name="$LocCol" exact="4 + $B"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = $PurposeTable.{$PurposeKey}.{$B + 1}, $halign = 'center']" comment="Dynamic Output"/>
+											<remove_value name="$LocCol"/>
+										</do_if>
+									</do_all>
+								</do_if>
+								<remove_value name="$LocTotal"/>
+							</do_if>
+							<remove_value name="$LocText"/>
+						</do_for_each>
+						<remove_value name="$PurposeKeys"/>
+						<remove_value name="$PurposeKeysText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- MACROS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,2303}, $halign = 'center', $cellBGColor = 'Color.row_title_background']" comment="Ship Types"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<!-- 1-4,5-8 -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,5}, $halign = 'left']" comment="Ship"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,2637}, $halign = 'center']" comment="Total"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- MACROS BODY -->
+						<set_value name="$SizeKeys" exact="[class.ship_xl,class.ship_l,class.ship_m,class.ship_s]"/>
+						<set_value name="$SizeKeysText" exact="[48,49,50,51]"/>
+						<do_for_each name="$Key" in="$SizeKeys" counter="$A">
+							<set_value name="$LocText" exact="readtext.{1001}.{$SizeKeysText.{$A}}"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 2,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = $LocText, $halign = 'center']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<remove_value name="$LocText"/>
+							<set_value name="$MacroList" exact="$MacroTable.keys.list"/>
+							<sort_list list="$MacroList" sortbyvalue="$MacroTable.{loop.element}.{1}.macro.name"/>
+							<do_for_each name="$Macro" in="$MacroList">
+								<do_if value="$MacroTable.{$Macro}? and $Macro.isclass.{$Key}">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<set_value name="$LocText" exact="$MacroTable.{$Macro}.{1}.macro.name" comment="Overly complicated"/>
+									<set_value name="$LocCount" exact="$MacroTable.{$Macro}.{2}"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $LocText, $halign = 'left']" comment="Ship"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = $LocCount, $halign = 'center']" comment="Total"/>
+									<remove_value name="$LocText"/>
+									<remove_value name="$LocCount"/>
+								</do_if>
+							</do_for_each>
+						</do_for_each>
+						<remove_value name="$SizeKeys"/>
+						<remove_value name="$SizeKeysText"/>
+						<remove_value name="$PurposeTable"/>
+						<remove_value name="$MacroTable"/>
+						<remove_value name="$EquipmentTable"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_InfoMilStrengthDisplay" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -6076,6 +6106,21 @@
 							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
 						</do_else>
 						<debug_text text="'MOD: DAMenus Info -- Updated $DAMVT.$InfoMilDisplayOption to %s'.[$DAMVT.$InfoMilDisplayOption]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_InfoEcoStrengthDisplay" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DAMVT.$InfoEcoDisplayOption == 1">
+							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="2"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus Info -- Updated $DAMVT.$InfoEcoDisplayOption to %s'.[$DAMVT.$InfoEcoDisplayOption]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -6204,6 +6249,118 @@
 						</do_if>
 					</actions>
 				</library>
+				<library name="Library_GetEcoStrength">
+					<actions>
+						<do_if value="$LocFaction">
+							<!-- Find ships -->
+							<find_ship_by_true_owner groupname="$XLShips" faction="$LocFaction" space="player.galaxy" class="class.ship_xl" checkoperational="true" masstraffic="false" unit="false" docked="false" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$XLShips" faction="$LocFaction" space="player.galaxy" class="class.ship_xl" checkoperational="true" masstraffic="false" unit="false" docked="true" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$LShips" faction="$LocFaction" space="player.galaxy" class="class.ship_l" checkoperational="true" masstraffic="false" unit="false" docked="false" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$LShips" faction="$LocFaction" space="player.galaxy" class="class.ship_l" checkoperational="true" masstraffic="false" unit="false" docked="true" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$MShips" faction="$LocFaction" space="player.galaxy" class="class.ship_m" checkoperational="true" masstraffic="false" unit="false" docked="false" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$MShips" faction="$LocFaction" space="player.galaxy" class="class.ship_m" checkoperational="true" masstraffic="false" unit="false" docked="true" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$SShips" faction="$LocFaction" space="player.galaxy" class="class.ship_s" checkoperational="true" masstraffic="false" unit="false" docked="false" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+								<match shiptype="shiptype.lasertower" negate="true"/>
+							</find_ship_by_true_owner>
+							<find_ship_by_true_owner groupname="$SShips" faction="$LocFaction" space="player.galaxy" class="class.ship_s" checkoperational="true" masstraffic="false" unit="false" docked="true" multiple="true" recursive="true">
+								<match_any>
+									<match primarypurpose="purpose.trade"/>
+									<match primarypurpose="purpose.build"/>
+									<match primarypurpose="purpose.mine"/>
+									<match primarypurpose="purpose.salvage"/>
+									<match primarypurpose="purpose.dismantling"/>
+								</match_any>
+								<match shiptype="shiptype.lasertower" negate="true"/>
+							</find_ship_by_true_owner>
+							<!-- Stations -->
+							<find_station_by_true_owner groupname="$Stations" faction="$LocFaction" space="player.galaxy" checkoperational="true" multiple="true"/>
+							<!-- Add to AllShips -->
+							<create_group groupname="$AllShips"/>
+							<add_to_group groupname="$AllShips" group="$XLShips"/>
+							<add_to_group groupname="$AllShips" group="$LShips"/>
+							<add_to_group groupname="$AllShips" group="$MShips"/>
+							<add_to_group groupname="$AllShips" group="$SShips"/>
+							<!-- Add data to tables+lists -->
+							<set_value name="$LocGalaxyTotal.{1}" exact="$AllShips.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{1}" exact="$AllShips.count" operation="add"/>
+							<set_value name="$LocGalaxyTotal.{2}" exact="$XLShips.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{2}" exact="$XLShips.count" operation="add"/>
+							<set_value name="$LocGalaxyTotal.{3}" exact="$LShips.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{3}" exact="$LShips.count" operation="add"/>
+							<set_value name="$LocGalaxyTotal.{4}" exact="$MShips.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{4}" exact="$MShips.count" operation="add"/>
+							<set_value name="$LocGalaxyTotal.{5}" exact="$SShips.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{5}" exact="$SShips.count" operation="add"/>
+							<set_value name="$LocGalaxyTotal.{6}" exact="$Stations.count" operation="add"/>
+							<set_value name="$EcoStrengthTable.{$LocFaction}.{6}" exact="$Stations.count" operation="add"/>
+							<!-- Strength History -->
+							<do_if value="not $DAMVT.$DWEcoStrengthHistory.{$LocFaction}?">
+								<set_value name="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}" exact="[player.age,$AllShips.count,$XLShips.count,$LShips.count,$MShips.count,$SShips.count,$Stations.count]"/>
+							</do_if>
+							<remove_value name="$XLShips"/>
+							<remove_value name="$LShips"/>
+							<remove_value name="$MShips"/>
+							<remove_value name="$SShips"/>
+							<remove_value name="$AllShips"/>
+							<remove_value name="$Stations"/>
+						</do_if>
+					</actions>
+				</library>
 				<library name="Library_AddMilStrengthRow">
 					<actions>
 						<do_if value="$LocFaction">
@@ -6260,7 +6417,63 @@
 						</do_if>
 					</actions>
 				</library>
-				<library name="Library_AddMilStrengthSummaryRow">
+				<library name="Library_AddEcoStrengthRow">
+					<actions>
+						<do_if value="$LocFaction">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<!-- Faction knownname -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 3,
+								$text = $LocFaction.knownname,
+								$halign = 'left',
+								]"/>
+							<!-- Total: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 4,
+								$colSpan = 1,
+								$text = $EcoStrengthTable.{$LocFaction}.{1},
+								$halign = 'center',
+								]"/>
+							<!-- XL: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 5,
+								$colSpan = 1,
+								$text = $EcoStrengthTable.{$LocFaction}.{2},
+								$halign = 'center',
+								]"/>
+							<!-- L: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 6,
+								$colSpan = 1,
+								$text = $EcoStrengthTable.{$LocFaction}.{3},
+								$halign = 'center',
+								]"/>
+							<!-- M: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 7,
+								$colSpan = 1,
+								$text = $EcoStrengthTable.{$LocFaction}.{4},
+								$halign = 'center',
+								]"/>
+							<!-- S: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = $EcoStrengthTable.{$LocFaction}.{5},
+								$halign = 'center',
+								]"/>
+							<!-- Threatscore: # -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 9,
+								$colSpan = 2,
+								$text = $EcoStrengthTable.{$LocFaction}.{6},
+								$halign = 'center',
+								]"/>
+						</do_if>
+					</actions>
+				</library>
+				<library name="Library_AddStrengthSummaryRow">
 					<actions>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -6439,6 +6652,122 @@
 						</do_if>
 					</actions>
 				</library>
+				<library name="Library_AddEcoStrengthHistoryRow">
+					<actions>
+						<do_if value="$LocFaction">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<!-- Faction knownname -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 3,
+								$text = $LocFaction.knownname,
+								$halign = 'left',
+								]"/>
+							<!-- Total: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2} != $EcoStrengthTable.{$LocFaction}.{1})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2} gt $EcoStrengthTable.{$LocFaction}.{1}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{1} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{1} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 4,
+								$colSpan = 1,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+							<!-- XL: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{3} != $EcoStrengthTable.{$LocFaction}.{2})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{3} gt $EcoStrengthTable.{$LocFaction}.{2}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{2} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{3}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{2} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{3}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 5,
+								$colSpan = 1,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+							<!-- L: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{4} != $EcoStrengthTable.{$LocFaction}.{3})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{4} gt $EcoStrengthTable.{$LocFaction}.{3}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{3} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{4}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{3} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{4}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 6,
+								$colSpan = 1,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+							<!-- M: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{5} != $EcoStrengthTable.{$LocFaction}.{4})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{5} gt $EcoStrengthTable.{$LocFaction}.{4}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{4} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{5}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{4} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{5}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 7,
+								$colSpan = 1,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+							<!-- S: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{6} != $EcoStrengthTable.{$LocFaction}.{5})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{6} gt $EcoStrengthTable.{$LocFaction}.{5}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{5} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{6}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{5} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{6}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+							<!-- Stations: # -->
+							<set_value name="$LocText" exact="''"/>
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{7} != $EcoStrengthTable.{$LocFaction}.{6})">
+								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{7} gt $EcoStrengthTable.{$LocFaction}.{6}">
+									<set_value name="$LocText" exact="'%s'.[$EcoStrengthTable.{$LocFaction}.{6} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{7}]"/>
+								</do_if>
+								<do_else>
+									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{6} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{7}]"/>
+								</do_else>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 9,
+								$colSpan = 2,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocText"/>
+						</do_if>
+					</actions>
+				</library>
 				<library name="Library_AddMilStrengthHistorySummaryRow">
 					<actions>
 						<!-- Horizontal Line -->
@@ -6562,6 +6891,155 @@
 						<remove_value name="$LocText"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{1} lt player.age)">
 							<set_value name="$LocNumber" exact="(player.age - $DAMVT.$DWMilStrengthHistory.$Galaxy.{1})s"/>
+							<set_value name="$LocTimeString" exact="''"/>
+							<do_if value="$LocNumber gt (3600s * 24)">
+								<set_value name="$LocTimeString" exact="'%s%s '.[$LocNumber.formatted.{'%d'},{1001,104}]" comment="days" operation="add"/>
+							</do_if>
+							<do_if value="$LocNumber gt 3600s">
+								<set_value name="$LocTimeString" exact="'%s%s '.[$LocNumber.formatted.{'%H'},{1001,102}]" comment="hours" operation="add"/>
+							</do_if>
+							<do_if value="$LocNumber gt 60s">
+								<set_value name="$LocTimeString" exact="'%s%s '.[$LocNumber.formatted.{'%M'},{1001,103}]" comment="minutes" operation="add"/>
+							</do_if>
+							<do_if value="$LocNumber ge 1s">
+								<set_value name="$LocTimeString" exact="'%s%s '.[$LocNumber.formatted.{'%S'},{1001,100}]" comment="seconds" operation="add"/>
+							</do_if>
+							<set_value name="$LocText" exact="{33232474,2400}.[$LocTimeString]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = $LocText,
+								$halign = 'center',
+								]"/>
+							<remove_value name="$LocNumber"/>
+							<remove_value name="$LocText"/>
+						</do_if>
+					</actions>
+				</library>
+				<library name="Library_AddEcoStrengthHistorySummaryRow">
+					<actions>
+						<!-- Horizontal Line -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<!-- Galaxy-wide -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 1,
+							$colSpan = 3,
+							$text = {1001,9191},
+							$halign = 'left',
+							]"/>
+						<!-- Total: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal.{1})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} gt $LocGalaxyTotal.{1}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{1} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{1} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 4,
+							$colSpan = 1,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<!-- XL: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} != $LocGalaxyTotal.{2})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{3} gt $LocGalaxyTotal.{2}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{2} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{2} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 5,
+							$colSpan = 1,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<!-- L: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} != $LocGalaxyTotal.{3})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{4} gt $LocGalaxyTotal.{3}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{3} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{3} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 6,
+							$colSpan = 1,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<!-- M: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} != $LocGalaxyTotal.{4})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{5} gt $LocGalaxyTotal.{4}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{4} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{4} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 7,
+							$colSpan = 1,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<!-- S: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} != $LocGalaxyTotal.{5})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{6} gt $LocGalaxyTotal.{5}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{5} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{5} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 8,
+							$colSpan = 1,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<!-- Stations: # -->
+						<set_value name="$LocText" exact="''"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} != $LocGalaxyTotal.{6})">
+							<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy.{7} gt $LocGalaxyTotal.{6}">
+								<set_value name="$LocText" exact="'%s'.[$LocGalaxyTotal.{6} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7}]"/>
+							</do_if>
+							<do_else>
+								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{6} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7}]"/>
+							</do_else>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+							$col = 9,
+							$colSpan = 2,
+							$text = $LocText,
+							$halign = 'center',
+							]"/>
+						<remove_value name="$LocText"/>
+						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{1} lt player.age)">
+							<set_value name="$LocNumber" exact="(player.age - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{1})s"/>
 							<set_value name="$LocTimeString" exact="''"/>
 							<do_if value="$LocNumber gt (3600s * 24)">
 								<set_value name="$LocTimeString" exact="'%s%s '.[$LocNumber.formatted.{'%d'},{1001,104}]" comment="days" operation="add"/>

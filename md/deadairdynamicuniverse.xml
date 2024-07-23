@@ -4256,6 +4256,8 @@
 						<!-- Inlcude default override library for easy diff changes -->
 						<do_if value="$DAJSST.$OverrideDefaultExecuted? and ($DAJSST.$OverrideDefaultExecuted == false)">
 							<include_actions ref="LibraryJobsSSTOverrideDefault"/>
+							<!-- 20240722 Forgot to set the override tracking to true -->
+							<set_value name="$DAJSST.$OverrideDefaultExecuted" exact="true"/>
 						</do_if>
 						<remove_value name="$LocClaimspaceList"/>
 						<remove_value name="$LocDebugString"/>
