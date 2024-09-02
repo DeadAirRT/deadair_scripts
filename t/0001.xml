@@ -461,7 +461,7 @@
 		<!-- God Menu Entries -->
 		<t id="340">Enable DA God</t>
 		<t id="341">Enable God Debug</t>
-		<t id="342">Show Quota Settings</t>
+		<t id="342">Show / Hide Quota Settings for</t>
 		<t id="343">Production Ware</t>
 		<t id="344">Additional Modules to Build</t>
 		<t id="345">Activate DA God for %s</t>
@@ -482,11 +482,11 @@
 		<!-- God Menu Entry Descriptions -->
 		<t id="1340">Changes whether the DA God options are available in the menu. This does not run the script or change anything in the game on it's own.</t>
 		<t id="1341">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1342">Displays the quota settings for this faction. No settings are applied until the Activate DA God for Faction button has been selected.</t>
+		<t id="1342">Displays or Hides the quota settings for this faction. No settings are applied until the Activate DA God for Faction button has been selected.</t>
 		<t id="1343">The ware produced by the station ordered by the DA God script.</t>
 		<t id="1344">The number of modules that will be built by the DA God script. Stations will each have up to 25 modules each when requested. Each ware and increment of 25 would result in an additional station so be aware that this may affect performance. The default values are calculated from several hundred hours of accumulated data for a strong and balanced economy.</t>
 		<t id="1345">This will trigger the script to run for this faction when this button is clicked. It will use the numbers set above on the sliders and is not reversible. The faction will attempt to maintain the number of modules set not including vanilla module count.</t>
-		<t id="1346">The script for this faction has already been activated. Multiple runs for the same faction is not yet supported.</t>
+		<t id="1346">The script for %s has already been activated. Multiple runs for the same faction is not yet supported.</t>
 		<t id="1347">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode. These debugs are extremely detailed and extensive.</t>
 		<t id="1348">(XXX)</t>
 		<t id="1349">(XXX)</t>
@@ -505,10 +505,10 @@
 		<t id="2341">Additional Modules to Build</t>
 		<t id="2342">{33232474,349} menu available once {33232474,340} is set to true.</t>
 		<t id="2343">Warning: Did not detect a mod that increases plot size and prevents reduction. This may cause issues with station generation due to space constraints. Recommend using a value at or below 10.</t>
-		<t id="2344">(XXX)</t>
-		<t id="2345">(XXX)</t>
-		<t id="2346">(XXX)</t>
-		<t id="2347">(XXX)</t>
+		<t id="2344">Quota Not Activated</t>
+		<t id="2345">Quota Has Been Activated</t>
+		<t id="2346">The script has not been activated for %s.</t>
+		<t id="2347">The script can not be activated for %s because the faction is not active.</t>
 		<t id="2348">(XXX)</t>
 		<t id="2349">(XXX)</t>
 		<t id="2350">(XXX)</t>
@@ -594,7 +594,7 @@
 		<t id="406">Trader Profit Menu</t>
 		<t id="407">Enable DA Trader Profit Tracking</t>
 		<t id="408">Ship Details Menu</t>
-		<t id="409">(XXX)</t>
+		<t id="409">Sector Details Menu</t>
 		<t id="410">(XXX)</t>
 		<t id="411">(XXX)</t>
 		<t id="412">(XXX)</t>
@@ -639,7 +639,7 @@
 		<t id="2409">Hourly estimated profit is based on start time of the default behaviour for the ship and does not account for interruptions.</t>
 		<t id="2410">Number of ships</t>
 		<t id="2411">Change in number of ships since last viewed</t>
-		<t id="2412">(XXX)</t>
+		<t id="2412">Threat Score</t>
 		<t id="2413">(XXX)</t>
 		<t id="2414">(XXX)</t>
 		<t id="2415">(XXX)</t>

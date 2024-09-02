@@ -13,6 +13,7 @@
 				<!-- DONE: Improve handling of prices/favors for increase/decrease relations menus -->
 				<!-- DONE: Jobs menu using md.$DADynamicVarTable.$DAJobsSSTJobSizeQuotas.{$LocFaction} -->
 				<!-- TODO: BP menu -->
+				<!-- TODO: New menu that goes through all sectors, displays balance of threatscore for purpose fight ships. -->
 				<set_value name="md.$DAMenuVarTable" exact="table[]"/>
 				<!-- Shortcut entries -->
 				<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
@@ -34,6 +35,8 @@
 				<set_value name="$DAMVT.$TextGreen" exact="'Color.da_text_green'"/>
 				<set_value name="$DAMVT.$TextRed" exact="'Color.da_text_red'"/>
 				<set_value name="$DAMVT.$TextBlue" exact="'Color.da_text_blue'"/>
+				<set_value name="$DAMVT.$TextWhite" exact="'Color.da_text_white'"/>
+				<set_value name="$DAMVT.$ButtonHighlight" exact="'Color.da_button_highlight'"/>
 				<set_value name="$DAMVT.$MarkerTransparent" exact="'Color.da_marker_transparent'"/>
 				<set_value name="$DAMVT.$FillTransparent" exact="'Color.da_transparent'"/>
 				<set_value name="$DAMVT.$FillRedDark" exact="'Color.da_red_dark'"/>
@@ -51,6 +54,10 @@
 				<set_value name="$DAMVT.$FillOrangeDark" exact="'Color.da_orange_dark'"/>
 				<set_value name="$DAMVT.$FillOrange" exact="'Color.da_orange'"/>
 				<set_value name="$DAMVT.$FillOrangeBright" exact="'Color.da_orange_bright'"/>
+				<set_value name="$DAMVT.$HeaderBackgroundBright" exact="'Color.da_headerbackground_bright'"/>
+				<set_value name="$DAMVT.$HeaderBackgroundDark" exact="'Color.da_headerbackground_dark'"/>
+				<set_value name="$DAMVT.$BodyBackgroundBright" exact="'Color.da_bodybackground_bright'"/>
+				<set_value name="$DAMVT.$BodyBackgroundDark" exact="'Color.da_bodybackground_dark'"/>
 			</actions>
 			<cues>
 				<cue name="DeadAirMenu">
@@ -59,7 +66,7 @@
 						<!-- This cue runs after init and is primarily used for variable storage for options selection -->
 					</actions>
 				</cue>
-				<cue name="VerifyVariablesExist" instantiate="true">
+				<cue name="VerifyVariablesExist" instantiate="false">
 					<conditions>
 						<check_any>
 							<event_universe_generated/>
@@ -69,70 +76,74 @@
 					</conditions>
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not md.$DAMenuVarTable?">
+						<do_if value="not md.$DAMenuVarTable? or (md.$DAMenuVarTable == null)">
 							<set_value name="md.$DAMenuVarTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT?">
+						<do_if value="not $DADVT? or ($DADVT == null)">
 							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT?">
+						<do_if value="not $DAMVT? or ($DAMVT == null)">
 							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAGVT?">
+						<do_if value="not $DAGVT? or ($DAGVT == null)">
 							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DAMenuDebugEnable?">
+						<do_if value="not $DAMVT.$DAMenuDebugEnable? or (not ((typeof $DAMVT.$DAMenuDebugEnable == datatype.integer) and (($DAMVT.$DAMenuDebugEnable == 1) or ($DAMVT.$DAMenuDebugEnable == 0))))">
 							<set_value name="$DAMVT.$DAMenuDebugEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DWMilStrengthHistory?">
+						<do_if value="not $DAMVT.$DWMilStrengthHistory? or ($DAMVT.$DWMilStrengthHistory == null)">
 							<set_value name="$DAMVT.$DWMilStrengthHistory" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$InfoMilDisplayOption?">
+						<do_if value="not $DAMVT.$InfoMilDisplayOption? or (not (typeof $DAMVT.$InfoMilDisplayOption == datatype.integer))">
 							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DWEcoStrengthHistory?">
+						<do_if value="not $DAMVT.$DWEcoStrengthHistory? or ($DAMVT.$DWEcoStrengthHistory == null)">
 							<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$InfoEcoDisplayOption?">
+						<do_if value="not $DAMVT.$InfoEcoDisplayOption? or (not (typeof $DAMVT.$InfoEcoDisplayOption == datatype.integer))">
 							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$TextGreen?">
-							<set_value name="$DAMVT.$TextGreen" exact="'Color.da_text_green'"/>
-							<set_value name="$DAMVT.$TextRed" exact="'Color.da_text_red'"/>
-							<set_value name="$DAMVT.$TextBlue" exact="'Color.da_text_blue'"/>
-							<set_value name="$DAMVT.$MarkerTransparent" exact="'Color.da_marker_transparent'"/>
-							<set_value name="$DAMVT.$FillTransparent" exact="'Color.da_transparent'"/>
-							<set_value name="$DAMVT.$FillRedDark" exact="'Color.da_red_dark'"/>
-							<set_value name="$DAMVT.$FillRed" exact="'Color.da_red'"/>
-							<set_value name="$DAMVT.$FillRedBright" exact="'Color.da_red_bright'"/>
-							<set_value name="$DAMVT.$FillGreenDark" exact="'Color.da_green_dark'"/>
-							<set_value name="$DAMVT.$FillGreen" exact="'Color.da_green'"/>
-							<set_value name="$DAMVT.$FillGreenBright" exact="'Color.da_green_bright'"/>
-							<set_value name="$DAMVT.$FillYellowDark" exact="'Color.da_yellow_dark'"/>
-							<set_value name="$DAMVT.$FillYellow" exact="'Color.da_yellow'"/>
-							<set_value name="$DAMVT.$FillYellowBright" exact="'Color.da_yellow_bright'"/>
-							<set_value name="$DAMVT.$FillBlueDark" exact="'Color.da_blue_dark'"/>
-							<set_value name="$DAMVT.$FillBlue" exact="'Color.da_blue'"/>
-							<set_value name="$DAMVT.$FillBlueBright" exact="'Color.da_blue_bright'"/>
-							<set_value name="$DAMVT.$FillOrangeDark" exact="'Color.da_orange_dark'"/>
-							<set_value name="$DAMVT.$FillOrange" exact="'Color.da_orange'"/>
-							<set_value name="$DAMVT.$FillOrangeBright" exact="'Color.da_orange_bright'"/>
-							<set_value name="$MissingVarCount" exact="1" operation="add"/>
-						</do_if>
+						<set_value name="$DAMVT.$TextGreen" exact="'Color.da_text_green'"/>
+						<set_value name="$DAMVT.$TextRed" exact="'Color.da_text_red'"/>
+						<set_value name="$DAMVT.$TextBlue" exact="'Color.da_text_blue'"/>
+						<set_value name="$DAMVT.$TextWhite" exact="'Color.da_text_white'"/>
+						<set_value name="$DAMVT.$ButtonHighlight" exact="'Color.da_button_highlight'"/>
+						<set_value name="$DAMVT.$MarkerTransparent" exact="'Color.da_marker_transparent'"/>
+						<set_value name="$DAMVT.$FillTransparent" exact="'Color.da_transparent'"/>
+						<set_value name="$DAMVT.$FillRedDark" exact="'Color.da_red_dark'"/>
+						<set_value name="$DAMVT.$FillRed" exact="'Color.da_red'"/>
+						<set_value name="$DAMVT.$FillRedBright" exact="'Color.da_red_bright'"/>
+						<set_value name="$DAMVT.$FillGreenDark" exact="'Color.da_green_dark'"/>
+						<set_value name="$DAMVT.$FillGreen" exact="'Color.da_green'"/>
+						<set_value name="$DAMVT.$FillGreenBright" exact="'Color.da_green_bright'"/>
+						<set_value name="$DAMVT.$FillYellowDark" exact="'Color.da_yellow_dark'"/>
+						<set_value name="$DAMVT.$FillYellow" exact="'Color.da_yellow'"/>
+						<set_value name="$DAMVT.$FillYellowBright" exact="'Color.da_yellow_bright'"/>
+						<set_value name="$DAMVT.$FillBlueDark" exact="'Color.da_blue_dark'"/>
+						<set_value name="$DAMVT.$FillBlue" exact="'Color.da_blue'"/>
+						<set_value name="$DAMVT.$FillBlueBright" exact="'Color.da_blue_bright'"/>
+						<set_value name="$DAMVT.$FillOrangeDark" exact="'Color.da_orange_dark'"/>
+						<set_value name="$DAMVT.$FillOrange" exact="'Color.da_orange'"/>
+						<set_value name="$DAMVT.$FillOrangeBright" exact="'Color.da_orange_bright'"/>
+						<set_value name="$DAMVT.$HeaderBackgroundBright" exact="'Color.da_headerbackground_bright'"/>
+						<set_value name="$DAMVT.$HeaderBackgroundDark" exact="'Color.da_headerbackground_dark'"/>
+						<set_value name="$DAMVT.$BodyBackgroundBright" exact="'Color.da_bodybackground_bright'"/>
+						<set_value name="$DAMVT.$BodyBackgroundDark" exact="'Color.da_bodybackground_dark'"/>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAMenus -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
+						<reset_cue cue="this"/>
 					</actions>
 				</cue>
 				<!--
@@ -404,6 +415,13 @@
 								$onOpen  = Menu_Information_ShipBreakdown,
 								$private = 1,
 							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_information_sectorbreakdown',
+								$columns = 10, 
+								$title   = {33232474,409},
+								$onOpen  = Menu_Information_SectorBreakdown,
+								$private = 1,
+							]"/>
 					</actions>
 				</cue>
 				<!-- DA Mod Menu -->
@@ -412,6 +430,7 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<signal_cue_instantly cue="md.DeadAirDynamicUniverse.VerifyVariablesExist"/>
 						<signal_cue_instantly cue="VerifyVariablesExist"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,101}, $id='da_dynamicwar_menu']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,102}, $id='da_dynamicnews_menu']"/>
@@ -516,6 +535,7 @@
 													  $color  = $DAMVT.$TextGreen,
 													  $halign = 'center',
 													],
+													$highlightColor = $DAMVT.$ButtonHighlight,
 													$onClick = ExecuteOption_RelationsIncrease,
 													$onRightClick = ExecuteOption_RelationsIncrease,
 													$echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$IncCost],
@@ -600,6 +620,7 @@
 													  $color  = $DAMVT.$TextGreen,
 													  $halign = 'center',
 													],
+													$highlightColor = $DAMVT.$ButtonHighlight,
 													$onClick = ExecuteOption_RelationsDecrease,
 													$onRightClick = ExecuteOption_RelationsDecrease,
 													$echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$DecCost],
@@ -654,6 +675,7 @@
 								  $color  =  if $DADVT.$DADynamicWarEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1123},
 								$onClick = ExecuteOption_DynamicWarEnable,
 								$onRightClick = ExecuteOption_DynamicWarEnable,
@@ -673,6 +695,7 @@
 								  $color  =  if $DADVT.$DADynamicWarFavorsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1124},
 								$onClick = ExecuteOption_DynamicWarFavorsEnable,
 								$onRightClick = ExecuteOption_DynamicWarFavorsEnable,
@@ -692,6 +715,7 @@
 								  $color  =  if $DADVT.$DADynamicWarRelationsFixEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1142},
 								$onClick = ExecuteOption_DynamicWarRelationsFixEnable,
 								$onRightClick = ExecuteOption_DynamicWarRelationsFixEnable,
@@ -1037,6 +1061,7 @@
 									  $color  =  if $DADVT.$DADynamicWarFlavorEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1136},
 									$onClick = ExecuteOption_DynamicWarFlavorEnable,
 									$onRightClick = ExecuteOption_DynamicWarFlavorEnable,
@@ -1066,6 +1091,7 @@
 									  $color  =  if $DADVT.$DADynamicWarDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1137},
 									$onClick = ExecuteOption_DynamicWarDebugEnable,
 									$onRightClick = ExecuteOption_DynamicWarDebugEnable,
@@ -1132,6 +1158,7 @@
 									  $color  =  if $DARelUnlFaction.isrelationlocked then $DAMVT.$TextRed else $DAMVT.$TextGreen,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1118},
 									$onClick = ExecuteOption_UnlockRelations,
 									$onRightClick = ExecuteOption_UnlockRelations,
@@ -1165,6 +1192,7 @@
 										  $color  =  if $DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnFaction} then $DAMVT.$TextRed else $DAMVT.$TextGreen,
 										  $halign = 'center',
 										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
 										$mouseOverText = {33232474,1119},
 										$onClick = ExecuteOption_IgnoredFactions,
 										$onRightClick = ExecuteOption_IgnoredFactions,
@@ -1218,6 +1246,7 @@
 									  $color  =  if $FLAllowed then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1145},
 									$onClick = ExecuteOption_ToggleFactionLogic,
 									$onRightClick = ExecuteOption_ToggleFactionLogic,
@@ -1829,6 +1858,7 @@
 								  $color  =  if $DADVT.$DADynamicNewsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1280},
 								$onClick = ExecuteOption_DynamicNewsEnable,
 								$onRightClick = ExecuteOption_DynamicNewsEnable,
@@ -1849,6 +1879,7 @@
 								  $color  =  if $DADVT.$DADynamicNewsEnableNotifications then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1281},
 								$onClick = ExecuteOption_DynamicNewsEnableNotifications,
 								$onRightClick = ExecuteOption_DynamicNewsEnableNotifications,
@@ -1878,6 +1909,7 @@
 								  $color  =  if $DADVT.$DADynamicNewsEnableLogbook then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1282},
 								$onClick = ExecuteOption_DynamicNewsEnableLogbook,
 								$onRightClick = ExecuteOption_DynamicNewsEnableLogbook,
@@ -1907,6 +1939,7 @@
 								  $color  =  if $DADVT.$DADynamicNewsEnableNewsStorage then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1283},
 								$onClick = ExecuteOption_DynamicNewsEnableNewsStorage,
 								$onRightClick = ExecuteOption_DynamicNewsEnableNewsStorage,
@@ -1966,6 +1999,7 @@
 								  $color  =  if $DADVT.$DADynamicNewsDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1285},
 								$onClick = ExecuteOption_DynamicNewsDetailedDebug,
 								$onRightClick = ExecuteOption_DynamicNewsDetailedDebug,
@@ -2144,6 +2178,7 @@
 								  $color  =  if $DADVT.$DAEvolutionEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1160},
 								$onClick = ExecuteOption_EvolutionEnable,
 								$onRightClick = ExecuteOption_EvolutionEnable,
@@ -2163,6 +2198,7 @@
 								  $color  =  if $DADVT.$DAEvolutionEnableJobs then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1163},
 								$onClick = ExecuteOption_EvolutionEnableJobs,
 								$onRightClick = ExecuteOption_EvolutionEnableJobs,
@@ -2296,6 +2332,7 @@
 									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 1) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1166},
 									$onClick = ExecuteOption_EvolutionXenFleetSmall,
 									$onRightClick = ExecuteOption_EvolutionXenFleetSmall,
@@ -2308,6 +2345,7 @@
 									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 2) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1167},
 									$onClick = ExecuteOption_EvolutionXenFleetMedium,
 									$onRightClick = ExecuteOption_EvolutionXenFleetMedium,
@@ -2320,6 +2358,7 @@
 									  $color  = if ($DADVT.$DAEvolutionXenonFleetSize == 3) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1168},
 									$onClick = ExecuteOption_EvolutionXenFleetLarge,
 									$onRightClick = ExecuteOption_EvolutionXenFleetLarge,
@@ -2349,6 +2388,7 @@
 									  $color  =  if $DADVT.$DAEvolutionEnableUpgradeStations then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1170},
 									$onClick = ExecuteOption_EvolutionEnableUpgradeStations,
 									$onRightClick = ExecuteOption_EvolutionEnableUpgradeStations,
@@ -2378,6 +2418,7 @@
 									  $color  =  if $DADVT.$DAEvolutionEnableFastOrder then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1171},
 									$onClick = ExecuteOption_EvolutionEnableFastOrder,
 									$onRightClick = ExecuteOption_EvolutionEnableFastOrder,
@@ -2407,6 +2448,7 @@
 									  $color  =  if $DADVT.$DAEvolutionDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1169},
 									$onClick = ExecuteOption_EvolutionDebugEnable,
 									$onRightClick = ExecuteOption_EvolutionDebugEnable,
@@ -2570,6 +2612,7 @@
 								  $color  =  if $DADVT.$DAFillEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1200},
 								$onClick = ExecuteOption_FillEnable,
 								$onRightClick = ExecuteOption_FillEnable,
@@ -2802,6 +2845,7 @@
 										  $color  =  if $DADVT.$DAFillShipModsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
 										$mouseOverText = {33232474,1208},
 										$onClick = ExecuteOption_FillShipModsEnable,
 										$onRightClick = ExecuteOption_FillShipModsEnable,
@@ -2831,6 +2875,7 @@
 										  $color  =  if $DADVT.$DAFillShipModFleetEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
 										$mouseOverText = {33232474,1210},
 										$onClick = ExecuteOption_FillShipModFleetEnable,
 										$onRightClick = ExecuteOption_FillShipModFleetEnable,
@@ -2860,6 +2905,7 @@
 										  $color  =  if $DADVT.$DAFillShipModPaintEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
 										$mouseOverText = {33232474,1211},
 										$onClick = ExecuteOption_FillShipModPaintEnable,
 										$onRightClick = ExecuteOption_FillShipModPaintEnable,
@@ -2889,6 +2935,7 @@
 									  $color  =  if $DADVT.$DAFillDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1209},
 									$onClick = ExecuteOption_FillDebugEnable,
 									$onRightClick = ExecuteOption_FillDebugEnable,
@@ -3240,6 +3287,7 @@
 														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 1) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
+														$highlightColor = $DAMVT.$ButtonHighlight,
 														$mouseOverText = $LocHoverText,
 														$onClick = ExecuteOption_JobsFleetSize,
 														$onRightClick = ExecuteOption_JobsFleetSize,
@@ -3254,6 +3302,7 @@
 														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 2) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
+														$highlightColor = $DAMVT.$ButtonHighlight,
 														$mouseOverText = $LocHoverText,
 														$onClick = ExecuteOption_JobsFleetSize,
 														$onRightClick = ExecuteOption_JobsFleetSize,
@@ -3268,6 +3317,7 @@
 														  $color  = if ($DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.{$LocWhichTag}.{2} == 3) then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 														  $halign = 'center',
 														],
+														$highlightColor = $DAMVT.$ButtonHighlight,
 														$mouseOverText = $LocHoverText,
 														$onClick = ExecuteOption_JobsFleetSize,
 														$onRightClick = ExecuteOption_JobsFleetSize,
@@ -3407,6 +3457,7 @@
 								  $color  =  if $DADVT.$DAJobsEXPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1240},
 								$onClick = ExecuteOption_JobsEXPEnable,
 								$onRightClick = ExecuteOption_JobsEXPEnable,
@@ -3426,6 +3477,7 @@
 								  $color  =  if $DADVT.$DAJobsSSTEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1241},
 								$onClick = ExecuteOption_JobsSSTEnable,
 								$onRightClick = ExecuteOption_JobsSSTEnable,
@@ -3446,6 +3498,7 @@
 									  $color  =  if $DADVT.$DAJobsSSTRemoveExclusivity then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1263},
 									$onClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
 									$onRightClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
@@ -3475,6 +3528,7 @@
 									  $color  =  if $DADVT.$DAJobsEXPDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1242},
 									$onClick = ExecuteOption_JobsEXPDebugEnable,
 									$onRightClick = ExecuteOption_JobsEXPDebugEnable,
@@ -3504,6 +3558,7 @@
 									  $color  =  if $DADVT.$DAJobsSSTDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1243},
 									$onClick = ExecuteOption_JobsSSTDebugEnable,
 									$onRightClick = ExecuteOption_JobsSSTDebugEnable,
@@ -3533,6 +3588,7 @@
 									  $color  =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1244},
 									$onClick = ExecuteOption_JobsSSTXtrDebugEnable,
 									$onRightClick = ExecuteOption_JobsSSTXtrDebugEnable,
@@ -3603,6 +3659,7 @@
 											  $color  =  if @$LocIsActive then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 											  $halign = 'center',
 											],
+											$highlightColor = $DAMVT.$ButtonHighlight,
 											$onClick = ExecuteOption_JobsToggleSpawned,
 											$onRightClick = ExecuteOption_JobsToggleSpawned,
 											$echo = [$LocJobID,$LocIsActive,$LocShipGroup]
@@ -3817,6 +3874,7 @@
 								  $color  =  if $DADVT.$DAGateEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1300},
 								$onClick = ExecuteOption_GateEnable,
 								$onRightClick = ExecuteOption_GateEnable,
@@ -3837,6 +3895,7 @@
 									  $color  =  if $DADVT.$DAGateShowAllGates then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1302},
 									$onClick = ExecuteOption_GateShowAllEnable,
 									$onRightClick = ExecuteOption_GateShowAllEnable,
@@ -3866,6 +3925,7 @@
 									  $color  =  if $DADVT.$DAGateDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1301},
 									$onClick = ExecuteOption_GateDebugEnable,
 									$onRightClick = ExecuteOption_GateDebugEnable,
@@ -3933,6 +3993,7 @@
 										  $color  =  if $LocGate.isactive then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 										  $halign = 'center',
 										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
 										$onClick = ExecuteOption_GateTriggerGate,
 										$onRightClick = ExecuteOption_GateTriggerGate,
 										$echo = $LocGate,
@@ -4046,6 +4107,7 @@
 								  $color  =  if $DADVT.$DAGodEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1340},
 								$onClick = ExecuteOption_GodEnable,
 								$onRightClick = ExecuteOption_GodEnable
@@ -4097,6 +4159,7 @@
 									  $color  =  if $DADVT.$DAGodAllowBuildInFriendly then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1352},
 									$onClick = ExecuteOption_GodAllowBuildInFriendlyEnable,
 									$onRightClick = ExecuteOption_GodAllowBuildInFriendlyEnable,
@@ -4126,6 +4189,7 @@
 									  $color  =  if $DADVT.$DAGodAllowBuildInPlayer then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1350},
 									$onClick = ExecuteOption_GodAllowBuildInPlayerEnable,
 									$onRightClick = ExecuteOption_GodAllowBuildInPlayerEnable,
@@ -4155,6 +4219,7 @@
 									  $color  =  if $DADVT.$DAGodAttemptRecovery then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1351},
 									$onClick = ExecuteOption_GodAttemptRecoveryEnable,
 									$onRightClick = ExecuteOption_GodAttemptRecoveryEnable,
@@ -4184,6 +4249,7 @@
 									  $color  =  if $DADVT.$DAGodStationUpgradeEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1353},
 									$onClick = ExecuteOption_GodStationUpgradeEnable,
 									$onRightClick = ExecuteOption_GodStationUpgradeEnable,
@@ -4253,6 +4319,7 @@
 									  $color  =  if $DADVT.$DAGodDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1341},
 									$onClick = ExecuteOption_GodDebugEnable,
 									$onRightClick = ExecuteOption_GodDebugEnable,
@@ -4282,6 +4349,7 @@
 									  $color  =  if $DADVT.$DAGodXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1347},
 									$onClick = ExecuteOption_GodDetailedDebugEnable,
 									$onRightClick = ExecuteOption_GodDetailedDebugEnable,
@@ -4310,47 +4378,49 @@
 							<do_for_each name="$LocFaction" in="$DAGodLocFactionsList">
 								<do_if value="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count gt 1)">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<set_value name="$LocText" exact="'%s (%s)'.[$LocFaction.knownname,$LocFaction.shortname]"/>
+									<do_if value="$LocFaction.isactive and (not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction})">
+										<set_value name="$LocText" exact="' - %s'.[{33232474,2344}]" operation="add" comment="Quota Not Activated"/>
+										<set_value name="$HoverText" exact="{33232474,2346}.[$LocFaction.knownname]"/>
+									</do_if>
+									<do_elseif value="$LocFaction.isactive and $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}">
+										<set_value name="$LocText" exact="' - %s'.[{33232474,2345}]" operation="add" comment="Quota Has Been Activated"/>
+										<set_value name="$HoverText" exact="{33232474,1346}.[$LocFaction.knownname]"/>
+									</do_elseif>
+									<do_else>
+										<set_value name="$LocText" exact="' - %s %s'.[{1001,43},{1001,12208}]" operation="add" comment="Faction Inactive"/>
+										<set_value name="$HoverText" exact="{33232474,2347}.[$LocFaction.knownname]"/>
+									</do_else>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 											$col = 1,
 											$colSpan = 8,
-											$text = '%s (%s)'.[$LocFaction.knownname,$LocFaction.shortname],
-											$halign = 'center'
+											$text = $LocText,
+											$mouseOverText = $HoverText,
+											$halign = 'center',
+											$cellBGColor = $DAMVT.$HeaderBackgroundDark
 										]"/>
+									<remove_value name="$LocText"/>
+									<remove_value name="$HoverText"/>
 									<do_if value="$LocFaction.isactive and (not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction})">
 										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+										<set_value name="$LocButtonText" exact="'%s %s'.[{33232474,342},$LocFaction.shortname]"/>
 										<!-- Show Quota Settings -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-												$col = 1,
-												$colSpan = 4,
-												$text = {33232474,342},
-												$mouseOverText = {33232474,1342},
-												$halign = 'left'
-											]"/>
-										<!-- Enable -->
 										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-												$col = 5, 
+												$col = 3, 
 												$colSpan = 4,
 												$text = table[
-												  $text   =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then {1001,4825} else {1001,8942}, 
-												  $color  =  if $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+												  $text   =  $LocButtonText, 
+												  $color  =  $DAMVT.$TextBlue,
 												  $halign = 'center',
 												],
+												$highlightColor = $DAMVT.$ButtonHighlight,
 												$mouseOverText = {33232474,1342},
 												$onClick = ExecuteOption_GodFactionEnable,
 												$onRightClick = ExecuteOption_GodFactionEnable,
 												$echo = $LocFaction
 											]"/>
+										<remove_value name="$LocButtonText"/>
 									</do_if>
-									<do_elseif value="$LocFaction.isactive and $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-										<!-- Already activated -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {33232474,346}, $mouseOverText = {33232474,1346}]" comment="Already Activated"/>
-									</do_elseif>
-									<do_else>
-										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-										<!-- Faction inactive -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {1001,43} + ' ' + {1001,12208}]" comment="Faction Inactive"/>
-									</do_else>
 									<do_if value="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled and $LocFaction.isactive">
 										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 										<!-- Production ware -->
@@ -4428,15 +4498,18 @@
 												  $color  = $DAMVT.$TextGreen,
 												  $halign = 'center',
 												],
+												$highlightColor = $DAMVT.$ButtonHighlight,
 												$mouseOverText = {33232474,1345},
 												$onClick = ExecuteOption_GodTriggerFaction,
 												$onRightClick = ExecuteOption_GodTriggerFaction,
 												$echo = $LocFaction
 											]"/>
 										</do_if>
+										<!--
 										<do_else>
 											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {33232474,346}, $mouseOverText = {33232474,1346}]" comment="Already Activated"/>
 										</do_else>
+										-->
 									</do_if>
 									<!-- Horizontal Line -->
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -4690,6 +4763,7 @@
 								  $color  =  if $DADVT.$DABPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1385},
 								$onClick = ExecuteOption_BPEnable,
 								$onRightClick = ExecuteOption_BPEnable
@@ -4710,6 +4784,7 @@
 									  $color  =  if $DADVT.$DABPDebugEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 									  $halign = 'center',
 									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$mouseOverText = {33232474,1387},
 									$onClick = ExecuteOption_BPDebugEnable,
 									$onRightClick = ExecuteOption_BPDebugEnable,
@@ -5183,6 +5258,14 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,405}, $id='menu_information_productioncount']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,406}, $id='menu_information_traderprofit']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,408}, $id='menu_information_shipbreakdown']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,409}, $id='menu_information_sectorbreakdown']"/>
+						<!-- Exiting back will now revert display option to 1 so that history isn't automatically reset -->
+						<do_if value="$DAMVT.$InfoMilDisplayOption == 2">
+							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
+						</do_if>
+						<do_if value="$DAMVT.$InfoEcoDisplayOption == 2">
+							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
+						</do_if>
 					</actions>
 				</cue>
 				<!-- Done: 20240524 Reworked again -->
@@ -5194,16 +5277,19 @@
 						<set_value name="$WhatFactions" exact="'All'"/>
 						<include_actions ref="Library_DAMenuGetFactions"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,4817}+':', $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Display Mode"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 1, 
-								$colSpan = event.param.$columns,
+								$col = 3, 
+								$colSpan = 8,
 								$text = table[
 								  $text   =  [{33232474,2410},{33232474,2411}].{$DAMVT.$InfoMilDisplayOption}, 
-								  $color  =  $DAMVT.$TextGreen,
+								  $color  =  $DAMVT.$TextBlue,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$onClick = ExecuteOption_InfoMilStrengthDisplay,
-								$onRightClick = ExecuteOption_InfoMilStrengthDisplay
+								$onRightClick = ExecuteOption_InfoMilStrengthDisplay,
+								$cellBGColor = $DAMVT.$BodyBackgroundDark
 							]"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -5216,19 +5302,19 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- Total: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- XL: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- L: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- M: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- S: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
-						<!-- Threat Assessment -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = {30211,150801}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<!-- Threat Score -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = {33232474,2412}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -5292,16 +5378,19 @@
 						<set_value name="$WhatFactions" exact="'All'"/>
 						<include_actions ref="Library_DAMenuGetFactions"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,4817}+':', $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Display Mode"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 1, 
-								$colSpan = event.param.$columns,
+								$col = 3, 
+								$colSpan = 8,
 								$text = table[
 								  $text   =  [{33232474,2410},{33232474,2411}].{$DAMVT.$InfoEcoDisplayOption}, 
-								  $color  =  $DAMVT.$TextGreen,
+								  $color  =  $DAMVT.$TextBlue,
 								  $halign = 'center',
 								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$onClick = ExecuteOption_InfoEcoStrengthDisplay,
-								$onRightClick = ExecuteOption_InfoEcoStrengthDisplay
+								$onRightClick = ExecuteOption_InfoEcoStrengthDisplay,
+								$cellBGColor = $DAMVT.$BodyBackgroundDark
 							]"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
@@ -5314,19 +5403,19 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Faction knownname -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,43}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- Total -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- XL -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- L -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- M -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- S -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- Stations -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 9, $colSpan = 2, $text = {1001,4}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[ $col = 9, $colSpan = 2, $text = {1001,4}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!-- Horizontal Line -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -5442,9 +5531,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = ('%s / %s / %s'.[{33232474,2401},{33232474,2402},{33232474,2403}]), $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s / %s'.[{1001,1406},{1001,2903}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = ('%s / %s / %s'.[{33232474,2401},{33232474,2402},{33232474,2403}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5457,14 +5546,14 @@
 						<do_for_each name="$ware" valuename="$wanted" in="$wares_wanted">
 							<set_value name="$exists" exact="$wares_existing.{$ware}"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<set_value name="$LocStart" exact="$wanted"/>
 							<set_value name="$LocCurrent" exact="$exists"/>
 							<set_value name="$LocMax" exact="[$exists,$wanted].max"/>
 							<!-- Colors by deadair -->
-							<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
-							<set_value name="$pcolor" exact="$DAMVT.$FillGreen"/>
-							<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+							<set_value name="$vcolor" exact="$DAMVT.$FillBlueDark"/>
+							<set_value name="$pcolor" exact="$DAMVT.$FillGreenDark"/>
+							<set_value name="$ncolor" exact="$DAMVT.$FillRedDark"/>
 							<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							<do_if value="$wanted gt 0">
 								<set_value name="$LocPercent" exact="'%,s%%'.[((($exists)f / ([$wanted,1.0].max)f) * 100.0)]"/>
@@ -5472,7 +5561,7 @@
 							<do_else>
 								<set_value name="$LocPercent" exact="{1001,19}"/>
 							</do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocPercent, $halign = 'center']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocPercent, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
 									$col			= 7, 
 									$colSpan		= 6,
@@ -5485,7 +5574,8 @@
 									$posChangeColor	= $pcolor,
 									$negChangeColor	= $ncolor,
 									$markerColor	= $mcolor,
-									$mouseOverText = '%s: %s / %s: %s'.[{1001,1406},$exists,{1001,2903},$wanted],
+									$mouseOverText 	= '%s: %s / %s: %s'.[{1001,1406},$exists,{1001,2903},$wanted],
+									$cellBGColor 	= $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_for_each>
 					</actions>
@@ -5547,11 +5637,11 @@
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- Ware -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,45}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!--Production-->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,2404}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,2404}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<!--Consumption-->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,2405}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,2405}, $mouseover = {1001,1406} + '/' + {1001,2903}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5567,7 +5657,7 @@
 							<set_value name="$pro_output" exact="$pro_existing.{$ware}"/>
 							<set_value name="$procap_output" exact="$pro_wanted.{$ware}"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $ware.name, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<!-- Production -->
 							<do_if value="$procap_output == 0">
 								<set_value name="$vcolor" exact="$DAMVT.$FillTransparent"/>
@@ -5576,9 +5666,9 @@
 								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_if>
 							<do_else>
-								<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
-								<set_value name="$pcolor" exact="$DAMVT.$FillBlue"/>
-								<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillBlueDark"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillBlueDark"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillRedDark"/>
 								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_else>
 							<do_if value="$procap_output">
@@ -5594,11 +5684,12 @@
 									$posChangeColor	= $pcolor,
 									$negChangeColor	= $ncolor,
 									$markerColor	= $mcolor,
-									$mouseOverText = '%s: %s / %s: %s'.[{1001,1406},$pro_output,{1001,8393},$procap_output],
+									$mouseOverText 	= '%s: %s / %s: %s'.[{1001,1406},$pro_output,{1001,8393},$procap_output],
+									$cellBGColor 	= $DAMVT.$BodyBackgroundDark
 								]"/>
 							</do_if>
 							<do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,9}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,9}, $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="none"/>
 							</do_else>
 							<!-- Consumption -->
 							<do_if value="$rescap_output == 0">
@@ -5608,9 +5699,9 @@
 								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_if>
 							<do_else>
-								<set_value name="$vcolor" exact="$DAMVT.$FillBlue"/>
-								<set_value name="$pcolor" exact="$DAMVT.$FillBlue"/>
-								<set_value name="$ncolor" exact="$DAMVT.$FillRed"/>
+								<set_value name="$vcolor" exact="$DAMVT.$FillBlueDark"/>
+								<set_value name="$pcolor" exact="$DAMVT.$FillBlueDark"/>
+								<set_value name="$ncolor" exact="$DAMVT.$FillRedDark"/>
 								<set_value name="$mcolor" exact="$DAMVT.$MarkerTransparent"/>
 							</do_else>
 							<do_if value="$rescap_output">
@@ -5626,11 +5717,12 @@
 									$posChangeColor	= $pcolor,
 									$negChangeColor	= $ncolor,
 									$markerColor	= $mcolor,
-									$mouseOverText = '%s: %s / %s: %s'.[{1001,1406},$res_output,{1001,8393},$rescap_output],
+									$mouseOverText 	= '%s: %s / %s: %s'.[{1001,1406},$res_output,{1001,8393},$rescap_output],
+									$cellBGColor 	= $DAMVT.$BodyBackgroundDark
 								]"/>
 							</do_if>
 							<do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $halign = 'center', $text = {1001,9}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $halign = 'center', $text = {1001,9}, $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							</do_else>
 						</do_for_each>
 					</actions>
@@ -5678,9 +5770,9 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!--Header row.-->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,56}, $halign = 'left', $cellBGColor = 'Color.row_title_background']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,1311}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {1001,8433}, $halign = 'center', $cellBGColor = 'Color.row_title_background']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,56}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="module"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,1311}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="operational"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {1001,8433}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="planned modules"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5693,14 +5785,14 @@
 						<do_for_each name="$Macro" in="$MacroList">
 							<do_if value="$ModuleTable.keys.list.indexof.{$Macro} or $PlannedModuleTable.keys.list.indexof.{$Macro}">
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $Macro.name, $halign = 'left']"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $Macro.name, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright, $wordwrap = true]" comment="macroname"/>
 								<do_if value="$ModuleTable.{$Macro}?">
 									<set_value name="$OperationalCount" exact="$ModuleTable.{$Macro}"/>
 								</do_if>
 								<do_else>
 									<set_value name="$OperationalCount" exact="0"/>
 								</do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = ('%s %s'.[$OperationalCount,{1001,1311}]), $halign = 'center']" comment="Number Operational"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = ('%s %s'.[$OperationalCount,{1001,1311}]), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number Operational"/>
 								<do_if value="$ModuleTable.{$Macro}? and $PlannedModuleTable.{$Macro}?">
 									<do_if value="$ModuleTable.{$Macro} ge $PlannedModuleTable.{$Macro}">
 										<set_value name="$PlannedCount" exact="0"/>
@@ -5715,7 +5807,7 @@
 								<do_else>
 									<set_value name="$PlannedCount" exact="0"/>
 								</do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = ('%s %s'.[$PlannedCount,{1001,8433}]), $halign = 'center']" comment="Number Planned Modules"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = ('%s %s'.[$PlannedCount,{1001,8433}]), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number Planned Modules"/>
 								<remove_value name="$OperationalCount"/>
 								<remove_value name="$PlannedCount"/>
 							</do_if>
@@ -5740,12 +5832,7 @@
 							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
 						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 9,
-								$text = {33232474,407},
-								$mouseOverText = {33232474,1407}
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 9, $text = {33232474,407}, $mouseOverText = {33232474,1407}, $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Enable DA Trader Profit Tracking"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 								$col = 10, 
 								$colSpan = 3,
@@ -5754,33 +5841,33 @@
 								  $color  =  if $DAGVT.$DATPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
 								  $halign = 'center',
 								],
+								$cellBGColor = $DAMVT.$BodyBackgroundDark,
+								$highlightColor = $DAMVT.$ButtonHighlight,
 								$mouseOverText = {33232474,1407},
 								$onClick = ExecuteOption_TPEnable,
 								$onRightClick = ExecuteOption_TPEnable
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 9,
-								$text = {1001,2906}
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 7, $text = {1001,2906}, $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="sort by"/>
 						<do_if value="$DAGVT.$DATPEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 10, 
-									$colSpan = 3,
+									$col = 8, 
+									$colSpan = 5,
 									$text = table[
 									  $text   =  if $DAMVT.$TPSortByName then {1001,2809} else {33232474,2406}, 
-									  $color  =  $DAMVT.$TextGreen,
+									  $color  =  $DAMVT.$TextBlue,
 									  $halign = 'center',
 									],
+									$cellBGColor = $DAMVT.$BodyBackgroundDark,
+									$highlightColor = $DAMVT.$ButtonHighlight,
 									$onClick = ExecuteOption_TPSortByNameEnable,
 									$onRightClick = ExecuteOption_TPSortByNameEnable,
 								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 10,
-									$colSpan = 3,
+									$col = 8,
+									$colSpan = 5,
 									$text = {1001,8942},
 									$halign = 'right',
 								]"/>
@@ -5842,9 +5929,9 @@
 								<set_value name="$LocKeyList" exact="$OutputTable.keys.list"/>
 								<!-- Header -->
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,5}, $halign = 'left']"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {33232474,2406}, $halign = 'center']"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = {33232474,2408}, $halign = 'center']"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $text = {1001,5}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="ship"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 4, $text = {33232474,2406}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Total lifetime estimated profit"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = {33232474,2408}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright, $wordwrap = true]" comment="Estimated profit per hour"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 										$col = 1, 
@@ -5865,7 +5952,7 @@
 								<do_for_each name="$LocObject" in="$LocKeyList">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 									<set_value name="$LocName" exact="'%s(%s)'.[$LocObject.knownname,$LocObject.idcode]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $LocName, $halign = 'left']"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $text = $LocName, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 									<remove_value name="$LocName"/>
 									<set_value name="$LocText" exact="$OutputTable.{$LocObject}.{1}.formatted.default"/>
 									<do_if value="$OutputTable.{$LocObject}.{1} gt 0">
@@ -5879,7 +5966,7 @@
 										<set_value name="$NColor" exact="$DAMVT.$FillRed"/>
 									</do_else>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
-											$col			= 5, 
+											$col			= 6, 
 											$colSpan		= 4,
 											$scaling		= true,
 											$type			= 'statusbar',
@@ -5891,6 +5978,7 @@
 											$posChangeColor	= $PColor,
 											$negChangeColor	= $NColor,
 											$markerColor	= $DAMVT.$MarkerTransparent,
+											$cellBGColor 	= $DAMVT.$BodyBackgroundDark
 										]"/>
 									<remove_value name="$LocText"/>
 									<remove_value name="$VColor"/>
@@ -5898,7 +5986,7 @@
 									<remove_value name="$NColor"/>
 									<set_value name="$LocNumber" exact="(($OutputTable.{$LocObject}.{1} / 100.0)f / (($OutputTable.{$LocObject}.{2})f / 3600.0))Cr"/>
 									<set_value name="$LocText" exact="'%s %s / %s'.[$LocNumber.formatted.default,{1001,101},{1001,102}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = $LocText, $halign = 'center']"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 									<remove_value name="$LocNumber"/>
 									<remove_value name="$LocText"/>
 								</do_for_each>
@@ -5968,7 +6056,7 @@
 						<include_actions ref="Library_DAMenuAddFactionDropdown"/>
 						<!-- PURPOSE HEADER -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,86}, $halign = 'center', $cellBGColor = 'Color.row_title_background']" comment="Specialisation"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,86}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Specialisation"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5979,12 +6067,12 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- 1-3,4,5,6,7,8 -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9199}, $halign = 'left']" comment="Object Purpose"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center']" comment="Total"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center']" comment="XL"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center']" comment="L"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center']" comment="M"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center']" comment="S"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9199}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Object Purpose"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = {1001,2637}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Total"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = {1001,48}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="XL"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = {1001,49}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="L"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = {1001,50}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="M"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = {1001,51}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="S"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -5999,21 +6087,47 @@
 						<do_for_each name="$PurposeKey" in="$PurposeKeys" counter="$A">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<set_value name="$LocText" exact="readtext.{20213}.{$PurposeKeysText.{$A}}"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText, $halign = 'left']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<do_if value="$PurposeTable.{$PurposeKey}?">
 								<set_value name="$LocTotal" exact="$PurposeTable.{$PurposeKey}.{2} + $PurposeTable.{$PurposeKey}.{3} + $PurposeTable.{$PurposeKey}.{4} + $PurposeTable.{$PurposeKey}.{5}"/>
 								<do_if value="$LocTotal gt 0">
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocTotal, $halign = 'center']" comment="Total"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocTotal, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Total"/>
 									<do_all exact="4" counter="$B">
 										<do_if value="$PurposeTable.{$PurposeKey}.{$B + 1}? and ($PurposeTable.{$PurposeKey}.{$B + 1} gt 0)">
 											<set_value name="$LocCol" exact="4 + $B"/>
-											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = $PurposeTable.{$PurposeKey}.{$B + 1}, $halign = 'center']" comment="Dynamic Output"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = $PurposeTable.{$PurposeKey}.{$B + 1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Dynamic Output"/>
+											<remove_value name="$LocCol"/>
+										</do_if>
+										<do_elseif value="(not $PurposeTable.{$PurposeKey}.{$B + 1}?) or ($PurposeTable.{$PurposeKey}.{$B + 1} == 0)">
+											<set_value name="$LocCol" exact="4 + $B"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = '0', $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Dynamic Output"/>
+											<remove_value name="$LocCol"/>
+										</do_elseif>
+									</do_all>
+								</do_if>
+								<do_else>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = '0', $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Total"/>
+									<do_all exact="4" counter="$B">
+										<do_if value="(not $PurposeTable.{$PurposeKey}.{$B + 1}?) or ($PurposeTable.{$PurposeKey}.{$B + 1} == 0)">
+											<set_value name="$LocCol" exact="4 + $B"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = '0', $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Dynamic Output"/>
 											<remove_value name="$LocCol"/>
 										</do_if>
 									</do_all>
-								</do_if>
+								</do_else>
 								<remove_value name="$LocTotal"/>
 							</do_if>
+							<do_else>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = '0', $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Total"/>
+								<do_all exact="4" counter="$B">
+									<do_if value="(not $PurposeTable.{$PurposeKey}.{$B + 1}?) or ($PurposeTable.{$PurposeKey}.{$B + 1} == 0)">
+										<set_value name="$LocCol" exact="4 + $B"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = $LocCol, $colSpan = 1, $text = '0', $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Dynamic Output"/>
+										<remove_value name="$LocCol"/>
+									</do_if>
+								</do_all>
+								<remove_value name="$LocTotal"/>
+							</do_else>
 							<remove_value name="$LocText"/>
 						</do_for_each>
 						<remove_value name="$PurposeKeys"/>
@@ -6028,7 +6142,7 @@
 							]"/>
 						<!-- MACROS HEADER -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,2303}, $halign = 'center', $cellBGColor = 'Color.row_title_background']" comment="Ship Types"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {1001,2303}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Ship Types"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -6039,8 +6153,8 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<!-- 1-4,5-8 -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,5}, $halign = 'left']" comment="Ship"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,2637}, $halign = 'center']" comment="Total"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,5}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Ship"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,2637}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Total"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1, 
@@ -6063,7 +6177,7 @@
 									$cellBGColor = 'Color.row_separator',
 								]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = $LocText, $halign = 'center']"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1, 
@@ -6080,8 +6194,8 @@
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 									<set_value name="$LocText" exact="$MacroTable.{$Macro}.{1}.macro.name" comment="Overly complicated"/>
 									<set_value name="$LocCount" exact="$MacroTable.{$Macro}.{2}"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $LocText, $halign = 'left']" comment="Ship"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = $LocCount, $halign = 'center']" comment="Total"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $LocText, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Ship"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = $LocCount, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Total"/>
 									<remove_value name="$LocText"/>
 									<remove_value name="$LocCount"/>
 								</do_if>
@@ -6092,6 +6206,315 @@
 						<remove_value name="$PurposeTable"/>
 						<remove_value name="$MacroTable"/>
 						<remove_value name="$EquipmentTable"/>
+					</actions>
+				</cue>
+				<cue name="Menu_Information_SectorBreakdown" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						<!-- Find Sectors, Gather info about sector, display, repeat -->
+						<!-- Station count, Ship count and threatscore bar, resources? -->
+						<!-- Col: 10 -->
+						<find_sector name="$AllSectors" space="player.galaxy" multiple="true"/>
+						<sort_list list="$AllSectors" sortbyvalue="loop.element.knownname"/>
+						<do_for_each name="$Sector" in="$AllSectors" counter="$C">
+							<do_if value="$C gt 1">
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = 10,
+									$height = 2,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							</do_if>
+							<!-- Sector name and owner -->
+							<set_value name="$LocOwnerName" exact="if ($Sector.trueowner == '') then {1001,38} else $Sector.trueowner.knownname" comment="Faction knownname or None"/>
+							<set_value name="$LocText" exact="'%s: %s'.[{1001,9040},$LocOwnerName]" comment="Owner: Name"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $Sector.knownname, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Sector Name"/>
+							<!-- Col 5+6 Below -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 4, $text = $LocText, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Owner: Name"/>
+							<remove_value name="$LocOwnerName"/>
+							<remove_value name="$LocText"/>
+							<!-- Station Info -->
+							<set_value name="$StationTable" exact="table[]"/>
+							<find_station groupname="$AllStations" multiple="true" space="$Sector" functional="true">
+								<match owner="faction.ownerless" negate="true"/>
+							</find_station>
+							<do_for_each name="$Station" in="$AllStations">
+								<do_if value="$Station.trueowner? and ($Station.trueowner != faction.ownerless)">
+									<!-- Count -->
+									<do_if value="not $StationTable.{$Station.trueowner}?">
+										<set_value name="$StationTable.{$Station.trueowner}" exact="table[]"/>
+										<set_value name="$StationTable.{$Station.trueowner}.$Count" exact="1"/>
+									</do_if>
+									<do_elseif value="$StationTable.{$Station.trueowner}? and (not $StationTable.{$Station.trueowner}.$Count?)">
+										<set_value name="$StationTable.{$Station.trueowner}.$Count" exact="1"/>
+									</do_elseif>
+									<do_else>
+										<set_value name="$StationTable.{$Station.trueowner}.$Count" exact="1" operation="add"/>
+									</do_else>
+									<!-- Products -->
+									<do_if value="$Station.products.list? and $Station.products.list.count">
+										<do_for_each name="$Product" in="$Station.products.list">
+											<do_if value="not $StationTable.{$Station.trueowner}.$Products?">
+												<set_value name="$StationTable.{$Station.trueowner}.$Products" exact="[]"/>
+												<append_to_list name="$StationTable.{$Station.trueowner}.$Products" exact="$Product"/>
+											</do_if>
+											<do_elseif value="$StationTable.{$Station.trueowner}.$Products? and (not $StationTable.{$Station.trueowner}.$Products.indexof.{$Product})">
+												<append_to_list name="$StationTable.{$Station.trueowner}.$Products" exact="$Product"/>
+											</do_elseif>
+										</do_for_each>
+									</do_if>
+									<!-- Resources -->
+									<do_if value="$Station.resources.primary.list? and $Station.resources.primary.list.count">
+										<do_for_each name="$Resource" in="$Station.resources.primary.list">
+											<do_if value="not $StationTable.{$Station.trueowner}.$Resources?">
+												<set_value name="$StationTable.{$Station.trueowner}.$Resources" exact="[]"/>
+												<append_to_list name="$StationTable.{$Station.trueowner}.$Resources" exact="$Resource"/>
+											</do_if>
+											<do_elseif value="$StationTable.{$Station.trueowner}.$Resources? and (not $StationTable.{$Station.trueowner}.$Resources.indexof.{$Resource})">
+												<append_to_list name="$StationTable.{$Station.trueowner}.$Resources" exact="$Resource"/>
+											</do_elseif>
+										</do_for_each>
+									</do_if>
+									<!-- Threatscore -->
+									<do_if value="$Station.threatscore" min="1">
+										<do_if value="not $StationTable.{$Station.trueowner}.$ThreatScore?">
+											<set_value name="$StationTable.{$Station.trueowner}.$ThreatScore" exact="$Station.threatscore"/>
+										</do_if>
+										<do_elseif value="$StationTable.{$Station.trueowner}.$ThreatScore?">
+											<set_value name="$StationTable.{$Station.trueowner}.$ThreatScore" exact="$Station.threatscore" operation="add"/>
+										</do_elseif>
+									</do_if>
+								</do_if>
+							</do_for_each>
+							<!-- Stations Output -->
+							<set_value name="$LocText" exact="'%s: %s'.[{1001,4},$AllStations.count]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Stations: #"/>
+							<remove_value name="$LocText"/>
+							<remove_value name="$AllStations"/>
+							<do_if value="$StationTable.keys.count">
+								<set_value name="$FactionList" exact="$StationTable.keys.list"/>
+								<sort_list list="$FactionList" sortbyvalue="loop.element.knownname"/>
+								<set_value name="$OutputNumber" exact="0"/>
+								<do_for_each name="$Faction" in="$FactionList" counter="$B">
+									<do_if value="$StationTable.{$Faction}.$Count" min="1">
+										<!-- Maybe slightly altering colors to differentiate? -->
+										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+										<!-- Faction: # Stations --><!-- Station Threat Score: # -->
+										<!-- Products: list -->
+										<!-- Resources: list -->
+										<set_value name="$LocText1" exact="'%s %s'.[$StationTable.{$Faction}.$Count,{1001,4}]" comment="# Stations"/>
+										<set_value name="$LocText2" exact="'%s %s: %s'.[{1001,4},{33232474,2412},$StationTable.{$Faction}.$ThreatScore]" comment="Station Threat Score: #"/>
+										<do_if value="$StationTable.{$Faction}.$Products? and $StationTable.{$Faction}.$Products.count">
+											<set_value name="$LocText3" exact="'%s: '.[{1001,1610}]" comment="Products: "/>
+											<sort_list list="$StationTable.{$Faction}.$Products" sortbyvalue="loop.element.name"/>
+											<do_for_each name="$Product" in="$StationTable.{$Faction}.$Products" counter="$A">
+												<do_if value="$A == 1">
+													<set_value name="$LocText3" exact="'%s'.[$Product.name]" operation="add" comment="productname"/>
+												</do_if>
+												<do_else>
+													<set_value name="$LocText3" exact="', %s'.[$Product.name]" operation="add" comment=", productname"/>
+												</do_else>
+											</do_for_each>
+										</do_if>
+										<do_else>
+											<set_value name="$LocText3" exact="'%s: %s'.[{1001,1610},{1001,32}]" comment="Products: None"/>
+										</do_else>
+										<do_if value="$StationTable.{$Faction}.$Resources? and $StationTable.{$Faction}.$Resources.count">
+											<set_value name="$LocText4" exact="'%s: '.[{1001,41}]" comment="Resources: "/>
+											<sort_list list="$StationTable.{$Faction}.$Resources" sortbyvalue="loop.element.name"/>
+											<do_for_each name="$Resource" in="$StationTable.{$Faction}.$Resources" counter="$A">
+												<do_if value="$A == 1">
+													<set_value name="$LocText4" exact="'%s'.[$Resource.name]" operation="add" comment="resourcename"/>
+												</do_if>
+												<do_else>
+													<set_value name="$LocText4" exact="', %s'.[$Resource.name]" operation="add" comment=", resourcename"/>
+												</do_else>
+											</do_for_each>
+										</do_if>
+										<do_else>
+											<set_value name="$LocText4" exact="'%s: %s'.[{1001,41},{1001,32}]" comment="Resources: None"/>
+										</do_else>
+										<!-- Alternate BG color -->
+										<set_value name="$OutputNumber" exact="1" operation="add"/>
+										<do_if value="($OutputNumber % 2) == 1">
+											<set_value name="$LocBGColor" exact="$DAMVT.$BodyBackgroundDark"/>
+										</do_if>
+										<do_else>
+											<set_value name="$LocBGColor" exact="$DAMVT.$BodyBackgroundBright"/>
+										</do_else>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $Faction.knownname, $halign = 'left', $cellBGColor = $LocBGColor]" comment="Faction"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocText1, $halign = 'center', $cellBGColor = $LocBGColor]" comment="# Stations"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 4, $text = $LocText2, $halign = 'left', $cellBGColor = $LocBGColor]" comment="Station Threat Score: #"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 10, $text = $LocText3, $halign = 'left', $wordwrap = true, $cellBGColor = $LocBGColor]" comment="Products: list"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 10, $text = $LocText4, $halign = 'left', $wordwrap = true, $cellBGColor = $LocBGColor]" comment="Resources: list"/>
+										<remove_value name="$LocText1"/>
+										<remove_value name="$LocText2"/>
+										<remove_value name="$LocText3"/>
+										<remove_value name="$LocText4"/>
+										<do_if value="$B lt $FactionList.count">
+											<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+											<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+												$col = 4, 
+												$colSpan = 4,
+												$height = 1,
+												$fontsize = 1,
+												$cellBGColor = 'Color.row_separator',
+											]"/>
+										</do_if>
+									</do_if>
+								</do_for_each>
+								<remove_value name="$FactionList"/>
+								<remove_value name="$OutputNumber"/>
+							</do_if>
+							<remove_value name="$StationTable"/>
+							<!-- Ship Info -->
+							<set_value name="$ShipTable" exact="table[]"/>
+							<find_ship groupname="$AllShips" multiple="true" space="$Sector" checkoperational="true" masstraffic="false" unit="false" docked="false" recursive="true">
+								<match owner="faction.ownerless" negate="true"/>
+								<match state="componentstate.wreck" negate="true"/>
+							</find_ship>
+							<find_ship groupname="$AllShips" multiple="true" space="$Sector" checkoperational="true" masstraffic="false" unit="false" docked="true" recursive="true">
+								<match owner="faction.ownerless" negate="true"/>
+								<match_any>
+									<match primarypurpose="purpose.fight"/>
+									<match primarypurpose="purpose.auxiliary"/>
+								</match_any>
+							</find_ship>
+							<set_value name="$TotalMilThreatScore" exact="0"/>
+							<do_for_each name="$Ship" in="$AllShips">
+								<do_if value="$Ship.trueowner? and ($Ship.trueowner != faction.ownerless)">
+									<do_if value="not $ShipTable.{$Ship.trueowner}?">
+										<set_value name="$ShipTable.{$Ship.trueowner}" exact="table[]"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$MilCount" exact="0"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$CivCount" exact="0"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$MilThreatScore" exact="0"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$CivThreatScore" exact="0"/>
+									</do_if>
+									<do_if value="[purpose.fight,purpose.auxiliary].indexof.{$Ship.primarypurpose}">
+										<!-- Military -->
+										<set_value name="$ShipTable.{$Ship.trueowner}.$MilCount" exact="1" operation="add"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$MilThreatScore" exact="$Ship.threatscore" operation="add"/>
+										<set_value name="$TotalMilThreatScore" exact="$Ship.threatscore" operation="add"/>
+									</do_if>
+									<do_else>
+										<!-- Civilian -->
+										<set_value name="$ShipTable.{$Ship.trueowner}.$CivCount" exact="1" operation="add"/>
+										<set_value name="$ShipTable.{$Ship.trueowner}.$CivThreatScore" exact="$Ship.threatscore" operation="add"/>
+									</do_else>
+								</do_if>
+							</do_for_each>
+							<do_if value="$Sector.trueowner? and ($Sector.trueowner != faction.ownerless)">
+								<do_if value="not $ShipTable.{$Sector.trueowner}?">
+									<set_value name="$ShipTable.{$Sector.trueowner}" exact="table[]"/>
+									<set_value name="$ShipTable.{$Sector.trueowner}.$MilCount" exact="0"/>
+									<set_value name="$ShipTable.{$Sector.trueowner}.$CivCount" exact="0"/>
+									<set_value name="$ShipTable.{$Sector.trueowner}.$MilThreatScore" exact="0"/>
+									<set_value name="$ShipTable.{$Sector.trueowner}.$CivThreatScore" exact="0"/>
+								</do_if>
+								<set_value name="$OwnerFaction" exact="$Sector.trueowner"/>
+								<set_value name="$HostileShipCount" exact="0"/>
+								<set_value name="$HostileShipThreatScore" exact="0"/>
+								<get_factions_by_relation result="$Enemies" relation="killmilitary" faction="$OwnerFaction"/>
+								<do_if value="$Enemies.count">
+									<do_for_each name="$EnemyFaction" in="$Enemies">
+										<do_if value="$ShipTable.{$EnemyFaction}.$MilCount? and $ShipTable.{$EnemyFaction}.$MilCount">
+											<set_value name="$HostileShipCount" exact="$ShipTable.{$EnemyFaction}.$MilCount" operation="add"/>
+											<set_value name="$HostileShipThreatScore" exact="$ShipTable.{$EnemyFaction}.$MilThreatScore" operation="add"/>
+										</do_if>
+									</do_for_each>
+								</do_if>
+								<!-- Percentages of control -->
+								<do_if value="@$ShipTable.{$OwnerFaction}.$MilCount + $HostileShipCount gt 0">
+									<set_value name="$SectorControlCount" exact="((@$ShipTable.{$OwnerFaction}.$MilCount)f / ([(@$ShipTable.{$OwnerFaction}.$MilCount + $HostileShipCount),1.0].max)f * 100.0)i"/>
+								</do_if>
+								<do_if value="@$ShipTable.{$OwnerFaction}.$MilThreatScore + $HostileShipThreatScore gt 0">
+									<set_value name="$SectorControlThreatScore" exact="((@$ShipTable.{$OwnerFaction}.$MilThreatScore)f / ([(@$ShipTable.{$OwnerFaction}.$MilThreatScore + $HostileShipThreatScore),1.0].max)f * 100.0)i"/>
+								</do_if>
+							</do_if>
+							<!-- Ships Output -->
+							<!-- if $OwnerFaction? then ownerless == no balance of power -->
+							<!-- if $OwnerFaction? but no $SectorControlCount or $SectorControlThreatScore then not defended == show balance of power -->
+							<!-- if $SectorControlCount and $SectorControlThreatScore then sector is defended/contested == show balance of power -->
+							<do_if value="$OwnerFaction?">
+								<do_if value="$SectorControlCount? and $SectorControlThreatScore?">
+									<!-- Sector Control -->
+									<!-- Owner: # Ships --><!-- Status Bar --><!-- Hostile: HostileShipCount Ships -->
+									<!-- Owner Ship ThreatScore: ThreatScore --><!-- Status Bar --><!-- Hostile Ship Threatscore: ThreatScore -->
+									<set_value name="$LocText1" exact="'%s %s'.[{1001,11284},{1001,12663}]" comment="Sector Control"/>
+									<set_value name="$LocText2" exact="'%s: %s %s'.[$OwnerFaction.knownname,$ShipTable.{$OwnerFaction}.$MilCount,{1001,6}]" comment="Faction: # Ships"/>
+									<set_value name="$LocText3" exact="'%s: %s %s'.[{1001,5212},$HostileShipCount,{1001,6}]" comment="Hostile: # Ships"/>
+									<set_value name="$LocText4" exact="'%s %s: %s'.[$OwnerFaction.shortname,{33232474,2412},$ShipTable.{$OwnerFaction}.$MilThreatScore]" comment="Faction Threat Score: #"/>
+									<set_value name="$LocText5" exact="'%s %s: %s'.[{1001,5212},{33232474,2412},$HostileShipThreatScore]" comment="Hostile Threat Score: #"/>
+									<set_value name="$HoverText1" exact="'%s%s %s'.[$SectorControlCount,'%',{1001,12663}]"/>
+									<set_value name="$HoverText2" exact="'%s%s %s'.[$SectorControlThreatScore,'%',{1001,12663}]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = '', $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment=""/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 6, $text = $LocText1, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]" comment="Sector Control"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = '', $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment=""/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText2, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Faction: # Ships"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
+											$col			= 4, 
+											$colSpan		= 4,
+											$scaling		= true,
+											$type			= 'statusbar',
+											$start			= 100,
+											$current		= $SectorControlCount,
+											$max			= 100,
+											$mouseOverText	= $HoverText1,
+											$valueColor		= $DAMVT.$FillGreenDark,
+											$posChangeColor	= $DAMVT.$FillTransparent,
+											$negChangeColor	= $DAMVT.$FillRedDark,
+											$markerColor	= $DAMVT.$MarkerTransparent,
+											$cellBGColor 	= $DAMVT.$BodyBackgroundDark
+										]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 3, $text = $LocText3, $halign = 'right', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Hostile: # Ships"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText4, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Faction Threat Score: #"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_StatusBar" param="table[
+											$col			= 4, 
+											$colSpan		= 4,
+											$scaling		= true,
+											$type			= 'statusbar',
+											$start			= 100,
+											$current		= $SectorControlThreatScore,
+											$max			= 100,
+											$mouseOverText	= $HoverText2,
+											$valueColor		= $DAMVT.$FillGreenDark,
+											$posChangeColor	= $DAMVT.$FillTransparent,
+											$negChangeColor	= $DAMVT.$FillRedDark,
+											$markerColor	= $DAMVT.$MarkerTransparent,
+											$cellBGColor 	= $DAMVT.$BodyBackgroundDark
+										]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 3, $text = $LocText5, $halign = 'right', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Hostile Threat Score: #"/>
+									<remove_value name="$LocText1"/>
+									<remove_value name="$LocText2"/>
+									<remove_value name="$LocText3"/>
+									<remove_value name="$LocText4"/>
+									<remove_value name="$LocText5"/>
+									<remove_value name="$HoverText1"/>
+									<remove_value name="$HoverText2"/>
+								</do_if>
+							</do_if>
+							<remove_value name="$ShipTable"/>
+							<remove_value name="$AllShips"/>
+							<remove_value name="$TotalMilThreatScore"/>
+							<remove_value name="$OwnerFaction"/>
+							<remove_value name="$HostileShipCount"/>
+							<remove_value name="$HostileShipThreatScore"/>
+							<remove_value name="$SectorControlCount"/>
+							<remove_value name="$SectorControlThreatScore"/>
+						</do_for_each>
+						<remove_value name="$AllSectors"/>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_InfoMilStrengthDisplay" instantiate="true">
@@ -6366,54 +6789,19 @@
 						<do_if value="$LocFaction">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<!-- Faction knownname -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 3,
-								$text = $LocFaction.knownname,
-								$halign = 'left',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<!-- Total: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 4,
-								$colSpan = 1,
-								$text = $MilStrengthTable.{$LocFaction}.{1},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $MilStrengthTable.{$LocFaction}.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- XL: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 5,
-								$colSpan = 1,
-								$text = $MilStrengthTable.{$LocFaction}.{2},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $MilStrengthTable.{$LocFaction}.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- L: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 6,
-								$colSpan = 1,
-								$text = $MilStrengthTable.{$LocFaction}.{3},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $MilStrengthTable.{$LocFaction}.{3}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- M: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 7,
-								$colSpan = 1,
-								$text = $MilStrengthTable.{$LocFaction}.{4},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $MilStrengthTable.{$LocFaction}.{4}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- S: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 8,
-								$colSpan = 1,
-								$text = $MilStrengthTable.{$LocFaction}.{5},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $MilStrengthTable.{$LocFaction}.{5}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- Threatscore: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 9,
-								$colSpan = 2,
-								$text = $MilStrengthTable.{$LocFaction}.{6},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $MilStrengthTable.{$LocFaction}.{6}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						</do_if>
 					</actions>
 				</library>
@@ -6422,54 +6810,19 @@
 						<do_if value="$LocFaction">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<!-- Faction knownname -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 3,
-								$text = $LocFaction.knownname,
-								$halign = 'left',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<!-- Total: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 4,
-								$colSpan = 1,
-								$text = $EcoStrengthTable.{$LocFaction}.{1},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $EcoStrengthTable.{$LocFaction}.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- XL: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 5,
-								$colSpan = 1,
-								$text = $EcoStrengthTable.{$LocFaction}.{2},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $EcoStrengthTable.{$LocFaction}.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- L: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 6,
-								$colSpan = 1,
-								$text = $EcoStrengthTable.{$LocFaction}.{3},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $EcoStrengthTable.{$LocFaction}.{3}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- M: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 7,
-								$colSpan = 1,
-								$text = $EcoStrengthTable.{$LocFaction}.{4},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $EcoStrengthTable.{$LocFaction}.{4}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- S: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 8,
-								$colSpan = 1,
-								$text = $EcoStrengthTable.{$LocFaction}.{5},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $EcoStrengthTable.{$LocFaction}.{5}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<!-- Threatscore: # -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 9,
-								$colSpan = 2,
-								$text = $EcoStrengthTable.{$LocFaction}.{6},
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $EcoStrengthTable.{$LocFaction}.{6}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						</do_if>
 					</actions>
 				</library>
@@ -6486,54 +6839,19 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<!-- Galaxy-wide -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,9191},
-							$halign = 'left',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9191}, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Galaxy-wide"/>
 						<!-- Total: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = $LocGalaxyTotal.{1},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocGalaxyTotal.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<!-- XL: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = $LocGalaxyTotal.{2},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $LocGalaxyTotal.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<!-- L: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = $LocGalaxyTotal.{3},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $LocGalaxyTotal.{3}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<!-- M: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = $LocGalaxyTotal.{4},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $LocGalaxyTotal.{4}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<!-- S: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = $LocGalaxyTotal.{5},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $LocGalaxyTotal.{5}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<!-- Threatscore: # -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = $LocGalaxyTotal.{6},
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $LocGalaxyTotal.{6}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 					</actions>
 				</library>
 				<library name="Library_AddMilStrengthHistoryRow">
@@ -6541,12 +6859,7 @@
 						<do_if value="$LocFaction">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<!-- Faction knownname -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 3,
-								$text = $LocFaction.knownname,
-								$halign = 'left',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<!-- Total: # -->
 							<set_value name="$LocText" exact="''"/>
 							<do_if value="$DAMVT.$DWMilStrengthHistory.{$LocFaction}? and ($DAMVT.$DWMilStrengthHistory.{$LocFaction}.{2} != $MilStrengthTable.{$LocFaction}.{1})">
@@ -6557,12 +6870,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{1} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{2}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 4,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- XL: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6574,12 +6882,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{2} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{3}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 5,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- L: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6591,12 +6894,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{3} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{4}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 6,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- M: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6608,12 +6906,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{4} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{5}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 7,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- S: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6625,12 +6918,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{5} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{6}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 8,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- Threatscore: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6642,12 +6930,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$MilStrengthTable.{$LocFaction}.{6} - $DAMVT.$DWMilStrengthHistory.{$LocFaction}.{7}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 9,
-								$colSpan = 2,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 						</do_if>
 					</actions>
@@ -6657,12 +6940,7 @@
 						<do_if value="$LocFaction">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<!-- Faction knownname -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 3,
-								$text = $LocFaction.knownname,
-								$halign = 'left',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 							<!-- Total: # -->
 							<set_value name="$LocText" exact="''"/>
 							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$LocFaction}? and ($DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2} != $EcoStrengthTable.{$LocFaction}.{1})">
@@ -6673,12 +6951,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{1} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{2}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 4,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- XL: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6690,12 +6963,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{2} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{3}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 5,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- L: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6707,12 +6975,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{3} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{4}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 6,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- M: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6724,12 +6987,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{4} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{5}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 7,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- S: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6741,12 +6999,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{5} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{6}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 8,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 							<!-- Stations: # -->
 							<set_value name="$LocText" exact="''"/>
@@ -6758,12 +7011,7 @@
 									<set_value name="$LocText" exact="'+%s'.[$EcoStrengthTable.{$LocFaction}.{6} - $DAMVT.$DWEcoStrengthHistory.{$LocFaction}.{7}]"/>
 								</do_else>
 							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 9,
-								$colSpan = 2,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 							<remove_value name="$LocText"/>
 						</do_if>
 					</actions>
@@ -6781,12 +7029,7 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<!-- Galaxy-wide -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,9191},
-							$halign = 'left',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9191}, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 						<!-- Total: # -->
 						<set_value name="$LocText" exact="''"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and $DAMVT.$DWMilStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal.{1})">
@@ -6797,12 +7040,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{1} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{2}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- XL: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6814,12 +7052,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{2} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{3}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- L: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6831,12 +7064,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{3} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{4}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- M: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6848,12 +7076,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{4} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{5}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- S: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6865,12 +7088,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{5} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{6}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- Threatscore: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6882,12 +7100,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{6} - $DAMVT.$DWMilStrengthHistory.$Galaxy.{7}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<do_if value="$DAMVT.$DWMilStrengthHistory.$Galaxy? and ($DAMVT.$DWMilStrengthHistory.$Galaxy.{1} lt player.age)">
 							<set_value name="$LocNumber" exact="(player.age - $DAMVT.$DWMilStrengthHistory.$Galaxy.{1})s"/>
@@ -6906,12 +7119,7 @@
 							</do_if>
 							<set_value name="$LocText" exact="{33232474,2400}.[$LocTimeString]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
 							<remove_value name="$LocNumber"/>
 							<remove_value name="$LocText"/>
 						</do_if>
@@ -6930,12 +7138,7 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<!-- Galaxy-wide -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 1,
-							$colSpan = 3,
-							$text = {1001,9191},
-							$halign = 'left',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,9191}, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
 						<!-- Total: # -->
 						<set_value name="$LocText" exact="''"/>
 						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{2} != $LocGalaxyTotal.{1})">
@@ -6946,12 +7149,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{1} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{2}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 4,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- XL: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6963,12 +7161,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{2} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{3}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 5,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- L: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6980,12 +7173,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{3} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{4}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 6,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- M: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -6997,12 +7185,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{4} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{5}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 7,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- S: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -7014,12 +7197,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{5} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{6}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 8,
-							$colSpan = 1,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 8, $colSpan = 1, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<!-- Stations: # -->
 						<set_value name="$LocText" exact="''"/>
@@ -7031,12 +7209,7 @@
 								<set_value name="$LocText" exact="'+%s'.[$LocGalaxyTotal.{6} - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{7}]"/>
 							</do_else>
 						</do_if>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-							$col = 9,
-							$colSpan = 2,
-							$text = $LocText,
-							$halign = 'center',
-							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
 						<remove_value name="$LocText"/>
 						<do_if value="$DAMVT.$DWEcoStrengthHistory.$Galaxy? and ($DAMVT.$DWEcoStrengthHistory.$Galaxy.{1} lt player.age)">
 							<set_value name="$LocNumber" exact="(player.age - $DAMVT.$DWEcoStrengthHistory.$Galaxy.{1})s"/>
@@ -7055,315 +7228,9 @@
 							</do_if>
 							<set_value name="$LocText" exact="{33232474,2400}.[$LocTimeString]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = event.param.$columns,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
 							<remove_value name="$LocNumber"/>
 							<remove_value name="$LocText"/>
-						</do_if>
-					</actions>
-				</library>
-				<library name="Library_AddFactionEconStrengthRows">
-					<actions>
-						<do_if value="$DADynamicWarFactionOne">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<!-- XL -->
-							<find_ship_by_true_owner name="$XLTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$XLDockedTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$XLDockedTradeShips" list="$XLTradeShips" multiple="true"/>
-							<append_list_elements name="$XLTradeShips" other="$XLDockedTradeShips"/>
-							<set_value name="$MouseOverText3a" exact="{1001,9010} + {1001,120} + [@$XLTradeShips.count,0].max"/>
-							<find_ship_by_true_owner name="$XLBuildShips" multiple="true" checkoperational="true" primarypurpose="purpose.build" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$XLDockedBuildShips" multiple="true" checkoperational="true" primarypurpose="purpose.build" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$XLDockedBuildShips" list="$XLBuildShips" multiple="true"/>
-							<append_list_elements name="$XLBuildShips" other="$XLDockedBuildShips"/>
-							<set_value name="$MouseOverText3b" exact="{1001,9012} + {1001,120} + [@$XLBuildShips.count,0].max"/>
-							<find_ship_by_true_owner name="$XLOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.mine"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<find_ship_by_true_owner name="$XLDockedOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_xl" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.mine"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<remove_from_list name="$XLDockedOtherShips" list="$XLOtherShips" multiple="true"/>
-							<append_list_elements name="$XLOtherShips" other="$XLDockedOtherShips"/>
-							<set_value name="$MouseOverText3c" exact="{1001,9014} + {1001,120} + [@$XLOtherShips.count,0].max"/>
-							<set_value name="$XLShips" exact="([@$XLTradeShips.count,0].max) + ([@$XLBuildShips.count,0].max) + ([@$XLOtherShips.count,0].max)"/>
-							<set_value name="$MouseOverText3" exact="$DADynamicWarFactionOne.knownname + ' ' + {1001,48} + ': ' + $MouseOverText3a + ' ' + $MouseOverText3b + ' ' + $MouseOverText3c"/>
-							<!-- L -->
-							<find_ship_by_true_owner name="$LTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$LDockedTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$LDockedTradeShips" list="$LTradeShips" multiple="true"/>
-							<append_list_elements name="$LTradeShips" other="$LDockedTradeShips"/>
-							<set_value name="$MouseOverText4a" exact="{1001,9010} + {1001,120} + [@$LTradeShips.count,0].max"/>
-							<find_ship_by_true_owner name="$LMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$LDockedMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$LDockedMineShips" list="$LMineShips" multiple="true"/>
-							<append_list_elements name="$LMineShips" other="$LDockedMineShips"/>
-							<set_value name="$MouseOverText4b" exact="{1001,9013} + {1001,120} + [@$LMineShips.count,0].max"/>
-							<find_ship_by_true_owner name="$LOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<find_ship_by_true_owner name="$LDockedOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_l" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<remove_from_list name="$LDockedOtherShips" list="$LOtherShips" multiple="true"/>
-							<append_list_elements name="$LOtherShips" other="$LDockedOtherShips"/>
-							<set_value name="$MouseOverText4c" exact="{1001,9014} + {1001,120} + [@$LOtherShips.count,0].max"/>
-							<set_value name="$LShips" exact="([@$LTradeShips.count,0].max) + ([@$LMineShips.count,0].max) + ([@$LOtherShips.count,0].max)"/>
-							<set_value name="$MouseOverText4" exact="$DADynamicWarFactionOne.knownname + ' ' + {1001,49} + ': ' + $MouseOverText4a + ' ' + $MouseOverText4b + ' ' + $MouseOverText4c"/>
-							<!-- M -->
-							<find_ship_by_true_owner name="$MTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$MDockedTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$MDockedTradeShips" list="$MTradeShips" multiple="true"/>
-							<append_list_elements name="$MTradeShips" other="$MDockedTradeShips"/>
-							<set_value name="$MouseOverText5a" exact="{1001,9010} + {1001,120} + [@$MTradeShips.count,0].max"/>
-							<find_ship_by_true_owner name="$MMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$MDockedMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$MDockedMineShips" list="$MMineShips" multiple="true"/>
-							<append_list_elements name="$MMineShips" other="$MDockedMineShips"/>
-							<set_value name="$MouseOverText5b" exact="{1001,9013} + {1001,120} + [@$MMineShips.count,0].max"/>
-							<find_ship_by_true_owner name="$MOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<find_ship_by_true_owner name="$MDockedOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_m" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<remove_from_list name="$MDockedOtherShips" list="$MOtherShips" multiple="true"/>
-							<append_list_elements name="$MOtherShips" other="$MDockedOtherShips"/>
-							<set_value name="$MouseOverText5c" exact="{1001,9014} + {1001,120} + [@$MOtherShips.count,0].max"/>
-							<set_value name="$MShips" exact="([@$MTradeShips.count,0].max) + ([@$MMineShips.count,0].max) + ([@$MOtherShips.count,0].max)"/>
-							<set_value name="$MouseOverText5" exact="$DADynamicWarFactionOne.knownname + ' ' + {1001,50} + ': ' + $MouseOverText5a + ' ' + $MouseOverText5b + ' ' + $MouseOverText5c"/>
-							<!-- S -->
-							<find_ship_by_true_owner name="$STradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$SDockedTradeShips" multiple="true" checkoperational="true" primarypurpose="purpose.trade" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$SDockedTradeShips" list="$STradeShips" multiple="true"/>
-							<append_list_elements name="$STradeShips" other="$SDockedTradeShips"/>
-							<set_value name="$MouseOverText6a" exact="{1001,9010} + {1001,120} + [@$STradeShips.count,0].max"/>
-							<find_ship_by_true_owner name="$SMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true"/>
-							<find_ship_by_true_owner name="$SDockedMineShips" multiple="true" checkoperational="true" primarypurpose="purpose.mine" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true"/>
-							<remove_from_list name="$SDockedMineShips" list="$SMineShips" multiple="true"/>
-							<append_list_elements name="$SMineShips" other="$SDockedMineShips"/>
-							<set_value name="$MouseOverText6b" exact="{1001,9013} + {1001,120} + [@$SMineShips.count,0].max"/>
-							<!-- OTHER -->
-							<find_ship_by_true_owner name="$SOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<find_ship_by_true_owner name="$SDockedOtherShips" multiple="true" checkoperational="true" masstraffic="false" unit="false" class="class.ship_s" space="player.galaxy" faction="$DADynamicWarFactionOne" docked="true" recursive="true">
-								<match_any>
-									<match primarypurpose="purpose.build"/>
-									<match primarypurpose="purpose.salvage"/>
-									<match primarypurpose="purpose.dismantling"/>
-								</match_any>
-							</find_ship_by_true_owner>
-							<remove_from_list name="$SDockedOtherShips" list="$SOtherShips" multiple="true"/>
-							<append_list_elements name="$SOtherShips" other="$SDockedOtherShips"/>
-							<set_value name="$MouseOverText6c" exact="{1001,9014} + {1001,120} + [@$SOtherShips.count,0].max"/>
-							<set_value name="$SShips" exact="([@$STradeShips.count,0].max) + ([@$SMineShips.count,0].max) + ([@$SOtherShips.count,0].max)"/>
-							<set_value name="$MouseOverText6" exact="$DADynamicWarFactionOne.knownname + ' ' + {1001,51} + ': ' + $MouseOverText6a + ' ' + $MouseOverText6b + ' ' + $MouseOverText6c"/>
-							<!-- Stations -->
-							<find_station_by_true_owner name="$Stations" multiple="true" checkoperational="true" space="player.galaxy" faction="$DADynamicWarFactionOne"/>
-							<!-- Total -->
-							<set_value name="$TotalShips" exact="$XLShips + $LShips + $MShips + $SShips"/>
-							<set_value name="$LocGalaxyTotal" exact="$TotalShips" operation="add"/>
-							<set_value name="$LocGalaxyTotalXL" exact="$XLShips" operation="add"/>
-							<set_value name="$LocGalaxyTotalL" exact="$LShips" operation="add"/>
-							<set_value name="$LocGalaxyTotalM" exact="$MShips" operation="add"/>
-							<set_value name="$LocGalaxyTotalS" exact="$SShips" operation="add"/>
-							<set_value name="$LocGalaxyTotalStations" exact="$Stations.count" operation="add"/>
-							<do_if value="not $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}?">
-								<set_value name="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}" exact="[player.age,$TotalShips,$XLShips,$LShips,$MShips,$SShips,([@$Stations.count,0].max)]"/>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 3,
-								$mouseOverText = $DADynamicWarFactionOne.knownname,
-								$text = $DADynamicWarFactionOne.knownname,
-								$halign = 'left',
-								]"/>
-							<!-- Total: # -->
-							<set_value name="$LocText" exact="'%s'.[$TotalShips]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{2} != $TotalShips)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{2} gt $TotalShips">
-									<set_value name="$LocText" exact="'(%s)'.[$TotalShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{2}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$TotalShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{2}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 4,
-								$colSpan = 1,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<!-- XL: # -->
-							<set_value name="$LocText" exact="'%s'.[$XLShips]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{3} != $XLShips)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{3} gt $XLShips">
-									<set_value name="$LocText" exact="'(%s)'.[$XLShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{3}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$XLShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{3}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 5,
-								$colSpan = 1,
-								$mouseOverText = $MouseOverText3,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<!-- L: # -->
-							<set_value name="$LocText" exact="'%s'.[$LShips]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{4} != $LShips)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{4} gt $LShips">
-									<set_value name="$LocText" exact="'(%s)'.[$LShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{4}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$LShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{4}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 6,
-								$colSpan = 1,
-								$mouseOverText = $MouseOverText4,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<!-- M: # -->
-							<set_value name="$LocText" exact="'%s'.[$MShips]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{5} != $MShips)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{5} gt $MShips">
-									<set_value name="$LocText" exact="'(%s)'.[$MShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{5}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$MShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{5}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 7,
-								$colSpan = 1,
-								$mouseOverText = $MouseOverText5,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<!-- S: # -->
-							<set_value name="$LocText" exact="'%s'.[$SShips]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{6} != $SShips)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{6} gt $SShips">
-									<set_value name="$LocText" exact="'(%s)'.[$SShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{6}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$SShips - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{6}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 8,
-								$colSpan = 1,
-								$mouseOverText = $MouseOverText6,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<!-- Stations: # -->
-							<set_value name="$LocText" exact="'%s'.[$Stations.count]"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and ($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{7} != $Stations.count)">
-								<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{7} gt $Stations.count">
-									<set_value name="$LocText" exact="'(%s)'.[$Stations.count - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{7}]" operation="add"/>
-								</do_if>
-								<do_else>
-									<set_value name="$LocText" exact="'(+%s)'.[$Stations.count - $DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{7}]" operation="add"/>
-								</do_else>
-							</do_if>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 9,
-								$colSpan = 2,
-								$text = $LocText,
-								$halign = 'center',
-								]"/>
-							<remove_value name="$LocText"/>
-							<do_if value="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}? and (($DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}.{1} + 5s) le player.age)">
-								<set_value name="$DAMVT.$DWEcoStrengthHistory.{$DADynamicWarFactionOne}" exact="[player.age,$TotalShips,$XLShips,$LShips,$MShips,$SShips,([@$Stations.count,0].max)]"/>
-							</do_if>
-							<remove_value name="$XLTradeShips"/>
-							<remove_value name="$XLDockedTradeShips"/>
-							<remove_value name="$MouseOverText3a"/>
-							<remove_value name="$XLBuildShips"/>
-							<remove_value name="$XLDockedBuildShips"/>
-							<remove_value name="$MouseOverText3b"/>
-							<remove_value name="$XLOtherShips"/>
-							<remove_value name="$XLDockedOtherShips"/>
-							<remove_value name="$MouseOverText3c"/>
-							<remove_value name="$XLShips"/>
-							<remove_value name="$MouseOverText3"/>
-							<remove_value name="$LTradeShips"/>
-							<remove_value name="$LDockedTradeShips"/>
-							<remove_value name="$MouseOverText4a"/>
-							<remove_value name="$LMineShips"/>
-							<remove_value name="$LDockedMineShips"/>
-							<remove_value name="$MouseOverText4b"/>
-							<remove_value name="$LOtherShips"/>
-							<remove_value name="$LDockedOtherShips"/>
-							<remove_value name="$MouseOverText4c"/>
-							<remove_value name="$LShips"/>
-							<remove_value name="$MouseOverText4"/>
-							<remove_value name="$MTradeShips"/>
-							<remove_value name="$MDockedTradeShips"/>
-							<remove_value name="$MouseOverText5a"/>
-							<remove_value name="$MMineShips"/>
-							<remove_value name="$MDockedMineShips"/>
-							<remove_value name="$MouseOverText5b"/>
-							<remove_value name="$MOtherShips"/>
-							<remove_value name="$MDockedOtherShips"/>
-							<remove_value name="$MouseOverText5c"/>
-							<remove_value name="$MShips"/>
-							<remove_value name="$MouseOverText5"/>
-							<remove_value name="$STradeShips"/>
-							<remove_value name="$SDockedTradeShips"/>
-							<remove_value name="$MouseOverText6a"/>
-							<remove_value name="$SMineShips"/>
-							<remove_value name="$SDockedMineShips"/>
-							<remove_value name="$MouseOverText6b"/>
-							<remove_value name="$SOtherShips"/>
-							<remove_value name="$SDockedOtherShips"/>
-							<remove_value name="$MouseOverText6c"/>
-							<remove_value name="$SShips"/>
-							<remove_value name="$MouseOverText6"/>
 						</do_if>
 					</actions>
 				</library>

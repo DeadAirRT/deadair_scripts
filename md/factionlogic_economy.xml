@@ -1,12 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <diff>
   <add sel="/mdscript/cues/library[@name='Econ_Manager']/cues/cue[@name='Request_Production_Module']/cues/cue[@name='Request_Production_Module_Generate_Sequence']/cues/cue[@name='Request_Production_Module_Sequence_Generated']/actions/do_if[@value='event.param and event.param2']/add_build_to_expand_station[@object='$Station.buildstorage']" pos="before">
-    <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsStationExpanded" param="[$Station,@$NewModules,@$WantedProductions]"/>
+    <do_if value="@md.$DADynamicVarTable.$DADynamicNewsEnable and ((not @md.$DADynamicVarTable.$DADynamicNewsKnownFactionsOnly) or ($Station.trueowner.isknown))">
+      <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsStationExpanded" param="[$Station,@$NewModules,@$WantedProductions]"/>
+    </do_if>
   </add>
   <add sel="/mdscript/cues/library[@name='Econ_Manager']/cues/cue[@name='Request_Factory']/actions/do_else[1]/do_else/do_if[@value='$Zone or @$BuildInSector']/do_if[@value='not $ProductionPlanned']/do_if[@value='@$BuildInSector']/remove_value[@name='$SectorCentre']" pos="before">
-    <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsNewStationStarted" param="[$Station,$Ware]"/>
+    <do_if value="@md.$DADynamicVarTable.$DADynamicNewsEnable and ((not @md.$DADynamicVarTable.$DADynamicNewsKnownFactionsOnly) or ($Faction.isknown))">
+      <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsNewStationStarted" param="[$Station,$Ware]"/>
+    </do_if>
   </add>
   <add sel="/mdscript/cues/library[@name='Econ_Manager']/cues/cue[@name='Request_Factory']/actions/do_else[1]/do_else/do_if[@value='$Zone or @$BuildInSector']/do_if[@value='not $ProductionPlanned']/do_else">
-    <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsNewStationStarted" param="[$Station,$Ware]"/>
+    <do_if value="@md.$DADynamicVarTable.$DADynamicNewsEnable and ((not @md.$DADynamicVarTable.$DADynamicNewsKnownFactionsOnly) or ($Faction.isknown))">
+      <signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicNewsNewStationStarted" param="[$Station,$Ware]"/>
+    </do_if>
   </add>
 </diff>

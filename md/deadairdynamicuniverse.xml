@@ -14,12 +14,14 @@
 					- Jobs Expeditions News
 					- JobSST event_sector_changed owner, reevaluate situation for that sector only
 					- Gate activate/deactivate highways
+					- Look into adding news events from faction logic when it starts new phase
 				-->
 				<!-- MAYBE: Features:
 					- Design Tater lifetime profit menu
 					- Allow setting AI traders to use DeadTater
 					- Integrate expeditions quota into SST
 					- Bounty and Favor rewards for police license kills from a faction against enemy
+					- Dynamic war alliances
 				-->
 				<!-- Base table and shortcut for settings/data -->
 				<set_value name="md.$DADynamicVarTable" exact="table[]"/>
@@ -56,7 +58,7 @@
 				<create_list name="$DADynamicWarInactiveFactions"/>
 				<set_value name="$DADVT.$DADynamicWarEventWeights" exact="[1,16,32,32,16,1,0]"/>
 				<set_value name="$DADVT.$DADynamicWarInterval" exact="30"/>
-				<set_value name="$DADynamicWarLastEventTime" exact="0"/>
+				<set_value name="$DADynamicWarLastEventTime" exact="0s"/>
 				<set_value name="$DADVT.$DADynamicWarFavors" exact="table[]"/>
 				<set_value name="$DADVT.$DADynamicWarDetailedDebug" exact="false"/>
 				<set_value name="$DADVT.$DADynamicWarPrimaryRaceModifier" exact="0.25"/>
@@ -80,18 +82,19 @@
 					</match_any>
 				</find_station>
 				<set_value name="$DADynamicNewsQueuedReports" exact="table[]"/>
-				<set_value name="$DADynamicNewsLastReportTime" exact="0"/>
+				<set_value name="$DADynamicNewsLastReportTime" exact="0s"/>
 				<set_value name="$DADVT.$DADynamicNewsInterval" exact="10"/>
 				<set_value name="$DADVT.$DADynamicNewsDetailedDebug" exact="false"/>
 				<set_value name="$DADVT.$DADynamicNewsEnableNotifications" exact="false"/>
 				<set_value name="$DADVT.$DADynamicNewsEnableLogbook" exact="false"/>
 				<set_value name="$DADVT.$DADynamicNewsEnableNewsStorage" exact="false"/>
+				<set_value name="$DADVT.$DADynamicNewsKnownFactionsOnly" exact="false"/>
 				<!-- Evolution -->
 				<set_value name="$DADVT.$DAEvolutionInterval" exact="120"/>
 				<set_value name="$DADVT.$DAEvolutionMaxLevel" exact="5"/>
 				<set_value name="$DADVT.$DAEvolutionCurrentLevel" exact="0"/>
 				<create_list name="$DAEvolutionCurrentEQMods"/>
-				<set_value name="$DAEvolutionLastUpgradeTime" exact="0"/>
+				<set_value name="$DAEvolutionLastUpgradeTime" exact="0s"/>
 				<set_value name="$DADVT.$DAEvolutionEnableJobs" exact="false"/>
 				<set_value name="$DADVT.$DAEvolutionMaxXenonJobs" exact="10"/>
 				<set_value name="$DADVT.$DAEvolutionXenonFleetSize" exact="2"/>
@@ -108,7 +111,7 @@
 				<set_value name="$DADVT.$DAFillShipModsEnable" exact="true"/>
 				<set_value name="$DAFillDelayAlpha" exact="2s"/>
 				<set_value name="$DADVT.$DAFillCheckInterval" exact="60"/>
-				<set_value name="$DAFillLastCheckTime" exact="0"/>
+				<set_value name="$DAFillLastCheckTime" exact="0s"/>
 				<set_value name="$DADVT.$DAFillMaxTSWarePercent" exact="90.0"/>
 				<set_value name="$DADVT.$DAFillMaxTSWarePercentAfter" exact="75.0"/>
 				<set_value name="$DADVT.$DAFillMinTSWarePercent" exact="5.0"/>
@@ -234,46 +237,58 @@
 			</actions>
 			<cues>
 				<!-- New / Load Save Variable Verification -->
-				<cue name="VerifyVariablesExist" instantiate="true">
+				<cue name="VerifyVariablesExist" instantiate="false">
 					<conditions>
 						<check_any>
 							<event_universe_generated/>
 							<event_game_loaded/>
-						</check_any>
-						<check_any>
-							<check_value value="not $VerifyVariablesExistTimer?"/>
-							<check_value value="$VerifyVariablesExistTimer? and (player.age gt $VerifyVariablesExistTimer)"/>
+							<event_cue_signalled/>
 						</check_any>
 					</conditions>
 					<actions>
-						<set_value name="$VerifyVariablesExistTimer" exact="player.age + 5s"/>
-						<do_if value="not md.$DADynamicVarTable?">
-							<set_value name="md.$DADynamicVarTable" exact="table[]"/>
-							<debug_text text="'MOD: DADynamicUniverse -- CRITICAL -- md.$DADynamicVarTable was missing. Will result in reset of all settings.'" context="true" filter="error"/>
+						<do_if value="(not $VerifyVariablesExistTimer?) or (player.age gt $VerifyVariablesExistTimer) or (event.name == 'event_cue_signalled')">
+							<set_value name="$VerifyVariablesExistTimer" exact="player.age + 5s"/>
+							<set_value name="$TotalMissingVar" exact="0"/>
+							<do_if value="not md.$DADynamicVarTable? or (md.$DADynamicVarTable == null)">
+								<set_value name="md.$DADynamicVarTable" exact="table[]"/>
+								<debug_text text="'MOD: DADynamicUniverse -- CRITICAL -- md.$DADynamicVarTable was missing. Will result in reset of all settings.'" context="true" filter="error"/>
+								<set_value name="$TotalMissingVar" exact="1" operation="add"/>
+							</do_if>
+							<do_if value="not $DADVT? or ($DADVT == null)">
+								<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+								<debug_text text="'MOD: DADynamicUniverse -- ERROR -- $DADVT was missing.'" context="true" filter="error"/>
+								<set_value name="$TotalMissingVar" exact="1" operation="add"/>
+							</do_if>
+							<do_if value="not global.$DAVarTable? or (global.$DAVarTable == null)">
+								<set_value name="global.$DAVarTable" exact="table[]"/>
+								<debug_text text="'MOD: DADynamicUniverse -- ERROR -- global.$DAVarTable was missing.'" context="true" filter="error"/>
+								<set_value name="$TotalMissingVar" exact="1" operation="add"/>
+							</do_if>
+							<do_if value="not $DAGVT? or ($DAGVT == null)">
+								<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+								<debug_text text="'MOD: DADynamicUniverse -- ERROR -- $DAGVT was missing.'" context="true" filter="error"/>
+								<set_value name="$TotalMissingVar" exact="1" operation="add"/>
+							</do_if>
+							<include_actions ref="LibraryCheckDynamicWarVariables"/>
+							<include_actions ref="LibraryCheckDynamicNewsVariables"/>
+							<include_actions ref="LibraryCheckEvolutionVariables"/>
+							<include_actions ref="LibraryCheckFillVariables"/>
+							<include_actions ref="LibraryCheckJobsEXPVariables"/>
+							<include_actions ref="LibraryCheckJobsSSTVariables"/>
+							<include_actions ref="LibraryCheckGateVariables"/>
+							<include_actions ref="LibraryCheckGodVariables"/>
+							<include_actions ref="LibraryCheckBPVariables"/>
+							<include_actions ref="LibraryCheckTPVariables"/>
+							<include_actions ref="LibraryCheckMiscVariables"/>
+							<do_if value="$TotalMissingVar">
+								<debug_text text="'MOD: DADynamicUniverse -- Number of missing variables set: %s.'.[$TotalMissingVar]" context="true" filter="error"/>
+							</do_if>
+							<do_else>
+								<debug_text text="'MOD: DADynamicUniverse -- No missing variables.'" context="false" filter="scripts"/>
+							</do_else>
+							<remove_value name="$TotalMissingVar"/>
 						</do_if>
-						<do_if value="not $DADVT?">
-							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
-							<debug_text text="'MOD: DADynamicUniverse -- ERROR -- $DADVT was missing.'" context="true" filter="error"/>
-						</do_if>
-						<do_if value="not global.$DAVarTable?">
-							<set_value name="global.$DAVarTable" exact="table[]"/>
-							<debug_text text="'MOD: DADynamicUniverse -- ERROR -- global.$DAVarTable was missing.'" context="true" filter="error"/>
-						</do_if>
-						<do_if value="not $DAGVT?">
-							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
-							<debug_text text="'MOD: DADynamicUniverse -- ERROR -- $DAGVT was missing.'" context="true" filter="error"/>
-						</do_if>
-						<include_actions ref="LibraryCheckDynamicWarVariables"/>
-						<include_actions ref="LibraryCheckDynamicNewsVariables"/>
-						<include_actions ref="LibraryCheckEvolutionVariables"/>
-						<include_actions ref="LibraryCheckFillVariables"/>
-						<include_actions ref="LibraryCheckJobsEXPVariables"/>
-						<include_actions ref="LibraryCheckJobsSSTVariables"/>
-						<include_actions ref="LibraryCheckGateVariables"/>
-						<include_actions ref="LibraryCheckGodVariables"/>
-						<include_actions ref="LibraryCheckBPVariables"/>
-						<include_actions ref="LibraryCheckTPVariables"/>
-						<include_actions ref="LibraryCheckMiscVariables"/>
+						<reset_cue cue="this"/>
 					</actions>
 				</cue>
 				<!-- Dynamic War // Dynamic War // Dynamic War // Dynamic War // Dynamic War // Dynamic War // Dynamic War // Dynamic War -->
@@ -1198,15 +1213,15 @@
 				<library name="LibraryCheckDynamicWarVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DADynamicWarEnable?">
+						<do_if value="(not $DADVT.$DADynamicWarEnable?) or (not ((typeof $DADVT.$DADynamicWarEnable == datatype.integer) and (($DADVT.$DADynamicWarEnable == 1) or ($DADVT.$DADynamicWarEnable == 0))))">
 							<set_value name="$DADVT.$DADynamicWarEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarFavorsEnable?">
+						<do_if value="(not $DADVT.$DADynamicWarFavorsEnable?) or (not ((typeof $DADVT.$DADynamicWarFavorsEnable == datatype.integer) and (($DADVT.$DADynamicWarFavorsEnable == 1) or ($DADVT.$DADynamicWarFavorsEnable == 0))))">
 							<set_value name="$DADVT.$DADynamicWarFavorsEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarDisabledFactions?">
+						<do_if value="(not $DADVT.$DADynamicWarDisabledFactions?) or ($DADVT.$DADynamicWarDisabledFactions == null)">
 							<set_value name="$DADVT.$DADynamicWarDisabledFactions" exact="[faction.civilian, faction.criminal, faction.khaak, faction.player, faction.smuggler, faction.visitor, faction.xenon]"/>
 							<do_if value="faction.boron?">
 								<append_to_list name="$DADVT.$DADynamicWarDisabledFactions" exact="faction.boron"/>
@@ -1219,73 +1234,76 @@
 							</do_if>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarPermaExcludedFactions?">
+						<do_if value="(not $DADVT.$DADynamicWarPermaExcludedFactions?) or ($DADVT.$DADynamicWarPermaExcludedFactions == null)">
 							<set_value name="$DADVT.$DADynamicWarPermaExcludedFactions" exact="[faction.civilian, faction.criminal, faction.khaak, faction.smuggler, faction.visitor]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarFactionChanceTable?">
+						<do_if value="(not $DADVT.$DADynamicWarFactionChanceTable?) or ($DADVT.$DADynamicWarFactionChanceTable == null)">
 							<set_value name="$DADVT.$DADynamicWarFactionChanceTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicWarLockedRelationFactions?">
+						<do_if value="(not $DADynamicWarLockedRelationFactions?) or ($DADynamicWarLockedRelationFactions == null)">
 							<create_list name="$DADynamicWarLockedRelationFactions"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicWarInactiveFactions?">
+						<do_if value="(not $DADynamicWarInactiveFactions?) or ($DADynamicWarInactiveFactions == null)">
 							<create_list name="$DADynamicWarInactiveFactions"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarEventWeights?">
+						<do_if value="(not $DADVT.$DADynamicWarEventWeights?) or ($DADVT.$DADynamicWarEventWeights == null)">
 							<set_value name="$DADVT.$DADynamicWarEventWeights" exact="[1,16,32,32,16,1,0]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarInterval?">
+						<do_if value="(not $DADVT.$DADynamicWarInterval?) or (not ($DADVT.$DADynamicWarInterval gt 0))">
 							<set_value name="$DADVT.$DADynamicWarInterval" exact="30"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicWarLastEventTime?">
-							<set_value name="$DADynamicWarLastEventTime" exact="0"/>
+						<do_if value="(not $DADynamicWarLastEventTime?) or (not (typeof $DADynamicWarLastEventTime == datatype.time))">
+							<set_value name="$DADynamicWarLastEventTime" exact="0s"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarFavors?">
+						<do_if value="(not $DADVT.$DADynamicWarFavors?) or ($DADVT.$DADynamicWarFavors == null)">
 							<set_value name="$DADVT.$DADynamicWarFavors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarDetailedDebug?">
+						<do_if value="(not $DADVT.$DADynamicWarDetailedDebug?) or (not ((typeof $DADVT.$DADynamicWarDetailedDebug == datatype.integer) and (($DADVT.$DADynamicWarDetailedDebug == 1) or ($DADVT.$DADynamicWarDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DADynamicWarDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarPrimaryRaceModifier?">
+						<do_if value="(not $DADVT.$DADynamicWarPrimaryRaceModifier?) or (not ($DADVT.$DADynamicWarPrimaryRaceModifier gt 0.0))">
 							<set_value name="$DADVT.$DADynamicWarPrimaryRaceModifier" exact="0.25"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarCurrentRelationsModifier?">
+						<do_if value="(not $DADVT.$DADynamicWarCurrentRelationsModifier?) or (not ($DADVT.$DADynamicWarCurrentRelationsModifier gt 0.0))">
 							<set_value name="$DADVT.$DADynamicWarCurrentRelationsModifier" exact="0.5"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarCollectiveRelationsModifier?">
+						<do_if value="(not $DADVT.$DADynamicWarCollectiveRelationsModifier?) or (not ($DADVT.$DADynamicWarCollectiveRelationsModifier gt 0.0))">
 							<set_value name="$DADVT.$DADynamicWarCollectiveRelationsModifier" exact="0.25"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarFlavorEnable?">
+						<do_if value="(not $DADVT.$DADynamicWarFlavorEnable?) or (not ((typeof $DADVT.$DADynamicWarFlavorEnable == datatype.integer) and (($DADVT.$DADynamicWarFlavorEnable == 1) or ($DADVT.$DADynamicWarFlavorEnable == 0))))">
 							<set_value name="$DADVT.$DADynamicWarFlavorEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarRelationsFixEnable?">
+						<do_if value="(not $DADVT.$DADynamicWarRelationsFixEnable?) or (not ((typeof $DADVT.$DADynamicWarRelationsFixEnable == datatype.integer) and (($DADVT.$DADynamicWarRelationsFixEnable == 1) or ($DADVT.$DADynamicWarRelationsFixEnable == 0))))">
 							<set_value name="$DADVT.$DADynamicWarRelationsFixEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarRelationsAILimit?">
+						<do_if value="(not $DADVT.$DADynamicWarRelationsAILimit?) or (not ($DADVT.$DADynamicWarRelationsAILimit gt 0.0))">
 							<set_value name="$DADVT.$DADynamicWarRelationsAILimit" exact="0.32"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicWarPossibleFactionsPerEvent?">
+						<do_if value="(not $DADVT.$DADynamicWarPossibleFactionsPerEvent?) or (not ($DADVT.$DADynamicWarPossibleFactionsPerEvent gt 0))">
 							<set_value name="$DADVT.$DADynamicWarPossibleFactionsPerEvent" exact="4"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DADynamicWar -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -1944,19 +1962,19 @@
 				<library name="LibraryCheckDynamicNewsVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DADynamicNewsEnable?">
+						<do_if value="not $DADVT.$DADynamicNewsEnable? or (not ((typeof $DADVT.$DADynamicNewsEnable == datatype.integer) and (($DADVT.$DADynamicNewsEnable == 1) or ($DADVT.$DADynamicNewsEnable == 0))))">
 							<set_value name="$DADVT.$DADynamicNewsEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsTable?">
+						<do_if value="not $DADVT.$DADynamicNewsTable? or ($DADVT.$DADynamicNewsTable == null)">
 							<set_value name="$DADVT.$DADynamicNewsTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicNewsAllSectors?">
+						<do_if value="not $DADynamicNewsAllSectors? or ($DADynamicNewsAllSectors == null)">
 							<find_sector groupname="$DADynamicNewsAllSectors" multiple="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicNewsStations?">
+						<do_if value="not $DADynamicNewsStations? or ($DADynamicNewsStations == null)">
 							<find_station groupname="$DADynamicNewsStations" multiple="true">
 								<match_any>
 									<match shipyard="true"/>
@@ -1969,37 +1987,44 @@
 							</find_station>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicNewsQueuedReports?">
+						<do_if value="not $DADynamicNewsQueuedReports? or ($DADynamicNewsQueuedReports == null)">
 							<set_value name="$DADynamicNewsQueuedReports" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADynamicNewsLastReportTime?">
-							<set_value name="$DADynamicNewsLastReportTime" exact="0"/>
+						<do_if value="not $DADynamicNewsLastReportTime? or (not (typeof $DADynamicNewsLastReportTime == datatype.time))">
+							<set_value name="$DADynamicNewsLastReportTime" exact="0s"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsInterval?">
+						<do_if value="not $DADVT.$DADynamicNewsInterval? or (not ($DADVT.$DADynamicNewsInterval gt 0))">
 							<set_value name="$DADVT.$DADynamicNewsInterval" exact="10"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsDetailedDebug?">
+						<do_if value="not $DADVT.$DADynamicNewsDetailedDebug? or (not ((typeof $DADVT.$DADynamicNewsDetailedDebug == datatype.integer) and (($DADVT.$DADynamicNewsDetailedDebug == 1) or ($DADVT.$DADynamicNewsDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DADynamicNewsDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsEnableNotifications?">
+						<do_if value="not $DADVT.$DADynamicNewsEnableNotifications? or (not ((typeof $DADVT.$DADynamicNewsEnableNotifications == datatype.integer) and (($DADVT.$DADynamicNewsEnableNotifications == 1) or ($DADVT.$DADynamicNewsEnableNotifications == 0))))">
 							<set_value name="$DADVT.$DADynamicNewsEnableNotifications" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsEnableLogbook?">
+						<do_if value="not $DADVT.$DADynamicNewsEnableLogbook? or (not ((typeof $DADVT.$DADynamicNewsEnableLogbook == datatype.integer) and (($DADVT.$DADynamicNewsEnableLogbook == 1) or ($DADVT.$DADynamicNewsEnableLogbook == 0))))">
 							<set_value name="$DADVT.$DADynamicNewsEnableLogbook" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DADynamicNewsEnableNewsStorage?">
+						<do_if value="not $DADVT.$DADynamicNewsEnableNewsStorage? or (not ((typeof $DADVT.$DADynamicNewsEnableNewsStorage == datatype.integer) and (($DADVT.$DADynamicNewsEnableNewsStorage == 1) or ($DADVT.$DADynamicNewsEnableNewsStorage == 0))))">
 							<set_value name="$DADVT.$DADynamicNewsEnableNewsStorage" exact="false"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DADVT.$DADynamicNewsKnownFactionsOnly? or (not ((typeof $DADVT.$DADynamicNewsKnownFactionsOnly == datatype.integer) and (($DADVT.$DADynamicNewsKnownFactionsOnly == 1) or ($DADVT.$DADynamicNewsKnownFactionsOnly == 0))))">
+							<set_value name="$DADVT.$DADynamicNewsKnownFactionsOnly" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DADynamicNews -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -2616,81 +2641,84 @@
 				<library name="LibraryCheckEvolutionVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAEvolutionEnable?">
+						<do_if value="not $DADVT.$DAEvolutionEnable? or (not ((typeof $DADVT.$DAEvolutionEnable == datatype.integer) and (($DADVT.$DAEvolutionEnable == 1) or ($DADVT.$DAEvolutionEnable == 0))))">
 							<set_value name="$DADVT.$DAEvolutionEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionInterval?">
+						<do_if value="not $DADVT.$DAEvolutionInterval? or (not ($DADVT.$DAEvolutionInterval gt 0))">
 							<set_value name="$DADVT.$DAEvolutionInterval" exact="120"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionMaxLevel?">
+						<do_if value="not $DADVT.$DAEvolutionMaxLevel? or (not ($DADVT.$DAEvolutionMaxLevel gt 0))">
 							<set_value name="$DADVT.$DAEvolutionMaxLevel" exact="5"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionCurrentLevel?">
+						<do_if value="not $DADVT.$DAEvolutionCurrentLevel? or (not ($DADVT.$DAEvolutionCurrentLevel ge 0))">
 							<set_value name="$DADVT.$DAEvolutionCurrentLevel" exact="0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAEvolutionCurrentEQMods?">
+						<do_if value="not $DAEvolutionCurrentEQMods? or ($DAEvolutionCurrentEQMods == null)">
 							<create_list name="$DAEvolutionCurrentEQMods"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAEvolutionLastUpgradeTime?">
-							<set_value name="$DAEvolutionLastUpgradeTime" exact="0"/>
+						<do_if value="not $DAEvolutionLastUpgradeTime? or (not (typeof $DAEvolutionLastUpgradeTime == datatype.time))">
+							<set_value name="$DAEvolutionLastUpgradeTime" exact="0s"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionEnableJobs?">
+						<do_if value="not $DADVT.$DAEvolutionEnableJobs? or (not ((typeof $DADVT.$DAEvolutionEnableJobs == datatype.integer) and (($DADVT.$DAEvolutionEnableJobs == 1) or ($DADVT.$DAEvolutionEnableJobs == 0))))">
 							<set_value name="$DADVT.$DAEvolutionEnableJobs" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionMaxXenonJobs?">
+						<do_if value="not $DADVT.$DAEvolutionMaxXenonJobs? or (not ($DADVT.$DAEvolutionMaxXenonJobs gt 0))">
 							<set_value name="$DADVT.$DAEvolutionMaxXenonJobs" exact="10"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionXenonFleetSize?">
+						<do_if value="not $DADVT.$DAEvolutionXenonFleetSize? or (not ($DADVT.$DAEvolutionXenonFleetSize gt 0))">
 							<set_value name="$DADVT.$DAEvolutionXenonFleetSize" exact="2"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionXenonFleetSizeName?">
+						<do_if value="not $DADVT.$DAEvolutionXenonFleetSizeName? or ($DADVT.$DAEvolutionXenonFleetSizeName == null)">
 							<set_value name="$DADVT.$DAEvolutionXenonFleetSizeName" exact="'daevoxen_medium'"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionXenonShipGroup?">
+						<do_if value="not $DADVT.$DAEvolutionXenonShipGroup? or ($DADVT.$DAEvolutionXenonShipGroup == null)">
 							<create_group groupname="$DADVT.$DAEvolutionXenonShipGroup"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionXenonFleetJobNumbers?">
+						<do_if value="not $DADVT.$DAEvolutionXenonFleetJobNumbers? or ($DADVT.$DAEvolutionXenonFleetJobNumbers == null)">
 							<create_group groupname="$DADVT.$DAEvolutionXenonFleetJobNumbers"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionXenonShipTempList?">
+						<do_if value="not $DADVT.$DAEvolutionXenonShipTempList? or ($DADVT.$DAEvolutionXenonShipTempList == null)">
 							<create_list name="$DADVT.$DAEvolutionXenonShipTempList"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAEvolutionXenonFleetJobs?">
+						<do_if value="not $DAEvolutionXenonFleetJobs? or ($DAEvolutionXenonFleetJobs == null)">
 							<set_value name="$DAEvolutionXenonFleetJobs" exact="['xenon_carrier_patrol_daevoxen_small','xenon_destroyer_patrol_daevoxen_small','xenon_carrier_patrol_daevoxen_medium','xenon_destroyer_patrol_daevoxen_medium','xenon_carrier_patrol_daevoxen_large','xenon_destroyer_patrol_daevoxen_large']"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionDetailedDebug?">
+						<do_if value="not $DADVT.$DAEvolutionDetailedDebug? or (not ((typeof $DADVT.$DAEvolutionDetailedDebug == datatype.integer) and (($DADVT.$DAEvolutionDetailedDebug == 1) or ($DADVT.$DAEvolutionDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAEvolutionDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionTotalShipsBuilt?">
+						<do_if value="not $DADVT.$DAEvolutionTotalShipsBuilt? or (not ($DADVT.$DAEvolutionTotalShipsBuilt ge 0))">
 							<set_value name="$DADVT.$DAEvolutionTotalShipsBuilt" exact="0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionEnableUpgradeStations?">
+						<do_if value="not $DADVT.$DAEvolutionEnableUpgradeStations? or (not ((typeof $DADVT.$DAEvolutionEnableUpgradeStations == datatype.integer) and (($DADVT.$DAEvolutionEnableUpgradeStations == 1) or ($DADVT.$DAEvolutionEnableUpgradeStations == 0))))">
 							<set_value name="$DADVT.$DAEvolutionEnableUpgradeStations" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAEvolutionEnableFastOrder?">
+						<do_if value="not $DADVT.$DAEvolutionEnableFastOrder? or (not ((typeof $DADVT.$DAEvolutionEnableFastOrder == datatype.integer) and (($DADVT.$DAEvolutionEnableFastOrder == 1) or ($DADVT.$DAEvolutionEnableFastOrder == 0))))">
 							<set_value name="$DADVT.$DAEvolutionEnableFastOrder" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAEvolution -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -3109,77 +3137,80 @@
 				<library name="LibraryCheckFillVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAFillEnable?">
+						<do_if value="not $DADVT.$DAFillEnable? or (not ((typeof $DADVT.$DAFillEnable == datatype.integer) and (($DADVT.$DAFillEnable == 1) or ($DADVT.$DAFillEnable == 0))))">
 							<set_value name="$DADVT.$DAFillEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillShipModsEnable?">
+						<do_if value="not $DADVT.$DAFillShipModsEnable? or (not ((typeof $DADVT.$DAFillShipModsEnable == datatype.integer) and (($DADVT.$DAFillShipModsEnable == 1) or ($DADVT.$DAFillShipModsEnable == 0))))">
 							<set_value name="$DADVT.$DAFillShipModsEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAFillDelayAlpha?">
+						<do_if value="not $DAFillDelayAlpha? or (not (typeof $DAFillDelayAlpha == datatype.time))">
 							<set_value name="$DAFillDelayAlpha" exact="2s"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillCheckInterval?">
+						<do_if value="not $DADVT.$DAFillCheckInterval? or (not ($DADVT.$DAFillCheckInterval gt 0))">
 							<set_value name="$DADVT.$DAFillCheckInterval" exact="60"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAFillLastCheckTime?">
-							<set_value name="$DAFillLastCheckTime" exact="0"/>
+						<do_if value="not $DAFillLastCheckTime? or (not (typeof $DAFillLastCheckTime == datatype.time))">
+							<set_value name="$DAFillLastCheckTime" exact="0s"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMaxTSWarePercent?">
+						<do_if value="not $DADVT.$DAFillMaxTSWarePercent? or (not ($DADVT.$DAFillMaxTSWarePercent gt 0.0))">
 							<set_value name="$DADVT.$DAFillMaxTSWarePercent" exact="90.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMaxTSWarePercentAfter?">
+						<do_if value="not $DADVT.$DAFillMaxTSWarePercentAfter? or (not ($DADVT.$DAFillMaxTSWarePercentAfter ge 0.0))">
 							<set_value name="$DADVT.$DAFillMaxTSWarePercentAfter" exact="75.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMinTSWarePercent?">
+						<do_if value="not $DADVT.$DAFillMinTSWarePercent? or (not ($DADVT.$DAFillMinTSWarePercent ge 0.0))">
 							<set_value name="$DADVT.$DAFillMinTSWarePercent" exact="5.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMinTSWarePercentAfter?">
+						<do_if value="not $DADVT.$DAFillMinTSWarePercentAfter? or (not ($DADVT.$DAFillMinTSWarePercentAfter ge 0.0))">
 							<set_value name="$DADVT.$DAFillMinTSWarePercentAfter" exact="10.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMinSYWarePercent?">
+						<do_if value="not $DADVT.$DAFillMinSYWarePercent? or (not ($DADVT.$DAFillMinSYWarePercent ge 0.0))">
 							<set_value name="$DADVT.$DAFillMinSYWarePercent" exact="5.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillMinSYWarePercentAfter?">
+						<do_if value="not $DADVT.$DAFillMinSYWarePercentAfter? or (not ($DADVT.$DAFillMinSYWarePercentAfter ge 0.0))">
 							<set_value name="$DADVT.$DAFillMinSYWarePercentAfter" exact="10.0"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillShipModFleetEnable?">
+						<do_if value="not $DADVT.$DAFillShipModFleetEnable? or (not ((typeof $DADVT.$DAFillShipModFleetEnable == datatype.integer) and (($DADVT.$DAFillShipModFleetEnable == 1) or ($DADVT.$DAFillShipModFleetEnable == 0))))">
 							<set_value name="$DADVT.$DAFillShipModFleetEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillShipModPaintEnable?">
+						<do_if value="not $DADVT.$DAFillShipModPaintEnable? or (not ((typeof $DADVT.$DAFillShipModPaintEnable == datatype.integer) and (($DADVT.$DAFillShipModPaintEnable == 1) or ($DADVT.$DAFillShipModPaintEnable == 0))))">
 							<set_value name="$DADVT.$DAFillShipModPaintEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillPaintModTable?">
+						<do_if value="not $DADVT.$DAFillPaintModTable? or ($DADVT.$DAFillPaintModTable == null)">
 							<set_value name="$DADVT.$DAFillPaintModTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillWareStatistics?">
+						<do_if value="not $DADVT.$DAFillWareStatistics? or ($DADVT.$DAFillWareStatistics == null)">
 							<set_value name="$DADVT.$DAFillWareStatistics" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillShipmodStatistics?">
+						<do_if value="not $DADVT.$DAFillShipmodStatistics? or ($DADVT.$DAFillShipmodStatistics == null)">
 							<set_value name="$DADVT.$DAFillShipmodStatistics" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAFillDetailedDebug?">
+						<do_if value="not $DADVT.$DAFillDetailedDebug? or (not ((typeof $DADVT.$DAFillDetailedDebug == datatype.integer) and (($DADVT.$DAFillDetailedDebug == 1) or ($DADVT.$DAFillDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAFillDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAFill -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -3704,61 +3735,64 @@
 				<library name="LibraryCheckJobsEXPVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAJobsEXPEnable?">
+						<do_if value="not $DADVT.$DAJobsEXPEnable? or (not ((typeof $DADVT.$DAJobsEXPEnable == datatype.integer) and (($DADVT.$DAJobsEXPEnable == 1) or ($DADVT.$DAJobsEXPEnable == 0))))">
 							<set_value name="$DADVT.$DAJobsEXPEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsEXPFactions?">
+						<do_if value="not $DADVT.$DAJobsEXPFactions? or ($DADVT.$DAJobsEXPFactions == null)">
 							<set_value name="$DADVT.$DAJobsEXPFactions" exact="[faction.argon, faction.antigone, faction.paranid, faction.holyorder, faction.teladi, faction.split, faction.terran, faction.xenon]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPExcludedFactions?">
+						<do_if value="not $DAJobsEXPExcludedFactions? or ($DAJobsEXPExcludedFactions == null)">
 							<create_list name="$DAJobsEXPExcludedFactions"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPTags?">
+						<do_if value="not $DAJobsEXPTags? or ($DAJobsEXPTags == null)">
 							<set_value name="$DAJobsEXPTags" exact="[tag.daexpedition]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPEnemiesTable?">
+						<do_if value="not $DAJobsEXPEnemiesTable? or ($DAJobsEXPEnemiesTable == null)">
 							<set_value name="$DAJobsEXPEnemiesTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPAlliesTable?">
+						<do_if value="not $DAJobsEXPAlliesTable? or ($DAJobsEXPAlliesTable == null)">
 							<set_value name="$DAJobsEXPAlliesTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPErrorFactions?">
+						<do_if value="not $DAJobsEXPErrorFactions? or ($DAJobsEXPErrorFactions == null)">
 							<create_list name="$DAJobsEXPErrorFactions"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPActiveExpeditionFleets?">
+						<do_if value="not $DAJobsEXPActiveExpeditionFleets? or ($DAJobsEXPActiveExpeditionFleets == null)">
 							<create_group groupname="$DAJobsEXPActiveExpeditionFleets"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPReadyExpeditionFleets?">
+						<do_if value="not $DAJobsEXPReadyExpeditionFleets? or ($DAJobsEXPReadyExpeditionFleets == null)">
 							<create_group groupname="$DAJobsEXPReadyExpeditionFleets"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPPreparingExpeditionFleets?">
+						<do_if value="not $DAJobsEXPPreparingExpeditionFleets? or ($DAJobsEXPPreparingExpeditionFleets == null)">
 							<create_group groupname="$DAJobsEXPPreparingExpeditionFleets"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPExpeditionFleetsFixedPatrol?">
+						<do_if value="not $DAJobsEXPExpeditionFleetsFixedPatrol? or ($DAJobsEXPExpeditionFleetsFixedPatrol == null)">
 							<create_group groupname="$DAJobsEXPExpeditionFleetsFixedPatrol"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsEXPDetailedDebug?">
+						<do_if value="not $DADVT.$DAJobsEXPDetailedDebug? or (not ((typeof $DADVT.$DAJobsEXPDetailedDebug == datatype.integer) and (($DADVT.$DAJobsEXPDetailedDebug == 1) or ($DADVT.$DAJobsEXPDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAJobsEXPDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJobsEXPExpeditionJobs?">
+						<do_if value="not $DAJobsEXPExpeditionJobs? or ($DAJobsEXPExpeditionJobs == null)">
 							<set_value name="$DAJobsEXPExpeditionJobs" exact="[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAJobsEXP -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -7105,97 +7139,100 @@
 				<library name="LibraryCheckJobsSSTVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAJobsSSTEnable?">
+						<do_if value="not $DADVT.$DAJobsSSTEnable? or (not ((typeof $DADVT.$DAJobsSSTEnable == datatype.integer) and (($DADVT.$DAJobsSSTEnable == 1) or ($DADVT.$DAJobsSSTEnable == 0))))">
 							<set_value name="$DADVT.$DAJobsSSTEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not md.$DAJSSTTable?">
+						<do_if value="not md.$DAJSSTTable? or (md.$DAJSSTTable == null)">
 							<set_value name="md.$DAJSSTTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST?">
+						<do_if value="not $DAJSST? or ($DAJSST == null)">
 							<set_value name="$DAJSST" exact="md.$DAJSSTTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$CriticalSectors?">
+						<do_if value="not $DAJSST.$CriticalSectors? or ($DAJSST.$CriticalSectors == null)">
 							<set_value name="$DAJSST.$CriticalSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$CoreSectors?">
+						<do_if value="not $DAJSST.$CoreSectors? or ($DAJSST.$CoreSectors == null)">
 							<set_value name="$DAJSST.$CoreSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$BorderSectors?">
+						<do_if value="not $DAJSST.$BorderSectors? or ($DAJSST.$BorderSectors == null)">
 							<set_value name="$DAJSST.$BorderSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$ContestedSectors?">
+						<do_if value="not $DAJSST.$ContestedSectors? or ($DAJSST.$ContestedSectors == null)">
 							<set_value name="$DAJSST.$ContestedSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$TraderSectors?">
+						<do_if value="not $DAJSST.$TraderSectors? or ($DAJSST.$TraderSectors == null)">
 							<set_value name="$DAJSST.$TraderSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$MinerSectors?">
+						<do_if value="not $DAJSST.$MinerSectors? or ($DAJSST.$MinerSectors == null)">
 							<set_value name="$DAJSST.$MinerSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$GasMinerSectors?">
+						<do_if value="not $DAJSST.$GasMinerSectors? or ($DAJSST.$GasMinerSectors == null)">
 							<set_value name="$DAJSST.$GasMinerSectors" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$ClaimspaceFactions?">
+						<do_if value="not $DAJSST.$ClaimspaceFactions? or ($DAJSST.$ClaimspaceFactions == null)">
 							<create_list name="$DAJSST.$ClaimspaceFactions"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$AllSectorGroup?">
+						<do_if value="not $DAJSST.$AllSectorGroup? or ($DAJSST.$AllSectorGroup == null)">
 							<create_group groupname="$DAJSST.$AllSectorGroup"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$JobsActivated?">
+						<do_if value="not $DAJSST.$JobsActivated? or ($DAJSST.$JobsActivated == null)">
 							<set_value name="$DAJSST.$JobsActivated" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$PrerequisitesComplete?">
+						<do_if value="not $DAJSST.$PrerequisitesComplete? or (not ((typeof $DAJSST.$PrerequisitesComplete == datatype.integer) and (($DAJSST.$PrerequisitesComplete == 1) or ($DAJSST.$PrerequisitesComplete == 0))))">
 							<set_value name="$DAJSST.$PrerequisitesComplete" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$ReadyToOrderShips?">
+						<do_if value="not $DAJSST.$ReadyToOrderShips? or (not ((typeof $DAJSST.$ReadyToOrderShips == datatype.integer) and (($DAJSST.$ReadyToOrderShips == 1) or ($DAJSST.$ReadyToOrderShips == 0))))">
 							<set_value name="$DAJSST.$ReadyToOrderShips" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTJobSizeQuotas?">
+						<do_if value="not $DADVT.$DAJobsSSTJobSizeQuotas? or ($DADVT.$DAJobsSSTJobSizeQuotas == null)">
 							<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTAllShips?">
+						<do_if value="not $DADVT.$DAJobsSSTAllShips? or ($DADVT.$DAJobsSSTAllShips == null)">
 							<create_group groupname="$DADVT.$DAJobsSSTAllShips"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTRemoveExclusivity?">
+						<do_if value="not $DADVT.$DAJobsSSTRemoveExclusivity? or (not ((typeof $DADVT.$DAJobsSSTRemoveExclusivity == datatype.integer) and (($DADVT.$DAJobsSSTRemoveExclusivity == 1) or ($DADVT.$DAJobsSSTRemoveExclusivity == 0))))">
 							<set_value name="$DADVT.$DAJobsSSTRemoveExclusivity" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTUnsupportedFactions?">
+						<do_if value="not $DADVT.$DAJobsSSTUnsupportedFactions? or ($DADVT.$DAJobsSSTUnsupportedFactions == null)">
 							<set_value name="$DADVT.$DAJobsSSTUnsupportedFactions" exact="[faction.boron,faction.player]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTDetailedDebug?">
+						<do_if value="not $DADVT.$DAJobsSSTDetailedDebug? or (not ((typeof $DADVT.$DAJobsSSTDetailedDebug == datatype.integer) and (($DADVT.$DAJobsSSTDetailedDebug == 1) or ($DADVT.$DAJobsSSTDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAJobsSSTDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsSSTXtremelyDetailedDebug?">
+						<do_if value="not $DADVT.$DAJobsSSTXtremelyDetailedDebug? or (not ((typeof $DADVT.$DAJobsSSTXtremelyDetailedDebug == datatype.integer) and (($DADVT.$DAJobsSSTXtremelyDetailedDebug == 1) or ($DADVT.$DAJobsSSTXtremelyDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAJobsSSTXtremelyDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAJSST.$OverrideDefaultExecuted?">
+						<do_if value="not $DAJSST.$OverrideDefaultExecuted? or (not ((typeof $DAJSST.$OverrideDefaultExecuted == datatype.integer) and (($DAJSST.$OverrideDefaultExecuted == 1) or ($DAJSST.$OverrideDefaultExecuted == 0))))">
 							<set_value name="$DAJSST.$OverrideDefaultExecuted" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAJobsSST -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -7346,15 +7383,15 @@
 				<library name="LibraryCheckGateVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAGateEnable?">
+						<do_if value="not $DADVT.$DAGateEnable? or (not ((typeof $DADVT.$DAGateEnable == datatype.integer) and (($DADVT.$DAGateEnable == 1) or ($DADVT.$DAGateEnable == 0))))">
 							<set_value name="$DADVT.$DAGateEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGateTrackedGates?">
+						<do_if value="not $DADVT.$DAGateTrackedGates? or ($DADVT.$DAGateTrackedGates == null)">
 							<set_value name="$DADVT.$DAGateTrackedGates" exact="[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGateZoneMacros?">
+						<do_if value="not $DADVT.$DAGateZoneMacros? or ($DADVT.$DAGateZoneMacros == null)">
 							<set_value name="$DADVT.$DAGateZoneMacros" exact="[macro.ZoneDAG3_Cluster_28_Sector001_macro,macro.ZoneDAG6_Cluster_41_Sector001_macro,
 								macro.ZoneDAG3_Cluster_46_Sector001_macro,macro.ZoneDAG6_Cluster_08_Sector001_macro,
 								macro.ZoneDAG5_Cluster_15_Sector001_macro,macro.ZoneDAG2_Cluster_43_Sector001_macro,
@@ -7369,13 +7406,16 @@
 							</do_if>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGateDetailedDebug?">
+						<do_if value="not $DADVT.$DAGateDetailedDebug? or (not ((typeof $DADVT.$DAGateDetailedDebug == datatype.integer) and (($DADVT.$DAGateDetailedDebug == 1) or ($DADVT.$DAGateDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAGateDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAGate -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -8547,11 +8587,12 @@
 											</do_for_each>
 										</do_if>
 										<do_if value="not (this.$SelectedBuildModule? and this.$SelectedBuildModule)">
-											<debug_text text="'MOD: DAGod -- EventGodCheckKeyStation -- Shipyard without valid buildmodule -- Faction: %s -- Station: %s(%s) - Sector: %s'.[this.$LocOwner.id,this.$LocStation.knownname,this.$LocStation.idcode,this.$LocStation.sector.knownname]" context="false" filter="scripts"/>
+											<debug_text text="'MOD: DAGod -- EventGodCheckKeyStation -- Shipyard without valid buildmodule -- Faction: %s -- Station: %s(%s) -- Sector: %s'.[this.$LocOwner.id,this.$LocStation.knownname,this.$LocStation.idcode,this.$LocStation.sector.knownname]" context="false" filter="scripts"/>
 										</do_if>
 									</do_if>
 									<remove_value name="this.$ViableBuildModules"/>
-									<do_if value="this.$SelectedStorageModule and this.$SelectedPierModule and this.$SelectedBuildModule? and this.$SelectedBuildModule">
+									<!-- 20240724 Suppress invalid -->
+									<do_if value="@this.$SelectedStorageModule and @this.$SelectedPierModule and @this.$SelectedBuildModule">
 										<set_value name="this.$LocSuccess" exact="true"/>
 										<set_value name="this.$LocNewModules" exact="[]"/>
 										<do_all exact="2">
@@ -8560,9 +8601,12 @@
 											<append_to_list name="this.$LocNewModules" exact="this.$SelectedBuildModule"/>
 										</do_all>
 									</do_if>
+									<do_else>
+										<debug_text text="'MOD: DAGod -- EventGodCheckKeyStation -- Shipyard without all modules -- Faction: %s -- Station: %s(%s) -- Sector: %s -- this.$SelectedStorageModule: %s -- this.$SelectedPierModule: %s -- this.$SelectedBuildModule: %s'.[this.$LocOwner.id,this.$LocStation.knownname,this.$LocStation.idcode,this.$LocStation.sector.knownname,@this.$SelectedStorageModule,@this.$SelectedPierModule,@this.$SelectedBuildModule]" context="false" filter="scripts"/>
+									</do_else>
 								</do_if>
 								<do_elseif value="this.$LocStation.iswharf">
-									<do_if value="this.$SelectedStorageModule and this.$SelectedPierModule">
+									<do_if value="@this.$SelectedStorageModule and @this.$SelectedPierModule">
 										<set_value name="this.$LocSuccess" exact="true"/>
 										<set_value name="this.$LocNewModules" exact="[]"/>
 										<do_all exact="2">
@@ -8570,9 +8614,12 @@
 											<append_to_list name="this.$LocNewModules" exact="this.$SelectedStorageModule"/>
 										</do_all>
 									</do_if>
+									<do_else>
+										<debug_text text="'MOD: DAGod -- EventGodCheckKeyStation -- Wharf without all modules -- Faction: %s -- Station: %s(%s) -- Sector: %s -- this.$SelectedStorageModule: %s -- this.$SelectedPierModule: %s'.[this.$LocOwner.id,this.$LocStation.knownname,this.$LocStation.idcode,this.$LocStation.sector.knownname,@this.$SelectedStorageModule,@this.$SelectedPierModule]" context="false" filter="scripts"/>
+									</do_else>
 								</do_elseif>
 								<do_elseif value="this.$LocStation.isequipmentdock">
-									<do_if value="this.$SelectedStorageModule and this.$SelectedPierModule">
+									<do_if value="@this.$SelectedStorageModule and @this.$SelectedPierModule">
 										<set_value name="this.$LocSuccess" exact="true"/>
 										<set_value name="this.$LocNewModules" exact="[]"/>
 										<do_all exact="2">
@@ -8580,6 +8627,9 @@
 											<append_to_list name="this.$LocNewModules" exact="this.$SelectedStorageModule"/>
 										</do_all>
 									</do_if>
+									<do_else>
+										<debug_text text="'MOD: DAGod -- EventGodCheckKeyStation -- EQDock without all modules -- Faction: %s -- Station: %s(%s) -- Sector: %s -- this.$SelectedStorageModule: %s -- this.$SelectedPierModule: %s'.[this.$LocOwner.id,this.$LocStation.knownname,this.$LocStation.idcode,this.$LocStation.sector.knownname,@this.$SelectedStorageModule,@this.$SelectedPierModule]" context="false" filter="scripts"/>
+									</do_else>
 								</do_elseif>
 								<do_if value="this.$LocSuccess and this.$LocNewModules? and this.$LocNewModules.count">
 									<!-- Find possible connection module macros for construction plan -->
@@ -8934,15 +8984,15 @@
 				<library name="LibraryCheckGodVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAGodEnable?">
+						<do_if value="not $DADVT.$DAGodEnable? or (not ((typeof $DADVT.$DAGodEnable == datatype.integer) and (($DADVT.$DAGodEnable == 1) or ($DADVT.$DAGodEnable == 0))))">
 							<set_value name="$DADVT.$DAGodEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodFactionModuleQuotas">
+						<do_if value="not $DADVT.$DAGodFactionModuleQuotas? or ($DADVT.$DAGodFactionModuleQuotas == null)">
 							<set_value name="$DADVT.$DAGodFactionModuleQuotas" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodExcludedFactions?">
+						<do_if value="not $DADVT.$DAGodExcludedFactions? or ($DADVT.$DAGodExcludedFactions == null)">
 							<set_value name="$DADVT.$DAGodExcludedFactions" exact="[faction.civilian, faction.criminal, faction.khaak, faction.player, faction.smuggler, faction.visitor, faction.xenon]"/>
 							<do_if value="faction.loanshark?">
 								<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.loanshark"/>
@@ -8958,77 +9008,80 @@
 							</do_if>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodDefaultModuleQuotas?">
+						<do_if value="not $DADVT.$DAGodDefaultModuleQuotas? or ($DADVT.$DAGodDefaultModuleQuotas == null)">
 							<set_value name="$DADVT.$DAGodDefaultModuleQuotas" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodFactionsTriggered?">
+						<do_if value="not $DADVT.$DAGodFactionsTriggered? or ($DADVT.$DAGodFactionsTriggered == null)">
 							<set_value name="$DADVT.$DAGodFactionsTriggered" exact="[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationsStarted?">
+						<do_if value="not $DADVT.$DAGodStationsStarted? or ($DADVT.$DAGodStationsStarted == null)">
 							<set_value name="$DADVT.$DAGodStationsStarted" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationsExpanded?">
+						<do_if value="not $DADVT.$DAGodStationsExpanded? or ($DADVT.$DAGodStationsExpanded == null)">
 							<set_value name="$DADVT.$DAGodStationsExpanded" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationsFinished?">
+						<do_if value="not $DADVT.$DAGodStationsFinished? or ($DADVT.$DAGodStationsFinished == null)">
 							<set_value name="$DADVT.$DAGodStationsFinished" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodAllowBuildInPlayer?">
+						<do_if value="not $DADVT.$DAGodAllowBuildInPlayer? or (not ((typeof $DADVT.$DAGodAllowBuildInPlayer == datatype.integer) and (($DADVT.$DAGodAllowBuildInPlayer == 1) or ($DADVT.$DAGodAllowBuildInPlayer == 0))))">
 							<set_value name="$DADVT.$DAGodAllowBuildInPlayer" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodAllowBuildInFriendly?">
+						<do_if value="not $DADVT.$DAGodAllowBuildInFriendly? or (not ((typeof $DADVT.$DAGodAllowBuildInFriendly == datatype.integer) and (($DADVT.$DAGodAllowBuildInFriendly == 1) or ($DADVT.$DAGodAllowBuildInFriendly == 0))))">
 							<set_value name="$DADVT.$DAGodAllowBuildInFriendly" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodAttemptRecovery?">
+						<do_if value="not $DADVT.$DAGodAttemptRecovery? or (not ((typeof $DADVT.$DAGodAttemptRecovery == datatype.integer) and (($DADVT.$DAGodAttemptRecovery == 1) or ($DADVT.$DAGodAttemptRecovery == 0))))">
 							<set_value name="$DADVT.$DAGodAttemptRecovery" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationUpgradeEnable?">
+						<do_if value="not $DADVT.$DAGodStationUpgradeEnable? or (not ((typeof $DADVT.$DAGodStationUpgradeEnable == datatype.integer) and (($DADVT.$DAGodStationUpgradeEnable == 1) or ($DADVT.$DAGodStationUpgradeEnable == 0))))">
 							<set_value name="$DADVT.$DAGodStationUpgradeEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationsUpgraded?">
+						<do_if value="not $DADVT.$DAGodStationsUpgraded? or ($DADVT.$DAGodStationsUpgraded == null)">
 							<create_group groupname="$DADVT.$DAGodStationsUpgraded"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodMaxModuleSetting?">
+						<do_if value="not $DADVT.$DAGodMaxModuleSetting? or (not ($DADVT.$DAGodMaxModuleSetting gt 0))">
 							<set_value name="$DADVT.$DAGodMaxModuleSetting" exact="25"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodMaxModuleWarning?">
+						<do_if value="not $DADVT.$DAGodMaxModuleWarning? or (not ((typeof $DADVT.$DAGodMaxModuleWarning == datatype.integer) and (($DADVT.$DAGodMaxModuleWarning == 1) or ($DADVT.$DAGodMaxModuleWarning == 0))))">
 							<set_value name="$DADVT.$DAGodMaxModuleWarning" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodTrackedStations?">
+						<do_if value="not $DADVT.$DAGodTrackedStations? or ($DADVT.$DAGodTrackedStations == null)">
 							<create_group groupname="$DADVT.$DAGodTrackedStations"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodTrackedStationsInfo?">
+						<do_if value="not $DADVT.$DAGodTrackedStationsInfo? or ($DADVT.$DAGodTrackedStationsInfo == null)">
 							<set_value name="$DADVT.$DAGodTrackedStationsInfo" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodStationRequestInterval?">
+						<do_if value="not $DADVT.$DAGodStationRequestInterval? or (not ($DADVT.$DAGodStationRequestInterval gt 0))">
 							<set_value name="$DADVT.$DAGodStationRequestInterval" exact="2"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodDetailedDebug?">
+						<do_if value="not $DADVT.$DAGodDetailedDebug? or (not ((typeof $DADVT.$DAGodDetailedDebug == datatype.integer) and (($DADVT.$DAGodDetailedDebug == 1) or ($DADVT.$DAGodDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAGodDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAGodXtremelyDetailedDebug?">
+						<do_if value="not $DADVT.$DAGodXtremelyDetailedDebug? or (not ((typeof $DADVT.$DAGodXtremelyDetailedDebug == datatype.integer) and (($DADVT.$DAGodXtremelyDetailedDebug == 1) or ($DADVT.$DAGodXtremelyDetailedDebug == 0))))">
 							<set_value name="$DADVT.$DAGodXtremelyDetailedDebug" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAGod -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -9365,15 +9418,15 @@
 				<library name="LibraryCheckBPVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DABPEnable?">
+						<do_if value="not $DADVT.$DABPEnable? or (not ((typeof $DADVT.$DABPEnable == datatype.integer) and (($DADVT.$DABPEnable == 1) or ($DADVT.$DABPEnable == 0))))">
 							<set_value name="$DADVT.$DABPEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DABPTracking?">
+						<do_if value="not $DADVT.$DABPTracking? or ($DADVT.$DABPTracking == null)">
 							<set_value name="$DADVT.$DABPTracking" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DABPClassRequirements?">
+						<do_if value="not $DADVT.$DABPClassRequirements? or ($DADVT.$DABPClassRequirements == null)">
 							<set_value name="$DADVT.$DABPClassRequirements" exact="table[{class.pier} = 20, {class.dockarea} = 20,
 								{class.production} = 20, {class.storage} = 20, {class.defencemodule} = 20, {class.buildmodule} = 20, {class.connectionmodule} = 20, {class.habitation} = 20, {class.welfaremodule} = 20, {class.processingmodule} = 20,
 								{class.ship_xs} = 25, {class.ship_s} = 25, {class.ship_m} = 30, {class.ship_l} = 35, {class.ship_xl} = 35,
@@ -9381,17 +9434,20 @@
 								{class.satellite} = 20, {class.missile} = 20, {class.countermeasure} = 20]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DABPUnkownClassRequirement?">
+						<do_if value="not $DADVT.$DABPUnkownClassRequirement? or (not ($DADVT.$DABPUnkownClassRequirement gt 0))">
 							<set_value name="$DADVT.$DABPUnkownClassRequirement" exact="20"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DABPDebugEnable?">
+						<do_if value="not $DADVT.$DABPDebugEnable? or (not ((typeof $DADVT.$DABPDebugEnable == datatype.integer) and (($DADVT.$DABPDebugEnable == 1) or ($DADVT.$DABPDebugEnable == 0))))">
 							<set_value name="$DADVT.$DABPDebugEnable" exact="false"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DABP -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -9498,17 +9554,20 @@
 				<library name="LibraryCheckTPVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DAGVT.$DATPEnable?">
+						<do_if value="not $DAGVT.$DATPEnable? or (not ((typeof $DAGVT.$DATPEnable == datatype.integer) and (($DAGVT.$DATPEnable == 1) or ($DAGVT.$DATPEnable == 0))))">
 							<set_value name="$DAGVT.$DATPEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAGVT.$DATPTraderTable?">
+						<do_if value="not $DAGVT.$DATPTraderTable? or ($DAGVT.$DATPTraderTable == null)">
 							<set_value name="$DAGVT.$DATPTraderTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DATP -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>
@@ -9517,7 +9576,7 @@
 				<library name="LibraryCheckMiscVariables">
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not $DADVT.$DAJobsVanillaSpawnedJobIds?">
+						<do_if value="not $DADVT.$DAJobsVanillaSpawnedJobIds? or ($DADVT.$DAJobsVanillaSpawnedJobIds == null)">
 							<set_value name="$DADVT.$DAJobsVanillaSpawnedJobIds" exact="['hatikvah_resourcescout_sm_deepspace_single','hatikvah_free_miner_ml_liquid_deepspace_single','hatikvah_free_miner_l_solid_deepspace_largegroup',
 								'scaleplate_plunderer_l_cluster','scaleplate_plunderer_l_cluster_reduced','scaleplate_scavenger_m_cluster','scaleplate_plunderer_m_cluster','scaleplate_smuggler_s','scaleplate_scavenger_sm_deepspace',
 								'buc_patrol_m_hidden','buc_patrol_s_hidden','buc_patrol_s_hidden_antisat','buc_plunderer_m_hidden_op','buc_plunderer_m_hidden','buc_guerilla_m_cluster','buc_guerilla_infiltrator_s_cluster',
@@ -9525,13 +9584,16 @@
 								'khaak_fighter_s_deepspace_group','hatikvah_plunderer_l_cluster','hatikvah_scavenger_m_cluster']"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT.$DAJobsDisabledVanillaSpawnedJobIds?">
+						<do_if value="not $DADVT.$DAJobsDisabledVanillaSpawnedJobIds? or ($DADVT.$DAJobsDisabledVanillaSpawnedJobIds == null)">
 							<set_value name="$DADVT.$DAJobsDisabledVanillaSpawnedJobIds" exact="[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAMisc -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
 						</do_if>
 						<remove_value name="$MissingVarCount"/>
 					</actions>

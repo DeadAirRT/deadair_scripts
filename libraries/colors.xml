@@ -3,7 +3,9 @@
 	<add sel="/colormap/mappings">
 		<mapping id="da_text_green" ref="green_glow"/>
 		<mapping id="da_text_red" ref="red_moderate_glow"/>
-		<mapping id="da_text_blue" ref="azure_bright_moderate_glow"/>
+		<mapping id="da_text_blue" ref="azure_bright_glow"/>
+		<mapping id="da_text_white" ref="white_moderate_glow"/>
+		<mapping id="da_button_highlight" ref="azure_dark_moderate_glow"/>
 		<mapping id="da_marker_transparent" ref="black_alpha_0"/>
 		<mapping id="da_transparent" ref="black_alpha_0"/>
 		<mapping id="da_red_dark" ref="red_dark"/>
@@ -21,5 +23,9 @@
 		<mapping id="da_orange_dark" ref="orange_dark"/>
 		<mapping id="da_orange" ref="orange_weak_glow"/>
 		<mapping id="da_orange_bright" ref="orange_bright_weak_glow"/>
+		<mapping id="da_headerbackground_bright" ref="azure_very_dark"/>
+		<mapping id="da_headerbackground_dark" ref="azure_extra_dark"/>
+		<mapping id="da_bodybackground_bright" ref="grey_32"/>
+		<mapping id="da_bodybackground_dark" ref="black"/>
 	</add>
 </diff>
