@@ -3,7 +3,7 @@
 	<page id="33232474" title="DeadAir Script T Files" descr="names used in DeadAir Scripts" voice="no">
 		<!-- DONE: Library entries like job names etc -->
 		<!-- DONE: hover descriptions for dynamic war -->
-		<t id="100">DA Mod Menu</t>
+		<t id="100">DA Mod {1001,4872}</t>
 		<!-- Submod Menus 101-109 -->
 		<t id="101">DA Dynamic War</t>
 		<t id="102">DA Dynamic News</t>
@@ -22,7 +22,7 @@
 		<t id="114">(XXX)</t>
 		<t id="115">(XXX)</t>
 		<t id="116">(XXX)</t>
-		<t id="117">(Options Menu){1001,2600}</t>
+		<t id="117">(Options){1001,3405}</t>
 		<t id="118">Unlock Relations</t>
 		<t id="119">DW Ignored Factions</t>
 		<t id="120">Insufficient Relation</t>
@@ -392,7 +392,7 @@
 		<t id="2295">%s stations expanded</t>
 		<!-- $NUMBER$ stations started -->
 		<t id="2296">%s stations started</t>
-		<t id="2297">{33232474,112} menu available once {33232474,280} and {33232474,283} are set to true.</t>
+		<t id="2297">{33232474,112} available once {33232474,280} and {33232474,283} are set to true.</t>
 		<t id="2298">(XXX)</t>
 		<t id="2299">(XXX)</t>
 		<!-- Gate Menu Entries -->
@@ -475,7 +475,7 @@
 		<t id="353">Enable Ship Building Station Upgrades</t>
 		<t id="354">Station Build Interval Multiplier</t>
 		<t id="355">Station Max Module Setting</t>
-		<t id="356">(XXX)</t>
+		<t id="356">Activate DA God for Remaining %s Valid Factions</t>
 		<t id="357">(XXX)</t>
 		<t id="358">(XXX)</t>
 		<t id="359">(XXX)</t>
@@ -496,7 +496,7 @@
 		<t id="1353">Changes whether the DA God script can order upgrades for a shipyard or wharf. Each station will only be upgraded once but the script will continue to check for new stations.</t>
 		<t id="1354">Adjusts the time between ordering stations for each faction. This is a multiplier to the coded time min max values. Default time between ordering stations is 20-25 minutes for initial stations and 25-30 minutes for recovery. Increasing this value will slow down the build up of stations.</t>
 		<t id="1355">Adjusts the amount of modules that the script will attempt to place on a single station.</t>
-		<t id="1356">(XXX)</t>
+		<t id="1356">This will trigger the script to run for the remaining %s valid factions when this button is clicked. It will use the numbers set by default unless they were individually changed or changed by a compatible mod. The faction will attempt to maintain the number of modules set not including vanilla module count.</t>
 		<t id="1357">(XXX)</t>
 		<t id="1358">(XXX)</t>
 		<t id="1359">(XXX)</t>
@@ -509,7 +509,7 @@
 		<t id="2345">Quota Has Been Activated</t>
 		<t id="2346">The script has not been activated for %s.</t>
 		<t id="2347">The script can not be activated for %s because the faction is not active.</t>
-		<t id="2348">(XXX)</t>
+		<t id="2348">Quick activation available once {33232474,340} is set to true.</t>
 		<t id="2349">(XXX)</t>
 		<t id="2350">(XXX)</t>
 		<t id="2351">(XXX)</t>

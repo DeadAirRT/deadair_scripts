@@ -7489,7 +7489,7 @@
 							$DADVT.$DAGodFactionModuleQuotas
 						-->
 						<set_value name="this.$DAGodFaction" exact="event.param"/>
-						<set_value name="this.$DAGodDelay" exact="0s"/>
+						<set_value name="this.$DAGodDelay" min="1s" max="15s"/>
 						<set_value name="this.$DAGodWareKeysList" exact="[]"/>
 						<set_value name="this.$DAGodWareTypesOrdered" exact="0"/>
 						<append_list_elements name="this.$DAGodWareKeysList" other="md.$DADynamicVarTable.$DAGodFactionModuleQuotas.{this.$DAGodFaction}.keys.list"/>

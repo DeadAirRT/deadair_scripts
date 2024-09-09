@@ -241,13 +241,6 @@
 								$private = 1,
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_dynamicwar_options',
-								$columns = 8, 
-								$title   = {33232474,117},
-								$onOpen  = Menu_DynamicWar_Options,
-								$private = 1,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
 								$id      = 'menu_dynamicwar_unlockrelations',
 								$columns = 8, 
 								$title   = {33232474,118},
@@ -269,20 +262,6 @@
 								$private = 1,
 							]"/>
 						<!-- Dynamic News Menus -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_dynamicnews_options',
-								$columns = 8, 
-								$title   = {33232474,112},
-								$onOpen  = Menu_DynamicNews_Options,
-								$private = 1,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_dynamicnews_recentnews',
-								$columns = 8, 
-								$title   = {33232474,112},
-								$onOpen  = Menu_DynamicNews_RecentNews,
-								$private = 1,
-							]"/>
 						<!-- DA Evolution Menus -->
 						<!-- DA Fill Menus -->
 						<!-- DA Jobs Menus -->
@@ -291,13 +270,6 @@
 								$columns = 8, 
 								$title   = {33232474,245},
 								$onOpen  = Menu_Jobs_Quotas,
-								$private = 1,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_jobs_options',
-								$columns = 8, 
-								$title   = {33232474,117},
-								$onOpen  = Menu_Jobs_Options,
 								$private = 1,
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
@@ -315,21 +287,7 @@
 								$onOpen  = Menu_God_Quotas,
 								$private = 1,
 							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_god_options',
-								$columns = 8, 
-								$title   = {33232474,348},
-								$onOpen  = Menu_God_Options,
-								$private = 1,
-							]"/>
 						<!-- BP Menus -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
-								$id      = 'menu_bp_options',
-								$columns = 8, 
-								$title   = {33232474,380},
-								$onOpen  = Menu_BP_Options,
-								$private = 1,
-							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
 								$id      = 'menu_bp_progress',
 								$columns = 8, 
@@ -449,7 +407,586 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_dynamicwar_options']"/>
+						<!-- $DADVT.$DADynamicWarEnable // $DADVT.$DADynamicWarFavorsEnable // $DADVT.$DADynamicWarInterval // $DADVT.$DADynamicWarEventWeights // $DADVT.$DADynamicWarPrimaryRaceModifier // 
+								$DADVT.$DADynamicWarCurrentRelationsModifier // $DADVT.$DADynamicWarCollectiveRelationsModifier // $DADVT.$DADynamicWarFlavorEnable // $DADVT.$DADynamicWarDetailedDebug //
+								$DADVT.$DADynamicWarDisabledFactions // $DADVT.$DADynamicWarLockedRelationFactions -->
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,101},{33232474,117}]" comment="DA Dynamic War Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,123},
+								$mouseOverText = {33232474,1123},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DADynamicWarEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DADynamicWarEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1123},
+								$onClick = ExecuteOption_DynamicWarEnable,
+								$onRightClick = ExecuteOption_DynamicWarEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,124},
+								$mouseOverText = {33232474,1124},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DADynamicWarFavorsEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DADynamicWarFavorsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1124},
+								$onClick = ExecuteOption_DynamicWarFavorsEnable,
+								$onRightClick = ExecuteOption_DynamicWarFavorsEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,142},
+								$mouseOverText = {33232474,1142},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DADynamicWarRelationsFixEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DADynamicWarRelationsFixEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1142},
+								$onClick = ExecuteOption_DynamicWarRelationsFixEnable,
+								$onRightClick = ExecuteOption_DynamicWarRelationsFixEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,125},
+									$mouseOverText = {33232474,1125},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<set_value name="$LocMax" exact="[120,$DADVT.$DADynamicWarInterval * 2].max"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarInterval,
+									$min = 0,
+									$minSelect = 5,
+									$max = $LocMax,
+									$maxSelect = $LocMax,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarInterval,
+									$step = 5,
+									$suffix = 'min',
+								]"/>
+							<remove_value name="$LocMax"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,126},
+									$mouseOverText = {33232474,1126},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBesties,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{1},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,127},
+									$mouseOverText = {33232474,1127},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBigBoost,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{2},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,128},
+									$mouseOverText = {33232474,1128},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightSmallBoost,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{3},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,129},
+									$mouseOverText = {33232474,1129},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightSmallBlow,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{4},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,130},
+									$mouseOverText = {33232474,1130},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBigBlow,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{5},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,131},
+									$mouseOverText = {33232474,1131},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightNemesis,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{6},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,132},
+									$mouseOverText = {33232474,1132},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightNothing,
+									$min = 0,
+									$minSelect = 0,
+									$max = 100,
+									$maxSelect = 100,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarEventWeights.{7},
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,133},
+									$mouseOverText = {33232474,1133},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarPrimaryRaceModifier,
+									$min = 0.0,
+									$minSelect = 5.0,
+									$max = 100.0,
+									$maxSelect = 95.0,
+									$exceedMaxValue = false,
+									$start = ($DADVT.$DADynamicWarPrimaryRaceModifier*100.0),
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,134},
+									$mouseOverText = {33232474,1134},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarCurrentRelationsModifier,
+									$min = 0.0,
+									$minSelect = 5.0,
+									$max = 100.0,
+									$maxSelect = 95.0,
+									$exceedMaxValue = false,
+									$start = ($DADVT.$DADynamicWarCurrentRelationsModifier*100.0),
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,135},
+									$mouseOverText = {33232474,1135},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarCollectiveRelationsModifier,
+									$min = 0.0,
+									$minSelect = 5.0,
+									$max = 100.0,
+									$maxSelect = 95.0,
+									$exceedMaxValue = false,
+									$start = ($DADVT.$DADynamicWarCollectiveRelationsModifier*100.0),
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,136},
+									$mouseOverText = {33232474,1136},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DADynamicWarFlavorEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarFlavorEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1136},
+									$onClick = ExecuteOption_DynamicWarFlavorEnable,
+									$onRightClick = ExecuteOption_DynamicWarFlavorEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,137},
+									$mouseOverText = {33232474,1137},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DADynamicWarDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1137},
+									$onClick = ExecuteOption_DynamicWarDebugEnable,
+									$onRightClick = ExecuteOption_DynamicWarDebugEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,143},
+									$mouseOverText = {33232474,1143},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarPossibleFactionsPerEvent,
+									$min = 0,
+									$minSelect = 1,
+									$max = 10,
+									$maxSelect = 10,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarPossibleFactionsPerEvent,
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,101},{1001,4836}]" comment="DA Dynamic War Menus"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,110}, $id='menu_dynamicwar_increaserelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,111}, $id='menu_dynamicwar_decreaserelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,118}, $id='menu_dynamicwar_unlockrelations']"/>
@@ -650,490 +1187,6 @@
 								</do_if>
 							</do_all>
 						</do_if>
-					</actions>
-				</cue>
-				<cue name="Menu_DynamicWar_Options" instantiate="true">
-					<conditions>
-						<event_cue_signalled/>
-					</conditions>
-					<actions>
-						<!-- $DADVT.$DADynamicWarEnable // $DADVT.$DADynamicWarFavorsEnable // $DADVT.$DADynamicWarInterval // $DADVT.$DADynamicWarEventWeights // $DADVT.$DADynamicWarPrimaryRaceModifier // 
-								$DADVT.$DADynamicWarCurrentRelationsModifier // $DADVT.$DADynamicWarCollectiveRelationsModifier // $DADVT.$DADynamicWarFlavorEnable // $DADVT.$DADynamicWarDetailedDebug //
-								$DADVT.$DADynamicWarDisabledFactions // $DADVT.$DADynamicWarLockedRelationFactions -->
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 6,
-								$text = {33232474,123},
-								$mouseOverText = {33232474,1123},
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
-								$text = table[
-								  $text   =  if $DADVT.$DADynamicWarEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-								  $halign = 'center',
-								],
-								$highlightColor = $DAMVT.$ButtonHighlight,
-								$mouseOverText = {33232474,1123},
-								$onClick = ExecuteOption_DynamicWarEnable,
-								$onRightClick = ExecuteOption_DynamicWarEnable,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 6,
-								$text = {33232474,124},
-								$mouseOverText = {33232474,1124},
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
-								$text = table[
-								  $text   =  if $DADVT.$DADynamicWarFavorsEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarFavorsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-								  $halign = 'center',
-								],
-								$highlightColor = $DAMVT.$ButtonHighlight,
-								$mouseOverText = {33232474,1124},
-								$onClick = ExecuteOption_DynamicWarFavorsEnable,
-								$onRightClick = ExecuteOption_DynamicWarFavorsEnable,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 6,
-								$text = {33232474,142},
-								$mouseOverText = {33232474,1142},
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
-								$text = table[
-								  $text   =  if $DADVT.$DADynamicWarRelationsFixEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DADynamicWarRelationsFixEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-								  $halign = 'center',
-								],
-								$highlightColor = $DAMVT.$ButtonHighlight,
-								$mouseOverText = {33232474,1142},
-								$onClick = ExecuteOption_DynamicWarRelationsFixEnable,
-								$onRightClick = ExecuteOption_DynamicWarRelationsFixEnable,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,125},
-									$mouseOverText = {33232474,1125},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<set_value name="$LocMax" exact="[120,$DADVT.$DADynamicWarInterval * 2].max"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarInterval,
-									$min = 0,
-									$minSelect = 5,
-									$max = $LocMax,
-									$maxSelect = $LocMax,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarInterval,
-									$step = 5,
-									$suffix = 'min',
-								]"/>
-							<remove_value name="$LocMax"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,126},
-									$mouseOverText = {33232474,1126},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBesties,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{1},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,127},
-									$mouseOverText = {33232474,1127},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBigBoost,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{2},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,128},
-									$mouseOverText = {33232474,1128},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightSmallBoost,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{3},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,129},
-									$mouseOverText = {33232474,1129},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightSmallBlow,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{4},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,130},
-									$mouseOverText = {33232474,1130},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightBigBlow,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{5},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,131},
-									$mouseOverText = {33232474,1131},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightNemesis,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{6},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,132},
-									$mouseOverText = {33232474,1132},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarEventWeightNothing,
-									$min = 0,
-									$minSelect = 0,
-									$max = 100,
-									$maxSelect = 100,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarEventWeights.{7},
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,133},
-									$mouseOverText = {33232474,1133},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarPrimaryRaceModifier,
-									$min = 0.0,
-									$minSelect = 5.0,
-									$max = 100.0,
-									$maxSelect = 95.0,
-									$exceedMaxValue = false,
-									$start = ($DADVT.$DADynamicWarPrimaryRaceModifier*100.0),
-									$step = 5.0,
-									$suffix = '%',
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,134},
-									$mouseOverText = {33232474,1134},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarCurrentRelationsModifier,
-									$min = 0.0,
-									$minSelect = 5.0,
-									$max = 100.0,
-									$maxSelect = 95.0,
-									$exceedMaxValue = false,
-									$start = ($DADVT.$DADynamicWarCurrentRelationsModifier*100.0),
-									$step = 5.0,
-									$suffix = '%',
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,135},
-									$mouseOverText = {33232474,1135},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarCollectiveRelationsModifier,
-									$min = 0.0,
-									$minSelect = 5.0,
-									$max = 100.0,
-									$maxSelect = 95.0,
-									$exceedMaxValue = false,
-									$start = ($DADVT.$DADynamicWarCollectiveRelationsModifier*100.0),
-									$step = 5.0,
-									$suffix = '%',
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,136},
-									$mouseOverText = {33232474,1136},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DADynamicWarFlavorEnable then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DADynamicWarFlavorEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1136},
-									$onClick = ExecuteOption_DynamicWarFlavorEnable,
-									$onRightClick = ExecuteOption_DynamicWarFlavorEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,137},
-									$mouseOverText = {33232474,1137},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DADynamicWarDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DADynamicWarDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1137},
-									$onClick = ExecuteOption_DynamicWarDebugEnable,
-									$onRightClick = ExecuteOption_DynamicWarDebugEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,143},
-									$mouseOverText = {33232474,1143},
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarPossibleFactionsPerEvent,
-									$min = 0,
-									$minSelect = 1,
-									$max = 10,
-									$maxSelect = 10,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarPossibleFactionsPerEvent,
-									$step = 1,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
 					</actions>
 				</cue>
 				<cue name="Menu_DynamicWar_UnlockRelations" instantiate="true">
@@ -1834,25 +1887,49 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_dynamicnews_options']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,112}, $id='menu_dynamicnews_recentnews']"/>
-					</actions>
-				</cue>
-				<cue name="Menu_DynamicNews_Options" instantiate="true">
-					<conditions>
-						<event_cue_signalled/>
-					</conditions>
-					<actions>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,102},{33232474,117}]" comment="DA Dynamic News Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,280},
 								$mouseOverText = {33232474,1280},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnable then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DADynamicNewsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -1866,14 +1943,15 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,281},
 								$mouseOverText = {33232474,1281},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DADynamicNewsEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableNotifications then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DADynamicNewsEnableNotifications then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -1887,23 +1965,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,282},
 								$mouseOverText = {33232474,1282},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DADynamicNewsEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableLogbook then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DADynamicNewsEnableLogbook then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -1917,23 +1997,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,283},
 								$mouseOverText = {33232474,1283},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DADynamicNewsEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsEnableNewsStorage then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DADynamicNewsEnableNewsStorage then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -1947,10 +2029,11 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
@@ -1959,6 +2042,7 @@
 								$colSpan = 4,
 								$text = {33232474,284},
 								$mouseOverText = {33232474,1284},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DADynamicNewsEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
@@ -1981,19 +2065,21 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,285},
 								$mouseOverText = {33232474,1285},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DADynamicNewsEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DADynamicNewsDetailedDebug then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DADynamicNewsDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2007,12 +2093,97 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = {33232474,112},
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
+						<do_if value="$DADVT.$DADynamicNewsEnable and $DADVT.$DADynamicNewsEnableNewsStorage">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'center', $text = {1001,24}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Time"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'center', $text = {1041,10172}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Origin"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,5721}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="News"/>
+							<!-- $DADVT.$DADynamicNewsTable.{Index} == [Player.age,Source,Message] -->
+							<do_if value="$DADVT.$DADynamicNewsTable.{1}?">
+								<do_all exact="$DADVT.$DADynamicNewsTable.keys.count" counter="$index">
+									<set_value name="$Time" exact="$DADVT.$DADynamicNewsTable.{$index}.{1}"/>
+									<set_value name="$Source" exact="$DADVT.$DADynamicNewsTable.{$index}.{2}"/>
+									<set_value name="$Message" exact="$DADVT.$DADynamicNewsTable.{$index}.{3}"/>
+									<do_if value="($Time != null) and ($Source != null) and ($Message != null)">
+										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+										<!-- Relative Time - Source - Message -->
+										<!-- $col 1 + 2 -->
+										<!-- This is in seconds ago for now -->
+										<set_value name="$RelativeTime" exact="player.age - $Time"/>
+										<set_value name="$RelativeTimeFormatted" exact="$RelativeTime.formatted.{'%dd:%Hh:%Mm'}"/>
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $RelativeTimeFormatted, $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+										<!-- $col 3 - 4 -->
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $Source, $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+										<!-- $col 5 - 8 -->
+										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'left', $wordwrap = true, $text = $Message, $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+										<remove_value name="$RelativeTime"/>
+										<remove_value name="$RelativeTimeFormatted"/>
+									</do_if>
+									<remove_value name="$Time"/>
+									<remove_value name="$Source"/>
+									<remove_value name="$Message"/>
+								</do_all>
+							</do_if>
+							<do_else>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {1099,16}, $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+							</do_else>
+						</do_if>
+						<do_elseif value="(not $DADVT.$DADynamicNewsEnable) or (not $DADVT.$DADynamicNewsEnableNewsStorage)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = event.param.$columns,
+									$text = {33232474,2297},
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
+								]"/>
+						</do_elseif>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_DynamicNewsEnable" instantiate="true">
@@ -2105,74 +2276,55 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
-				<cue name="Menu_DynamicNews_RecentNews" instantiate="true">
-					<conditions>
-						<event_cue_signalled/>
-					</conditions>
-					<actions>
-						<do_if value="$DADVT.$DADynamicNewsEnable and $DADVT.$DADynamicNewsEnableNewsStorage">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'center', $text = {1001,24}]" comment="Time"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'center', $text = {1041,10172}]" comment="Origin"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,5721}]" comment="News"/>
-							<!-- $DADVT.$DADynamicNewsTable.{Index} == [Player.age,Source,Message] -->
-							<do_if value="$DADVT.$DADynamicNewsTable.{1}?">
-								<do_all exact="$DADVT.$DADynamicNewsTable.keys.count" counter="$index">
-									<set_value name="$Time" exact="$DADVT.$DADynamicNewsTable.{$index}.{1}"/>
-									<set_value name="$Source" exact="$DADVT.$DADynamicNewsTable.{$index}.{2}"/>
-									<set_value name="$Message" exact="$DADVT.$DADynamicNewsTable.{$index}.{3}"/>
-									<do_if value="($Time != null) and ($Source != null) and ($Message != null)">
-										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-										<!-- Relative Time - Source - Message -->
-										<!-- $col 1 + 2 -->
-										<!-- This is in seconds ago for now -->
-										<set_value name="$RelativeTime" exact="player.age - $Time"/>
-										<set_value name="$RelativeTimeFormatted" exact="$RelativeTime.formatted.{'%dd:%Hh:%Mm'}"/>
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $RelativeTimeFormatted]"/>
-										<!-- $col 3 - 4 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $halign = 'left', $wordwrap = true, $text = $Source]"/>
-										<!-- $col 5 - 8 -->
-										<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'left', $wordwrap = true, $text = $Message]"/>
-										<remove_value name="$Time"/>
-										<remove_value name="$Source"/>
-										<remove_value name="$Message"/>
-										<remove_value name="$RelativeTime"/>
-										<remove_value name="$RelativeTimeFormatted"/>
-									</do_if>
-								</do_all>
-							</do_if>
-							<do_else>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
-								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 8, $halign = 'center', $text = {1099,16}]"/>
-							</do_else>
-						</do_if>
-						<do_elseif value="(not $DADVT.$DADynamicNewsEnable) or (not $DADVT.$DADynamicNewsEnableNewsStorage)">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = event.param.$columns,
-									$text = {33232474,2297},
-									$halign = 'center'
-								]"/>
-						</do_elseif>
-					</actions>
-				</cue>
 				<!-- Evolution -->
 				<cue name="DA_Evolution_Menu" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,103},{33232474,117}]" comment="DA Evolution Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,160},
 								$mouseOverText = {33232474,1160},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DAEvolutionEnable then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DAEvolutionEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2186,13 +2338,14 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,163},
 								$mouseOverText = {33232474,1163},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DAEvolutionEnableJobs then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DAEvolutionEnableJobs then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2205,11 +2358,12 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,161},
-									$mouseOverText = {33232474,1161},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,161},
+								$mouseOverText = {33232474,1161},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable">
 							<set_value name="$LocMax" exact="[300,$DADVT.$DAEvolutionInterval * 2].max"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
@@ -2233,15 +2387,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,162},
-									$mouseOverText = {33232474,1162},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,162},
+								$mouseOverText = {33232474,1162},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 5,
@@ -2249,6 +2405,7 @@
 									$text = '%s: %s / %s: %s'.[{1001,7899},$DADVT.$DAEvolutionCurrentLevel,{1001,19},$DADVT.$DAEvolutionMaxLevel],
 									$mouseOverText = {33232474,1162},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_if>
 						<do_else>
@@ -2257,15 +2414,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,164},
-									$mouseOverText = {33232474,1164},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,164},
+								$mouseOverText = {33232474,1164},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnableJobs">
 							<set_value name="$LocMax" exact="[100,$DADVT.$DAEvolutionMaxXenonJobs * 2].max"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
@@ -2289,15 +2448,18 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<set_value name="$LocText" exact="'%s / %s'.[{1001,12207},{1001,2407}]" comment="Active/Building"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = $LocText,
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = $LocText,
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<remove_value name="$LocText"/>
 						<do_if value="$DADVT.$DAEvolutionEnableJobs">
 							<set_value name="$LocText" exact="'%s: %s / %s: %s'.[{1001,12207},$DADVT.$DAEvolutionXenonShipGroup.count,{1001,2407},$DADVT.$DAEvolutionXenonShipTempList.count]" comment="Active/Building"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2305,7 +2467,9 @@
 									$colSpan = 4,
 									$text = $LocText,
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
+							<remove_value name="$LocText"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2313,16 +2477,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
-						<remove_value name="$LocText"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 2,
-									$text = {33232474,165},
-									$mouseOverText = {33232474,1165},
-								]"/>
+								$col = 1,
+								$colSpan = 2,
+								$text = {33232474,165},
+								$mouseOverText = {33232474,1165},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnableJobs">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 									$col = 3, 
@@ -2370,19 +2535,21 @@
 									$colSpan = 6,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,170},
-									$mouseOverText = {33232474,1170},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,170},
+								$mouseOverText = {33232474,1170},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAEvolutionEnableUpgradeStations then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAEvolutionEnableUpgradeStations then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2396,23 +2563,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,171},
-									$mouseOverText = {33232474,1171},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,171},
+								$mouseOverText = {33232474,1171},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnableJobs">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAEvolutionEnableFastOrder then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAEvolutionEnableFastOrder then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2426,23 +2595,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,169},
-									$mouseOverText = {33232474,1169},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,169},
+								$mouseOverText = {33232474,1169},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable or $DADVT.$DAEvolutionEnableJobs">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAEvolutionDetailedDebug then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAEvolutionDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2456,10 +2627,11 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 					</actions>
@@ -2597,16 +2769,49 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,104},{33232474,117}]" comment="DA Fill Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,200},
 								$mouseOverText = {33232474,1200},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DAFillEnable then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DAFillEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2619,11 +2824,12 @@
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,201},
-									$mouseOverText = {33232474,1201},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,201},
+								$mouseOverText = {33232474,1201},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable">
 							<set_value name="$LocMax" exact="[120,$DADVT.$DAFillCheckInterval * 2].max"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
@@ -2647,15 +2853,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,202},
-									$mouseOverText = {33232474,1202},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,202},
+								$mouseOverText = {33232474,1202},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
 									$col = 5,
@@ -2677,29 +2885,31 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 4,
-										$text = {33232474,203},
-										$mouseOverText = {33232474,1203},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,203},
+								$mouseOverText = {33232474,1203},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-										$col = 5,
-										$colSpan = 4,
-										$onSliderCellConfirm = ExecuteOption_FillMaxTSWarePercentAfter,
-										$min = 0.0,
-										$minSelect = 0.0,
-										$max = 100.0,
-										$maxSelect = 95.0,
-										$exceedMaxValue = false,
-										$start = $DADVT.$DAFillMaxTSWarePercentAfter,
-										$step = 5.0,
-										$suffix = '%',
-									]"/>
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_FillMaxTSWarePercentAfter,
+									$min = 0.0,
+									$minSelect = 0.0,
+									$max = 100.0,
+									$maxSelect = 95.0,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DAFillMaxTSWarePercentAfter,
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2707,15 +2917,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,204},
-									$mouseOverText = {33232474,1204},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,204},
+								$mouseOverText = {33232474,1204},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
 									$col = 5,
@@ -2737,29 +2949,31 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 4,
-										$text = {33232474,205},
-										$mouseOverText = {33232474,1205},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,205},
+								$mouseOverText = {33232474,1205},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and ($DADVT.$DAFillMinTSWarePercent gt 0)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-										$col = 5,
-										$colSpan = 4,
-										$onSliderCellConfirm = ExecuteOption_FillMinTSWarePercentAfter,
-										$min = 0.0,
-										$minSelect = 5.0,
-										$max = 100.0,
-										$maxSelect = 100.0,
-										$exceedMaxValue = false,
-										$start = $DADVT.$DAFillMinTSWarePercentAfter,
-										$step = 5.0,
-										$suffix = '%',
-									]"/>
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_FillMinTSWarePercentAfter,
+									$min = 0.0,
+									$minSelect = 5.0,
+									$max = 100.0,
+									$maxSelect = 100.0,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DAFillMinTSWarePercentAfter,
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2767,15 +2981,17 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,206},
-									$mouseOverText = {33232474,1206},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,206},
+								$mouseOverText = {33232474,1206},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
 									$col = 5,
@@ -2797,29 +3013,31 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 4,
-										$text = {33232474,207},
-										$mouseOverText = {33232474,1207},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,207},
+								$mouseOverText = {33232474,1207},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and ($DADVT.$DAFillMinSYWarePercent gt 0)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-										$col = 5,
-										$colSpan = 4,
-										$onSliderCellConfirm = ExecuteOption_FillMinSYWarePercentAfter,
-										$min = 0.0,
-										$minSelect = 5.0,
-										$max = 100.0,
-										$maxSelect = 100.0,
-										$exceedMaxValue = false,
-										$start = $DADVT.$DAFillMinSYWarePercentAfter,
-										$step = 5.0,
-										$suffix = '%',
-									]"/>
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_FillMinSYWarePercentAfter,
+									$min = 0.0,
+									$minSelect = 5.0,
+									$max = 100.0,
+									$maxSelect = 100.0,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DAFillMinSYWarePercentAfter,
+									$step = 5.0,
+									$suffix = '%',
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2827,109 +3045,117 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 6,
-										$text = {33232474,208},
-										$mouseOverText = {33232474,1208},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,208},
+								$mouseOverText = {33232474,1208},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-										$col = 7, 
-										$colSpan = 2,
-										$text = table[
-										  $text   =  if $DADVT.$DAFillShipModsEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-										  $halign = 'center',
-										],
-										$highlightColor = $DAMVT.$ButtonHighlight,
-										$mouseOverText = {33232474,1208},
-										$onClick = ExecuteOption_FillShipModsEnable,
-										$onRightClick = ExecuteOption_FillShipModsEnable,
-									]"/>
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAFillShipModsEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillShipModsEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1208},
+									$onClick = ExecuteOption_FillShipModsEnable,
+									$onRightClick = ExecuteOption_FillShipModsEnable,
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 6,
-										$text = {33232474,210},
-										$mouseOverText = {33232474,1210},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,210},
+								$mouseOverText = {33232474,1210},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipModsEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-										$col = 7, 
-										$colSpan = 2,
-										$text = table[
-										  $text   =  if $DADVT.$DAFillShipModFleetEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModFleetEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-										  $halign = 'center',
-										],
-										$highlightColor = $DAMVT.$ButtonHighlight,
-										$mouseOverText = {33232474,1210},
-										$onClick = ExecuteOption_FillShipModFleetEnable,
-										$onRightClick = ExecuteOption_FillShipModFleetEnable,
-									]"/>
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAFillShipModFleetEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillShipModFleetEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1210},
+									$onClick = ExecuteOption_FillShipModFleetEnable,
+									$onRightClick = ExecuteOption_FillShipModFleetEnable,
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-										$col = 1,
-										$colSpan = 6,
-										$text = {33232474,211},
-										$mouseOverText = {33232474,1211},
-									]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,211},
+								$mouseOverText = {33232474,1211},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipModsEnable and ($DADVT.$DAFillMaxTSWarePercent lt 100)">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-										$col = 7, 
-										$colSpan = 2,
-										$text = table[
-										  $text   =  if $DADVT.$DAFillShipModPaintEnable then {1001,4825} else {1001,8942}, 
-										  $color  =  if $DADVT.$DAFillShipModPaintEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-										  $halign = 'center',
-										],
-										$highlightColor = $DAMVT.$ButtonHighlight,
-										$mouseOverText = {33232474,1211},
-										$onClick = ExecuteOption_FillShipModPaintEnable,
-										$onRightClick = ExecuteOption_FillShipModPaintEnable,
-									]"/>
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAFillShipModPaintEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillShipModPaintEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1211},
+									$onClick = ExecuteOption_FillShipModPaintEnable,
+									$onRightClick = ExecuteOption_FillShipModPaintEnable,
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,209},
-									$mouseOverText = {33232474,1209},
-								]"/>
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,209},
+								$mouseOverText = {33232474,1209},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAFillDetailedDebug then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAFillDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -2943,70 +3169,135 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
 						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillWareStatistics.keys.list.count">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<!-- SUBMENUS HEADER -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<set_value name="$LocText" exact="'%s %s / %s'.[{1001,46},{33232474,2200},{33232474,2201}]" comment="Wares Added / Removed"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 2,
+									$colSpan = 6,
+									$text = $LocText,
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 8,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<remove_value name="$LocText"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1, 
-									$colSpan = 8,
-									$height = 2,
+									$colSpan = event.param.$columns,
+									$height = 1,
 									$fontsize = 1,
 									$cellBGColor = 'Color.row_separator',
 								]"/>
+							<!-- SUBMENUS BODY -->
 							<!-- 1+2 = Ware.name, 3+4+5 Added Amount, 6+7+8 Removed Amount -->
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,45}, $halign = 'left']" comment="Ware"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ('%s %s'.[{33232474,2200},{1041,10173}]), $halign = 'center']" comment="Added Number"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s %s'.[{33232474,2201},{1041,10173}]), $halign = 'center']" comment="Removed Number"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ('%s %s'.[{33232474,2203},{1041,10173}]), $halign = 'center']" comment="Net Number"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,45}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Ware"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ('%s %s'.[{33232474,2200},{1041,10173}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Added Number"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ('%s %s'.[{33232474,2201},{1041,10173}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Removed Number"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ('%s %s'.[{33232474,2203},{1041,10173}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Net Number"/>
 							<set_value name="$LocWares" exact="[]"/>
 							<append_list_elements name="$LocWares" other="$DADVT.$DAFillWareStatistics.keys.list"/>
 							<sort_list list="$LocWares" sortbyvalue="loop.element.name"/>
 							<do_for_each name="$LocWare" in="$LocWares">
 								<do_if value="$DADVT.$DAFillWareStatistics.{$LocWare}? and $DADVT.$DAFillWareStatistics.{$LocWare}.{1}? and $DADVT.$DAFillWareStatistics.{$LocWare}.{2}?">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocWare.name, $halign = 'left']" comment="Ware"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocWare.name, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Ware"/>
 									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{1}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 2, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number"/>
 									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{2}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number"/>
 									<set_value name="$LocText" exact="'%s'.[$DADVT.$DAFillWareStatistics.{$LocWare}.{1} - $DADVT.$DAFillWareStatistics.{$LocWare}.{2}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ($LocText), $halign = 'center']" comment="Number"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number"/>
 									<remove_value name="$LocText"/>
 								</do_if>
 							</do_for_each>
 							<remove_value name="$LocWares"/>
-						</do_if>
-						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipmodStatistics.keys.list.count">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1, 
-									$colSpan = 8,
-									$height = 2,
+									$colSpan = event.param.$columns,
+									$height = 1,
 									$fontsize = 1,
 									$cellBGColor = 'Color.row_separator',
 								]"/>
+						</do_if>
+						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillShipmodStatistics.keys.list.count">
+							<!-- SUBMENUS HEADER -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<set_value name="$LocText" exact="'%s %s'.[{1001,6},{33232474,2202}]" comment="Ships Modified"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 2,
+									$colSpan = 6,
+									$text = $LocText,
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 8,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<remove_value name="$LocText"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<!-- SUBMENUS BODY -->
 							<!-- 1+2 = Faction.knownname, 3+4+5 Total Military Ships Modded, 6+7+8 Total Civilian Ships Modded -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,43}, $halign = 'left']" comment="Faction"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ('%s %s %s'.[{1001,2637},{1001,9150},{33232474,2202}]), $halign = 'center']" comment="Total Military Ships Modded"/>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ('%s %s %s'.[{1001,2637},{1001,9151},{33232474,2202}]), $halign = 'center']" comment="Total Civilian Ships Modded"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = {1001,43}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Faction"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ('%s %s %s'.[{1001,2637},{1001,9150},{33232474,2202}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Total Military Ships Modded"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ('%s %s %s'.[{1001,2637},{1001,9151},{33232474,2202}]), $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Total Civilian Ships Modded"/>
 							<set_value name="$LocFactions" exact="[]"/>
 							<append_list_elements name="$LocFactions" other="$DADVT.$DAFillShipmodStatistics.keys.list"/>
 							<sort_list list="$LocFactions" sortbyvalue="loop.element.knownname"/>
 							<do_for_each name="$LocFaction" in="$LocFactions">
 								<do_if value="$DADVT.$DAFillShipmodStatistics.{$LocFaction}? and $DADVT.$DAFillShipmodStatistics.{$LocFaction}.{1}? and $DADVT.$DAFillShipmodStatistics.{$LocFaction}.{2}?">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocFaction.knownname, $halign = 'left']" comment="Faction"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Faction"/>
 									<set_value name="$LocText" exact="'%s %s'.[$DADVT.$DAFillShipmodStatistics.{$LocFaction}.{1},{1001,6}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ($LocText), $halign = 'center']" comment="Number Ships"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 3, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number Ships"/>
 									<set_value name="$LocText" exact="'%s %s'.[$DADVT.$DAFillShipmodStatistics.{$LocFaction}.{2},{1001,6}]"/>
-									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ($LocText), $halign = 'center']" comment="Number Ships"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 3, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Number Ships"/>
 									<remove_value name="$LocText"/>
 								</do_if>
 							</do_for_each>
@@ -3201,7 +3492,248 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,117}, $id='menu_jobs_options']"/>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,105},{33232474,117}]" comment="DA Jobs Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,240},
+								$mouseOverText = {33232474,1240},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DAJobsEXPEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DAJobsEXPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1240},
+								$onClick = ExecuteOption_JobsEXPEnable,
+								$onRightClick = ExecuteOption_JobsEXPEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,241},
+								$mouseOverText = {33232474,1241},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DAJobsSSTEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DAJobsSSTEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1241},
+								$onClick = ExecuteOption_JobsSSTEnable,
+								$onRightClick = ExecuteOption_JobsSSTEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,263},
+								$mouseOverText = {33232474,1263},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAJobsSSTEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAJobsSSTRemoveExclusivity then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTRemoveExclusivity then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1263},
+									$onClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
+									$onRightClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,242},
+								$mouseOverText = {33232474,1242},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAJobsEXPEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAJobsEXPDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsEXPDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1242},
+									$onClick = ExecuteOption_JobsEXPDebugEnable,
+									$onRightClick = ExecuteOption_JobsEXPDebugEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,243},
+									$mouseOverText = {33232474,1243},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DAJobsSSTEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAJobsSSTDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1243},
+									$onClick = ExecuteOption_JobsSSTDebugEnable,
+									$onRightClick = ExecuteOption_JobsSSTDebugEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,244},
+								$mouseOverText = {33232474,1244},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAJobsSSTEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1244},
+									$onClick = ExecuteOption_JobsSSTXtrDebugEnable,
+									$onRightClick = ExecuteOption_JobsSSTXtrDebugEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,105},{1001,4836}]" comment="DA Jobs Menus"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,245}, $id='menu_jobs_quotas']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,261}, $id='menu_jobs_togglespawned']"/>
 					</actions>
@@ -3435,174 +3967,6 @@
 								$halign = 'center',
 							]"/>
 						</do_elseif>
-					</actions>
-				</cue>
-				<cue name="Menu_Jobs_Options" instantiate="true">
-					<conditions>
-						<event_cue_signalled/>
-					</conditions>
-					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 6,
-								$text = {33232474,240},
-								$mouseOverText = {33232474,1240},
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
-								$text = table[
-								  $text   =  if $DADVT.$DAJobsEXPEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAJobsEXPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-								  $halign = 'center',
-								],
-								$highlightColor = $DAMVT.$ButtonHighlight,
-								$mouseOverText = {33232474,1240},
-								$onClick = ExecuteOption_JobsEXPEnable,
-								$onRightClick = ExecuteOption_JobsEXPEnable,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-								$col = 1,
-								$colSpan = 6,
-								$text = {33232474,241},
-								$mouseOverText = {33232474,1241},
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
-								$text = table[
-								  $text   =  if $DADVT.$DAJobsSSTEnable then {1001,4825} else {1001,8942}, 
-								  $color  =  if $DADVT.$DAJobsSSTEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-								  $halign = 'center',
-								],
-								$highlightColor = $DAMVT.$ButtonHighlight,
-								$mouseOverText = {33232474,1241},
-								$onClick = ExecuteOption_JobsSSTEnable,
-								$onRightClick = ExecuteOption_JobsSSTEnable,
-							]"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,263},
-									$mouseOverText = {33232474,1263},
-								]"/>
-						<do_if value="$DADVT.$DAJobsSSTEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTRemoveExclusivity then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTRemoveExclusivity then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1263},
-									$onClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
-									$onRightClick = ExecuteOption_JobsSSTRemoveExclusivityEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,242},
-									$mouseOverText = {33232474,1242},
-								]"/>
-						<do_if value="$DADVT.$DAJobsEXPEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DAJobsEXPDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsEXPDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1242},
-									$onClick = ExecuteOption_JobsEXPDebugEnable,
-									$onRightClick = ExecuteOption_JobsEXPDebugEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,243},
-									$mouseOverText = {33232474,1243},
-								]"/>
-						<do_if value="$DADVT.$DAJobsSSTEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1243},
-									$onClick = ExecuteOption_JobsSSTDebugEnable,
-									$onRightClick = ExecuteOption_JobsSSTDebugEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 6,
-									$text = {33232474,244},
-									$mouseOverText = {33232474,1244},
-								]"/>
-						<do_if value="$DADVT.$DAJobsSSTEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
-									$text = table[
-									  $text   =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAJobsSSTXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
-									  $halign = 'center',
-									],
-									$highlightColor = $DAMVT.$ButtonHighlight,
-									$mouseOverText = {33232474,1244},
-									$onClick = ExecuteOption_JobsSSTXtrDebugEnable,
-									$onRightClick = ExecuteOption_JobsSSTXtrDebugEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = {1001,8942},
-									$halign = 'right',
-								]"/>
-						</do_else>
-						<!-- MAYBE: Flesh out menu, allow changing fleet counts -->
 					</actions>
 				</cue>
 				<cue name="Menu_Jobs_ToggleSpawned" instantiate="true">
@@ -3859,16 +4223,49 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,106},{33232474,117}]" comment="DA Gate Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,300},
 								$mouseOverText = {33232474,1300},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DAGateEnable then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DAGateEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -3882,17 +4279,18 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,302},
 								$mouseOverText = {33232474,1302},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGateEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGateShowAllGates then {1001,4825} else {1001,8942}, 
-									  $color  =  if $DADVT.$DAGateShowAllGates then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $color  =  $DAMVT.$TextBlue,
 									  $halign = 'center',
 									],
 									$highlightColor = $DAMVT.$ButtonHighlight,
@@ -3903,23 +4301,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,301},
 								$mouseOverText = {33232474,1301},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGateEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGateDetailedDebug then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGateDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -3933,32 +4333,56 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
 						<do_if value="$DADVT.$DAGateEnable and $DADVT.$DAGateTrackedGates.count">
+							<!-- SUBMENUS HEADER -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
-									$colSpan = 4,
-									$text = {1001,9809},
-									$halign = 'left',
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
 								]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 2,
-									$text = {1001,12},
+									$col = 2,
+									$colSpan = 6,
+									$text = {20001,703},
 									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
 								]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
-									$text = '%s / %s'.[{1001,12207},{1001,12208}],
-									$halign = 'center',
+									$col = 8,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
 								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<!-- SUBMENUS BODY -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,9809}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Jump Gate Connection"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = {1001,12}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Status"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = '%s / %s'.[{1001,12207},{1001,12208}], $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Active / Inactive"/>
 							<!-- Horizontal Line -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[$selectable = false]"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -3978,12 +4402,15 @@
 											$colSpan = 4,
 											$text = '%s &lt;-&gt; %s'.[$LocGate.sector.knownname,$LocGate.exit.sector.knownname],
 											$halign = 'left',
+											$cellBGColor = $DAMVT.$BodyBackgroundBright,
+											$wordwrap = true
 										]"/>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 											$col = 5,
 											$colSpan = 2,
 											$text = if $LocGate.isactive then {1001,12207} else {1001,12208},
 											$halign = 'center',
+											$cellBGColor = $DAMVT.$BodyBackgroundDark
 										]"/>
 									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
 										$col = 7,
@@ -4082,26 +4509,49 @@
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,348}, $id='menu_god_options']"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,349}, $id='menu_god_quotas']"/>
-						<!-- TODO: Special ordering -->
-					</actions>
-				</cue>
-				<cue name="Menu_God_Options" instantiate="true">
-					<conditions>
-						<event_cue_signalled/>
-					</conditions>
-					<actions>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,107},{33232474,117}]" comment="DA God Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,340},
-								$mouseOverText = {33232474,1340}
+								$mouseOverText = {33232474,1340},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-								$col = 7, 
-								$colSpan = 2,
+								$col = 5, 
+								$colSpan = 4,
 								$text = table[
 								  $text   =  if $DADVT.$DAGodEnable then {1001,4825} else {1001,8942}, 
 								  $color  =  if $DADVT.$DAGodEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4118,6 +4568,7 @@
 								$colSpan = 4,
 								$text = {33232474,354},
 								$mouseOverText = {33232474,1354},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<set_value name="$LocMax" exact="[5,$DADVT.$DAGodStationRequestInterval * 2].max"/>
@@ -4141,19 +4592,21 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,352},
 								$mouseOverText = {33232474,1352},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAllowBuildInFriendly then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodAllowBuildInFriendly then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4167,23 +4620,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,350},
 								$mouseOverText = {33232474,1350},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable and $DADVT.$DAGodAllowBuildInFriendly">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAllowBuildInPlayer then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodAllowBuildInPlayer then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4197,23 +4652,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,351},
 								$mouseOverText = {33232474,1351},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodAttemptRecovery then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodAttemptRecovery then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4227,23 +4684,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,353},
 								$mouseOverText = {33232474,1353},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodStationUpgradeEnable then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodStationUpgradeEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4257,10 +4716,11 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
@@ -4269,6 +4729,7 @@
 								$colSpan = 4,
 								$text = {33232474,355},
 								$mouseOverText = {33232474,1355},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
@@ -4291,6 +4752,7 @@
 											$col = 1,
 											$colSpan = event.param.$columns,
 											$text = {33232474,2343},
+											$cellBGColor = $DAMVT.$BodyBackgroundDark
 										]"/>
 								</do_if>
 							</do_if>
@@ -4301,19 +4763,21 @@
 									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,341},
 								$mouseOverText = {33232474,1341},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodDetailedDebug then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4327,23 +4791,25 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
-								$colSpan = 6,
+								$colSpan = 4,
 								$text = {33232474,347},
 								$mouseOverText = {33232474,1347},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAGodEnable">
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
-									$col = 7, 
-									$colSpan = 2,
+									$col = 5, 
+									$colSpan = 4,
 									$text = table[
 									  $text   =  if $DADVT.$DAGodXtremelyDetailedDebug then {1001,4825} else {1001,8942}, 
 									  $color  =  if $DADVT.$DAGodXtremelyDetailedDebug then $DAMVT.$TextGreen else $DAMVT.$TextRed,
@@ -4357,12 +4823,107 @@
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 7,
-									$colSpan = 2,
+									$col = 5,
+									$colSpan = 4,
 									$text = {1001,8942},
 									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- IMPORTANT OPTION HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,107},{1001,508}]" comment="DA God Shortcut"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- IMPORTANT OPTION BODY -->
+						<do_if value="$DADVT.$DAGodEnable and $DADVT.$DAGodFactionModuleQuotas? and $DADVT.$DAGodFactionModuleQuotas.keys.list.count">
+							<include_actions ref="DA_God_Activate_All_Button"/>
+						</do_if>
+						<do_elseif value="not $DADVT.$DAGodEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = event.param.$columns,
+								$text = {33232474,2348},
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$BodyBackgroundDark
+							]"/>
+						</do_elseif>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,107},{1001,4836}]" comment="DA God Menus"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,349}, $id='menu_god_quotas']"/>
 					</actions>
 				</cue>
 				<cue name="Menu_God_Quotas" instantiate="true">
@@ -4375,6 +4936,8 @@
 							<set_value name="$DAGodLocFactionsList" exact="[]"/>
 							<append_list_elements name="$DAGodLocFactionsList" other="$DADVT.$DAGodFactionModuleQuotas.keys.list"/>
 							<sort_list list="$DAGodLocFactionsList" sortbyvalue="loop.element.knownname"/>
+							<!-- Activate All Button -->
+							<include_actions ref="DA_God_Activate_All_Button"/>
 							<do_for_each name="$LocFaction" in="$DAGodLocFactionsList">
 								<do_if value="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count gt 1)">
 									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
@@ -4714,14 +5277,350 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_GodTriggerMultipleFactions" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="event.param.$echo.count">
+							<set_value name="$LocFactions" exact="event.param.$echo"/>
+							<do_for_each name="$LocFaction" in="$LocFactions">
+								<do_if value="$LocFaction.isactive and (not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}) and $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count gt 1)">
+									<do_if value="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled != true)">
+										<set_value name="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled" exact="true"/>
+									</do_if>
+									<do_elseif value="not $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled?">
+										<debug_text text="'MOD: DAMenus God : ExecuteOption_GodTriggerMultipleFactions -- %s -- Unable to find $DADVT.$DAGodFactionModuleQuotas.{%s}.$Enabled'.[$LocFaction,$LocFaction]" context="false" filter="error"/>
+									</do_elseif>
+									<do_if value="$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.$Enabled">
+										<append_to_list name="$DADVT.$DAGodFactionsTriggered" exact="$LocFaction"/>
+										<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventGodSignalledActive" param="$LocFaction"/>
+										<debug_text text="'MOD: DAMenus God : ExecuteOption_GodTriggerMultipleFactions -- %s -- Faction triggered.'.[$LocFaction]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+									</do_if>
+								</do_if>
+								<do_elseif value="not $LocFaction.isactive">
+									<debug_text text="'MOD: DAMenus God : ExecuteOption_GodTriggerMultipleFactions -- %s -- Attempted to trigger on inactive faction'.[$LocFaction]" context="false" filter="error"/>
+								</do_elseif>
+								<do_elseif value="$DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}">
+									<debug_text text="'MOD: DAMenus God : ExecuteOption_GodTriggerMultipleFactions -- %s -- Attempted to trigger on an already triggered faction'.[$LocFaction]" context="false" filter="error"/>
+								</do_elseif>
+								<do_elseif value="not ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count gt 1))">
+									<debug_text text="'MOD: DAMenus God : ExecuteOption_GodTriggerMultipleFactions -- %s -- Attempted to trigger on faction without table set up -- $DADVT.$DAGodFactionModuleQuotas.{%s}?: %s -- $DADVT.$DAGodFactionModuleQuotas.{%s}.keys.list.count: %s'.[$LocFaction,$LocFaction,$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}?,$LocFaction,$DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count]" context="false" filter="error"/>
+								</do_elseif>
+							</do_for_each>
+							<remove_value name="$LocFactions"/>
+						</do_if>
+						<do_else>
+							<!-- ERROR -->
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<library name="DA_God_Activate_All_Button">
+					<actions>
+						<set_value name="$LocFactionList" exact="[]"/>
+						<append_list_elements name="$LocFactionList" other="$DADVT.$DAGodFactionModuleQuotas.keys.list"/>
+						<sort_list list="$LocFactionList" sortbyvalue="loop.element.knownname"/>
+						<!-- Activate All Button -->
+						<set_value name="$FactionsNotActivated" exact="[]"/>
+						<do_if value="$LocFactionList.count" min="1">
+							<do_for_each name="$LocFaction" in="$LocFactionList">
+								<do_if value="$LocFaction.isactive and (not $FactionsNotActivated.indexof.{$LocFaction}) and (not $DADVT.$DAGodFactionsTriggered.indexof.{$LocFaction}) and $DADVT.$DAGodFactionModuleQuotas.{$LocFaction}? and ($DADVT.$DAGodFactionModuleQuotas.{$LocFaction}.keys.list.count gt 1)">
+									<append_to_list name="$FactionsNotActivated" exact="$LocFaction"/>
+								</do_if>
+							</do_for_each>
+						</do_if>
+						<remove_value name="$LocFactionList"/>
+						<do_if value="$FactionsNotActivated.count" min="1">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 1,
+									$colSpan = 8,
+									$text = table[
+									  $text   = {33232474,356}.[$FactionsNotActivated.count],
+									  $color  = $DAMVT.$TextGreen,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1356}.[$FactionsNotActivated.count],
+									$onClick = ExecuteOption_GodTriggerMultipleFactions,
+									$onRightClick = ExecuteOption_GodTriggerMultipleFactions,
+									$echo = $FactionsNotActivated
+								]"/>
+						</do_if>
+						<do_elseif value="$FactionsNotActivated.count == 0">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<set_value name="$LocText" exact="'%s %s %s'.[{33232474,346},{1001,2963},{1001,44}]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 8,
+									$text = $LocText,
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
+								]"/>
+							<remove_value name="$LocText"/>
+						</do_elseif>
+						<remove_value name="$FactionsNotActivated"/>
+					</actions>
+				</library>
 				<!-- BP -->
 				<cue name="DA_BP_Menu" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,380}, $id='menu_bp_options']"/>
+						<!-- OPTIONS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,108},{33232474,117}]" comment="DA BP Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- OPTIONS BODY -->
+						
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,385},
+								$mouseOverText = {33232474,1385},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 5, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DADVT.$DABPEnable then {1001,4825} else {1001,8942}, 
+								  $color  =  if $DADVT.$DABPEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$mouseOverText = {33232474,1385},
+								$onClick = ExecuteOption_BPEnable,
+								$onRightClick = ExecuteOption_BPEnable
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,387},
+								$mouseOverText = {33232474,1387},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DABPEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DABPDebugEnable then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DABPDebugEnable then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1387},
+									$onClick = ExecuteOption_BPDebugEnable,
+									$onRightClick = ExecuteOption_BPDebugEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{1004,16},{1001,2679}]" comment="Scan Settings"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<do_if value="$DADVT.$DABPEnable">
+							<!-- SUBMENUS BODY -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {1001,9197},
+								$halign = 'left',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 5,
+								$colSpan = 4,
+								$text = {33232474,386},
+								$halign = 'center',
+								$mouseOverText = {33232474,1386},
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+							<do_all exact="$DADVT.$DABPClassRequirements.keys.list.count" counter="$A">
+								<!-- BODY -->
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+										$col = 1,
+										$colSpan = 4,
+										$text = $DADVT.$DABPClassRequirements.keys.list.{$A},
+										$halign = 'left',
+										$cellBGColor = $DAMVT.$BodyBackgroundBright
+									]"/>
+								<set_value name="$LocMax" exact="[200,$DADVT.$DABPClassRequirements.{$DADVT.$DABPClassRequirements.keys.list.{$A}} * 2].max"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+										$col = 5,
+										$colSpan = 4,
+										$onSliderCellConfirm = ExecuteOption_BPChangeRequirement,
+										$min = 0,
+										$minSelect = 1,
+										$max = $LocMax,
+										$maxSelect = $LocMax,
+										$exceedMaxValue = false,
+										$start = $DADVT.$DABPClassRequirements.{$DADVT.$DABPClassRequirements.keys.list.{$A}},
+										$step = 1,
+										$echo = $DADVT.$DABPClassRequirements.keys.list.{$A},
+									]"/>
+								<remove_value name="$LocMax"/>
+							</do_all>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,2380},
+									$halign = 'left',
+									$mouseOverText = {33232474,1380},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+							<set_value name="$LocMax" exact="[200,$DADVT.$DABPUnkownClassRequirement * 2].max"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_BPChangeRequirement,
+									$min = 0,
+									$minSelect = 1,
+									$max = $LocMax,
+									$maxSelect = $LocMax,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DABPUnkownClassRequirement,
+									$step = 1,
+									$echo = 'Unknown',
+								]"/>
+							<remove_value name="$LocMax"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = event.param.$columns,
+									$text = {1001,8942},
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,108},{1001,4836}]" comment="DA BP Menus"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,381}, $id='menu_bp_progress']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
