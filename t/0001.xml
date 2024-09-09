@@ -322,7 +322,7 @@
 		<t id="283">Enable DN News Storage</t>
 		<t id="284">DN Interval</t>
 		<t id="285">Enable DN Debug</t>
-		<t id="286">(XXX)</t>
+		<t id="286">Restrict News to Known Factions</t>
 		<t id="287">(XXX)</t>
 		<t id="288">(XXX)</t>
 		<t id="289">(XXX)</t>
@@ -343,7 +343,7 @@
 		<t id="1283">Changes whether Dynamic News will store recent news events.</t>
 		<t id="1284">Changes the minimum time between the script checking for any new reports. This will change the time between checks for groups of reports that will be output in regular intervals.</t>
 		<t id="1285">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
-		<t id="1286">(XXX)</t>
+		<t id="1286">Restricts certain news entries if the faction is not known to player.</t>
 		<t id="1287">(XXX)</t>
 		<t id="1288">(XXX)</t>
 		<t id="1289">(XXX)</t>
