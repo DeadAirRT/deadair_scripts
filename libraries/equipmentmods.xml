@@ -56,31 +56,31 @@
     <rotationspeed ware="mod_weapon_xenon_missile_5_da" quality="3" min="1.25" max="1.25"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <damage ware="mod_weapon_damage_AI" quality="3" min="1.25" max="1.25"/>
+    <damage ware="mod_weapon_damage_AI" quality="3" min="1.3" max="1.3"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <mining ware="mod_weapon_mining_AI" quality="3" min="4" max="4"/>
+    <mining ware="mod_weapon_mining_AI" quality="3" min="1.3" max="1.3"/>
   </add>
   <add sel="/equipmentmods/weapon">
     <damage ware="mod_weapon_damage_AI_mk2" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <mining ware="mod_weapon_mining_AI_mk2" quality="2" min="3" max="3"/>
+    <mining ware="mod_weapon_mining_AI_mk2" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <damage ware="mod_weapon_damage_AI_mk1" quality="1" min="1.15" max="1.15"/>
+    <damage ware="mod_weapon_damage_AI_mk1" quality="1" min="1.1" max="1.1"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <mining ware="mod_weapon_mining_AI_mk1" quality="1" min="2" max="2"/>
+    <mining ware="mod_weapon_mining_AI_mk1" quality="1" min="1.1" max="1.1"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <rotationspeed ware="mod_weapon_missile_AI" quality="3" min="1.25" max="1.25"/>
+    <rotationspeed ware="mod_weapon_missile_AI" quality="3" min="1.3" max="1.3"/>
   </add>
   <add sel="/equipmentmods/weapon">
     <rotationspeed ware="mod_weapon_missile_AI_mk2" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <rotationspeed ware="mod_weapon_missile_AI_mk1" quality="1" min="1.15" max="1.15"/>
+    <rotationspeed ware="mod_weapon_missile_AI_mk1" quality="1" min="1.1" max="1.1"/>
   </add>
   <add sel="/equipmentmods/engine">
     <forwardthrust ware="mod_engine_xenon_1_da" quality="1" min="1.05" max="1.05">
@@ -133,11 +133,11 @@
     </forwardthrust>
   </add>
   <add sel="/equipmentmods/engine">
-    <forwardthrust ware="mod_engine_forwardthrust_AI" quality="3" min="1.25" max="1.25">
+    <forwardthrust ware="mod_engine_forwardthrust_AI" quality="3" min="1.3" max="1.3">
       <bonus chance="1.0" max="4">
-        <rotationthrust min="1.25" max="1.25"/>
-        <boostthrust min="1.0" max="1.25"/>
-        <travelthrust min="1.0" max="1.25"/>
+        <rotationthrust min="1.0" max="1.3"/>
+        <boostthrust min="1.0" max="1.3"/>
+        <travelthrust min="1.0" max="1.3"/>
         <travelchargetime min="0" max="0"/>
       </bonus>
     </forwardthrust>
@@ -145,7 +145,7 @@
   <add sel="/equipmentmods/engine">
     <forwardthrust ware="mod_engine_forwardthrust_AI_mk2" quality="2" min="1.2" max="1.2">
       <bonus chance="1.0" max="4">
-        <rotationthrust min="1.25" max="1.2"/>
+        <rotationthrust min="1.0" max="1.2"/>
         <boostthrust min="1.0" max="1.2"/>
         <travelthrust min="1.0" max="1.2"/>
         <travelchargetime min="0.33" max="0.33"/>
@@ -153,11 +153,11 @@
     </forwardthrust>
   </add>
   <add sel="/equipmentmods/engine">
-    <forwardthrust ware="mod_engine_forwardthrust_AI_mk1" quality="1" min="1.15" max="1.15">
+    <forwardthrust ware="mod_engine_forwardthrust_AI_mk1" quality="1" min="1.1" max="1.1">
       <bonus chance="1.0" max="4">
-        <rotationthrust min="1.0" max="1.15"/>
-        <boostthrust min="1.0" max="1.15"/>
-        <travelthrust min="1.0" max="1.15"/>
+        <rotationthrust min="1.0" max="1.1"/>
+        <boostthrust min="1.0" max="1.1"/>
+        <travelthrust min="1.0" max="1.1"/>
         <travelchargetime min="0.66" max="0.66"/>
       </bonus>
     </forwardthrust>
@@ -253,10 +253,10 @@
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_mass_AI" quality="3" min="0.75" max="0.75">
+    <mass ware="mod_ship_mass_AI" quality="3" min="0.7" max="0.7">
       <bonus chance="1.0" max="2">
-        <drag min="0.75" max="0.75"/>
-        <maxhull min="1.0" max="1.25"/>
+        <drag min="0.7" max="0.7"/>
+        <maxhull min="1.0" max="1.3"/>
       </bonus>
     </mass>
   </add>
@@ -269,10 +269,10 @@
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_mass_AI_mk1" quality="1" min="0.85" max="0.85">
+    <mass ware="mod_ship_mass_AI_mk1" quality="1" min="0.9" max="0.9">
       <bonus chance="1.0" max="2">
-        <drag min="0.85" max="0.85"/>
-        <maxhull min="1.0" max="1.15"/>
+        <drag min="0.9" max="0.9"/>
+        <maxhull min="1.0" max="1.1"/>
       </bonus>
     </mass>
   </add>
@@ -292,12 +292,12 @@
     <capacity ware="mod_shield_xenon_5_da" quality="3" min="1.25" max="1.25"/>
   </add>
   <add sel="/equipmentmods/shield">
-    <capacity ware="mod_shield_capacity_AI" quality="3" min="1.25" max="1.25"/>
+    <capacity ware="mod_shield_capacity_AI" quality="3" min="1.3" max="1.3"/>
   </add>
   <add sel="/equipmentmods/shield">
     <capacity ware="mod_shield_capacity_AI_mk2" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/shield">
-    <capacity ware="mod_shield_capacity_AI_mk1" quality="1" min="1.15" max="1.15"/>
+    <capacity ware="mod_shield_capacity_AI_mk1" quality="1" min="1.1" max="1.1"/>
   </add>
 </diff>

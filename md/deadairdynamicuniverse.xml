@@ -4157,7 +4157,7 @@
 								<set_value name="$LocLMinerTag" exact="tag.{$LocLMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocLMinerTag" includeinactive="true" force="true" multiple="true"/>
 								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
-									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag" exact="[$LocLMinerTag,2,10,5,null,[],null,[]]"/>
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag" exact="[$LocLMinerTag,2,4,2,null,[],null,[]]"/>
 									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $LMinerTag,'" operation="add"/>
 								</do_if>
@@ -4192,7 +4192,7 @@
 										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
 									</do_if>
 									<do_else>
-										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,20,10,null,[],null,[]]"/>
+										<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag" exact="[$LocMMinerTag,2,10,5,null,[],null,[]]"/>
 										<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MMinerTag.{7}"/>
 									</do_else>
 									<set_value name="$LocDebugString" exact="' $MMinerTag,'" operation="add"/>
@@ -4223,7 +4223,7 @@
 								<set_value name="$LocLGasMinerTag" exact="tag.{$LocLGasMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocLGasMinerTag" includeinactive="true" force="true" multiple="true"/>
 								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
-									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag" exact="[$LocLGasMinerTag,2,10,5,null,[],null,[]]"/>
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag" exact="[$LocLGasMinerTag,2,4,2,null,[],null,[]]"/>
 									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$LGasMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $LGasMinerTag,'" operation="add"/>
 								</do_if>
@@ -4253,7 +4253,7 @@
 								<set_value name="$LocMGasMinerTag" exact="tag.{$LocMGasMinerTagText}"/>
 								<get_suitable_job result="$LocJobs" faction="$LocFaction" tags="$LocMGasMinerTag" includeinactive="true" force="true" multiple="true"/>
 								<do_if value="(not $DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag?) and @$LocJobs.count and $DADVT.$DAJobsSSTEnable">
-									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag" exact="[$LocMGasMinerTag,2,20,10,null,[],null,[]]"/>
+									<set_value name="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag" exact="[$LocMGasMinerTag,2,10,5,null,[],null,[]]"/>
 									<create_group groupname="$DADVT.$DAJobsSSTJobSizeQuotas.{$LocFaction}.$MGasMinerTag.{7}"/>
 									<set_value name="$LocDebugString" exact="' $MGasMinerTag,'" operation="add"/>
 								</do_if>
@@ -8759,22 +8759,24 @@
 					<actions>
 						<!-- Use $DADVT.$DAGodDefaultModuleQuotas -->
 						<!-- Vanilla Wares -->
-						<set_value name="$DADVT.$DAGodDefaultModuleQuotas" exact="table[{ware.advancedcomposites} = 5, {ware.advancedelectronics} = 29, {ware.antimattercells} = 2, {ware.antimatterconverters} = 10, {ware.claytronics} = 23, {ware.dronecomponents} = 8,
-							{ware.energycells} = 75, {ware.engineparts} = 17, {ware.fieldcoils} = 3, {ware.graphene} = 26, {ware.hullparts} = 80, {ware.microchips} = 78, {ware.missilecomponents} = 6, {ware.plasmaconductors} = 17, {ware.quantumtubes} = 40,
-							{ware.refinedmetals} = 46, {ware.teladianium} = 29, {ware.scanningarrays} = 12, {ware.shieldcomponents} = 10, {ware.siliconwafers} = 40, {ware.smartchips} = 69, {ware.superfluidcoolant} = 9, {ware.turretcomponents} = 19, {ware.water} = 14,
-							{ware.weaponcomponents} = 16, {ware.foodrations} = 52, {ware.sojahusk} = 62, {ware.nostropoil} = 26, {ware.meat} = 15, {ware.wheat} = 16, {ware.majasnails} = 29, {ware.sojabeans} = 33, {ware.sunriseflowers} = 19, {ware.swampplant} = 0,
-							{ware.medicalsupplies} = 78, {ware.spices} = 23, {ware.spacefuel} = 0, {ware.majadust} = 0, {ware.spaceweed} = 0]"/>
+						<set_value name="$DADVT.$DAGodDefaultModuleQuotas" exact="table[{ware.advancedcomposites} = 1, {ware.advancedelectronics} = 16, {ware.antimattercells} = 0, {ware.antimatterconverters} = 5,
+							{ware.claytronics} = 18, {ware.dronecomponents} = 4, {ware.energycells} = 11, {ware.engineparts} = 9, {ware.fieldcoils} = 1, {ware.graphene} = 4, {ware.hullparts} = 35, {ware.microchips} = 26,
+							{ware.missilecomponents} = 8, {ware.plasmaconductors} = 3, {ware.quantumtubes} = 15, {ware.refinedmetals} = 13, {ware.teladianium} = 6, {ware.scanningarrays} = 5, {ware.shieldcomponents} = 5,
+							{ware.siliconwafers} = 7, {ware.smartchips} = 37, {ware.superfluidcoolant} = 1, {ware.turretcomponents} = 12, {ware.water} = 0, {ware.weaponcomponents} = 9,
+							{ware.foodrations} = 12, {ware.sojahusk} = 21, {ware.nostropoil} = 4,
+							{ware.meat} = 2, {ware.wheat} = 1, {ware.majasnails} = 2, {ware.sojabeans} = 6, {ware.sunriseflowers} = 0, {ware.swampplant} = 0, {ware.medicalsupplies} = 16, {ware.spices} = 1,
+							{ware.spacefuel} = 0, {ware.majadust} = 0, {ware.spaceweed} = 0]"/>
 						<!-- Split -->
 						<do_if value="faction.split?">
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.cheltmeat}" exact="83"/>
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.scruffinfruits}" exact="43"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.cheltmeat}" exact="54"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.scruffinfruits}" exact="25"/>
 						</do_if>
 						<do_if value="faction.terran?">
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.metallicmicrolattice}" exact="77"/>
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.computronicsubstrate}" exact="36"/>
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.siliconcarbide}" exact="43"/>
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.proteinpaste}" exact="15"/>
-							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.terranmre}" exact="44"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.computronicsubstrate}" exact="18"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.metallicmicrolattice}" exact="38"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.proteinpaste}" exact="2"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.siliconcarbide}" exact="20"/>
+							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.terranmre}" exact="17"/>
 							<set_value name="$DADVT.$DAGodDefaultModuleQuotas.{ware.stimulants}" exact="0"/>
 						</do_if>
 						<do_if value="faction.boron?">
@@ -8835,127 +8837,141 @@
 					<actions>
 						<!-- 20240424 Adjusting numbers based on tracked shipyard/wharf usage of wares -->
 						<do_if value="not $DADVT.$DAGodFactionsTriggered.indexof.{faction.paranid}">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.advancedcomposites}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.advancedelectronics}.{2}" exact="27"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.claytronics}.{2}" exact="21"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.energycells}.{2}" exact="73"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.engineparts}.{2}" exact="15"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.fieldcoils}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.graphene}.{2}" exact="25"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.hullparts}.{2}" exact="78"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.medicalsupplies}.{2}" exact="87"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.microchips}.{2}" exact="76"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.quantumtubes}.{2}" exact="38"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.refinedmetals}.{2}" exact="44"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.scanningarrays}.{2}" exact="10"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.shieldcomponents}.{2}" exact="11"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.siliconwafers}.{2}" exact="39"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.smartchips}.{2}" exact="67"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.spices}.{2}" exact="19"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.water}.{2}" exact="18"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.advancedcomposites}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.advancedelectronics}.{2}" exact="9"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.antimatterconverters}.{2}" exact="7"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.claytronics}.{2}" exact="16"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.energycells}.{2}" exact="22"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.engineparts}.{2}" exact="12"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.fieldcoils}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.graphene}.{2}" exact="5"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.hullparts}.{2}" exact="63"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.medicalsupplies}.{2}" exact="23"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.microchips}.{2}" exact="24"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.missilecomponents}.{2}" exact="31"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.plasmaconductors}.{2}" exact="5"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.quantumtubes}.{2}" exact="12"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.refinedmetals}.{2}" exact="21"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.siliconwafers}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.smartchips}.{2}" exact="51"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.spices}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.superfluidcoolant}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.turretcomponents}.{2}" exact="8"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.water}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.paranid}.{ware.weaponcomponents}.{2}" exact="17"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodFactionsTriggered.indexof.{faction.holyorder}">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.advancedcomposites}.{2}" exact="3"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.advancedelectronics}.{2}" exact="28"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.antimattercells}.{2}" exact="3"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.antimatterconverters}.{2}" exact="9"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.claytronics}.{2}" exact="21"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.dronecomponents}.{2}" exact="7"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.energycells}.{2}" exact="73"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.engineparts}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.hullparts}.{2}" exact="78"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.majasnails}.{2}" exact="32"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.medicalsupplies}.{2}" exact="91"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.microchips}.{2}" exact="76"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.quantumtubes}.{2}" exact="39"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.refinedmetals}.{2}" exact="43"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.scanningarrays}.{2}" exact="11"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.siliconwafers}.{2}" exact="42"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.sojahusk}.{2}" exact="57"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.spices}.{2}" exact="21"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.water}.{2}" exact="18"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.weaponcomponents}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.advancedcomposites}.{2}" exact="0"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.advancedelectronics}.{2}" exact="10"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.antimattercells}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.antimatterconverters}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.claytronics}.{2}" exact="16"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.energycells}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.engineparts}.{2}" exact="10"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.graphene}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.hullparts}.{2}" exact="63"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.majasnails}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.medicalsupplies}.{2}" exact="27"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.microchips}.{2}" exact="24"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.missilecomponents}.{2}" exact="31"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.plasmaconductors}.{2}" exact="5"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.quantumtubes}.{2}" exact="13"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.refinedmetals}.{2}" exact="20"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.scanningarrays}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.shieldcomponents}.{2}" exact="4"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.siliconwafers}.{2}" exact="10"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.smartchips}.{2}" exact="53"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.sojahusk}.{2}" exact="16"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.spices}.{2}" exact="4"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.superfluidcoolant}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.turretcomponents}.{2}" exact="8"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.water}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.holyorder}.{ware.weaponcomponents}.{2}" exact="16"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodFactionsTriggered.indexof.{faction.teladi}">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.advancedcomposites}.{2}" exact="3"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.advancedelectronics}.{2}" exact="23"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.antimatterconverters}.{2}" exact="8"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.claytronics}.{2}" exact="12"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.dronecomponents}.{2}" exact="6"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.energycells}.{2}" exact="60"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.engineparts}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.graphene}.{2}" exact="24"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.hullparts}.{2}" exact="60"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.medicalsupplies}.{2}" exact="73"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.microchips}.{2}" exact="69"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.missilecomponents}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.quantumtubes}.{2}" exact="32"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.scanningarrays}.{2}" exact="8"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.siliconwafers}.{2}" exact="38"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.smartchips}.{2}" exact="62"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.spices}.{2}" exact="19"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.superfluidcoolant}.{2}" exact="7"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.turretcomponents}.{2}" exact="16"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.water}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.weaponcomponents}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.advancedcomposites}.{2}" exact="0"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.advancedelectronics}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.antimatterconverters}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.claytronics}.{2}" exact="17"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.dronecomponents}.{2}" exact="0"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.energycells}.{2}" exact="9"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.engineparts}.{2}" exact="5"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.fieldcoils}.{2}" exact="2"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.hullparts}.{2}" exact="16"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.medicalsupplies}.{2}" exact="10"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.microchips}.{2}" exact="23"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.missilecomponents}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.plasmaconductors}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.quantumtubes}.{2}" exact="11"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.scanningarrays}.{2}" exact="3"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.shieldcomponents}.{2}" exact="8"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.smartchips}.{2}" exact="23"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.superfluidcoolant}.{2}" exact="0"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.teladi}.{ware.turretcomponents}.{2}" exact="1"/>
 						</do_if>
 						<do_if value="faction.split? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.split})">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.advancedcomposites}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.advancedelectronics}.{2}" exact="11"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.antimattercells}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.dronecomponents}.{2}" exact="20"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.engineparts}.{2}" exact="136"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.fieldcoils}.{2}" exact="10"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.graphene}.{2}" exact="29"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.hullparts}.{2}" exact="78"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.medicalsupplies}.{2}" exact="121"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.microchips}.{2}" exact="74"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.missilecomponents}.{2}" exact="2"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.plasmaconductors}.{2}" exact="27"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.quantumtubes}.{2}" exact="42"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.refinedmetals}.{2}" exact="64"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.scanningarrays}.{2}" exact="26"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.shieldcomponents}.{2}" exact="5"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.siliconwafers}.{2}" exact="37"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.smartchips}.{2}" exact="24"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.spices}.{2}" exact="28"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.superfluidcoolant}.{2}" exact="12"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.turretcomponents}.{2}" exact="47"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.water}.{2}" exact="31"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.weaponcomponents}.{2}" exact="19"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.advancedelectronics}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.antimattercells}.{2}" exact="8"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.antimatterconverters}.{2}" exact="1"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.claytronics}.{2}" exact="28"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.dronecomponents}.{2}" exact="12"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.energycells}.{2}" exact="21"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.engineparts}.{2}" exact="92"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.fieldcoils}.{2}" exact="6"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.graphene}.{2}" exact="14"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.hullparts}.{2}" exact="43"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.medicalsupplies}.{2}" exact="66"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.microchips}.{2}" exact="41"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.missilecomponents}.{2}" exact="4"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.plasmaconductors}.{2}" exact="11"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.quantumtubes}.{2}" exact="27"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.refinedmetals}.{2}" exact="36"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.scanningarrays}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.shieldcomponents}.{2}" exact="3"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.siliconwafers}.{2}" exact="18"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.smartchips}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.spices}.{2}" exact="12"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.superfluidcoolant}.{2}" exact="5"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.turretcomponents}.{2}" exact="35"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.water}.{2}" exact="17"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.weaponcomponents}.{2}" exact="14"/>
 						</do_if>
 						<do_if value="faction.court? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.court})">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedcomposites}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedelectronics}.{2}" exact="11"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.antimattercells}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.dronecomponents}.{2}" exact="20"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.engineparts}.{2}" exact="136"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.fieldcoils}.{2}" exact="10"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.graphene}.{2}" exact="29"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.hullparts}.{2}" exact="78"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.medicalsupplies}.{2}" exact="121"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.microchips}.{2}" exact="74"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.missilecomponents}.{2}" exact="2"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.plasmaconductors}.{2}" exact="27"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.quantumtubes}.{2}" exact="42"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.refinedmetals}.{2}" exact="64"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.scanningarrays}.{2}" exact="26"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.shieldcomponents}.{2}" exact="5"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.siliconwafers}.{2}" exact="37"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.smartchips}.{2}" exact="24"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.spices}.{2}" exact="28"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.superfluidcoolant}.{2}" exact="12"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.turretcomponents}.{2}" exact="47"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.water}.{2}" exact="31"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.weaponcomponents}.{2}" exact="19"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedcomposites}.{2}" exact="3"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedelectronics}.{2}" exact="10"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.antimattercells}.{2}" exact="11"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.antimatterconverters}.{2}" exact="3"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.claytronics}.{2}" exact="35"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.dronecomponents}.{2}" exact="14"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.energycells}.{2}" exact="31"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.engineparts}.{2}" exact="94"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.fieldcoils}.{2}" exact="8"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.graphene}.{2}" exact="20"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.hullparts}.{2}" exact="65"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.medicalsupplies}.{2}" exact="88"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.microchips}.{2}" exact="49"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.missilecomponents}.{2}" exact="7"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.plasmaconductors}.{2}" exact="15"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.quantumtubes}.{2}" exact="31"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.refinedmetals}.{2}" exact="44"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.scanningarrays}.{2}" exact="17"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.siliconwafers}.{2}" exact="24"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.smartchips}.{2}" exact="23"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.spices}.{2}" exact="18"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.superfluidcoolant}.{2}" exact="7"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.turretcomponents}.{2}" exact="37"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.water}.{2}" exact="21"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.weaponcomponents}.{2}" exact="18"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.cheltmeat}.{2}" exact="57"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.scruffinfruits}.{2}" exact="30"/>
 						</do_if>
 						<do_if value="faction.terran? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.terran})">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.energycells}.{2}" exact="736"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.medicalsupplies}.{2}" exact="92"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.energycells}.{2}" exact="320"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.medicalsupplies}.{2}" exact="26"/>
 						</do_if>
 						<do_if value="faction.pioneers? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.pioneers})">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.pioneers}.{ware.energycells}.{2}" exact="736"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.pioneers}.{ware.medicalsupplies}.{2}" exact="92"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.pioneers}.{ware.energycells}.{2}" exact="320"/>
+							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.pioneers}.{ware.medicalsupplies}.{2}" exact="26"/>
 						</do_if>
 						<!-- TODO: Other factions -->
 						<do_if value="true" comment="EasyDiffAddMarker">

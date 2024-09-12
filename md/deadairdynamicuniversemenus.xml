@@ -2102,8 +2102,6 @@
 									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
-						
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -5452,7 +5450,6 @@
 								$cellBGColor = 'Color.row_separator',
 							]"/>
 						<!-- OPTIONS BODY -->
-						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
@@ -7256,7 +7253,8 @@
 									<do_if value="$StationTable.{$Faction}.$Count" min="1">
 										<!-- Maybe slightly altering colors to differentiate? -->
 										<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-										<!-- Faction: # Stations --><!-- Station Threat Score: # -->
+										<!-- Faction: # Stations -->
+										<!-- Station Threat Score: # -->
 										<!-- Products: list -->
 										<!-- Resources: list -->
 										<set_value name="$LocText1" exact="'%s %s'.[$StationTable.{$Faction}.$Count,{1001,4}]" comment="# Stations"/>
@@ -7397,8 +7395,12 @@
 							<do_if value="$OwnerFaction?">
 								<do_if value="$SectorControlCount? and $SectorControlThreatScore?">
 									<!-- Sector Control -->
-									<!-- Owner: # Ships --><!-- Status Bar --><!-- Hostile: HostileShipCount Ships -->
-									<!-- Owner Ship ThreatScore: ThreatScore --><!-- Status Bar --><!-- Hostile Ship Threatscore: ThreatScore -->
+									<!-- Owner: # Ships -->
+									<!-- Status Bar -->
+									<!-- Hostile: HostileShipCount Ships -->
+									<!-- Owner Ship ThreatScore: ThreatScore -->
+									<!-- Status Bar -->
+									<!-- Hostile Ship Threatscore: ThreatScore -->
 									<set_value name="$LocText1" exact="'%s %s'.[{1001,11284},{1001,12663}]" comment="Sector Control"/>
 									<set_value name="$LocText2" exact="'%s: %s %s'.[$OwnerFaction.knownname,$ShipTable.{$OwnerFaction}.$MilCount,{1001,6}]" comment="Faction: # Ships"/>
 									<set_value name="$LocText3" exact="'%s: %s %s'.[{1001,5212},$HostileShipCount,{1001,6}]" comment="Hostile: # Ships"/>
