@@ -9273,7 +9273,7 @@
 						<find_object_component groupname="this.$LocComponentGroup" class="[class.engine, class.turret, class.shieldgenerator, class.weapon]" object="this.$LocParent" multiple="true"/>
 						<do_if value="this.$LocComponentGroup.count" min="1">
 							<do_for_each name="this.$LocComponent" in="this.$LocComponentGroup">
-								<do_if value="this.$LocComponent.macro?" chance="50">
+								<do_if value="this.$LocComponent.macro?" chance="25">
 									<set_value name="this.$LocMacro" exact="this.$LocComponent.macro"/>
 									<do_if value="this.$LocMacro.ware?">
 										<set_value name="this.$LocWare" exact="this.$LocMacro.ware"/>
