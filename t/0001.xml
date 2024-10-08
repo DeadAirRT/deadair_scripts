@@ -185,10 +185,10 @@
 		<t id="209">Enable Fill Debug</t>
 		<t id="210">Enable Fill Fleet Ship Mods</t>
 		<t id="211">Enable Fill Ship Paint Mods</t>
-		<t id="212">(XXX)</t>
-		<t id="213">(XXX)</t>
-		<t id="214">(XXX)</t>
-		<t id="215">(XXX)</t>
+		<t id="212">Fill Faction Menu</t>
+		<t id="213">Fill Statistics Menu</t>
+		<t id="214">{1001,9803} Credit Limit</t>
+		<t id="215">Xenon Shipbuilding Setting</t>
 		<t id="216">(XXX)</t>
 		<t id="217">(XXX)</t>
 		<t id="218">(XXX)</t>
@@ -206,10 +206,10 @@
 		<t id="1209">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
 		<t id="1210">Changes whether the Fill script will add ship mods to all subordinates of the selected Military ship.</t>
 		<t id="1211">Changes whether the Fill script will paint ships that have mods added to them.</t>
-		<t id="1212">(XXX)</t>
-		<t id="1213">(XXX)</t>
-		<t id="1214">(XXX)</t>
-		<t id="1215">(XXX)</t>
+		<t id="1212">Menu for excluding factions from being affected by Fill for {1001,9803}s or shipyards/wharves.</t>
+		<t id="1213">Menu with statistics for wares added/removed, ships modded, and the account balance of factions.</t>
+		<t id="1214">Limits the wares that can be added to a Trade Station to less than the value of wares removed. This is calculated by the ware average price.</t>
+		<t id="1215">If Fill is enabled, this option will have the script add wares to Xenon shipyards and wharves even if the Shipyard/Wharf settings prevent the addition of wares. The script will add wares to Xenon shipyard/wharves when the station has less than 20%-25% of the desired wares.</t>
 		<t id="1216">(XXX)</t>
 		<t id="1217">(XXX)</t>
 		<t id="1218">(XXX)</t>
@@ -219,8 +219,8 @@
 		<t id="2201">Removed</t>
 		<t id="2202">Modified</t>
 		<t id="2203">Net</t>
-		<t id="2204">(XXX)</t>
-		<t id="2205">(XXX)</t>
+		<t id="2204">Changes whether settings for DA Fill will apply to this faction's {1001,9803}s.</t>
+		<t id="2205">Changes whether settings for DA Fill will apply to this faction's ship building/equipping stations.</t>
 		<t id="2206">(XXX)</t>
 		<t id="2207">(XXX)</t>
 		<t id="2208">(XXX)</t>
@@ -595,7 +595,7 @@
 		<t id="407">Enable DA Trader Profit Tracking</t>
 		<t id="408">Ship Details Menu</t>
 		<t id="409">Sector Details Menu</t>
-		<t id="410">(XXX)</t>
+		<t id="410">Station Calculator</t>
 		<t id="411">(XXX)</t>
 		<t id="412">(XXX)</t>
 		<t id="413">(XXX)</t>
@@ -640,11 +640,11 @@
 		<t id="2410">Number of ships</t>
 		<t id="2411">Change in number of ships since last viewed</t>
 		<t id="2412">Threat Score</t>
-		<t id="2413">(XXX)</t>
-		<t id="2414">(XXX)</t>
-		<t id="2415">(XXX)</t>
-		<t id="2416">(XXX)</t>
-		<t id="2417">(XXX)</t>
+		<t id="2413">{1001,3106}(Add) {1001,2456}(Station Workforce) {1001,8034}(Effects)</t>
+		<t id="2414">{1001,3106}(Add) {1001,1615}(Secondary resource) {1001,8034}(Effects)</t>
+		<t id="2415">Select Module to Add</t>
+		<t id="2416">{1001,3}(Station) Hourly {1001,1600}(Production) &amp; {1001,1609}(Consumption)</t>
+		<t id="2417">The production and consumption reflects workforce influence, but a habitat must be added to determine workforce race. This is only capable of calculating for one race of workers.</t>
 		<t id="2418">(XXX)</t>
 		<t id="2419">(XXX)</t>
 	</page>

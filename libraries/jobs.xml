@@ -734,7 +734,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACriticalTagargon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DACriticalTagargon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -760,7 +760,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACoreTagargon,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DACoreTagargon,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -786,7 +786,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DABorderTagargon,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DABorderTagargon,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -812,7 +812,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DAContestedTagargon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DAContestedTagargon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -905,7 +905,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACriticalTagargon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DACriticalTagargon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -931,7 +931,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACoreTagargon,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DACoreTagargon,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -957,7 +957,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DABorderTagargon,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DABorderTagargon,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -983,7 +983,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DAContestedTagargon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DAContestedTagargon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1076,7 +1076,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACriticalTagargon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DACriticalTagargon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1102,7 +1102,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DACoreTagargon,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DACoreTagargon,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1128,7 +1128,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DABorderTagargon,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="argon" tags="[DABorderTagargon,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1154,7 +1154,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="argon" tags="[DAContestedTagargon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="argon" tags="[DAContestedTagargon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagargon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1401,7 +1401,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACriticalTagantigone,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DACriticalTagantigone,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1427,7 +1427,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACoreTagantigone,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DACoreTagantigone,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1453,7 +1453,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DABorderTagantigone,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DABorderTagantigone,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1479,7 +1479,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DAContestedTagantigone,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DAContestedTagantigone,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1572,7 +1572,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACriticalTagantigone,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DACriticalTagantigone,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1598,7 +1598,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACoreTagantigone,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DACoreTagantigone,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1624,7 +1624,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DABorderTagantigone,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DABorderTagantigone,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1650,7 +1650,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DAContestedTagantigone,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DAContestedTagantigone,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1743,7 +1743,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACriticalTagantigone,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DACriticalTagantigone,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1769,7 +1769,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DACoreTagantigone,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DACoreTagantigone,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1795,7 +1795,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DABorderTagantigone,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="antigone" tags="[DABorderTagantigone,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -1821,7 +1821,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="antigone" tags="[DAContestedTagantigone,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="antigone" tags="[DAContestedTagantigone,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagantigone"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2068,7 +2068,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACriticalTagparanid,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DACriticalTagparanid,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2094,7 +2094,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACoreTagparanid,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DACoreTagparanid,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2120,7 +2120,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DABorderTagparanid,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DABorderTagparanid,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2146,7 +2146,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DAContestedTagparanid,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DAContestedTagparanid,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2239,7 +2239,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACriticalTagparanid,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DACriticalTagparanid,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2265,7 +2265,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACoreTagparanid,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DACoreTagparanid,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2291,7 +2291,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DABorderTagparanid,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DABorderTagparanid,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2317,7 +2317,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DAContestedTagparanid,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DAContestedTagparanid,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2410,7 +2410,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACriticalTagparanid,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DACriticalTagparanid,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2436,7 +2436,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DACoreTagparanid,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DACoreTagparanid,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2462,7 +2462,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DABorderTagparanid,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="paranid" tags="[DABorderTagparanid,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2488,7 +2488,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="paranid" tags="[DAContestedTagparanid,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="paranid" tags="[DAContestedTagparanid,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagparanid"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2735,7 +2735,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACriticalTagholyorder,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DACriticalTagholyorder,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2761,7 +2761,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACoreTagholyorder,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DACoreTagholyorder,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2787,7 +2787,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DABorderTagholyorder,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DABorderTagholyorder,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2813,7 +2813,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DAContestedTagholyorder,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DAContestedTagholyorder,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2906,7 +2906,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACriticalTagholyorder,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DACriticalTagholyorder,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2932,7 +2932,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACoreTagholyorder,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DACoreTagholyorder,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2958,7 +2958,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DABorderTagholyorder,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DABorderTagholyorder,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -2984,7 +2984,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DAContestedTagholyorder,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DAContestedTagholyorder,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3077,7 +3077,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACriticalTagholyorder,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DACriticalTagholyorder,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3103,7 +3103,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DACoreTagholyorder,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DACoreTagholyorder,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3129,7 +3129,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DABorderTagholyorder,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="holyorder" tags="[DABorderTagholyorder,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3155,7 +3155,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="holyorder" tags="[DAContestedTagholyorder,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="holyorder" tags="[DAContestedTagholyorder,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagholyorder"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3402,7 +3402,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACriticalTagtrinity,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DACriticalTagtrinity,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3428,7 +3428,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACoreTagtrinity,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DACoreTagtrinity,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3454,7 +3454,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DABorderTagtrinity,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DABorderTagtrinity,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3480,7 +3480,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DAContestedTagtrinity,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DAContestedTagtrinity,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3573,7 +3573,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACriticalTagtrinity,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DACriticalTagtrinity,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3599,7 +3599,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACoreTagtrinity,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DACoreTagtrinity,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3625,7 +3625,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DABorderTagtrinity,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DABorderTagtrinity,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3651,7 +3651,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DAContestedTagtrinity,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DAContestedTagtrinity,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3744,7 +3744,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACriticalTagtrinity,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DACriticalTagtrinity,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3770,7 +3770,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DACoreTagtrinity,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DACoreTagtrinity,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3796,7 +3796,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DABorderTagtrinity,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="trinity" tags="[DABorderTagtrinity,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -3822,7 +3822,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="trinity" tags="[DAContestedTagtrinity,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="trinity" tags="[DAContestedTagtrinity,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagtrinity"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4069,7 +4069,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACriticalTagteladi,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DACriticalTagteladi,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4095,7 +4095,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACoreTagteladi,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DACoreTagteladi,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4121,7 +4121,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DABorderTagteladi,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DABorderTagteladi,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4147,7 +4147,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DAContestedTagteladi,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DAContestedTagteladi,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4240,7 +4240,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACriticalTagteladi,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DACriticalTagteladi,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4266,7 +4266,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACoreTagteladi,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DACoreTagteladi,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4292,7 +4292,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DABorderTagteladi,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DABorderTagteladi,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4318,7 +4318,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DAContestedTagteladi,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DAContestedTagteladi,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4411,7 +4411,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACriticalTagteladi,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DACriticalTagteladi,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4437,7 +4437,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DACoreTagteladi,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DACoreTagteladi,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4463,7 +4463,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DABorderTagteladi,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="teladi" tags="[DABorderTagteladi,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4489,7 +4489,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="teladi" tags="[DAContestedTagteladi,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="teladi" tags="[DAContestedTagteladi,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagteladi"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4736,7 +4736,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACriticalTagsplit,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DACriticalTagsplit,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4762,7 +4762,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACoreTagsplit,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DACoreTagsplit,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4788,7 +4788,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DABorderTagsplit,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DABorderTagsplit,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4814,7 +4814,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DAContestedTagsplit,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DAContestedTagsplit,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4907,7 +4907,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACriticalTagsplit,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DACriticalTagsplit,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4933,7 +4933,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACoreTagsplit,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DACoreTagsplit,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4959,7 +4959,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DABorderTagsplit,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DABorderTagsplit,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -4985,7 +4985,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DAContestedTagsplit,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DAContestedTagsplit,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5078,7 +5078,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACriticalTagsplit,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DACriticalTagsplit,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5104,7 +5104,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DACoreTagsplit,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DACoreTagsplit,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5130,7 +5130,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DABorderTagsplit,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="split" tags="[DABorderTagsplit,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5156,7 +5156,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="split" tags="[DAContestedTagsplit,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="split" tags="[DAContestedTagsplit,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagsplit"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5557,7 +5557,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACriticalTagcourt,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DACriticalTagcourt,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5583,7 +5583,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACoreTagcourt,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DACoreTagcourt,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5609,7 +5609,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DABorderTagcourt,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DABorderTagcourt,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5635,7 +5635,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DAContestedTagcourt,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DAContestedTagcourt,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5728,7 +5728,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACriticalTagcourt,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DACriticalTagcourt,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5754,7 +5754,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACoreTagcourt,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DACoreTagcourt,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5780,7 +5780,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DABorderTagcourt,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DABorderTagcourt,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5806,7 +5806,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DAContestedTagcourt,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DAContestedTagcourt,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5899,7 +5899,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACriticalTagcourt,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DACriticalTagcourt,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5925,7 +5925,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DACoreTagcourt,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DACoreTagcourt,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5951,7 +5951,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DABorderTagcourt,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="court" tags="[DABorderTagcourt,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -5977,7 +5977,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="court" tags="[DAContestedTagcourt,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="court" tags="[DAContestedTagcourt,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagcourt"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6224,7 +6224,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACriticalTagterran,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DACriticalTagterran,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6250,7 +6250,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACoreTagterran,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DACoreTagterran,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6276,7 +6276,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DABorderTagterran,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DABorderTagterran,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6302,7 +6302,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DAContestedTagterran,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DAContestedTagterran,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6395,7 +6395,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACriticalTagterran,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DACriticalTagterran,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6421,7 +6421,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACoreTagterran,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DACoreTagterran,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6447,7 +6447,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DABorderTagterran,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DABorderTagterran,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6473,7 +6473,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DAContestedTagterran,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DAContestedTagterran,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6566,7 +6566,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACriticalTagterran,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DACriticalTagterran,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6592,7 +6592,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DACoreTagterran,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DACoreTagterran,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6618,7 +6618,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DABorderTagterran,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="terran" tags="[DABorderTagterran,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6644,7 +6644,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="terran" tags="[DAContestedTagterran,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="terran" tags="[DAContestedTagterran,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagterran"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6891,7 +6891,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACriticalTagpioneers,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DACriticalTagpioneers,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6917,7 +6917,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACoreTagpioneers,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DACoreTagpioneers,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6943,7 +6943,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DABorderTagpioneers,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DABorderTagpioneers,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -6969,7 +6969,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DAContestedTagpioneers,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DAContestedTagpioneers,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7062,7 +7062,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACriticalTagpioneers,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DACriticalTagpioneers,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7088,7 +7088,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACoreTagpioneers,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DACoreTagpioneers,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7114,7 +7114,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DABorderTagpioneers,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DABorderTagpioneers,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7140,7 +7140,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DAContestedTagpioneers,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DAContestedTagpioneers,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7233,7 +7233,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACriticalTagpioneers,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DACriticalTagpioneers,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7259,7 +7259,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DACoreTagpioneers,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DACoreTagpioneers,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7285,7 +7285,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DABorderTagpioneers,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="pioneers" tags="[DABorderTagpioneers,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7311,7 +7311,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="pioneers" tags="[DAContestedTagpioneers,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="pioneers" tags="[DAContestedTagpioneers,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagpioneers"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7558,7 +7558,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACriticalTagxenon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACriticalTagxenon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7584,7 +7584,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACoreTagxenon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACoreTagxenon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7610,7 +7610,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DABorderTagxenon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DABorderTagxenon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7636,7 +7636,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DAContestedTagxenon,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DAContestedTagxenon,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7729,7 +7729,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACriticalTagxenon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACriticalTagxenon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7755,7 +7755,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACoreTagxenon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACoreTagxenon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7781,7 +7781,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DABorderTagxenon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DABorderTagxenon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7807,7 +7807,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DAContestedTagxenon,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DAContestedTagxenon,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7900,7 +7900,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACriticalTagxenon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACriticalTagxenon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7926,7 +7926,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DACoreTagxenon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DACoreTagxenon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7952,7 +7952,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DABorderTagxenon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DABorderTagxenon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -7978,7 +7978,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="xenon" tags="[DAContestedTagxenon,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="xenon" tags="[DAContestedTagxenon,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagxenon"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8117,7 +8117,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACriticalTagboron,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DACriticalTagboron,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8143,7 +8143,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACoreTagboron,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DACoreTagboron,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8169,7 +8169,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DABorderTagboron,DASmallFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DABorderTagboron,DASmallFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8195,7 +8195,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DAContestedTagboron,DASmallFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DAContestedTagboron,DASmallFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8288,7 +8288,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACriticalTagboron,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DACriticalTagboron,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8314,7 +8314,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACoreTagboron,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DACoreTagboron,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8340,7 +8340,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DABorderTagboron,DAMediumFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DABorderTagboron,DAMediumFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8366,7 +8366,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DAContestedTagboron,DAMediumFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DAContestedTagboron,DAMediumFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8459,7 +8459,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACriticalTagboron,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DACriticalTagboron,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="20"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACriticalTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8485,7 +8485,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DACoreTagboron,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DACoreTagboron,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DACoreTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8511,7 +8511,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DABorderTagboron,DALargeFleet,factionlogic]" size="ship_l"/>
+      <category faction="boron" tags="[DABorderTagboron,DALargeFleet,factionlogic,military]" size="ship_l"/>
       <quota galaxy="0" maxgalaxy="40"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DABorderTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>
@@ -8537,7 +8537,7 @@
           <param name="range" value="class.sector"/>
         </order>
       </orders>
-      <category faction="boron" tags="[DAContestedTagboron,DALargeFleet,factionlogic]" size="ship_xl"/>
+      <category faction="boron" tags="[DAContestedTagboron,DALargeFleet,factionlogic,military]" size="ship_xl"/>
       <quota galaxy="0" maxgalaxy="16"/>
       <location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" tags="DAContestedTagboron"/>
       <environment buildatshipyard="true" preferbuilding="true"/>

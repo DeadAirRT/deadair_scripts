@@ -58,6 +58,17 @@
 				<set_value name="$DAMVT.$HeaderBackgroundDark" exact="'Color.da_headerbackground_dark'"/>
 				<set_value name="$DAMVT.$BodyBackgroundBright" exact="'Color.da_bodybackground_bright'"/>
 				<set_value name="$DAMVT.$BodyBackgroundDark" exact="'Color.da_bodybackground_dark'"/>
+				<set_value name="$DAMVT.$DAStationCalcTable" exact="table[]"/>
+				<set_value name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="[]"/>
+				<set_value name="$DAMVT.$DAStationModules" exact="table[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$Selected" exact="table[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$Order" exact="[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$Dropdown" exact="[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$Workforce" exact="false"/>
+				<set_value name="$DAMVT.$DAStationModules.$Secondary" exact="false"/>
+				<set_value name="$DAMVT.$DAStationModules.$Products" exact="table[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$Resources" exact="table[]"/>
+				<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs" exact="table[]"/>
 			</actions>
 			<cues>
 				<cue name="DeadAirMenu">
@@ -138,6 +149,26 @@
 						<set_value name="$DAMVT.$HeaderBackgroundDark" exact="'Color.da_headerbackground_dark'"/>
 						<set_value name="$DAMVT.$BodyBackgroundBright" exact="'Color.da_bodybackground_bright'"/>
 						<set_value name="$DAMVT.$BodyBackgroundDark" exact="'Color.da_bodybackground_dark'"/>
+						<do_if value="not $DAMVT.$DAStationCalcTable? or ($DAMVT.$DAStationCalcTable == null)">
+							<set_value name="$DAMVT.$DAStationCalcTable" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$DAStationCalcListOfAvailableModules? or ($DAMVT.$DAStationCalcListOfAvailableModules == null)">
+							<set_value name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="not $DAMVT.$DAStationModules? or ($DAMVT.$DAStationModules == null)">
+							<set_value name="$DAMVT.$DAStationModules" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Selected" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Order" exact="[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Dropdown" exact="[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Workforce" exact="false"/>
+							<set_value name="$DAMVT.$DAStationModules.$Secondary" exact="false"/>
+							<set_value name="$DAMVT.$DAStationModules.$Products" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Resources" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DAMenus -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
@@ -264,6 +295,20 @@
 						<!-- Dynamic News Menus -->
 						<!-- DA Evolution Menus -->
 						<!-- DA Fill Menus -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_fill_factions',
+								$columns = 8, 
+								$title   = {33232474,212},
+								$onOpen  = Menu_Fill_Factions,
+								$private = 1,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_fill_statistics',
+								$columns = 8, 
+								$title   = {33232474,213},
+								$onOpen  = Menu_Fill_Statistics,
+								$private = 1,
+							]"/>
 						<!-- DA Jobs Menus -->
 						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
 								$id      = 'menu_jobs_quotas',
@@ -378,6 +423,13 @@
 								$columns = 10, 
 								$title   = {33232474,409},
 								$onOpen  = Menu_Information_SectorBreakdown,
+								$private = 1,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_information_stationcalculator',
+								$columns = 12, 
+								$title   = {33232474,410},
+								$onOpen  = Menu_Information_StationCalculator,
 								$private = 1,
 							]"/>
 					</actions>
@@ -1569,6 +1621,7 @@
 							<append_to_list name="$DADVT.$DADynamicWarDisabledFactions" exact="$DAIgnSelectedFactionOne"/>
 						</do_elseif>
 						<debug_text text="'MOD: DAMenus DynamicWar -- Allowed/Ignored %s -- Ignored: %s'.[$DAIgnSelectedFactionOne.knownname,$DADVT.$DADynamicWarDisabledFactions.indexof.{$DAIgnSelectedFactionOne}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<remove_value name="$DAIgnSelectedFactionOne"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -3197,6 +3250,70 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 								$col = 1,
 								$colSpan = 4,
+								$text = {33232474,214},
+								$mouseOverText = {33232474,1214},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAFillEnable and ($DADVT.$DAFillMinTSWarePercent gt 0)">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAFillLimitByValue then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillLimitByValue then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1214},
+									$onClick = ExecuteOption_FillLimitByValueEnable,
+									$onRightClick = ExecuteOption_FillLimitByValueEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,215},
+								$mouseOverText = {33232474,1215},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAFillEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DAFillXenonProtection then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DAFillXenonProtection then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1215},
+									$onClick = ExecuteOption_FillXenonProtectionEnable,
+									$onRightClick = ExecuteOption_FillXenonProtectionEnable,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
 								$text = {33232474,209},
 								$mouseOverText = {33232474,1209},
 								$cellBGColor = $DAMVT.$BodyBackgroundBright
@@ -3233,6 +3350,162 @@
 								$fontsize = 1,
 								$cellBGColor = 'Color.row_separator',
 							]"/>
+						<!-- SUBMENUS HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,104},{1001,4836}]" comment="DA Fill Menus"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 2,
+								$colSpan = 6,
+								$text = $LocText,
+								$halign = 'center',
+								$cellBGColor = $DAMVT.$HeaderBackgroundBright
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 8,
+								$colSpan = 1,
+								$text = '',
+								$cellBGColor = $DAMVT.$HeaderBackgroundDark
+							]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- SUBMENUS BODY -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,212}, $id='menu_fill_factions']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,213}, $id='menu_fill_statistics']"/>
+					</actions>
+				</cue>
+				<cue name="Menu_Fill_Factions" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$WhatFactions" exact="'All'"/>
+						<include_actions ref="Library_DAMenuGetFactions"/>
+						<!-- $DADVT.$DADynamicWarDisabledFactions // $DADVT.$DADynamicWarPermaExcludedFactions -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $halign = 'center', $text = {1001,43}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Faction"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $halign = 'center', $text = {1001,9803}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Trading Station"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $halign = 'center', $text = {30199,2201} + ' ' + {1001,3}, $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Ship Building Station"/>
+						<do_if value="$FactionList.count">
+							<do_for_each name="$DAIgnFaction" in="$FactionList">
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $halign = 'left', $text = $DAIgnFaction.knownname, $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+								<do_if value="$DAIgnFaction.isactive">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+										$col = 5,
+										$colSpan = 2,
+										$text = table[
+										  $text   =  if $DADVT.$DAFillTSExcludedFactions.indexof.{$DAIgnFaction} then {1001,8942} else {1001,4825}, 
+										  $color  =  if $DADVT.$DAFillTSExcludedFactions.indexof.{$DAIgnFaction} then $DAMVT.$TextRed else $DAMVT.$TextGreen,
+										  $halign = 'center',
+										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
+										$mouseOverText = {33232474,2204},
+										$onClick = ExecuteOption_FillIgnoreFaction,
+										$onRightClick = ExecuteOption_FillIgnoreFaction,
+										$echo = ['Trade',$DAIgnFaction],
+										]"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+										$col = 7,
+										$colSpan = 2,
+										$text = table[
+										  $text   =  if $DADVT.$DAFillSYWExcludedFactions.indexof.{$DAIgnFaction} then {1001,8942} else {1001,4825}, 
+										  $color  =  if $DADVT.$DAFillSYWExcludedFactions.indexof.{$DAIgnFaction} then $DAMVT.$TextRed else $DAMVT.$TextGreen,
+										  $halign = 'center',
+										],
+										$highlightColor = $DAMVT.$ButtonHighlight,
+										$mouseOverText = {33232474,2205},
+										$onClick = ExecuteOption_FillIgnoreFaction,
+										$onRightClick = ExecuteOption_FillIgnoreFaction,
+										$echo = ['Ship',$DAIgnFaction],
+										]"/>
+								</do_if>
+								<do_elseif value="(not $DAIgnFaction.isactive)">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,43} + ' ' + {1001,12208}, $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Faction Inactive"/>
+								</do_elseif>
+								<do_else>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $halign = 'center', $text = {1001,39}, $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+								</do_else>
+							</do_for_each>
+						</do_if>
+					</actions>
+				</cue>
+				<cue name="Menu_Fill_Statistics" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillFactionAccounts.keys.list.count">
+							<!-- HEADER -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<set_value name="$LocText" exact="'%s %s'.[{1001,43},{1001,7773}]" comment="Faction Account"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 2,
+									$colSpan = 6,
+									$text = $LocText,
+									$halign = 'center',
+									$cellBGColor = $DAMVT.$HeaderBackgroundBright
+								]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 8,
+									$colSpan = 1,
+									$text = '',
+									$cellBGColor = $DAMVT.$HeaderBackgroundDark
+								]"/>
+							<remove_value name="$LocText"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<!-- BODY -->
+							<!-- 1+2 = Ware.name, 3+4+5 Added Amount, 6+7+8 Removed Amount -->
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row" param="table[]"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = {1001,43}, $halign = 'left', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Faction"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = {1001,2442}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="Total Value"/>
+							<set_value name="$LocFactions" exact="[]"/>
+							<append_list_elements name="$LocFactions" other="$DADVT.$DAFillFactionAccounts.keys.list"/>
+							<sort_list list="$LocFactions" sortbyvalue="loop.element.knownname"/>
+							<do_for_each name="$LocFaction" in="$LocFactions">
+								<do_if value="$DADVT.$DAFillFactionAccounts.{$LocFaction}?">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = $LocFaction.knownname, $halign = 'left', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Faction"/>
+									<set_value name="$LocText" exact="$DADVT.$DAFillFactionAccounts.{$LocFaction}.formatted.{'%.s %Cr'}"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 4, $text = ($LocText), $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Money Money"/>
+									<remove_value name="$LocText"/>
+								</do_if>
+							</do_for_each>
+							<remove_value name="$LocFactions"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+						</do_if>
 						<do_if value="$DADVT.$DAFillEnable and $DADVT.$DAFillWareStatistics.keys.list.count">
 							<!-- SUBMENUS HEADER -->
 							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
@@ -3520,6 +3793,36 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_FillLimitByValueEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAFillLimitByValue">
+							<set_value name="$DADVT.$DAFillLimitByValue" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAFillLimitByValue" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillLimitByValue to %s'.[$DADVT.$DAFillLimitByValue]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_FillXenonProtectionEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DADVT.$DAFillXenonProtection">
+							<set_value name="$DADVT.$DAFillXenonProtection" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DADVT.$DAFillXenonProtection" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillXenonProtection to %s'.[$DADVT.$DAFillXenonProtection]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_FillDebugEnable" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -3532,6 +3835,37 @@
 							<set_value name="$DADVT.$DAFillDetailedDebug" exact="true"/>
 						</do_else>
 						<debug_text text="'MOD: DAMenus Fill -- Updated $DADVT.$DAFillDetailedDebug to %s'.[$DADVT.$DAFillDetailedDebug]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_FillIgnoreFaction" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DAIgnSelectedFactionOne" exact="event.param.$echo.{2}"/>
+						<do_if value="event.param.$echo.{1} == 'Trade'">
+							<do_if value="$DADVT.$DAFillTSExcludedFactions.indexof.{$DAIgnSelectedFactionOne}">
+								<remove_from_list name="$DADVT.$DAFillTSExcludedFactions" exact="$DAIgnSelectedFactionOne" multiple="true"/>
+							</do_if>
+							<do_elseif value="not $DADVT.$DAFillTSExcludedFactions.indexof.{$DAIgnSelectedFactionOne}">
+								<append_to_list name="$DADVT.$DAFillTSExcludedFactions" exact="$DAIgnSelectedFactionOne"/>
+							</do_elseif>
+							<debug_text text="'MOD: DAMenus DynamicWar -- Fill Faction %s %s -- DAFillTSExcludedFactions Ignored: %s'.[$DAIgnSelectedFactionOne.knownname,event.param.$echo.{1},$DADVT.$DAFillTSExcludedFactions.indexof.{$DAIgnSelectedFactionOne}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						</do_if>
+						<do_elseif value="event.param.$echo.{1} == 'Ship'">
+							<do_if value="$DADVT.$DAFillSYWExcludedFactions.indexof.{$DAIgnSelectedFactionOne}">
+								<remove_from_list name="$DADVT.$DAFillSYWExcludedFactions" exact="$DAIgnSelectedFactionOne" multiple="true"/>
+							</do_if>
+							<do_elseif value="not $DADVT.$DAFillSYWExcludedFactions.indexof.{$DAIgnSelectedFactionOne}">
+								<append_to_list name="$DADVT.$DAFillSYWExcludedFactions" exact="$DAIgnSelectedFactionOne"/>
+							</do_elseif>
+							<debug_text text="'MOD: DAMenus DynamicWar -- Fill Faction %s %s -- DAFillSYWExcludedFactions Ignored: %s'.[$DAIgnSelectedFactionOne.knownname,event.param.$echo.{1},$DADVT.$DAFillSYWExcludedFactions.indexof.{$DAIgnSelectedFactionOne}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						</do_elseif>
+						<do_else>
+							<!-- ERROR -->
+						</do_else>
+						<remove_value name="$DAIgnSelectedFactionOne"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -4786,7 +5120,7 @@
 									$colSpan = 4,
 									$onSliderCellConfirm = ExecuteOption_GodMaxModuleSetting,
 									$min = 0,
-									$minSelect = 1,
+									$minSelect = 10,
 									$max = 25,
 									$maxSelect = 25,
 									$exceedMaxValue = false,
@@ -6206,6 +6540,7 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,406}, $id='menu_information_traderprofit']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,408}, $id='menu_information_shipbreakdown']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,409}, $id='menu_information_sectorbreakdown']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,410}, $id='menu_information_stationcalculator']"/>
 						<!-- Exiting back will now revert display option to 1 so that history isn't automatically reset -->
 						<do_if value="$DAMVT.$InfoMilDisplayOption == 2">
 							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
@@ -7469,6 +7804,240 @@
 						<remove_value name="$AllSectors"/>
 					</actions>
 				</cue>
+				<cue name="Menu_Information_StationCalculator" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<do_if value="not $DADVT?">
+							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						</do_if>
+						<do_if value="not $DAGVT?">
+							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+						</do_if>
+						<do_if value="not $DAMVT?">
+							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						</do_if>
+						<!-- Design
+							Options
+						workforce checkbox	secondary checkbox
+							Station Modules
+						dropdown	number of modules	remove
+							Calculations
+						Ware	produced	consumed	net
+							Output plan to logbook button
+						-->
+						<include_actions ref="Library_StationCalc_SetTable"/>
+						<include_actions ref="Library_StationCalc_GetModuleList"/>
+						<!-- HEADER -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{33232474,410},{1001,3405}]" comment="Station Calculator Options"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 6, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- BODY 2-5 Workforce 8-11 Secondary Resources -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 6, $text = {33232474,2413}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Add Station Workforce Effects"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = {33232474,2414}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Add Secondary resource Effects"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 1, $text = '', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 2, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DAMVT.$DAStationModules.$Workforce then {1001,4825} else {1001,8942},
+								  $color  =  if $DAMVT.$DAStationModules.$Workforce then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$cellBGColor = $DAMVT.$BodyBackgroundDark,
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$onClick = ExecuteOption_StationCalcWorkforceEnable,
+								$onRightClick = ExecuteOption_StationCalcWorkforceEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 2, $text = '', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+								$col = 8, 
+								$colSpan = 4,
+								$text = table[
+								  $text   =  if $DAMVT.$DAStationModules.$Secondary then {1001,4825} else {1001,8942},
+								  $color  =  if $DAMVT.$DAStationModules.$Secondary then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+								  $halign = 'center',
+								],
+								$cellBGColor = $DAMVT.$BodyBackgroundDark,
+								$highlightColor = $DAMVT.$ButtonHighlight,
+								$onClick = ExecuteOption_StationCalcSecondaryEnable,
+								$onRightClick = ExecuteOption_StationCalcSecondaryEnable,
+							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 12, $colSpan = 1, $text = '', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- HEADER 2 -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<set_value name="$LocText" exact="'%s %s'.[{1001,3},{1001,7924}]" comment="Station Modules"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 6, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- COLUMN LABLES 1-4 Dropdown/Module Name 5-10 Module Count 11-12 Remove Button -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $text = {1001,56}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Module"/>
+						<set_value name="$LocText" exact="'%s %s %s'.[{1001,1202},{1001,2952},{1001,7924}]" comment="Amount of Modules"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 6, $colSpan = 7, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Amount of Modules"/>
+						<remove_value name="$LocText"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- BODY -->
+						<do_if value="$DAMVT.$DAStationModules.$Order.count" min="1">
+							<do_for_each name="$ModuleMacro" in="$DAMVT.$DAStationModules.$Order">
+								<do_if value="$DAMVT.$DAStationModules.$Selected.{$ModuleMacro}?">
+									<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 5, $text = $ModuleMacro.name, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Module name"/>
+									<set_value name="$LocMax" exact="[20,$DAMVT.$DAStationModules.$Selected.{$ModuleMacro} * 2].max"/>
+									<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+											$col = 6,
+											$colSpan = 7,
+											$onSliderCellConfirm = ExecuteOption_StationCalcSetModuleCount,
+											$min = -1,
+											$minSelect = -1,
+											$max = $LocMax,
+											$maxSelect = $LocMax,
+											$exceedMaxValue = false,
+											$start = $DAMVT.$DAStationModules.$Selected.{$ModuleMacro},
+											$step = 1,
+											$echo = $ModuleMacro,
+										]"/>
+									<remove_value name="$LocMax"/>
+								</do_if>
+								<do_else>
+									<debug_text text="'MOD: DAMenus SC -- Menu_Information_StationCalculator -- ERROR %s is not in $DAMVT.$DAStationModules.$Selected'.[@$ModuleMacro]" context="false" filter="error"/>
+								</do_else>
+							</do_for_each>
+						</do_if>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<include_actions ref="Library_StationCalc_AddModuleDropdown"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- HEADER 3 -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 6, $text = {33232474,2416}, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- COLUMN LABLES 1-3 Ware 4-6 Production 7-9 Consumption 10-12 Results -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = {1001,45}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Ware"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 3, $text = {1001,1600}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Production"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 3, $text = {1001,1609}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Consumption"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = {1001,8811}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Results"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 1,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<!-- BODY 3 -->
+						<!-- $DAMVT.$DAStationModules.$Products $DAMVT.$DAStationModules.$Resources $DAMVT.$DAStationModules.$WorkforceCalcs -->
+						<do_if value="$DAMVT.$DAStationModules.$Selected.keys.count" min="1">
+							<do_for_each name="$ModuleMacro" in="$DAMVT.$DAStationModules.$Selected.keys.list">
+								<do_if value="$DAMVT.$DAStationModules.$Selected.{$ModuleMacro}" min="1">
+									<include_actions ref="Library_StationCalc_CollectData"/>
+								</do_if>
+							</do_for_each>
+							<do_if value="$DAMVT.$DAStationModules.$Workforce and $DAMVT.$DAStationModules.$WorkforceCalcs.$Race? and $DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers? and ($DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers gt 0) and $DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity? and ($DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity gt 0)">
+								<include_actions ref="Library_StationCalc_CalculateWorkforceNeeds"/>
+							</do_if>
+							<set_value name="$LocWareList" exact="[]"/>
+							<do_for_each name="$LocWare" in="$DAMVT.$DAStationModules.$Products.keys.list">
+								<append_to_list name="$LocWareList" exact="$LocWare" unique="true"/>
+							</do_for_each>
+							<do_for_each name="$LocWare" in="$DAMVT.$DAStationModules.$Resources.keys.list">
+								<append_to_list name="$LocWareList" exact="$LocWare" unique="true"/>
+							</do_for_each>
+							<do_if value="$LocWareList.count" min="1">
+								<do_for_each name="$LocWare" in="$LocWareList">
+									<include_actions ref="Library_StationCalc_AddWareInformation"/>
+								</do_for_each>
+							</do_if>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1, 
+									$colSpan = event.param.$columns,
+									$height = 1,
+									$fontsize = 1,
+									$cellBGColor = 'Color.row_separator',
+								]"/>
+							<do_if value="$DAMVT.$DAStationModules.$Workforce">
+								<!-- COLUMN LABLES 1-3 Race 4-6 Optimal 7-9 Capacity 10-12 Net Capacity -->
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+								<set_value name="$LocText" exact="'%s %s'.[{1001,9415},{1001,2428}]"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Workforce Race"/>
+								<remove_value name="$LocText"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 3, $text = {1001,7992}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Optimal Workforce"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 3, $text = {1001,9611}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Workforce Capacity"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = {1001,8811}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]" comment="Results"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+								<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+										$col = 1, 
+										$colSpan = event.param.$columns,
+										$height = 1,
+										$fontsize = 1,
+										$cellBGColor = 'Color.row_separator',
+									]"/>
+								<include_actions ref="Library_StationCalc_AddWorkforceInformation"/>
+							</do_if>
+						</do_if>
+						<!-- Cleanup -->
+						<set_value name="$DAMVT.$DAStationModules.$Products" exact="table[]"/>
+						<set_value name="$DAMVT.$DAStationModules.$Resources" exact="table[]"/>
+						<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs" exact="table[]"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_InfoMilStrengthDisplay" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -8285,6 +8854,396 @@
 							]"/>
 					</actions>
 				</library>
+				<library name="Library_StationCalc_SetTable">
+					<actions>
+						<!-- {1}Prod Ware,{2}Prod Time,{3}Prod Amount,{4}R1,{5}R1 Amount,{6}R2,{7}R2 Amount,{8}R3,{9}R3 Amount,{10}R4,{11}R4 Amount,{12}R5,{13}R5 Amount,
+							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_advancedcomposites_macro}" exact="[ware.advancedcomposites,600,108,ware.energycells,100,ware.graphene,160,ware.refinedmetals,160,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,31,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_advancedcomposites_macro}" exact="[ware.advancedcomposites,600,108,ware.energycells,100,ware.graphene,160,ware.teladianium,116,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,31,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_advancedelectronics_macro}" exact="[ware.advancedelectronics,600,45,ware.energycells,50,ware.microchips,37,ware.quantumtubes,17,null,0,null,0,540,0.5,0.5,ware.da_adv_schematics,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_antimattercells_macro}" exact="[ware.antimattercells,300,248,ware.energycells,250,ware.hydrogen,800,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,38,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_antimatterconverters_macro}" exact="[ware.antimatterconverters,600,266,ware.advancedcomposites,40,ware.energycells,160,ware.microchips,60,null,0,null,0,1080,0.5,0.5,ware.da_adv_schematics,19,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_claytronics_macro}" exact="[ware.claytronics,600,108,ware.antimattercells,101,ware.energycells,140,ware.microchips,161,ware.quantumtubes,101,null,0,1215,0.5,0.5,ware.da_adv_schematics,54,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_dronecomponents_macro}" exact="[ware.dronecomponents,600,53,ware.energycells,30,ware.engineparts,10,ware.hullparts,10,ware.microchips,10,ware.scanningarrays,20,675,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_energycells_macro}" exact="[ware.energycells,300,875,null,0,null,0,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_energycells_macro}" exact="[ware.energycells,300,250,null,0,null,0,null,0,null,0,null,0,45,0.5,0.5,ware.da_laborunion_contracts,4,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_engineparts_macro}" exact="[ware.engineparts,600,139,ware.antimattercells,53,ware.energycells,40,ware.refinedmetals,64,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_engineparts_macro}" exact="[ware.engineparts,600,139,ware.antimattercells,53,ware.energycells,40,ware.teladianium,47,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_fieldcoils_macro}" exact="[ware.fieldcoils,600,175,ware.energycells,60,ware.plasmaconductors,40,ware.quantumtubes,43,null,0,null,0,810,0.5,0.5,ware.da_adv_schematics,15,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_foodrations_macro}" exact="[ware.foodrations,300,575,ware.energycells,125,ware.meat,50,ware.spices,50,ware.wheat,50,null,0,90,0.5,0.5,ware.da_laborunion_contracts,11,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_graphene_macro}" exact="[ware.graphene,300,120,ware.energycells,100,ware.methane,400,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_hullparts_macro}" exact="[ware.hullparts,600,196,ware.energycells,53,ware.graphene,27,ware.refinedmetals,187,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_hullparts_macro}" exact="[ware.hullparts,600,196,ware.energycells,53,ware.graphene,27,ware.teladianium,136,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_majadust_macro}" exact="[ware.majadust,600,64,ware.energycells,40,ware.majasnails,120,ware.spices,60,null,0,null,0,123,0.5,0.5,ware.da_laborunion_contracts,18,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_majasnails_macro}" exact="[ware.majasnails,300,97,ware.energycells,27,ware.water,67,null,0,null,0,null,0,175,0.5,0.5,ware.da_laborunion_contracts,8,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_meat_macro}" exact="[ware.meat,300,193,ware.energycells,53,ware.water,67,null,0,null,0,null,0,75,0.5,0.5,ware.da_laborunion_contracts,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.spices,40,ware.water,60,ware.wheat,30,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.sojabeans,10,ware.spices,40,ware.water,60,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.spices,40,ware.sunriseflowers,12,ware.water,60,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.scruffinfruits,30,ware.spices,60,ware.water,60,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,140,ware.energycells,100,ware.ice,50,ware.proteinpaste,24,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_microchips_macro}" exact="[ware.microchips,600,144,ware.energycells,100,ware.siliconwafers,400,null,0,null,0,null,0,450,0.5,0.5,ware.da_adv_schematics,24,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_missilecomponents_macro}" exact="[ware.missilecomponents,600,187,ware.advancedcomposites,1,ware.energycells,13,ware.hullparts,1,null,0,null,0,22,0.5,0.5,ware.da_mil_schematics,2,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_nostropoil_macro}" exact="[ware.nostropoil,300,500,ware.energycells,100,ware.spices,40,ware.sunriseflowers,40,ware.water,60,null,0,120,0.5,0.5,ware.da_laborunion_contracts,18,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_plasmaconductors_macro}" exact="[ware.plasmaconductors,600,29,ware.energycells,40,ware.graphene,64,ware.superfluidcoolant,93,null,0,null,0,225,0.5,0.5,ware.da_adv_schematics,6,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_quantumtubes_macro}" exact="[ware.quantumtubes,600,156,ware.energycells,66,ware.graphene,194,ware.superfluidcoolant,50,null,0,null,0,225,0.5,0.5,ware.da_adv_schematics,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_refinedmetals_macro}" exact="[ware.refinedmetals,300,352,ware.energycells,360,ware.ore,960,null,0,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,61,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_scanningarrays_macro}" exact="[ware.scanningarrays,600,36,ware.energycells,60,ware.refinedmetals,100,ware.siliconwafers,60,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,18,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_scanningarrays_macro}" exact="[ware.scanningarrays,600,36,ware.energycells,60,ware.siliconwafers,60,ware.teladianium,73,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,18,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_shieldcomponents_macro}" exact="[ware.shieldcomponents,600,97,ware.energycells,35,ware.plasmaconductors,10,ware.quantumtubes,10,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_siliconwafers_macro}" exact="[ware.siliconwafers,300,356,ware.energycells,300,ware.silicon,800,null,0,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,97,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_smartchips_macro}" exact="[ware.smartchips,600,143,ware.energycells,50,ware.siliconwafers,20,null,0,null,0,null,0,60,0.5,0.5,ware.da_mil_schematics,3,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_sojabeans_macro}" exact="[ware.sojabeans,300,104,ware.energycells,30,ware.water,80,null,0,null,0,null,0,175,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_sojahusk_macro}" exact="[ware.sojahusk,300,350,ware.energycells,80,ware.majasnails,50,ware.sojabeans,40,ware.spices,20,null,0,99,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_spacefuel_macro}" exact="[ware.spacefuel,600,123,ware.energycells,50,ware.water,125,ware.wheat,100,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_spaceweed_macro}" exact="[ware.spaceweed,600,183,ware.energycells,140,ware.spices,40,ware.swampplant,120,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,22,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_spices_macro}" exact="[ware.spices,300,250,ware.energycells,20,ware.water,40,null,0,null,0,null,0,60,0.5,0.5,ware.da_laborunion_contracts,5,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_sunriseflowers_macro}" exact="[ware.sunriseflowers,300,100,ware.energycells,30,ware.water,80,null,0,null,0,null,0,50,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_superfluidcoolant_macro}" exact="[ware.superfluidcoolant,300,119,ware.energycells,75,ware.helium,400,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,21,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_swampplant_macro}" exact="[ware.swampplant,300,80,ware.energycells,27,ware.water,67,null,0,null,0,null,0,50,0.5,0.5,ware.da_laborunion_contracts,8,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_teladianium_macro}" exact="[ware.teladianium,300,350,ware.energycells,226,ware.ore,1400,null,0,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,83,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_turretcomponents_macro}" exact="[ware.turretcomponents,600,57,ware.energycells,20,ware.microchips,7,ware.quantumtubes,7,ware.scanningarrays,3,null,0,225,0.5,0.5,ware.da_mil_schematics,7,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_water_macro}" exact="[ware.water,300,483,ware.energycells,150,ware.ice,800,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,46,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_weaponcomponents_macro}" exact="[ware.weaponcomponents,600,57,ware.energycells,20,ware.hullparts,7,ware.plasmaconductors,10,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,8,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_wheat_macro}" exact="[ware.wheat,300,310,ware.energycells,60,ware.water,80,null,0,null,0,null,0,75,0.5,0.5,ware.da_laborunion_contracts,11,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_cheltmeat_macro}" exact="[ware.cheltmeat,300,139,ware.energycells,33,ware.water,80,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_scruffinfruit_macro}" exact="[ware.scruffinfruits,300,255,ware.energycells,30,ware.water,80,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_computronicsubstrate_macro}" exact="[ware.computronicsubstrate,300,49,ware.energycells,2000,ware.hydrogen,1000,ware.ore,1500,ware.silicon,1500,null,0,1500,0.5,0.5,ware.da_adv_schematics,90,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_metallicmicrolattice_macro}" exact="[ware.metallicmicrolattice,300,317,ware.energycells,83,ware.helium,217,ware.ore,83,null,0,null,0,120,0.5,0.5,ware.da_mil_schematics,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_proteinpaste_macro}" exact="[ware.proteinpaste,300,219,ware.energycells,80,ware.ice,80,ware.methane,200,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,20,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_siliconcarbide_macro}" exact="[ware.siliconcarbide,300,48,ware.energycells,200,ware.metallicmicrolattice,2,ware.methane,400,ware.silicon,300,null,0,750,0.5,0.5,ware.da_mil_schematics,33,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_stimulants_macro}" exact="[ware.stimulants,300,98,ware.energycells,80,ware.helium,400,ware.silicon,20,null,0,null,0,300,0.5,0.5,ware.da_laborunion_contracts,31,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_mre_macro}" exact="[ware.terranmre,300,219,ware.energycells,75,ware.proteinpaste,75,null,0,null,0,null,0,135,0.5,0.5,ware.da_laborunion_contracts,11,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_bofu_macro}" exact="[ware.bofu,300,103,ware.bogas,50,ware.energycells,50,ware.plankton,150,null,0,null,0,125,0.5,0.5,ware.da_laborunion_contracts,12,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_bogas_macro}" exact="[ware.bogas,300,220,ware.energycells,80,ware.water,200,null,0,null,0,null,0,100,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_plankton_macro}" exact="[ware.plankton,300,206,ware.energycells,15,ware.water,38,null,0,null,0,null,0,40,0.5,0.5,ware.da_laborunion_contracts,5,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_adv_schematics_macro}" exact="[ware.da_adv_schematics,900,35,null,null,null,null,null,null,null,null,null,null,750,5,0.5,null,null,null,null]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_mil_schematics_macro}" exact="[ware.da_mil_schematics,900,50,null,null,null,null,null,null,null,null,null,null,500,5,0.5,null,null,null,null]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_laborunion_contracts_macro}" exact="[ware.da_laborunion_contracts,900,120,null,null,null,null,null,null,null,null,null,null,500,5,0.5,null,null,null,null]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.argon}" exact="[ware.workunit_busy,600,200,ware.foodrations,75,ware.medicalsupplies,45,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.paranid}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.sojahusk,48,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.teladi}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.nostropoil,38,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.split}" exact="[ware.workunit_busy,600,200,ware.cheltmeat,17,ware.medicalsupplies,45,ware.scruffinfruits,23,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.terran}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.terranmre,43,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{race.boron}" exact="[ware.workunit_busy,600,200,ware.bofu,15,ware.medicalsupplies,33,ware.water,27,null,0,null,0,0,0,0,null,0,0,0]"/>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_GetModuleList">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- Populate from players blueprints. Rebuild each time. -->
+						<set_value name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="[]"/>
+						<!-- Dropdown will be populated from $DAMVT.$DAStationCalcListOfAvailableModules that are not in $DAMVT.$DAStationModules.$Order -->
+						<set_value name="$DAMVT.$DAStationModules.$Dropdown" exact="[]"/>
+						<do_if value="not $DAMVT.$DAStationModules? or ($DAMVT.$DAStationModules == null)">
+							<set_value name="$DAMVT.$DAStationModules" exact="table[]"/>
+							<!-- Keys will be station modules that player has selected -->
+							<set_value name="$DAMVT.$DAStationModules.$Selected" exact="table[]"/>
+							<!-- Entries will be the order that player has added modules -->
+							<set_value name="$DAMVT.$DAStationModules.$Order" exact="[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Workforce" exact="false"/>
+							<set_value name="$DAMVT.$DAStationModules.$Secondary" exact="false"/>
+							<set_value name="$DAMVT.$DAStationModules.$Products" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$Resources" exact="table[]"/>
+							<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs" exact="table[]"/>
+						</do_if>
+						<set_value name="$BlueprintList" exact="[]"/>
+						<get_ware_definition result="$BlueprintList" faction="faction.player" tags="tag.module"/>
+						<do_for_each name="$Blueprint" in="$BlueprintList">
+							<do_if value="player.blueprints.{$Blueprint}.any.exists">
+								<do_if value="$Blueprint.objectmacro? and $Blueprint.objectmacro.isclass.production and $DAMVT.$DAStationCalcTable.{$Blueprint.objectmacro}?">
+									<append_to_list name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="$Blueprint.objectmacro"/>
+								</do_if>
+								<do_elseif value="$Blueprint.objectmacro? and $Blueprint.objectmacro.isclass.habitation">
+									<append_to_list name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="$Blueprint.objectmacro"/>
+								</do_elseif>
+							</do_if>
+						</do_for_each>
+						<debug_text text="'MOD: DAMenus SC -- $DAMVT.$DAStationCalcListOfAvailableModules.count: %s'.[$DAMVT.$DAStationCalcListOfAvailableModules.count]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<do_if value="$DAMVT.$DAStationCalcListOfAvailableModules.count" min="1">
+							<set_value name="$LocModuleMacroList" exact="$DAMVT.$DAStationCalcListOfAvailableModules"/>
+							<sort_list list="$LocModuleMacroList" sortbyvalue="loop.element.name"/>
+							<do_for_each name="$ModuleMacro" in="$DAMVT.$DAStationCalcListOfAvailableModules">
+								<do_if value="not $DAMVT.$DAStationModules.$Selected.{$ModuleMacro}?">
+									<do_if value="not $DAMVT.$DAStationModules.$Dropdown.indexof.{$ModuleMacro}">
+										<append_to_list name="$DAMVT.$DAStationModules.$Dropdown" exact="$ModuleMacro"/>
+									</do_if>
+								</do_if>
+								<do_elseif value="$DAMVT.$DAStationModules.$Selected.{$ModuleMacro}?">
+									<remove_from_list name="$DAMVT.$DAStationModules.$Dropdown" exact="$ModuleMacro" multiple="true"/>
+								</do_elseif>
+							</do_for_each>
+							<debug_text text="'MOD: DAMenus SC -- $DAMVT.$DAStationModules.$Dropdown.count: %s'.[$DAMVT.$DAStationModules.$Dropdown.count]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						</do_if>
+						<remove_value name="$BlueprintList"/>
+						<remove_value name="$LocModuleMacroList"/>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_AddModuleDropdown">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- List of Tables, [$Text = $Name, $Value = $ModuleMacro] -->
+						<set_value name="$StationCalc_DDOptions" exact="[]"/>
+						<append_to_list name="$StationCalc_DDOptions" exact="table[$text = {33232474,2415}, $value = null]"/>
+						<do_if value="$DAMVT.$DAStationModules.$Dropdown.count" min="1">
+							<set_value name="$LocModuleMacroList" exact="$DAMVT.$DAStationCalcListOfAvailableModules"/>
+							<sort_list list="$LocModuleMacroList" sortbyvalue="loop.element.name"/>
+							<do_for_each name="$ModuleMacro" in="$LocModuleMacroList">
+								<set_value name="$Name" exact="'%s'.[$ModuleMacro.name]"/>
+								<append_to_list name="$StationCalc_DDOptions" exact="table[$text = $Name, $value = $ModuleMacro]"/>
+								<remove_value name="$Name"/>
+							</do_for_each>
+							<remove_value name="$LocModuleMacroList"/>
+						</do_if>
+						<!-- Returns $option table on confirm -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Dropdown" param="table[
+							$col = 1,
+							$colSpan = event.param.$columns,
+							$options = $StationCalc_DDOptions,
+							$startOption = 1,
+							$cellBGColor = $DAMVT.$BodyBackgroundBright,
+							$onDropDownConfirmed = ExecuteOption_StationCalcDropDown,
+							]"/>
+						<remove_value name="$StationCalc_DDOptions"/>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_CollectData">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- $DAMVT.$DAStationModules.$Products $DAMVT.$DAStationModules.$Resources $DAMVT.$DAStationModules.$WorkforceCalcs -->
+						<!-- {1}Prod Ware,{2}Prod Time,{3}Prod Amount,{4}R1,{5}R1 Amount,{6}R2,{7}R2 Amount,{8}R3,{9}R3 Amount,{10}R4,{11}R4 Amount,{12}R5,{13}R5 Amount,
+							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
+						<!-- USING $ModuleMacro -->
+						<set_value name="$ModuleCount" exact="$DAMVT.$DAStationModules.$Selected.{$ModuleMacro}"/>
+						<do_if value="$ModuleMacro.isclass.production">
+							<set_value name="$ProdWare" exact="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{1}"/>
+							<!-- Cycle Time Math -->
+							<set_value name="$CycleTime" exact="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{2} * (1.0 - $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{16}) ^ $DAMVT.$DAStationModules.$Workforce * (1.0 - $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{20}) ^ $DAMVT.$DAStationModules.$Secondary"/>
+							<set_value name="$CyclesPerHour" exact="3600.0 / $CycleTime"/>
+							<!-- Product Amount Math -->
+							<set_value name="$ProdAmountPerModule" exact="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{3} * (1.0 + $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{15}) ^ $DAMVT.$DAStationModules.$Workforce * (1.0 + $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{19}) ^ $DAMVT.$DAStationModules.$Secondary"/>
+							<set_value name="$ProdPerHour" exact="($ProdAmountPerModule * $CyclesPerHour * $ModuleCount)i"/>
+							<set_value name="$DAMVT.$DAStationModules.$Products.{$ProdWare}" exact="$ProdPerHour" operation="add"/>
+							<!-- Resources -->
+							<do_all exact="5" counter="$i">
+								<set_value name="$ResourceIndex" exact="(($i - 1) * 2) + 4"/>
+								<set_value name="$ResourceAmountIndex" exact="$ResourceIndex + 1"/>
+								<do_if value="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{$ResourceIndex}? and (typeof $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{$ResourceIndex} == datatype.ware) and ($DAMVT.$DAStationCalcTable.{$ModuleMacro}.{$ResourceAmountIndex} gt 0)">
+									<set_value name="$ResourcePerHour" exact="($DAMVT.$DAStationCalcTable.{$ModuleMacro}.{$ResourceAmountIndex} * $CyclesPerHour * $ModuleCount)i"/>
+									<set_value name="$DAMVT.$DAStationModules.$Resources.{$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{$ResourceIndex}}" exact="$ResourcePerHour" operation="add"/>
+								</do_if>
+							</do_all>
+							<remove_value name="$ResourceIndex"/>
+							<remove_value name="$ResourceAmountIndex"/>
+							<!-- Secondary Resources -->
+							<do_if value="$DAMVT.$DAStationModules.$Secondary and (typeof $DAMVT.$DAStationCalcTable.{$ModuleMacro}.{17} == datatype.ware) and ($DAMVT.$DAStationCalcTable.{$ModuleMacro}.{18} gt 0)">
+								<set_value name="$SecondaryResourceWare" exact="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{17}"/>
+								<set_value name="$SecondaryResourcePerHour" exact="($DAMVT.$DAStationCalcTable.{$ModuleMacro}.{18} * $CyclesPerHour * $ModuleCount)i"/>
+								<set_value name="$DAMVT.$DAStationModules.$Resources.{$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{17}}" exact="$SecondaryResourcePerHour" operation="add"/>
+								<remove_value name="$SecondaryResourceWare"/>
+								<remove_value name="$SecondaryResourcePerHour"/>
+							</do_if>
+							<!-- Workforce Math -->
+							<do_if value="$DAMVT.$DAStationModules.$Workforce and ($DAMVT.$DAStationCalcTable.{$ModuleMacro}.{14} gt 0)">
+								<set_value name="$WorkersNeeded" exact="$DAMVT.$DAStationCalcTable.{$ModuleMacro}.{14} * $ModuleCount"/>
+								<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers" exact="$WorkersNeeded" operation="add"/>
+								<remove_value name="$WorkersNeeded"/>
+							</do_if>
+							<do_else>
+								<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers" exact="0"/>
+							</do_else>
+							<remove_value name="$ProdWare"/>
+							<remove_value name="$CycleTime"/>
+							<remove_value name="$CyclesPerHour"/>
+							<remove_value name="$ProdAmountPerModule"/>
+							<remove_value name="$ProdPerHour"/>
+						</do_if>
+						<do_elseif value="$ModuleMacro.isclass.habitation">
+							<do_if value="not $DAMVT.$DAStationModules.$WorkforceCalcs.$Race? and @$ModuleMacro.workforce.race">
+								<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs.$Race" exact="$ModuleMacro.workforce.race"/>
+							</do_if>
+							<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity" exact="$ModuleMacro.workforce.capacity * $ModuleCount" operation="add"/>
+						</do_elseif>
+						<remove_value name="$ModuleCount"/>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_CalculateWorkforceNeeds">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- $DAMVT.$DAStationModules.$Products $DAMVT.$DAStationModules.$Resources $DAMVT.$DAStationModules.$WorkforceCalcs -->
+						<!-- {1}Prod Ware,{2}Prod Time,{3}Prod Amount,{4}R1,{5}R1 Amount,{6}R2,{7}R2 Amount,{8}R3,{9}R3 Amount,{10}R4,{11}R4 Amount,{12}R5,{13}R5 Amount,
+							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
+						<!-- $DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers $DAMVT.$DAStationModules.$WorkforceCalcs.$Race $DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity -->
+						<do_if value="$DAMVT.$DAStationCalcTable.{$DAMVT.$DAStationModules.$WorkforceCalcs.$Race}?">
+							<set_value name="$LocRace" exact="$DAMVT.$DAStationModules.$WorkforceCalcs.$Race"/>
+							<set_value name="$UsageMultiplier" exact="($DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers)f / ($DAMVT.$DAStationCalcTable.{$LocRace}.{3})f"/>
+							<set_value name="$CyclesPerHour" exact="3600.0 / $DAMVT.$DAStationCalcTable.{$LocRace}.{2}"/>
+							<!-- Resources -->
+							<do_all exact="5" counter="$i">
+								<set_value name="$ResourceIndex" exact="(($i - 1) * 2) + 4"/>
+								<set_value name="$ResourceAmountIndex" exact="$ResourceIndex + 1"/>
+								<do_if value="$DAMVT.$DAStationCalcTable.{$LocRace}.{$ResourceIndex}? and (typeof $DAMVT.$DAStationCalcTable.{$LocRace}.{$ResourceIndex} == datatype.ware) and ($DAMVT.$DAStationCalcTable.{$LocRace}.{$ResourceAmountIndex} gt 0)">
+									<set_value name="$ResourcePerHour" exact="($DAMVT.$DAStationCalcTable.{$LocRace}.{$ResourceAmountIndex} * $CyclesPerHour * $UsageMultiplier)i"/>
+									<set_value name="$DAMVT.$DAStationModules.$Resources.{$DAMVT.$DAStationCalcTable.{$LocRace}.{$ResourceIndex}}" exact="$ResourcePerHour" operation="add"/>
+								</do_if>
+							</do_all>
+							<remove_value name="$ResourceIndex"/>
+							<remove_value name="$ResourceAmountIndex"/>
+						</do_if>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_AddWareInformation">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- $DAMVT.$DAStationModules.$Products $DAMVT.$DAStationModules.$Resources $DAMVT.$DAStationModules.$WorkforceCalcs -->
+						<!-- {1}Prod Ware,{2}Prod Time,{3}Prod Amount,{4}R1,{5}R1 Amount,{6}R2,{7}R2 Amount,{8}R3,{9}R3 Amount,{10}R4,{11}R4 Amount,{12}R5,{13}R5 Amount,
+							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
+						<!-- USING $LocWare -->
+						<set_value name="$ProductsPerHour" exact="0"/>
+						<set_value name="$ResourcesPerHour" exact="0"/>
+						<set_value name="$NetPerHour" exact="0"/>
+						<do_if value="$DAMVT.$DAStationModules.$Products.{$LocWare}? and ($DAMVT.$DAStationModules.$Products.{$LocWare} gt 0)">
+							<set_value name="$ProductsPerHour" exact="($DAMVT.$DAStationModules.$Products.{$LocWare})i"/>
+						</do_if>
+						<do_if value="$DAMVT.$DAStationModules.$Resources.{$LocWare}? and ($DAMVT.$DAStationModules.$Resources.{$LocWare} gt 0)">
+							<set_value name="$ResourcesPerHour" exact="($DAMVT.$DAStationModules.$Resources.{$LocWare})i"/>
+						</do_if>
+						<set_value name="$NetPerHour" exact="$ProductsPerHour - $ResourcesPerHour"/>
+						<!-- COLUMN LABLES 1-3 Ware 4-6 Production 7-9 Consumption 10-12 Results -->
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $LocWare.name, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Ware"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 3, $text = $ProductsPerHour, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Production"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 3, $text = $ResourcesPerHour, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Consumption"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = $NetPerHour, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Results"/>
+						<remove_value name="$ProductsPerHour"/>
+						<remove_value name="$ResourcesPerHour"/>
+						<remove_value name="$NetPerHour"/>
+					</actions>
+				</library>
+				<library name="Library_StationCalc_AddWorkforceInformation">
+					<actions>
+						<!-- $DAMVT.$DAStationCalcTable $DAMVT.$DAStationCalcListOfAvailableModules $DAMVT.$DAStationModules -->
+						<!-- $DAMVT.$DAStationModules.$Selected = table, $DAMVT.$DAStationModules.$Order = list, $DAMVT.$DAStationModules.$Dropdown = list, $DAMVT.$DAStationModules.$Workforce = bool, $DAMVT.$DAStationModules.$Secondary = bool -->
+						<!-- $DAMVT.$DAStationModules.$Products $DAMVT.$DAStationModules.$Resources $DAMVT.$DAStationModules.$WorkforceCalcs -->
+						<!-- {1}Prod Ware,{2}Prod Time,{3}Prod Amount,{4}R1,{5}R1 Amount,{6}R2,{7}R2 Amount,{8}R3,{9}R3 Amount,{10}R4,{11}R4 Amount,{12}R5,{13}R5 Amount,
+							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
+						<!-- $DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers $DAMVT.$DAStationModules.$WorkforceCalcs.$Race $DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity -->
+						<set_value name="$OptimalWorkers" exact="0"/>
+						<set_value name="$WorkerCapacity" exact="0"/>
+						<set_value name="$NetCapacity" exact="0"/>
+						<do_if value="$DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers? and ($DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers gt 0)">
+							<set_value name="$OptimalWorkers" exact="$DAMVT.$DAStationModules.$WorkforceCalcs.$TotalWorkers"/>
+						</do_if>
+						<do_if value="$DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity? and ($DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity gt 0)">
+							<set_value name="$WorkerCapacity" exact="$DAMVT.$DAStationModules.$WorkforceCalcs.$Capacity"/>
+						</do_if>
+						<set_value name="$NetCapacity" exact="$WorkerCapacity - $OptimalWorkers"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<do_if value="$DAMVT.$DAStationModules.$WorkforceCalcs.$Race? and (typeof $DAMVT.$DAStationModules.$WorkforceCalcs.$Race == datatype.race)">
+							<set_value name="$WorkforceRace" exact="$DAMVT.$DAStationModules.$WorkforceCalcs.$Race.name"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = $WorkforceRace, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Workforce Race"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 3, $text = $OptimalWorkers, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Optimal Workforce"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 3, $text = $WorkerCapacity, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Workforce Capacity"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = $NetCapacity, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]" comment="Results"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = event.param.$columns, $text = {33232474,2417}, $color = $DAMVT.$TextRed, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright, $wordwrap = true]" comment="ERROR"/>
+						</do_else>
+						<remove_value name="$ProductsPerHour"/>
+						<remove_value name="$ResourcesPerHour"/>
+						<remove_value name="$NetPerHour"/>
+					</actions>
+				</library>
+				<!-- Station Calc -->
+				<cue name="ExecuteOption_StationCalcDropDown" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$Param" exact="event.param"/>
+						<do_if value="$Param.$option.$value != null">
+							<do_if value="not $DAMVT.$DAStationModules.$Selected.{$Param.$option.$value}?">
+								<set_value name="$DAMVT.$DAStationModules.$Selected.{$Param.$option.$value}" exact="0"/>
+								<do_if value="not $DAMVT.$DAStationModules.$Order.indexof.{$Param.$option.$value}">
+									<append_to_list name="$DAMVT.$DAStationModules.$Order" exact="$Param.$option.$value"/>
+								</do_if>
+								<do_else>
+									<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcDropDown -- ERROR module already in $DAMVT.$DAStationModules.$Order: %s'.[@$DAMVT.$DAStationModules.$Order.indexof.{$Param.$option.$value}]" context="false" filter="error"/>
+								</do_else>
+							</do_if>
+							<do_else>
+								<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcDropDown -- ERROR module already in $DAMVT.$DAStationModules.$Selected: %s'.[@$Param.$option.$value.name]" context="false" filter="error"/>
+							</do_else>
+						</do_if>
+						<do_else>
+							<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcDropDown -- ERROR $Param.$option.$value is invalid: %s'.[@$Param.$option.$value]" context="false" filter="error"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_StationCalcWorkforceEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DAMVT.$DAStationModules.$Workforce">
+							<set_value name="$DAMVT.$DAStationModules.$Workforce" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DAMVT.$DAStationModules.$Workforce" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus SC -- Updated $DAMVT.$DAStationModules.$Workforce to %s'.[$DAMVT.$DAStationModules.$Workforce]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_StationCalcSecondaryEnable" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DAMVT.$DAStationModules.$Secondary">
+							<set_value name="$DAMVT.$DAStationModules.$Secondary" exact="false"/>
+						</do_if>
+						<do_else>
+							<set_value name="$DAMVT.$DAStationModules.$Secondary" exact="true"/>
+						</do_else>
+						<debug_text text="'MOD: DAMenus SC -- Updated $DAMVT.$DAStationModules.$Secondary to %s'.[$DAMVT.$DAStationModules.$Secondary]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_StationCalcSetModuleCount" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="$DAMVT.$DAStationModules.$Selected.{event.param.$echo}?">
+							<do_if value="event.param.$value ge 0">
+								<set_value name="$DAMVT.$DAStationModules.$Selected.{event.param.$echo}" exact="event.param.$value"/>
+								<debug_text text="'MOD: DAMenus SC -- Updated $DAMVT.$DAStationModules.$Selected.{%s} to %s'.[event.param.$echo,$DAMVT.$DAStationModules.$Selected.{event.param.$echo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+							</do_if>
+							<do_else>
+								<remove_value name="$DAMVT.$DAStationModules.$Selected.{event.param.$echo}"/>
+								<debug_text text="'MOD: DAMenus SC -- Removed $DAMVT.$DAStationModules.$Selected.{%s} -- Exists: %s'.[event.param.$echo,$DAMVT.$DAStationModules.$Selected.{event.param.$echo}?]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+								<do_if value="$DAMVT.$DAStationModules.$Order.indexof.{event.param.$echo}">
+									<remove_from_list name="$DAMVT.$DAStationModules.$Order" exact="event.param.$echo" multiple="true"/>
+									<debug_text text="'MOD: DAMenus SC -- Removed %s from $DAMVT.$DAStationModules.$Order -- Exists: %s'.[event.param.$echo,@$DAMVT.$DAStationModules.$Order.indexof.{event.param.$echo}]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+								</do_if>
+								<do_else>
+									<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcRemoveModule -- ERROR %s is not in $DAMVT.$DAStationModules.$Order'.[@event.param.$echo]" context="false" filter="error"/>
+								</do_else>
+							</do_else>
+						</do_if>
+						<do_else>
+							<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcSetModuleCount -- ERROR event.param.$echo is invalid: %s -- event.param.$value: %s'.[@event.param.$echo,event.param.$value]" context="false" filter="error"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<!-- Base Menu Functionality Cues -->
 				<cue name="Handle_Option_Change" instantiate="true">
 					<conditions>
