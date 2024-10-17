@@ -122,7 +122,7 @@
 		<t id="169">Enable Evolution Debug</t>
 		<t id="170">Enable Xenon Station Evolution</t>
 		<t id="171">Enable Evolution Fast Fleet Ordering</t>
-		<t id="172">(XXX)</t>
+		<t id="172">Evolution Max Level Setting</t>
 		<t id="173">(XXX)</t>
 		<t id="174">(XXX)</t>
 		<t id="175">(XXX)</t>
@@ -132,7 +132,7 @@
 		<t id="179">(XXX)</t>
 		<!-- Evolution Menu Entry Descriptions -->
 		<t id="1160">Changes whether the Evolution script will continue to run. Disabling does not revert ships already upgraded.</t>
-		<t id="1161">Changes the time \(in minutes\) between evolution level increases. Has no effect if Evolution disabled or already at max level. Default = 120 minutes</t>
+		<t id="1161">Changes the time \(in minutes\) between evolution level increases. Has no effect if Evolution disabled or already at max level. Default = 240 minutes</t>
 		<t id="1162">Shows the current progress level of Evolution.</t>
 		<t id="1163">Changes whether additional ships are built by xenon.</t>
 		<t id="1164">Changes the maximum number of Xenon fleets that will be ordered built by Xenon from this mod. Default = 10 fleets</t>
@@ -143,7 +143,7 @@
 		<t id="1169">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
 		<t id="1170">Changes whether Xenon shipyards and wharves will expand at evolution levels 1,3, and 5. At each of these tiers shipyards will add two additional storage modules, an additional XL ship builder, and an additional defense module. Wharves will add one additional storage module and one energy cell module.</t>
 		<t id="1171">Changes whether Xenon will order one or multiple Evolution fleets at a time. If enabled, Xenon will order one fleet at each shipyard. If disabled, Xenon will order one fleet at one shipyard. Fleets ordered will respect Maximum Xenon Fleets Added amount.</t>
-		<t id="1172">(XXX)</t>
+		<t id="1172">Changes the maximum level of Xenon evolution.</t>
 		<t id="1173">(XXX)</t>
 		<t id="1174">(XXX)</t>
 		<t id="1175">(XXX)</t>
@@ -152,18 +152,18 @@
 		<t id="1178">(XXX)</t>
 		<t id="1179">(XXX)</t>
 		<!-- Evolution Misc -->
-		<t id="2160">Branch 9 Evolution {1001,1112}</t>
-		<t id="2161">Branch 9 Evolution {1001,7817}</t>
-		<t id="2162">(XXX)</t>
-		<t id="2163">(XXX)</t>
-		<t id="2164">(XXX)</t>
-		<t id="2165">(XXX)</t>
-		<t id="2166">(XXX)</t>
-		<t id="2167">(XXX)</t>
-		<t id="2168">(XXX)</t>
-		<t id="2169">(XXX)</t>
-		<t id="2170">(XXX)</t>
-		<t id="2171">(XXX)</t>
+		<t id="2160">Branch 9 EVO {1001,1112}</t>
+		<t id="2161">Branch 9 EVO {1001,7817}</t>
+		<t id="2162">EVO {20402,1}(1)</t>
+		<t id="2163">EVO {20402,2}(2)</t>
+		<t id="2164">EVO {20402,3}(3)</t>
+		<t id="2165">EVO {20402,4}(4)</t>
+		<t id="2166">EVO {20402,5}(5)</t>
+		<t id="2167">EVO {20402,6}(6)</t>
+		<t id="2168">EVO {20402,7}(7)</t>
+		<t id="2169">EVO {20402,8}(8)</t>
+		<t id="2170">EVO {20402,9}(9)</t>
+		<t id="2171">EVO {20402,10}(10)</t>
 		<t id="2172">(XXX)</t>
 		<t id="2173">(XXX)</t>
 		<t id="2174">(XXX)</t>
@@ -221,9 +221,9 @@
 		<t id="2203">Net</t>
 		<t id="2204">Changes whether settings for DA Fill will apply to this faction's {1001,9803}s.</t>
 		<t id="2205">Changes whether settings for DA Fill will apply to this faction's ship building/equipping stations.</t>
-		<t id="2206">(XXX)</t>
-		<t id="2207">(XXX)</t>
-		<t id="2208">(XXX)</t>
+		<t id="2206">Fill {20111,101}(Mk1)</t>
+		<t id="2207">Fill {20111,201}(Mk2)</t>
+		<t id="2208">Fill {20111,301}(Mk3)</t>
 		<t id="2209">(XXX)</t>
 		<t id="2210">(XXX)</t>
 		<t id="2211">(XXX)</t>

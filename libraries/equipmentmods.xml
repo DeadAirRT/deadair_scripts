@@ -17,7 +17,7 @@
     </damage>
   </add>
   <add sel="/equipmentmods/weapon">
-    <damage ware="mod_weapon_xenon_3_da" quality="2" min="1.15" max="1.15">
+    <damage ware="mod_weapon_xenon_3_da" quality="1" min="1.15" max="1.15">
       <bonus chance="1.0" max="2">
         <mining min="1.3" max="1.3"/>
         <rotationspeed min="1.15" max="1.15"/>
@@ -33,10 +33,50 @@
     </damage>
   </add>
   <add sel="/equipmentmods/weapon">
-    <damage ware="mod_weapon_xenon_5_da" quality="3" min="1.25" max="1.25">
+    <damage ware="mod_weapon_xenon_5_da" quality="2" min="1.25" max="1.25">
       <bonus chance="1.0" max="2">
         <mining min="1.5" max="1.5"/>
         <rotationspeed min="1.25" max="1.25"/>
+      </bonus>
+    </damage>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <damage ware="mod_weapon_xenon_6_da" quality="2" min="1.3" max="1.3">
+      <bonus chance="1.0" max="2">
+        <mining min="1.6" max="1.6"/>
+        <rotationspeed min="1.3" max="1.3"/>
+      </bonus>
+    </damage>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <damage ware="mod_weapon_xenon_7_da" quality="3" min="1.35" max="1.35">
+      <bonus chance="1.0" max="2">
+        <mining min="1.7" max="1.7"/>
+        <rotationspeed min="1.35" max="1.35"/>
+      </bonus>
+    </damage>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <damage ware="mod_weapon_xenon_8_da" quality="3" min="1.4" max="1.4">
+      <bonus chance="1.0" max="2">
+        <mining min="1.8" max="1.8"/>
+        <rotationspeed min="1.4" max="1.4"/>
+      </bonus>
+    </damage>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <damage ware="mod_weapon_xenon_9_da" quality="3" min="1.45" max="1.45">
+      <bonus chance="1.0" max="2">
+        <mining min="1.9" max="1.9"/>
+        <rotationspeed min="1.45" max="1.45"/>
+      </bonus>
+    </damage>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <damage ware="mod_weapon_xenon_10_da" quality="3" min="1.5" max="1.5">
+      <bonus chance="1.0" max="2">
+        <mining min="2.0" max="2.0"/>
+        <rotationspeed min="1.5" max="1.5"/>
       </bonus>
     </damage>
   </add>
@@ -47,13 +87,28 @@
     <rotationspeed ware="mod_weapon_xenon_missile_2_da" quality="1" min="1.1" max="1.1"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <rotationspeed ware="mod_weapon_xenon_missile_3_da" quality="2" min="1.15" max="1.15"/>
+    <rotationspeed ware="mod_weapon_xenon_missile_3_da" quality="1" min="1.15" max="1.15"/>
   </add>
   <add sel="/equipmentmods/weapon">
     <rotationspeed ware="mod_weapon_xenon_missile_4_da" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/weapon">
-    <rotationspeed ware="mod_weapon_xenon_missile_5_da" quality="3" min="1.25" max="1.25"/>
+    <rotationspeed ware="mod_weapon_xenon_missile_5_da" quality="2" min="1.25" max="1.25"/>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <rotationspeed ware="mod_weapon_xenon_missile_6_da" quality="2" min="1.3" max="1.3"/>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <rotationspeed ware="mod_weapon_xenon_missile_7_da" quality="3" min="1.35" max="1.35"/>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <rotationspeed ware="mod_weapon_xenon_missile_8_da" quality="3" min="1.4" max="1.4"/>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <rotationspeed ware="mod_weapon_xenon_missile_9_da" quality="3" min="1.45" max="1.45"/>
+  </add>
+  <add sel="/equipmentmods/weapon">
+    <rotationspeed ware="mod_weapon_xenon_missile_10_da" quality="3" min="1.5" max="1.5"/>
   </add>
   <add sel="/equipmentmods/weapon">
     <damage ware="mod_weapon_damage_AI" quality="3" min="1.3" max="1.3"/>
@@ -87,7 +142,7 @@
       <bonus chance="1.0" max="4">
         <rotationthrust min="1.05" max="1.05"/>
         <boostthrust min="1.0" max="1.05"/>
-        <travelthrust min="1.0" max="1.05"/>
+        <travelthrust min="1.0" max="1.025"/>
         <travelchargetime min="0.95" max="1.0"/>
       </bonus>
     </forwardthrust>
@@ -97,17 +152,17 @@
       <bonus chance="1.0" max="4">
         <rotationthrust min="1.1" max="1.1"/>
         <boostthrust min="1.0" max="1.1"/>
-        <travelthrust min="1.0" max="1.1"/>
+        <travelthrust min="1.0" max="1.05"/>
         <travelchargetime min="0.9" max="1.0"/>
       </bonus>
     </forwardthrust>
   </add>
   <add sel="/equipmentmods/engine">
-    <forwardthrust ware="mod_engine_xenon_3_da" quality="2" min="1.15" max="1.15">
+    <forwardthrust ware="mod_engine_xenon_3_da" quality="1" min="1.15" max="1.15">
       <bonus chance="1.0" max="4">
         <rotationthrust min="1.15" max="1.15"/>
         <boostthrust min="1.0" max="1.15"/>
-        <travelthrust min="1.0" max="1.15"/>
+        <travelthrust min="1.0" max="1.075"/>
         <travelchargetime min="0.85" max="1.0"/>
       </bonus>
     </forwardthrust>
@@ -117,18 +172,68 @@
       <bonus chance="1.0" max="4">
         <rotationthrust min="1.2" max="1.2"/>
         <boostthrust min="1.0" max="1.2"/>
-        <travelthrust min="1.0" max="1.2"/>
+        <travelthrust min="1.0" max="1.1"/>
         <travelchargetime min="0.8" max="1.0"/>
       </bonus>
     </forwardthrust>
   </add>
   <add sel="/equipmentmods/engine">
-    <forwardthrust ware="mod_engine_xenon_5_da" quality="3" min="1.25" max="1.25">
+    <forwardthrust ware="mod_engine_xenon_5_da" quality="2" min="1.25" max="1.25">
       <bonus chance="1.0" max="4">
         <rotationthrust min="1.25" max="1.25"/>
         <boostthrust min="1.0" max="1.25"/>
-        <travelthrust min="1.0" max="1.25"/>
+        <travelthrust min="1.0" max="1.125"/>
         <travelchargetime min="0.75" max="1.0"/>
+      </bonus>
+    </forwardthrust>
+  </add>
+  <add sel="/equipmentmods/engine">
+    <forwardthrust ware="mod_engine_xenon_6_da" quality="2" min="1.3" max="1.3">
+      <bonus chance="1.0" max="4">
+        <rotationthrust min="1.3" max="1.3"/>
+        <boostthrust min="1.0" max="1.3"/>
+        <travelthrust min="1.0" max="1.15"/>
+        <travelchargetime min="0.7" max="1.0"/>
+      </bonus>
+    </forwardthrust>
+  </add>
+  <add sel="/equipmentmods/engine">
+    <forwardthrust ware="mod_engine_xenon_7_da" quality="3" min="1.35" max="1.35">
+      <bonus chance="1.0" max="4">
+        <rotationthrust min="1.35" max="1.35"/>
+        <boostthrust min="1.0" max="1.35"/>
+        <travelthrust min="1.0" max="1.175"/>
+        <travelchargetime min="0.65" max="1.0"/>
+      </bonus>
+    </forwardthrust>
+  </add>
+  <add sel="/equipmentmods/engine">
+    <forwardthrust ware="mod_engine_xenon_8_da" quality="3" min="1.4" max="1.4">
+      <bonus chance="1.0" max="4">
+        <rotationthrust min="1.4" max="1.4"/>
+        <boostthrust min="1.0" max="1.4"/>
+        <travelthrust min="1.0" max="1.2"/>
+        <travelchargetime min="0.6" max="1.0"/>
+      </bonus>
+    </forwardthrust>
+  </add>
+  <add sel="/equipmentmods/engine">
+    <forwardthrust ware="mod_engine_xenon_9_da" quality="3" min="1.45" max="1.45">
+      <bonus chance="1.0" max="4">
+        <rotationthrust min="1.45" max="1.45"/>
+        <boostthrust min="1.0" max="1.45"/>
+        <travelthrust min="1.0" max="1.225"/>
+        <travelchargetime min="0.55" max="1.0"/>
+      </bonus>
+    </forwardthrust>
+  </add>
+  <add sel="/equipmentmods/engine">
+    <forwardthrust ware="mod_engine_xenon_10_da" quality="3" min="1.5" max="1.5">
+      <bonus chance="1.0" max="4">
+        <rotationthrust min="1.5" max="1.5"/>
+        <boostthrust min="1.0" max="1.5"/>
+        <travelthrust min="1.0" max="1.25"/>
+        <travelchargetime min="0.5" max="1.0"/>
       </bonus>
     </forwardthrust>
   </add>
@@ -165,90 +270,170 @@
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_1_da" quality="1" min="0.95" max="0.95">
       <bonus chance="1.0" max="2">
-        <drag min="0.95" max="0.95"/>
-        <maxhull min="1.0" max="1.05"/>
+        <drag min="0.975" max="0.975"/>
+        <maxhull min="1.025" max="1.025"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_2_da" quality="1" min="0.9" max="0.9">
       <bonus chance="1.0" max="2">
-        <drag min="0.9" max="0.9"/>
-        <maxhull min="1.0" max="1.1"/>
+        <drag min="0.95" max="0.95"/>
+        <maxhull min="1.05" max="1.05"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_xenon_3_da" quality="2" min="0.85" max="0.85">
+    <mass ware="mod_ship_xenon_3_da" quality="1" min="0.85" max="0.85">
       <bonus chance="1.0" max="2">
-        <drag min="0.85" max="0.85"/>
-        <maxhull min="1.0" max="1.15"/>
+        <drag min="0.925" max="0.925"/>
+        <maxhull min="1.075" max="1.075"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_4_da" quality="2" min="0.8" max="0.8">
       <bonus chance="1.0" max="2">
-        <drag min="0.8" max="0.8"/>
-        <maxhull min="1.0" max="1.2"/>
+        <drag min="0.9" max="0.9"/>
+        <maxhull min="1.1" max="1.1"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_xenon_5_da" quality="3" min="0.75" max="0.75">
+    <mass ware="mod_ship_xenon_5_da" quality="2" min="0.75" max="0.75">
+      <bonus chance="1.0" max="2">
+        <drag min="0.875" max="0.875"/>
+        <maxhull min="1.125" max="1.125"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_6_da" quality="2" min="0.7" max="0.7">
+      <bonus chance="1.0" max="2">
+        <drag min="0.85" max="0.85"/>
+        <maxhull min="1.15" max="1.15"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_7_da" quality="3" min="0.65" max="0.65">
+      <bonus chance="1.0" max="2">
+        <drag min="0.825" max="0.825"/>
+        <maxhull min="1.175" max="1.175"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_8_da" quality="3" min="0.6" max="0.6">
+      <bonus chance="1.0" max="2">
+        <drag min="0.8" max="0.8"/>
+        <maxhull min="1.2" max="1.2"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_9_da" quality="3" min="0.55" max="0.55">
+      <bonus chance="1.0" max="2">
+        <drag min="0.775" max="0.775"/>
+        <maxhull min="1.225" max="1.225"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_10_da" quality="3" min="0.5" max="0.5">
       <bonus chance="1.0" max="2">
         <drag min="0.75" max="0.75"/>
-        <maxhull min="1.0" max="1.25"/>
+        <maxhull min="1.25" max="1.25"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_eco_1_da" quality="1" min="0.95" max="0.95">
-      <bonus chance="1.0" max="4">
-        <drag min="0.95" max="0.95"/>
-        <radarcloak min="-0.1" max="-0.1"/>
-        <radarrange min="1.05" max="1.05"/>
-        <maxhull min="1.0" max="1.1"/>
+      <bonus chance="1.0" max="3">
+        <drag min="0.975" max="0.975"/>
+        <radarcloak min="-0.05" max="-0.05"/>
+        <maxhull min="1.05" max="1.05"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_eco_2_da" quality="1" min="0.9" max="0.9">
-      <bonus chance="1.0" max="4">
-        <drag min="0.9" max="0.9"/>
-        <radarcloak min="-0.2" max="-0.2"/>
-        <radarrange min="1.1" max="1.1"/>
-        <maxhull min="1.0" max="1.2"/>
+      <bonus chance="1.0" max="3">
+        <drag min="0.95" max="0.95"/>
+        <radarcloak min="-0.1" max="-0.1"/>
+        <maxhull min="1.1" max="1.1"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_xenon_eco_3_da" quality="2" min="0.85" max="0.85">
-      <bonus chance="1.0" max="4">
-        <drag min="0.85" max="0.85"/>
-        <radarcloak min="-0.3" max="-0.3"/>
-        <radarrange min="1.15" max="1.15"/>
-        <maxhull min="1.0" max="1.3"/>
+    <mass ware="mod_ship_xenon_eco_3_da" quality="1" min="0.85" max="0.85">
+      <bonus chance="1.0" max="3">
+        <drag min="0.925" max="0.925"/>
+        <radarcloak min="-0.15" max="-0.15"/>
+        <maxhull min="1.15" max="1.15"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
     <mass ware="mod_ship_xenon_eco_4_da" quality="2" min="0.8" max="0.8">
-      <bonus chance="1.0" max="4">
-        <drag min="0.8" max="0.8"/>
-        <radarcloak min="-0.4" max="-0.4"/>
-        <radarrange min="1.2" max="1.2"/>
-        <maxhull min="1.0" max="1.4"/>
+      <bonus chance="1.0" max="3">
+        <drag min="0.9" max="0.9"/>
+        <radarcloak min="-0.2" max="-0.2"/>
+        <maxhull min="1.2" max="1.2"/>
       </bonus>
     </mass>
   </add>
   <add sel="/equipmentmods/ship">
-    <mass ware="mod_ship_xenon_eco_5_da" quality="3" min="0.75" max="0.75">
-      <bonus chance="1.0" max="4">
+    <mass ware="mod_ship_xenon_eco_5_da" quality="2" min="0.75" max="0.75">
+      <bonus chance="1.0" max="3">
+        <drag min="0.875" max="0.875"/>
+        <radarcloak min="-0.25" max="-0.25"/>
+        <maxhull min="1.25" max="1.25"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_eco_6_da" quality="2" min="0.7" max="0.7">
+      <bonus chance="1.0" max="3">
+        <drag min="0.85" max="0.85"/>
+        <radarcloak min="-0.3" max="-0.3"/>
+        <maxhull min="1.3" max="1.3"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_eco_7_da" quality="3" min="0.65" max="0.65">
+      <bonus chance="1.0" max="3">
+        <drag min="0.825" max="0.825"/>
+        <radarcloak min="-0.35" max="-0.35"/>
+        <maxhull min="1.35" max="1.35"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_eco_8_da" quality="3" min="0.6" max="0.6">
+      <bonus chance="1.0" max="3">
+        <drag min="0.8" max="0.8"/>
+        <radarcloak min="-0.4" max="-0.4"/>
+        <maxhull min="1.4" max="1.4"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_eco_9_da" quality="3" min="0.55" max="0.55">
+      <bonus chance="1.0" max="3">
+        <drag min="0.775" max="0.775"/>
+        <radarcloak min="-0.45" max="-0.45"/>
+        <maxhull min="1.45" max="1.45"/>
+      </bonus>
+    </mass>
+  </add>
+  <add sel="/equipmentmods/ship">
+    <mass ware="mod_ship_xenon_eco_10_da" quality="3" min="0.5" max="0.5">
+      <bonus chance="1.0" max="3">
         <drag min="0.75" max="0.75"/>
         <radarcloak min="-0.5" max="-0.5"/>
-        <radarrange min="1.25" max="1.25"/>
-        <maxhull min="1.0" max="1.5"/>
+        <maxhull min="1.5" max="1.5"/>
       </bonus>
     </mass>
   </add>
@@ -283,13 +468,28 @@
     <capacity ware="mod_shield_xenon_2_da" quality="1" min="1.1" max="1.1"/>
   </add>
   <add sel="/equipmentmods/shield">
-    <capacity ware="mod_shield_xenon_3_da" quality="2" min="1.15" max="1.15"/>
+    <capacity ware="mod_shield_xenon_3_da" quality="1" min="1.15" max="1.15"/>
   </add>
   <add sel="/equipmentmods/shield">
     <capacity ware="mod_shield_xenon_4_da" quality="2" min="1.2" max="1.2"/>
   </add>
   <add sel="/equipmentmods/shield">
-    <capacity ware="mod_shield_xenon_5_da" quality="3" min="1.25" max="1.25"/>
+    <capacity ware="mod_shield_xenon_5_da" quality="2" min="1.25" max="1.25"/>
+  </add>
+  <add sel="/equipmentmods/shield">
+    <capacity ware="mod_shield_xenon_6_da" quality="2" min="1.3" max="1.3"/>
+  </add>
+  <add sel="/equipmentmods/shield">
+    <capacity ware="mod_shield_xenon_7_da" quality="3" min="1.35" max="1.35"/>
+  </add>
+  <add sel="/equipmentmods/shield">
+    <capacity ware="mod_shield_xenon_8_da" quality="3" min="1.4" max="1.4"/>
+  </add>
+  <add sel="/equipmentmods/shield">
+    <capacity ware="mod_shield_xenon_9_da" quality="3" min="1.45" max="1.45"/>
+  </add>
+  <add sel="/equipmentmods/shield">
+    <capacity ware="mod_shield_xenon_10_da" quality="3" min="1.5" max="1.5"/>
   </add>
   <add sel="/equipmentmods/shield">
     <capacity ware="mod_shield_capacity_AI" quality="3" min="1.3" max="1.3"/>

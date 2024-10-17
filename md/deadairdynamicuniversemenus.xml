@@ -2467,7 +2467,7 @@
 								$cellBGColor = $DAMVT.$BodyBackgroundBright
 							]"/>
 						<do_if value="$DADVT.$DAEvolutionEnable">
-							<set_value name="$LocMax" exact="[300,$DADVT.$DAEvolutionInterval * 2].max"/>
+							<set_value name="$LocMax" exact="[480,$DADVT.$DAEvolutionInterval * 2].max"/>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
 									$col = 5,
 									$colSpan = 4,
@@ -2482,6 +2482,37 @@
 									$suffix = 'min',
 								]"/>
 							<remove_value name="$LocMax"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1,
+								$colSpan = 4,
+								$text = {33232474,172},
+								$mouseOverText = {33232474,1172},
+								$cellBGColor = $DAMVT.$BodyBackgroundBright
+							]"/>
+						<do_if value="$DADVT.$DAEvolutionEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_EvolutionMaxLevel,
+									$min = 0,
+									$minSelect = 1,
+									$max = 10,
+									$maxSelect = 10,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DAEvoltuionPlayerMaxSetting,
+									$step = 1,
+								]"/>
 						</do_if>
 						<do_else>
 							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
@@ -2763,6 +2794,16 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
+				<cue name="ExecuteOption_EvolutionMaxLevel" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT.$DAEvoltuionPlayerMaxSetting" exact="event.param.$value"/>
+						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvoltuionPlayerMaxSetting to %s'.[$DADVT.$DAEvoltuionPlayerMaxSetting]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
 				<cue name="ExecuteOption_EvolutionEnableJobs" instantiate="true">
 					<conditions>
 						<event_cue_signalled/>
@@ -2785,6 +2826,7 @@
 					<actions>
 						<set_value name="$DADVT.$DAEvolutionMaxXenonJobs" exact="event.param.$value"/>
 						<debug_text text="'MOD: DAMenus Evolution -- Updated $DADVT.$DAEvolutionMaxXenonJobs to %s'.[$DADVT.$DAEvolutionMaxXenonJobs]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_EvolutionXenFleetSmall" instantiate="true">
@@ -6784,19 +6826,50 @@
 							</do_if>
 							<!--Go through resources.-->
 							<do_for_each name="$ware" in="$cont.resources.list">
-								<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								<!-- 20241014 Fixing negative build storage numbers -->
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 							</do_for_each>
 							<!--Go through products.-->
 							<do_for_each name="$ware" in="$cont.products.list">
-								<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<!-- 20240717 Adding half of target amount for production stations better represents the goal of producers having 50% stock -->
-								<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target / 2" operation="add"/>
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<!-- 20241014 Adding 2/3 of target amount for production stations better represents the goal of producers having 66% stock -->
+									<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target * 2 / 3" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 							</do_for_each>
 							<!--Tradewares are those that are not product or resource.-->
 							<do_for_each name="$ware" in="$cont.tradewares.list">
-								<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$wares_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<set_value name="$wares_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$wares_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 							</do_for_each>
 						</do_for_each>
 						<remove_value name="$stations"/>
@@ -6892,10 +6965,24 @@
 						<remove_value name="$buildstorages"/>
 						<!--Main loop to gather info.-->
 						<do_for_each name="$cont" in="$stations">
+							<do_if value="($cont.isclass.buildstorage) and (@$cont.base.iswreck or (not (@$cont.base.hasplannedconstruction or @$cont.base.isoperational)))">
+								<continue/>
+							</do_if>
 							<!--Go through resources.-->
 							<do_for_each name="$ware" in="$cont.resources.list">
-								<set_value name="$res_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$res_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								<!-- 20241014 Fixing negative build storage numbers -->
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$res_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$res_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<set_value name="$res_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$res_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 								<set_value name="$pro_existing.{$ware}" exact="0" operation="add"/>
 								<set_value name="$pro_wanted.{$ware}" exact="0" operation="add"/>
 							</do_for_each>
@@ -6903,13 +6990,35 @@
 							<do_for_each name="$ware" in="$cont.products.list">
 								<set_value name="$res_existing.{$ware}" exact="0" operation="add"/>
 								<set_value name="$res_wanted.{$ware}" exact="0" operation="add"/>
-								<set_value name="$pro_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$pro_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								<!-- 20241014 Fixing negative build storage numbers -->
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$pro_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$pro_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<set_value name="$pro_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$pro_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 							</do_for_each>
 							<!-- Tradewares -->
 							<do_for_each name="$ware" in="$cont.tradewares.list">
-								<set_value name="$res_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
-								<set_value name="$res_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								<!-- 20241014 Fixing negative build storage numbers -->
+								<do_if value="@$cont.cargo.{$ware}.count gt 0">
+									<set_value name="$res_existing.{$ware}" exact="$cont.cargo.{$ware}.count" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$res_existing.{$ware}" exact="0" operation="add"/>
+								</do_else>
+								<do_if value="@$cont.cargo.{$ware}.target gt 0">
+									<set_value name="$res_wanted.{$ware}" exact="$cont.cargo.{$ware}.target" operation="add"/>
+								</do_if>
+								<do_else>
+									<set_value name="$res_wanted.{$ware}" exact="0" operation="add"/>
+								</do_else>
 								<set_value name="$pro_existing.{$ware}" exact="0" operation="add"/>
 								<set_value name="$pro_wanted.{$ware}" exact="0" operation="add"/>
 							</do_for_each>
@@ -8860,20 +8969,20 @@
 							{14}Workforce Num,{15}Workforce Prod Effect,{16}Workforce Cycle Effect,{17}Secondary Resource,{18}SR Amount,{19}SR Prod Effect,{20}SR Cycle Effect -->
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_advancedcomposites_macro}" exact="[ware.advancedcomposites,600,108,ware.energycells,100,ware.graphene,160,ware.refinedmetals,160,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,31,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_advancedcomposites_macro}" exact="[ware.advancedcomposites,600,108,ware.energycells,100,ware.graphene,160,ware.teladianium,116,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,31,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_advancedelectronics_macro}" exact="[ware.advancedelectronics,600,45,ware.energycells,50,ware.microchips,37,ware.quantumtubes,17,null,0,null,0,540,0.5,0.5,ware.da_adv_schematics,9,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_advancedelectronics_macro}" exact="[ware.advancedelectronics,600,68,ware.energycells,75,ware.microchips,56,ware.quantumtubes,26,null,0,null,0,540,0.5,0.5,ware.da_adv_schematics,14,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_antimattercells_macro}" exact="[ware.antimattercells,300,248,ware.energycells,250,ware.hydrogen,800,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,38,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_antimatterconverters_macro}" exact="[ware.antimatterconverters,600,266,ware.advancedcomposites,40,ware.energycells,160,ware.microchips,60,null,0,null,0,1080,0.5,0.5,ware.da_adv_schematics,19,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_claytronics_macro}" exact="[ware.claytronics,600,108,ware.antimattercells,101,ware.energycells,140,ware.microchips,161,ware.quantumtubes,101,null,0,1215,0.5,0.5,ware.da_adv_schematics,54,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_dronecomponents_macro}" exact="[ware.dronecomponents,600,53,ware.energycells,30,ware.engineparts,10,ware.hullparts,10,ware.microchips,10,ware.scanningarrays,20,675,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_energycells_macro}" exact="[ware.energycells,300,875,null,0,null,0,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_energycells_macro}" exact="[ware.energycells,300,250,null,0,null,0,null,0,null,0,null,0,45,0.5,0.5,ware.da_laborunion_contracts,4,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_energycells_macro}" exact="[ware.energycells,300,1750,null,0,null,0,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,28,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_energycells_macro}" exact="[ware.energycells,300,750,null,0,null,0,null,0,null,0,null,0,45,0.5,0.5,ware.da_laborunion_contracts,12,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_engineparts_macro}" exact="[ware.engineparts,600,139,ware.antimattercells,53,ware.energycells,40,ware.refinedmetals,64,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,10,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_engineparts_macro}" exact="[ware.engineparts,600,139,ware.antimattercells,53,ware.energycells,40,ware.teladianium,47,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,10,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_fieldcoils_macro}" exact="[ware.fieldcoils,600,175,ware.energycells,60,ware.plasmaconductors,40,ware.quantumtubes,43,null,0,null,0,810,0.5,0.5,ware.da_adv_schematics,15,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_foodrations_macro}" exact="[ware.foodrations,300,575,ware.energycells,125,ware.meat,50,ware.spices,50,ware.wheat,50,null,0,90,0.5,0.5,ware.da_laborunion_contracts,11,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_graphene_macro}" exact="[ware.graphene,300,120,ware.energycells,100,ware.methane,400,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_hullparts_macro}" exact="[ware.hullparts,600,196,ware.energycells,53,ware.graphene,27,ware.refinedmetals,187,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_hullparts_macro}" exact="[ware.hullparts,600,196,ware.energycells,53,ware.graphene,27,ware.teladianium,136,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,19,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_graphene_macro}" exact="[ware.graphene,300,240,ware.energycells,200,ware.methane,800,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,48,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_hullparts_macro}" exact="[ware.hullparts,600,392,ware.energycells,106,ware.graphene,54,ware.refinedmetals,374,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,39,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_hullparts_macro}" exact="[ware.hullparts,600,392,ware.energycells,106,ware.graphene,54,ware.teladianium,272,null,0,null,0,270,0.5,0.5,ware.da_mil_schematics,39,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_majadust_macro}" exact="[ware.majadust,600,64,ware.energycells,40,ware.majasnails,120,ware.spices,60,null,0,null,0,123,0.5,0.5,ware.da_laborunion_contracts,18,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_majasnails_macro}" exact="[ware.majasnails,300,97,ware.energycells,27,ware.water,67,null,0,null,0,null,0,175,0.5,0.5,ware.da_laborunion_contracts,8,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_meat_macro}" exact="[ware.meat,300,193,ware.energycells,53,ware.water,67,null,0,null,0,null,0,75,0.5,0.5,ware.da_laborunion_contracts,9,0.1,0.25]"/>
@@ -8882,8 +8991,8 @@
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.spices,40,ware.sunriseflowers,12,ware.water,60,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,208,ware.energycells,100,ware.scruffinfruits,30,ware.spices,60,ware.water,60,null,0,90,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_ter_medicalsupplies_macro}" exact="[ware.medicalsupplies,300,140,ware.energycells,100,ware.ice,50,ware.proteinpaste,24,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,9,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_microchips_macro}" exact="[ware.microchips,600,144,ware.energycells,100,ware.siliconwafers,400,null,0,null,0,null,0,450,0.5,0.5,ware.da_adv_schematics,24,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_missilecomponents_macro}" exact="[ware.missilecomponents,600,187,ware.advancedcomposites,1,ware.energycells,13,ware.hullparts,1,null,0,null,0,22,0.5,0.5,ware.da_mil_schematics,2,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_microchips_macro}" exact="[ware.microchips,600,216,ware.energycells,150,ware.siliconwafers,600,null,0,null,0,null,0,450,0.5,0.5,ware.da_adv_schematics,35,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_missilecomponents_macro}" exact="[ware.missilecomponents,600,374,ware.advancedcomposites,2,ware.energycells,26,ware.hullparts,2,null,0,null,0,22,0.5,0.5,ware.da_mil_schematics,3,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_nostropoil_macro}" exact="[ware.nostropoil,300,500,ware.energycells,100,ware.spices,40,ware.sunriseflowers,40,ware.water,60,null,0,120,0.5,0.5,ware.da_laborunion_contracts,18,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_plasmaconductors_macro}" exact="[ware.plasmaconductors,600,29,ware.energycells,40,ware.graphene,64,ware.superfluidcoolant,93,null,0,null,0,225,0.5,0.5,ware.da_adv_schematics,6,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_quantumtubes_macro}" exact="[ware.quantumtubes,600,156,ware.energycells,66,ware.graphene,194,ware.superfluidcoolant,50,null,0,null,0,225,0.5,0.5,ware.da_adv_schematics,10,0.1,0.25]"/>
@@ -8892,7 +9001,7 @@
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_scanningarrays_macro}" exact="[ware.scanningarrays,600,36,ware.energycells,60,ware.siliconwafers,60,ware.teladianium,73,null,0,null,0,315,0.5,0.5,ware.da_mil_schematics,18,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_shieldcomponents_macro}" exact="[ware.shieldcomponents,600,97,ware.energycells,35,ware.plasmaconductors,10,ware.quantumtubes,10,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,9,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_siliconwafers_macro}" exact="[ware.siliconwafers,300,356,ware.energycells,300,ware.silicon,800,null,0,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,97,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_smartchips_macro}" exact="[ware.smartchips,600,143,ware.energycells,50,ware.siliconwafers,20,null,0,null,0,null,0,60,0.5,0.5,ware.da_mil_schematics,3,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_smartchips_macro}" exact="[ware.smartchips,600,286,ware.energycells,100,ware.siliconwafers,40,null,0,null,0,null,0,60,0.5,0.5,ware.da_mil_schematics,6,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_sojabeans_macro}" exact="[ware.sojabeans,300,104,ware.energycells,30,ware.water,80,null,0,null,0,null,0,175,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_par_sojahusk_macro}" exact="[ware.sojahusk,300,350,ware.energycells,80,ware.majasnails,50,ware.sojabeans,40,ware.spices,20,null,0,99,0.5,0.5,ware.da_laborunion_contracts,14,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_spacefuel_macro}" exact="[ware.spacefuel,600,123,ware.energycells,50,ware.water,125,ware.wheat,100,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
@@ -8902,9 +9011,9 @@
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_superfluidcoolant_macro}" exact="[ware.superfluidcoolant,300,119,ware.energycells,75,ware.helium,400,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,21,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_swampplant_macro}" exact="[ware.swampplant,300,80,ware.energycells,27,ware.water,67,null,0,null,0,null,0,50,0.5,0.5,ware.da_laborunion_contracts,8,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_tel_teladianium_macro}" exact="[ware.teladianium,300,350,ware.energycells,226,ware.ore,1400,null,0,null,0,null,0,225,0.5,0.5,ware.da_laborunion_contracts,83,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_turretcomponents_macro}" exact="[ware.turretcomponents,600,57,ware.energycells,20,ware.microchips,7,ware.quantumtubes,7,ware.scanningarrays,3,null,0,225,0.5,0.5,ware.da_mil_schematics,7,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_turretcomponents_macro}" exact="[ware.turretcomponents,600,114,ware.energycells,40,ware.microchips,14,ware.quantumtubes,14,ware.scanningarrays,6,null,0,225,0.5,0.5,ware.da_mil_schematics,13,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_water_macro}" exact="[ware.water,300,483,ware.energycells,150,ware.ice,800,null,0,null,0,null,0,180,0.5,0.5,ware.da_laborunion_contracts,46,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_weaponcomponents_macro}" exact="[ware.weaponcomponents,600,57,ware.energycells,20,ware.hullparts,7,ware.plasmaconductors,10,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,8,0.1,0.25]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_weaponcomponents_macro}" exact="[ware.weaponcomponents,600,114,ware.energycells,40,ware.hullparts,14,ware.plasmaconductors,20,null,0,null,0,225,0.5,0.5,ware.da_mil_schematics,15,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_arg_wheat_macro}" exact="[ware.wheat,300,310,ware.energycells,60,ware.water,80,null,0,null,0,null,0,75,0.5,0.5,ware.da_laborunion_contracts,11,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_cheltmeat_macro}" exact="[ware.cheltmeat,300,139,ware.energycells,33,ware.water,80,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_spl_scruffinfruit_macro}" exact="[ware.scruffinfruits,300,255,ware.energycells,30,ware.water,80,null,0,null,0,null,0,90,0.5,0.5,ware.da_laborunion_contracts,10,0.1,0.25]"/>
@@ -8917,15 +9026,15 @@
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_bofu_macro}" exact="[ware.bofu,300,103,ware.bogas,50,ware.energycells,50,ware.plankton,150,null,0,null,0,125,0.5,0.5,ware.da_laborunion_contracts,12,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_bogas_macro}" exact="[ware.bogas,300,220,ware.energycells,80,ware.water,200,null,0,null,0,null,0,100,0.5,0.5,ware.da_laborunion_contracts,24,0.1,0.25]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_bor_plankton_macro}" exact="[ware.plankton,300,206,ware.energycells,15,ware.water,38,null,0,null,0,null,0,40,0.5,0.5,ware.da_laborunion_contracts,5,0.1,0.25]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_adv_schematics_macro}" exact="[ware.da_adv_schematics,900,35,null,null,null,null,null,null,null,null,null,null,750,5,0.5,null,null,null,null]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_mil_schematics_macro}" exact="[ware.da_mil_schematics,900,50,null,null,null,null,null,null,null,null,null,null,500,5,0.5,null,null,null,null]"/>
-						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_laborunion_contracts_macro}" exact="[ware.da_laborunion_contracts,900,120,null,null,null,null,null,null,null,null,null,null,500,5,0.5,null,null,null,null]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.argon}" exact="[ware.workunit_busy,600,200,ware.foodrations,75,ware.medicalsupplies,45,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.paranid}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.sojahusk,48,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.teladi}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.nostropoil,38,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.split}" exact="[ware.workunit_busy,600,200,ware.cheltmeat,17,ware.medicalsupplies,45,ware.scruffinfruits,23,null,0,null,0,0,0,0,null,0,0,0]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.terran}" exact="[ware.workunit_busy,600,200,ware.medicalsupplies,45,ware.terranmre,43,null,0,null,0,null,0,0,0,0,null,0,0,0]"/>
 						<set_value name="$DAMVT.$DAStationCalcTable.{race.boron}" exact="[ware.workunit_busy,600,200,ware.bofu,15,ware.medicalsupplies,33,ware.water,27,null,0,null,0,0,0,0,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_adv_schematics_macro}" exact="[ware.da_adv_schematics,900,35,null,0,null,0,null,0,null,0,null,0,750,5,0.5,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_mil_schematics_macro}" exact="[ware.da_mil_schematics,900,50,null,0,null,0,null,0,null,0,null,0,500,5,0.5,null,0,0,0]"/>
+						<set_value name="$DAMVT.$DAStationCalcTable.{macro.prod_gen_da_laborunion_contracts_macro}" exact="[ware.da_laborunion_contracts,900,120,null,0,null,0,null,0,null,0,null,0,500,5,0.5,null,0,0,0]"/>
 					</actions>
 				</library>
 				<library name="Library_StationCalc_GetModuleList">
