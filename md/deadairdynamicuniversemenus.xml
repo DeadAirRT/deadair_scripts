@@ -87,39 +87,39 @@
 					</conditions>
 					<actions>
 						<set_value name="$MissingVarCount" exact="0"/>
-						<do_if value="not md.$DAMenuVarTable? or (md.$DAMenuVarTable == null)">
+						<do_if value="(not md.$DAMenuVarTable?) or (md.$DAMenuVarTable == null)">
 							<set_value name="md.$DAMenuVarTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DADVT? or ($DADVT == null)">
+						<do_if value="(not $DADVT?) or ($DADVT == null)">
 							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT? or ($DAMVT == null)">
+						<do_if value="(not $DAMVT?) or ($DAMVT == null)">
 							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAGVT? or ($DAGVT == null)">
+						<do_if value="(not $DAGVT?) or ($DAGVT == null)">
 							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DAMenuDebugEnable? or (not ((typeof $DAMVT.$DAMenuDebugEnable == datatype.integer) and (($DAMVT.$DAMenuDebugEnable == 1) or ($DAMVT.$DAMenuDebugEnable == 0))))">
+						<do_if value="(not $DAMVT.$DAMenuDebugEnable?) or (not ((typeof $DAMVT.$DAMenuDebugEnable == datatype.integer) and (($DAMVT.$DAMenuDebugEnable == 1) or ($DAMVT.$DAMenuDebugEnable == 0))))">
 							<set_value name="$DAMVT.$DAMenuDebugEnable" exact="true"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DWMilStrengthHistory? or ($DAMVT.$DWMilStrengthHistory == null)">
+						<do_if value="(not $DAMVT.$DWMilStrengthHistory?) or ($DAMVT.$DWMilStrengthHistory == null)">
 							<set_value name="$DAMVT.$DWMilStrengthHistory" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$InfoMilDisplayOption? or (not (typeof $DAMVT.$InfoMilDisplayOption == datatype.integer))">
+						<do_if value="(not $DAMVT.$InfoMilDisplayOption?) or (not (typeof $DAMVT.$InfoMilDisplayOption == datatype.integer))">
 							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DWEcoStrengthHistory? or ($DAMVT.$DWEcoStrengthHistory == null)">
+						<do_if value="(not $DAMVT.$DWEcoStrengthHistory?) or ($DAMVT.$DWEcoStrengthHistory == null)">
 							<set_value name="$DAMVT.$DWEcoStrengthHistory" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$InfoEcoDisplayOption? or (not (typeof $DAMVT.$InfoEcoDisplayOption == datatype.integer))">
+						<do_if value="(not $DAMVT.$InfoEcoDisplayOption?) or (not (typeof $DAMVT.$InfoEcoDisplayOption == datatype.integer))">
 							<set_value name="$DAMVT.$InfoEcoDisplayOption" exact="1"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
@@ -149,15 +149,15 @@
 						<set_value name="$DAMVT.$HeaderBackgroundDark" exact="'Color.da_headerbackground_dark'"/>
 						<set_value name="$DAMVT.$BodyBackgroundBright" exact="'Color.da_bodybackground_bright'"/>
 						<set_value name="$DAMVT.$BodyBackgroundDark" exact="'Color.da_bodybackground_dark'"/>
-						<do_if value="not $DAMVT.$DAStationCalcTable? or ($DAMVT.$DAStationCalcTable == null)">
+						<do_if value="(not $DAMVT.$DAStationCalcTable?) or ($DAMVT.$DAStationCalcTable == null)">
 							<set_value name="$DAMVT.$DAStationCalcTable" exact="table[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DAStationCalcListOfAvailableModules? or ($DAMVT.$DAStationCalcListOfAvailableModules == null)">
+						<do_if value="(not $DAMVT.$DAStationCalcListOfAvailableModules?) or ($DAMVT.$DAStationCalcListOfAvailableModules == null)">
 							<set_value name="$DAMVT.$DAStationCalcListOfAvailableModules" exact="[]"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
-						<do_if value="not $DAMVT.$DAStationModules? or ($DAMVT.$DAStationModules == null)">
+						<do_if value="(not $DAMVT.$DAStationModules?) or ($DAMVT.$DAStationModules == null)">
 							<set_value name="$DAMVT.$DAStationModules" exact="table[]"/>
 							<set_value name="$DAMVT.$DAStationModules.$Selected" exact="table[]"/>
 							<set_value name="$DAMVT.$DAStationModules.$Order" exact="[]"/>
@@ -940,6 +940,103 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
 									$colSpan = 4,
+									$text = {33232474,143},
+									$mouseOverText = {33232474,1143},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarPossibleFactionsPerEvent,
+									$min = 0,
+									$minSelect = 1,
+									$max = 10,
+									$maxSelect = 10,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarPossibleFactionsPerEvent,
+									$step = 1,
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,146},
+									$mouseOverText = {33232474,1146},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DADynamicWarStatTracking then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarStatTracking then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1146},
+									$onClick = ExecuteOption_EnableSimplfied,
+									$onRightClick = ExecuteOption_EnableSimplfied,
+									$echo = ['DADVT','$DADynamicWarStatTracking',$DADVT.$DADynamicWarStatTracking]
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,147},
+									$mouseOverText = {33232474,1147},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable and $DADVT.$DADynamicWarStatTracking">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Button" param="table[
+									$col = 5, 
+									$colSpan = 4,
+									$text = table[
+									  $text   =  if $DADVT.$DADynamicWarFatigue then {1001,4825} else {1001,8942}, 
+									  $color  =  if $DADVT.$DADynamicWarFatigue then $DAMVT.$TextGreen else $DAMVT.$TextRed,
+									  $halign = 'center',
+									],
+									$highlightColor = $DAMVT.$ButtonHighlight,
+									$mouseOverText = {33232474,1147},
+									$onClick = ExecuteOption_EnableSimplfied,
+									$onRightClick = ExecuteOption_EnableSimplfied,
+									$echo = ['DADVT','$DADynamicWarFatigue',$DADVT.$DADynamicWarFatigue]
+								]"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
 									$text = {33232474,137},
 									$mouseOverText = {33232474,1137},
 									$cellBGColor = $DAMVT.$BodyBackgroundBright
@@ -957,37 +1054,6 @@
 									$mouseOverText = {33232474,1137},
 									$onClick = ExecuteOption_DynamicWarDebugEnable,
 									$onRightClick = ExecuteOption_DynamicWarDebugEnable,
-								]"/>
-						</do_if>
-						<do_else>
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$text = {1001,8942},
-									$halign = 'right',
-									$cellBGColor = $DAMVT.$BodyBackgroundDark
-								]"/>
-						</do_else>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
-						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
-									$col = 1,
-									$colSpan = 4,
-									$text = {33232474,143},
-									$mouseOverText = {33232474,1143},
-									$cellBGColor = $DAMVT.$BodyBackgroundBright
-								]"/>
-						<do_if value="$DADVT.$DADynamicWarEnable">
-							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
-									$col = 5,
-									$colSpan = 4,
-									$onSliderCellConfirm = ExecuteOption_DynamicWarPossibleFactionsPerEvent,
-									$min = 0,
-									$minSelect = 1,
-									$max = 10,
-									$maxSelect = 10,
-									$exceedMaxValue = false,
-									$start = $DADVT.$DADynamicWarPossibleFactionsPerEvent,
-									$step = 1,
 								]"/>
 						</do_if>
 						<do_else>
@@ -1364,17 +1430,27 @@
 						<remove_value name="$DAFLSectors"/>
 					</actions>
 				</cue>
-				<cue name="ExecuteOption_RelationsIncrease" instantiate="true">
+				<cue name="ExecuteOption_RelationsIncrease" instantiate="true" namespace="this">
 					<conditions>
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- Namespace Variables -->
+						<do_if value="(not $DAMVT?) or ($DAMVT == null)">
+							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						</do_if>
+						<do_if value="(not $DADVT?) or ($DADVT == null)">
+							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						</do_if>
+						<do_if value="(not $DWT?) or ($DWT == null)">
+							<set_value name="$DWT" exact="md.$DynamicWarTable"/>
+						</do_if>
 						<!-- $echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$IncCost] -->
 						<set_value name="$DARelSelectedFactionOne" exact="event.param.$echo.{1}"/>
 						<set_value name="$DARelSelectedFactionTwo" exact="event.param.$echo.{2}"/>
 						<set_value name="$DARelUseFavor" exact="event.param.$echo.{3}"/>
 						<set_value name="$DARelIncCost" exact="event.param.$echo.{4}"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsIncrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- IncCost: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelIncCost]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<set_value name="$LocOldAbsRel" exact="$DARelSelectedFactionOne.relationto.{$DARelSelectedFactionTwo}"/>
 						<set_value name="$UIRelationChange" exact="5"/>
 						<include_actions ref="Library_CalculateUiValueRepChange"/>
 						<!-- Returns $NewAbsoluteRepValue and $AbsoluteRepValueChange -->
@@ -1389,20 +1465,40 @@
 						</do_else>
 						<set_faction_relation faction="$DARelSelectedFactionOne" otherfaction="$DARelSelectedFactionTwo" value="([$NewAbsoluteRepValue, 1.0].min)"/>
 						<set_faction_relation faction="$DARelSelectedFactionTwo" otherfaction="$DARelSelectedFactionOne" value="([$NewAbsoluteRepValue, 1.0].min)"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsIncrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- IncCost: %s -- OldRel: %s -- NewRel: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelIncCost,$LocOldAbsRel,$NewAbsoluteRepValue]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<do_if value="(@$LocOldAbsRel le -0.1) and (@$NewAbsoluteRepValue gt -0.1)">
+							<do_if value="$DWT.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}?">
+								<set_value name="$DWT.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}.{6}" exact="true"/>
+							</do_if>
+							<do_if value="$DWT.{$DARelSelectedFactionTwo}.{$DARelSelectedFactionOne}?">
+								<set_value name="$DWT.{$DARelSelectedFactionOne}.{$DARelSelectedFactionTwo}.{6}" exact="true"/>
+							</do_if>
+						</do_if>
+						<remove_value name="$LocOldAbsRel"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
-				<cue name="ExecuteOption_RelationsDecrease" instantiate="true">
+				<cue name="ExecuteOption_RelationsDecrease" instantiate="true" namespace="this">
 					<conditions>
 						<event_cue_signalled/>
 					</conditions>
 					<actions>
+						<!-- Namespace Variables -->
+						<do_if value="(not $DAMVT?) or ($DAMVT == null)">
+							<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						</do_if>
+						<do_if value="(not $DADVT?) or ($DADVT == null)">
+							<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						</do_if>
+						<do_if value="(not $DWT?) or ($DWT == null)">
+							<set_value name="$DWT" exact="md.$DynamicWarTable"/>
+						</do_if>
 						<!-- $echo = [$DADynamicWarFactionOne,$DADynamicWarFactionTwo,$UseFavor,$DecCost] -->
 						<set_value name="$DARelSelectedFactionOne" exact="event.param.$echo.{1}"/>
 						<set_value name="$DARelSelectedFactionTwo" exact="event.param.$echo.{2}"/>
 						<set_value name="$DARelUseFavor" exact="event.param.$echo.{3}"/>
 						<set_value name="$DARelDecCost" exact="event.param.$echo.{4}"/>
-						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsDecrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- IncCost: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelDecCost]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<set_value name="$LocOldAbsRel" exact="$DARelSelectedFactionOne.relationto.{$DARelSelectedFactionTwo}"/>
 						<set_value name="$UIRelationChange" exact="-5"/>
 						<include_actions ref="Library_CalculateUiValueRepChange"/>
 						<!-- Returns $NewAbsoluteRepValue and $AbsoluteRepValueChange -->
@@ -1417,6 +1513,11 @@
 						</do_else>
 						<set_faction_relation faction="$DARelSelectedFactionOne" otherfaction="$DARelSelectedFactionTwo" value="([$NewAbsoluteRepValue, -1].max)"/>
 						<set_faction_relation faction="$DARelSelectedFactionTwo" otherfaction="$DARelSelectedFactionOne" value="([$NewAbsoluteRepValue, -1].max)"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- ExecuteOption_RelationsDecrease -- FactionOne: %s -- FactionTwo: %s -- UseFavor: %s -- DecCost: %s -- OldRel: %s -- NewRel: %s'.[$DARelSelectedFactionOne.knownname,$DARelSelectedFactionTwo.knownname,$DARelUseFavor,$DARelDecCost,$LocOldAbsRel,$NewAbsoluteRepValue]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<do_if value="(@$LocOldAbsRel gt -0.1) and (@$NewAbsoluteRepValue le -0.1)">
+							<signal_cue_instantly cue="md.DeadAirDynamicUniverse.EventDynamicWarTrackEvent" param="[$DARelSelectedFactionOne,$DARelSelectedFactionTwo,$LocOldAbsRel,$NewAbsoluteRepValue]"/>
+						</do_if>
+						<remove_value name="$LocOldAbsRel"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>
@@ -9350,6 +9451,26 @@
 						<do_else>
 							<debug_text text="'MOD: DAMenus SC -- ExecuteOption_StationCalcSetModuleCount -- ERROR event.param.$echo is invalid: %s -- event.param.$value: %s'.[@event.param.$echo,event.param.$value]" context="false" filter="error"/>
 						</do_else>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<!-- New Simplified enable/disable -->
+				<cue name="ExecuteOption_EnableSimplfied" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="event.param.$echo?">
+							<do_if value="event.param.$echo.{1} == 'DADVT'">
+								<do_if value="$DADVT.{event.param.$echo.{2}}?">
+									<set_value name="$DADVT.{event.param.$echo.{2}}" exact="not event.param.$echo.{3}"/>
+									<debug_text text="'MOD: DAMenus -- Updated $%s.%s from %s to %s'.[event.param.$echo.{1},event.param.$echo.{2},event.param.$echo.{3},$DADVT.{event.param.$echo.{2}}]" context="false" filter="scripts"/>
+								</do_if>
+								<do_else>
+									<debug_text text="'MOD: DAMenus -- ERROR -- Could not find $%s.%s'.[event.param.$echo.{1},event.param.$echo.{2}]" context="false" filter="error"/>
+								</do_else>
+							</do_if>
+						</do_if>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>

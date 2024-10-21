@@ -51,6 +51,8 @@
 		<t id="143">Maximum Factions to Check</t>
 		<t id="144">(XXX)</t>
 		<t id="145">Sector Faction Logic Menu</t>
+		<t id="146">Enable DW Stat Tracking</t>
+		<t id="147">Enable DW Fatigue</t>
 		<!-- Dynamic War Menu Entry Descriptions -->
 		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
 		<t id="1111">Allows the player to use credits or favors to increase relations between two factions. Decreasing relation between two factions requires a certain level of trust (reputation) with the faction.</t>
@@ -78,7 +80,7 @@
 		<t id="1133">Changes the effect that a factions primary race plays. Factions will tend to be more friendly with same race and xenophobic the higher this value is. This value is multiplicative. Default = 0.25</t>
 		<t id="1134">Changes the effect that a factions current relation plays. Factions will tend to continue friendly relations or continue hostility the higher this value is. This value is multiplicative. Default = 0.5</t>
 		<t id="1135">Changes the effect that a factions current allies and enemies plays. Factions will tend to form coalitions the higher this value is. This value is multiplicative. Default = 0.25</t>
-		<t id="1136">TODO. Changes whether logbook entries have added flavor text. Does not affect gameplay but takes a lot of work to write them.</t>
+		<t id="1136">Changes whether logbook entries have added flavor text. Does not affect gameplay but takes a lot of work to write them or find appropriate quotes.</t>
 		<t id="1137">Changes whether debug entries in the code will output text or files. Has no effect if game is not run in the appropriate debug mode.</t>
 		<t id="1138">This faction has locked relations.</t>
 		<t id="1139">(XXX)</t>
@@ -88,6 +90,8 @@
 		<t id="1143">The number of factions the script will have as potential second faction during an event. Increasing this value can potentially cause an impact to performance as there is a large amount of calculations for determining faction strength. Default = 4</t>
 		<t id="1144">(XXX)</t>
 		<t id="1145">Allows the player to change whether faction logic in Clusters and their child Sectors is enabled. This menu will force the cluster and child sectors to be on the same setting if changed to avoid problems with AI. This may cause issues with certain storyline missions.</t>
+		<t id="1146">Enables new functionality to track ship kills and war stats for conflicts started by this script package.</t>
+		<t id="1147">Enables factions returning to previous reputation when they have sustained enough losses. Wars have a minimum time of 2 hours before peace can result via fatigue.</t>
 		<!-- Dynamic War Misc -->
 		<t id="2110">(FACTION)Relations Locked.</t>
 		<t id="2111">(XXX)</t>
@@ -97,7 +101,7 @@
 		<t id="2115">Diplomatic Favor</t>
 		<t id="2116">Cluster</t>
 		<t id="2117">Change in count compared to %s minutes ago.</t>
-		<t id="2118">(XXX)</t>
+		<t id="2118">War Fatigue</t>
 		<t id="2119">(XXX)</t>
 		<t id="2120">(XXX)</t>
 		<t id="2121">(XXX)</t>
@@ -109,6 +113,50 @@
 		<t id="2127">(XXX)</t>
 		<t id="2128">(XXX)</t>
 		<t id="2129">(XXX)</t>
+		<!-- Dynamic War Quotes -->
+		<!-- Alliance -->
+		<t id="3110">Lofty words cannot construct an alliance or maintain it; only concrete deeds can do that.(John F. Kennedy)</t>
+		<t id="3111">It is not love that makes the world go around, but rather those mutually supportive alliances through which parties recognize their dependence on each other for the achievement of shared and private goals.(Fred Allen)(Altered)</t>
+		<t id="3112">We are not dictating. We are not telling them how they should do it or who they should look like. We are their friends. We have mutual interests and we will help them in any way that is possible.(Colin Powell)(Altered)</t>
+		<t id="3113">Create strategic alliances and partnerships: Now and in years to come, shrewd leaders will create allegiances with other organizations whose fates are correlated with their own.(Warren G. Bennis)</t>
+		<t id="3114">No one person, no one nation, no one of us is as smart as all of us thinking together.(James G. Stavridis)(Altered)</t>
+		<!-- Friendly -->
+		<t id="3120">Community means engaging constructively with like-minded nations to build strong, sustaining institutions and alliances - and bringing emerging powers into this community so future conflict becomes less likely.(Joe Lieberman)</t>
+		<t id="3121">Alliances and international organizations should be understood as opportunities for leadership and a means to expand our influence, not as constraints on our power.(Chuck Hagel)</t>
+		<t id="3122">It always takes a group of people working together with a common purpose in an atmosphere of trust and collaboration to get extraordinary things done.(James M. Kouzes)</t>
+		<t id="3123">Where people of goodwill get together and transcend their differences for the common good, peaceful and just solutions can be found even for those problems which seem most intractable.(Nelson Mandela)</t>
+		<t id="3124">One usually dies because one is alone, or because one has got into something over one's head. One often dies because one does not have the right alliances, because one is not given support.(Giovanni Falcone)(Altered)</t>
+		<!-- Positive to Neutral -->
+		<t id="3130">Peace, commerce and honest friendship with all nations; entangling alliances with none.(Thomas Jefferson)</t>
+		<t id="3131">My ardent desire is, and my aim has been, to comply strictly with all our engagements, foreign and domestic, but to keep the State free from political connections with every other country; to see that they may be independent of all and under the influence of none.(George Washington)(Altered)</t>
+		<t id="3132">Commerce with all nations, alliance with none, should be our motto.(Thomas Jefferson)</t>
+		<t id="3133">Friendship is but another name for an alliance with the follies and the misfortunes of others. Our own share of miseries is sufficient: why enter then as volunteers into those of another?(Thomas Jefferson)</t>
+		<t id="3134">The great rule of conduct for us, in regard to foreign nations, is, in extending our commercial relations, to have with them as little political connection as possible.(George Washington)</t>
+		<!-- Negative to Neutral -->
+		<t id="3140">The rights of neutrality will only be respected when they are defended by an adequate power. A nation, despicable by its weakness, forfeits even the privilege of being neutral.(Alexander Hamilton)</t>
+		<t id="3141">A political society does not live to conduct foreign policy; it would be more correct to say that it conducts foreign policy in order to live.(George F. Kennan)</t>
+		<t id="3142">Great is the guilt of an unnecessary war. We must strive to maintain neutrality.(John Adams)(Altered)</t>
+		<t id="3143">To fight the raven you may make an alliance with the serpent until the battle is done.(Robert Jordan)(Altered)</t>
+		<t id="3144">To the world, we seek a new way forward, based on mutual interest and mutual respect. To those leaders around the globe who seek to sow conflict, or blame their society's ills on us - know that your people will judge you on what you can build, not what you destroy. To those who cling to power through corruption and deceit and the silencing of dissent, know that you are on the wrong side of history; but that we will extend a hand if you are willing to unclench your fist.(Barack Obama)(Altered)</t>
+		<t id="3145">Our goal is peace. We can gain that peace by strengthening our alliances, by speaking candidly about the dangers before us, by assuring potential adversaries of our seriousness, by actively pursuing every chance of honest and fruitful negotiation.(Ronald Reagan)</t>
+		<!-- Negative -->
+		<t id="3150">It is a power stronger than will. Could a stone escape from the laws of gravity? Impossible. Impossible, for evil to form an alliance with good.(Isidore Ducasse Lautreamont)</t>
+		<t id="3151">Let every nation know, whether it wishes us well or ill, that we shall pay any price, bear any burden, meet any hardship, support any friend, oppose any foe to assure the survival and the success of our nation.(John F. Kennedy)(Altered)</t>
+		<t id="3152">Trust is earned, respect is given, and loyalty is demonstrated. Betrayal of any one of those is to lose all three.(Ziad K. Abdelnour)</t>
+		<t id="3153">When you fear a foe, fear crushes your strength; and this weakness gives strength to your opponents.(William Shakespeare)</t>
+		<t id="3154">In a world of complex threats, our security and leadership depends on all elements of our power - including strong and principled diplomacy.(Barack Obama)</t>
+		<!-- Conflict -->
+		<t id="3160">The only thing necessary for the triumph of evil is for good men to do nothing. We refuse to sit idly by as our enemies grow bolder.(Edmund Burke)(Altered)</t>
+		<t id="3161">Evil is powerless if the good are unafraid. Our nation will not bow down to transgressions against us.(Ronald Reagan)(Altered)</t>
+		<t id="3162">It is our choice of good or evil that determines our character, not our opinion about good or evil. Our enemy has chosen evil and we choose to stand against them.(Aristotle)(Altered)</t>
+		<t id="3163">The door of conciliation and compromise is finally closed by our adversaries, and it remains only to us to meet the conflict with the dignity and firmness of men worthy of freedom.(Robert Toombs)</t>
+		<t id="3164">The way to secure peace is to be prepared for war. They that are on their guard, and appear ready to receive their adversaries, are in much less danger of being attacked, than the supine, secure, and negligent.(Benjamin Franklin)</t>
+		<!-- War -->
+		<t id="3170">Never leave an enemy behind, or it will rise again to fly at your throat.(Shakra)</t>
+		<t id="3171">We have before us an ordeal of the most grievous kind. We have before us many many long months of struggle and of suffering. You ask, what is our policy? I can say: It is to wage war against a monstrous tyranny.(Winston Churchill)(Altered)</t>
+		<t id="3172">You are about to embark upon the Great Crusade, toward which we have striven these many months. The eyes of the world are upon you. The hopes and prayers of our people everywhere march with you. You will bring about the destruction of the enemy war machine, the eliminations of tyranny, and the security for ourselves in a free universe.(Dwight D Eisenhower)(Altered)</t>
+		<t id="3173">The path we have chosen for the present is full of hazards, as all paths are; but it is the one most consistent with our character and courage as a nation. The cost of our way of life is always high, but we have always paid it. And one path we shall never choose, and that is the path of surrender or submission.(John F. Kennedy)(Altered)</t>
+		<t id="3174">Shall we allow our audacious enemies to violate with impunity the territory of our nation? Will you permit the enemy to escape which has carried terror into your families? You will not. March, then, to meet them. Teach the universe that a malediction attends those that violate the territory of our people. The result of our efforts will be unclouded glory, and a durable peace.(Napoleon Bonaparte)(Altered)</t>
 		<!-- Evolution Menu Entries -->
 		<t id="160">Enable Evolution</t>
 		<t id="161">Evolution Interval</t>
