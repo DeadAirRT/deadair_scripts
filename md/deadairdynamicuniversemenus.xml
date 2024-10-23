@@ -292,6 +292,13 @@
 								$onOpen  = Menu_DynamicWar_SpaceFactionLogic,
 								$private = 1,
 							]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+								$id      = 'menu_dynamicwar_warhistory',
+								$columns = 12, 
+								$title   = {33232474,144},
+								$onOpen  = Menu_DynamicWar_WarHistory,
+								$private = 1,
+							]"/>
 						<!-- Dynamic News Menus -->
 						<!-- DA Evolution Menus -->
 						<!-- DA Fill Menus -->
@@ -1110,6 +1117,7 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,118}, $id='menu_dynamicwar_unlockrelations']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,119}, $id='menu_dynamicwar_ignoredfactions']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,145}, $id='menu_dynamicwar_spacefactionlogic']"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,144}, $id='menu_dynamicwar_warhistory']"/>
 					</actions>
 				</cue>
 				<cue name="Menu_DynamicWar_IncreaseRelations" instantiate="true">
@@ -1428,6 +1436,236 @@
 							</do_for_each>
 						</do_if>
 						<remove_value name="$DAFLSectors"/>
+					</actions>
+				</cue>
+				<cue name="Menu_DynamicWar_WarHistory" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
+						<set_value name="$DAMVT" exact="md.$DAMenuVarTable"/>
+						<!-- Col: 12 -->
+						<!--	1+2+3 = empty
+								4+5+6+7+8+9 = Current War
+								10+11+12 = empty -->
+						<set_value name="$LocText" exact="'%s %s'.[{30610,3303},{1001,2500}]" comment="War Statistics"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 4, $colSpan = 6, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]" comment="War Statistics"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 10, $colSpan = 3, $text = '', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+								$col = 1, 
+								$colSpan = event.param.$columns,
+								$height = 2,
+								$fontsize = 1,
+								$cellBGColor = 'Color.row_separator',
+							]"/>
+						<remove_value name="$LocText"/>
+						<do_if value="$DADVT.$DADynamicWarResultsTable.keys.count">
+							<!-- $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStart} == [$LocFacOneData.clone,$LocFacTwoData.clone] -->
+							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+							<set_value name="$LocAlreadyPrintedTable" exact="table[]"/>
+							<set_value name="$LocFacList" exact="$DADVT.$DADynamicWarResultsTable.keys.list"/>
+							<sort_list list="$LocFacList" sortbyvalue="loop.element.knownname"/>
+							<do_for_each name="$LocFacOne" in="$LocFacList">
+								<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}? and $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.keys.count">
+									<set_value name="$LocFacList2" exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.keys.list"/>
+									<sort_list list="$LocFacList2" sortbyvalue="loop.element.knownname"/>
+									<do_for_each name="$LocFacTwo" in="$LocFacList2">
+										<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}? and $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.count">
+											<do_all exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.count" counter="$WarCounter">
+												<set_value name="$WarStartTime" exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.list.{$WarCounter}"/>
+												<do_if value="(not $LocAlreadyPrintedTable.{$LocFacOne}?) or (not $LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}?) or (not $LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}.indexof.{$WarStartTime})">
+													<!-- 1+2+3+4+5+6 = LocFacOne	7+8+9+10+11+12 = LocFacTwo -->
+													<!-- all = WarName -->
+													<!-- 1+2+3+4 = War Fatigue:		5+6 = #		7+8+9+10 = War Fatigue:		11+12 = # -->
+													<!-- 1+2+3+4 = War Score:		5+6 = #		7+8+9+10 = War Score:		11+12 = # -->
+													<!-- all = MilKills -->
+													<!-- 1+2 = Total:#		3+4+5+6 = XL:#/L:#/M:#/S:#		7+8 = Total:#		9+10+11+12 = #:S/#:M/#:L/#:XL -->
+													<!-- all = CivKills -->
+													<!-- 1+2 = Total:#		3+4+5+6 = XL:#/L:#/M:#/S:#		7+8 = Total:#		9+10+11+12 = #:S/#:M/#:L/#:XL -->
+													<!-- 1+2+3+4 = Sta Killed:		5+6 = #		7+8+9+10 = Sta Killed:		11+12 = # -->
+													<set_value name="$TableShortcut" exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStartTime}"/>
+													<set_value name="$LocFatigue" exact="[$TableShortcut.{1}.{1},$TableShortcut.{2}.{1}]"/>
+													<set_value name="$LocWarScore" exact="[$TableShortcut.{1}.{2},$TableShortcut.{2}.{2}]"/>
+													<set_value name="$LocTotalWarScore" exact="$LocWarScore.{1} + $LocWarScore.{2}"/>
+													<set_value name="$LocMilKills" exact="[$TableShortcut.{1}.{3},$TableShortcut.{2}.{3}]"/>
+													<set_value name="$LocCivKills" exact="[$TableShortcut.{1}.{4},$TableShortcut.{2}.{4}]"/>
+													<set_value name="$LocStationKills" exact="[$TableShortcut.{1}.{5},$TableShortcut.{2}.{5}]"/>
+													<set_value name="$LocTotalKills" exact="$LocMilKills.{1} + $LocMilKills.{2} + $LocCivKills.{1} + $LocCivKills.{2} + $LocStationKills.{1} + $LocStationKills.{2}"/>
+													<set_value name="$LocMilXLKills" exact="[$TableShortcut.{1}.{6},$TableShortcut.{2}.{6}]"/>
+													<set_value name="$LocMilLKills" exact="[$TableShortcut.{1}.{7},$TableShortcut.{2}.{7}]"/>
+													<set_value name="$LocMilMKills" exact="[$TableShortcut.{1}.{8},$TableShortcut.{2}.{8}]"/>
+													<set_value name="$LocMilSKills" exact="[$TableShortcut.{1}.{9},$TableShortcut.{2}.{9}]"/>
+													<set_value name="$LocCivXLKills" exact="[$TableShortcut.{1}.{10},$TableShortcut.{2}.{10}]"/>
+													<set_value name="$LocCivLKills" exact="[$TableShortcut.{1}.{11},$TableShortcut.{2}.{11}]"/>
+													<set_value name="$LocCivMKills" exact="[$TableShortcut.{1}.{12},$TableShortcut.{2}.{12}]"/>
+													<set_value name="$LocCivSKills" exact="[$TableShortcut.{1}.{13},$TableShortcut.{2}.{13}]"/>
+													<set_value name="$LocWarEnded" exact="if @$TableShortcut.{1}.{14} then true else false"/>
+													<!-- War Stage -->
+													<do_if value="$LocWarEnded">
+														<do_if value="$LocTotalKills == 0">
+															<set_value name="$LocWarName" exact="{33232474,3201}"/>
+														</do_if>
+														<do_else>
+															<set_value name="$LocFacOneKillsTotal" exact="$LocMilKills.{1} + $LocCivKills.{1} + $LocStationKills.{1}"/>
+															<set_value name="$LocFacOneKillPercent" exact="((($LocFacOneKillsTotal)f / ($LocTotalKills)f) * 100.0)i"/>
+															<!-- Kill% Thresholds == 0-25 = costly, 25-50 = close, 50 = balanced, 50-75 = heroic, 75-100 decisive -->
+															<do_if value="$LocFacOneKillPercent ge 75">
+																<set_value name="$LocWarName" exact="{33232474,3190}"/>
+															</do_if>
+															<do_elseif value="$LocFacOneKillPercent gt 50">
+																<set_value name="$LocWarName" exact="{33232474,3191}"/>
+															</do_elseif>
+															<do_elseif value="$LocFacOneKillPercent == 50">
+																<set_value name="$LocWarName" exact="{33232474,3192}"/>
+															</do_elseif>
+															<do_elseif value="$LocFacOneKillPercent ge 25">
+																<set_value name="$LocWarName" exact="{33232474,3193}"/>
+															</do_elseif>
+															<do_else>
+																<set_value name="$LocWarName" exact="{33232474,3194}"/>
+															</do_else>
+															<!-- Victory Stalemate Defeat -->
+															<do_if value="$LocFatigue.{2} ge 100">
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3200}]"/>
+															</do_if>
+															<do_elseif value="$LocFatigue.{1} ge 100">
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3202}]"/>
+															</do_elseif>
+															<do_else>
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3201}]"/>
+															</do_else>
+															<remove_value name="$LocFacOneKillsTotal"/>
+															<remove_value name="$LocFacOneKillPercent"/>
+														</do_else>
+													</do_if>
+													<do_else>
+														<do_if value="$LocTotalKills == 0">
+															<set_value name="$LocWarName" exact="{33232474,3180}"/>
+														</do_if>
+														<do_elseif value="$LocTotalKills le 50">
+															<set_value name="$LocWarName" exact="{33232474,3181}"/>
+														</do_elseif>
+														<do_elseif value="$LocTotalKills le 150">
+															<set_value name="$LocWarName" exact="{33232474,3182}"/>
+														</do_elseif>
+														<do_else>
+															<set_value name="$LocWarName" exact="{33232474,3183}"/>
+														</do_else>
+													</do_else>
+													<!-- 1+2+3+4+5+6 = LocFacOne	7+8+9+10+11+12 = LocFacTwo -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 6, $text = $LocFacOne.knownname, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 6, $text = $LocFacTwo.knownname, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundBright]"/>
+													<!-- 1+2+3+4+5+6+7+8+9+10+11+12 = WarName -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 12, $text = $LocWarName, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+													<remove_value name="$LocWarName"/>
+													<!-- 1+2+3+4 = War Fatigue:		5+6 = #		7+8+9+10 = War Fatigue:		11+12 = # -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = '%s:'.[{33232474,2118}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocFatigue.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 4, $text = '%s:'.[{33232474,2118}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 11, $colSpan = 2, $text = $LocFatigue.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<!-- 1+2+3+4 = War Score:		5+6 = #		7+8+9+10 = War Score:		11+12 = # -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = '%s:'.[{33232474,2119}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocWarScore.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 4, $text = '%s:'.[{33232474,2119}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 11, $colSpan = 2, $text = $LocWarScore.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<!-- 1+2+3+4+5+6+7+8+9+10+11+12 = MilKills -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<set_value name="$LocText" exact="'%s %s'.[{1001,9150},{30004,1801}]" comment="Military Ships Killed"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 12, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+													<remove_value name="$LocText"/>
+													<!-- 1+2 = Total:#		3+4+5+6 = XL:#/L:#/M:#/S:#		7+8 = Total:#		9+10+11+12 = #:S/#:M/#:L/#:XL -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<set_value name="$LocText" exact="'%s: %s'.[{1001,2637},$LocMilKills.{1}]" comment="Total: #"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<set_value name="$LocText" exact="'%s:%s/%s:%s/%s:%s/%s:%s'.[{1001,48},$LocMilXLKills.{1},{1001,49},$LocMilLKills.{1},{1001,50},$LocMilMKills.{1},{1001,51},$LocMilSKills.{1}]" comment="XL:#/L:#/M:#/S:#"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 4, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<set_value name="$LocText" exact="'%s: %s'.[{1001,2637},$LocMilKills.{2}]" comment="Total: #"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<set_value name="$LocText" exact="'%s:%s/%s:%s/%s:%s/%s:%s'.[{1001,48},$LocMilXLKills.{2},{1001,49},$LocMilLKills.{2},{1001,50},$LocMilMKills.{2},{1001,51},$LocMilSKills.{2}]" comment="XL:#/L:#/M:#/S:#"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<remove_value name="$LocText"/>
+													<!-- 1+2+3+4+5+6+7+8+9+10+11+12 = CivKills -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<set_value name="$LocText" exact="'%s %s'.[{1001,9151},{30004,1801}]" comment="Civilian Ships Killed"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 12, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$HeaderBackgroundDark]"/>
+													<remove_value name="$LocText"/>
+													<!-- 1+2 = Total:#		3+4+5+6 = XL:#/L:#/M:#/S:#		7+8 = Total:#		9+10+11+12 = #:S/#:M/#:L/#:XL -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<set_value name="$LocText" exact="'%s: %s'.[{1001,2637},$LocCivKills.{1}]" comment="Total: #"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<set_value name="$LocText" exact="'%s:%s/%s:%s/%s:%s/%s:%s'.[{1001,48},$LocCivXLKills.{1},{1001,49},$LocCivLKills.{1},{1001,50},$LocCivMKills.{1},{1001,51},$LocCivSKills.{1}]" comment="XL:#/L:#/M:#/S:#"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 3, $colSpan = 4, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<set_value name="$LocText" exact="'%s: %s'.[{1001,2637},$LocCivKills.{2}]" comment="Total: #"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 2, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<set_value name="$LocText" exact="'%s:%s/%s:%s/%s:%s/%s:%s'.[{1001,48},$LocCivXLKills.{2},{1001,49},$LocCivLKills.{2},{1001,50},$LocCivMKills.{2},{1001,51},$LocCivSKills.{2}]" comment="XL:#/L:#/M:#/S:#"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 9, $colSpan = 4, $text = $LocText, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<remove_value name="$LocText"/>
+													<!-- 1+2+3+4 = Sta Killed:		5+6 = #		7+8+9+10 = Sta Killed:		11+12 = # -->
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 1, $colSpan = 4, $text = '%s %s:'.[{1001,4},{30004,1801}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 5, $colSpan = 2, $text = $LocStationKills.{1}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 7, $colSpan = 4, $text = '%s %s:'.[{1001,4},{30004,1801}], $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundBright]"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[$col = 11, $colSpan = 2, $text = $LocStationKills.{2}, $halign = 'center', $cellBGColor = $DAMVT.$BodyBackgroundDark]"/>
+													
+													<!-- Tracking -->
+													<do_if value="$LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}?">
+														<append_to_list name="$LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}" exact="$WarStartTime"/>
+													</do_if>
+													<do_elseif value="not $LocAlreadyPrintedTable.{$LocFacOne}?">
+														<set_value name="$LocAlreadyPrintedTable.{$LocFacOne}" exact="table[]"/>
+														<set_value name="$LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}" exact="[$WarStartTime]"/>
+													</do_elseif>
+													<do_elseif value="not $LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}?">
+														<set_value name="$LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}" exact="[$WarStartTime]"/>
+													</do_elseif>
+													<do_else>
+														<!-- Should not reach here! -->
+													</do_else>
+													<!-- Cleanup -->
+													<remove_value name="$TableShortcut"/>
+													<remove_value name="$LocFatigue"/>
+													<remove_value name="$LocWarScore"/>
+													<remove_value name="$LocTotalWarScore"/>
+													<remove_value name="$LocMilKills"/>
+													<remove_value name="$LocCivKills"/>
+													<remove_value name="$LocStationKills"/>
+													<remove_value name="$LocTotalKills"/>
+													<remove_value name="$LocMilXLKills"/>
+													<remove_value name="$LocMilLKills"/>
+													<remove_value name="$LocMilMKills"/>
+													<remove_value name="$LocMilSKills"/>
+													<remove_value name="$LocCivXLKills"/>
+													<remove_value name="$LocCivLKills"/>
+													<remove_value name="$LocCivMKills"/>
+													<remove_value name="$LocCivSKills"/>
+													<remove_value name="$LocWarEnded"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+													<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+															$col = 1, 
+															$colSpan = event.param.$columns,
+															$height = 2,
+															$fontsize = 1,
+															$cellBGColor = 'Color.row_separator',
+														]"/>
+												</do_if>
+												<remove_value name="$WarStartTime"/>
+											</do_all>
+										</do_if>
+									</do_for_each>
+									<remove_value name="$LocFacList2"/>
+								</do_if>
+							</do_for_each>
+							<remove_value name="$LocFacList"/>
+							<remove_value name="$LocAlreadyPrintedTable"/>
+						</do_if>
 					</actions>
 				</cue>
 				<cue name="ExecuteOption_RelationsIncrease" instantiate="true" namespace="this">
@@ -6684,6 +6922,15 @@
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,408}, $id='menu_information_shipbreakdown']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,409}, $id='menu_information_sectorbreakdown']"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,410}, $id='menu_information_stationcalculator']"/>
+						<do_if value="$DADVT.$DADynamicWarEnable and $DADVT.$DADynamicWarStatTracking">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,144}, $id='menu_dynamicwar_warhistory']"/>
+						</do_if>
+						<do_if value="$DADVT.$DAFillEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,213}, $id='menu_fill_statistics']"/>
+						</do_if>
+						<do_if value="$DADVT.$DABPEnable">
+							<signal_cue_instantly cue="md.Simple_Menu_API.Add_Submenu_Link" param="table[$text={33232474,381}, $id='menu_bp_progress']"/>
+						</do_if>
 						<!-- Exiting back will now revert display option to 1 so that history isn't automatically reset -->
 						<do_if value="$DAMVT.$InfoMilDisplayOption == 2">
 							<set_value name="$DAMVT.$InfoMilDisplayOption" exact="1"/>

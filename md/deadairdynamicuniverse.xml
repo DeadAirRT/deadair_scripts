@@ -198,12 +198,15 @@
 				<set_value name="$DADVT.$DAGateShowAllGates" exact="false"/>
 				<!-- God -->
 				<set_value name="$DADVT.$DAGodFactionModuleQuotas" exact="table[]"/>
-				<set_value name="$DADVT.$DAGodExcludedFactions" exact="[faction.civilian, faction.criminal, faction.khaak, faction.player, faction.smuggler, faction.visitor, faction.xenon]"/>
+				<set_value name="$DADVT.$DAGodExcludedFactions" exact="[faction.buccaneers,faction.civilian,faction.criminal,faction.hatikvah,faction.khaak,faction.player,faction.smuggler,faction.visitor,faction.xenon]"/>
 				<do_if value="faction.loanshark?">
 					<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.loanshark"/>
 				</do_if>
 				<do_if value="faction.scavenger?">
 					<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.scavenger"/>
+				</do_if>
+				<do_if value="faction.court?">
+					<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.court"/>
 				</do_if>
 				<do_if value="faction.fallensplit?">
 					<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.fallensplit"/>
@@ -786,10 +789,7 @@
 									<remove_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}"/>
 								</do_if>
 							</do_if>
-							<!-- TODO: Change value to proper debug var check -->
-							<do_if value="true">
-								<debug_text text="'MOD: DW -- EventDynamicWarTrackEvent -- ERROR:HANDLED -- Mismatched data tracking for war. Cleaning up previous tracking silently -- $LocFacOne: %s -- $LocFacTwo: %s -- $DWT.{$LocFacOne}.{$LocFacTwo}?: %s -- $DWT.{$LocFacTwo}.{$LocFacOne}?: %s'.[@$LocFacOne,@$LocFacTwo,$DWT.{$LocFacOne}.{$LocFacTwo}?,$DWT.{$LocFacTwo}.{$LocFacOne}?]" context="true" filter="error"/>
-							</do_if>
+							<debug_text text="'MOD: DW -- EventDynamicWarTrackEvent -- ERROR:HANDLED -- Mismatched data tracking for war. Cleaning up previous tracking silently -- $LocFacOne: %s -- $LocFacTwo: %s -- $DWT.{$LocFacOne}.{$LocFacTwo}?: %s -- $DWT.{$LocFacTwo}.{$LocFacOne}?: %s'.[@$LocFacOne,@$LocFacTwo,$DWT.{$LocFacOne}.{$LocFacTwo}?,$DWT.{$LocFacTwo}.{$LocFacOne}?]" context="false" filter="scripts"/>
 						</do_if>
 						<do_elseif value="@$NewData">
 							<!-- Signal war tracking cue -->
@@ -896,9 +896,9 @@
 							<find_station_by_true_owner groupname="$LocFacOneStations" faction="$LocFacOne" space="player.galaxy" checkoperational="true" multiple="true"/>
 							<find_station_by_true_owner groupname="$LocFacTwoStations" faction="$LocFacTwo" space="player.galaxy" checkoperational="true" multiple="true"/>
 							<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill] -->
-							<set_value name="$LocFacOneData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0]"/>
-							<set_value name="$LocFacTwoData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0]"/>
+							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+							<set_value name="$LocFacOneData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null]"/>
+							<set_value name="$LocFacTwoData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null]"/>
 							<set_value name="$StopDataGather" exact="false"/>
 							<do_if value="(not $DADVT?) or ($DADVT == null)">
 								<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
@@ -906,8 +906,7 @@
 							<do_if value="(not $DWT?) or ($DWT == null)">
 								<set_value name="$DWT" exact="md.$DynamicWarTable"/>
 							</do_if>
-							<!-- TODO: Change value to proper debug var check -->
-							<set_value name="$OutputDebug" exact="true"/>
+							<set_value name="$OutputDebug" exact="$DADVT.$DADynamicWarDetailedDebug"/>
 						</do_if>
 						<do_else>
 							<cancel_cue cue="EventDynamicWarTrackWar"/>
@@ -962,7 +961,7 @@
 							</conditions>
 							<actions>
 								<!-- event.object = killed, event.param = killer -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
 								<do_if value="event.object.isclass.ship_xl">
 									<!-- $LocFatigue -->
 									<set_value name="$LocFacOneData.{1}" exact="4" operation="add"/>
@@ -1054,7 +1053,7 @@
 							</conditions>
 							<actions>
 								<!-- event.object = killed, event.param = killer -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
 								<do_if value="event.object.isclass.ship_xl">
 									<!-- $LocFatigue -->
 									<set_value name="$LocFacTwoData.{1}" exact="4" operation="add"/>
@@ -1138,26 +1137,42 @@
 								<set_value name="$OutputData" exact="false"/>
 								<set_value name="$EndTheWar" exact="false"/>
 								<set_value name="$CleanupData" exact="false"/>
+								<set_value name="$SyncTime" exact="player.age"/>
 								<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
 								<do_if value="(not $DWT.{$LocFacOne}.{$LocFacTwo}?) or (not $DWT.{$LocFacTwo}.{$LocFacOne}?)">
 									<!-- Missing table -->
 									<set_value name="$StopDataGather" exact="true"/>
 									<debug_text text="'MOD: DW -- DynamicWarTrackingUpdate -- ERROR:HANDLED -- Tracking cleaned up -- $LocFacOne: %s -- $LocFacTwo: %s -- $DWT.{$LocFacOne}.{$LocFacTwo}?: %s -- $DWT.{$LocFacTwo}.{$LocFacOne}?: %s'.[@$LocFacOne,@$LocFacTwo,$DWT.{$LocFacOne}.{$LocFacTwo}?,$DWT.{$LocFacTwo}.{$LocFacOne}?]" context="true" filter="error"/>
 									<set_value name="$CleanupData" exact="true"/>
+									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}?">
+										<remove_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}"/>
+									</do_if>
+									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}?">
+										<remove_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}"/>
+									</do_if>
 								</do_if>
 								<do_if value="$DWT.{$LocFacOne}.{$LocFacTwo}.{7} or $DWT.{$LocFacTwo}.{$LocFacOne}.{7}">
 									<!-- $SilentQuit = clean up data and cancel -->
 									<set_value name="$StopDataGather" exact="true"/>
 									<debug_text text="'MOD: DW -- DynamicWarTrackingUpdate -- ERROR:HANDLED -- Tracking cleaned up -- $LocFacOne: %s -- $LocFacTwo: %s -- $DWT.{$LocFacOne}.{$LocFacTwo}?: %s -- $DWT.{$LocFacTwo}.{$LocFacOne}?: %s'.[@$LocFacOne,@$LocFacTwo,$DWT.{$LocFacOne}.{$LocFacTwo}?,$DWT.{$LocFacTwo}.{$LocFacOne}?]" context="true" filter="error"/>
 									<set_value name="$CleanupData" exact="true"/>
+									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}?">
+										<remove_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}"/>
+									</do_if>
+									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}?">
+										<remove_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}"/>
+									</do_if>
 								</do_if>
 								<do_elseif value="$DWT.{$LocFacOne}.{$LocFacTwo}.{6} or $DWT.{$LocFacTwo}.{$LocFacOne}.{6}">
 									<!-- $EndNow = send data to tracking table for output and cancel -->
+									<!-- War was ended by a different script -->
 									<set_value name="$StopDataGather" exact="true"/>
 									<debug_text text="'MOD: DW -- DynamicWarTrackingUpdate -- War Ended Outputting Data -- $LocFacOne: %s -- $LocFacTwo: %s'.[@$LocFacOne,@$LocFacTwo]" context="true" filter="scripts"/>
 									<set_value name="$OutputData" exact="true"/>
 									<set_value name="$CleanupData" exact="true"/>
+									<set_value name="$LocFacOneData.{13}" exact="$SyncTime"/>
+									<set_value name="$LocFacTwoData.{13}" exact="$SyncTime"/>
 								</do_elseif>
 								<do_elseif value="(((player.age - $DWT.{$LocFacOne}.{$LocFacTwo}.{1}) gt 7200s) or ((player.age - $DWT.{$LocFacTwo}.{$LocFacOne}.{1}) gt 7200s)) and (($DWT.{$LocFacOne}.{$LocFacTwo}.{4} ge 100) or ($DWT.{$LocFacTwo}.{$LocFacOne}.{4} ge 100))">
 									<!-- $Fatigue has reached 100+, end the war -->
@@ -1165,46 +1180,30 @@
 									<set_value name="$OutputData" exact="true"/>
 									<set_value name="$EndTheWar" exact="true"/>
 									<set_value name="$CleanupData" exact="true"/>
+									<set_value name="$LocFacOneData.{13}" exact="$SyncTime"/>
+									<set_value name="$LocFacTwoData.{13}" exact="$SyncTime"/>
 								</do_elseif>
 								<do_else>
 									<set_value name="$OutputData" exact="true"/>
 								</do_else>
 								<do_if value="$OutputData">
-									<!-- $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStart} == -->
+									<!-- $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStart} == [$LocFacOneData.clone,$LocFacTwoData.clone] -->
 									<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-									<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill] -->
+									<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
 									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="$LocFacOneData.clone"/>
+										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="[$LocFacOneData.clone,$LocFacTwoData.clone]"/>
 									</do_if>
 									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacOne}?">
 										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}" exact="table[]"/>
 										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}" exact="table[]"/>
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="$LocFacOneData.clone"/>
+										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="[$LocFacOneData.clone,$LocFacTwoData.clone]"/>
 									</do_elseif>
 									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}?">
 										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}" exact="table[]"/>
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="$LocFacOneData.clone"/>
+										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="[$LocFacOneData.clone,$LocFacTwoData.clone]"/>
 									</do_elseif>
 									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="$LocFacOneData.clone"/>
-									</do_elseif>
-									<do_else>
-										<!-- SHOULD NOT REACH HERE!!! -->
-									</do_else>
-									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}" exact="$LocFacTwoData.clone"/>
-									</do_if>
-									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacTwo}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}" exact="table[]"/>
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}" exact="table[]"/>
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}" exact="$LocFacTwoData.clone"/>
-									</do_elseif>
-									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}" exact="table[]"/>
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}" exact="$LocFacTwoData.clone"/>
-									</do_elseif>
-									<do_elseif value="not $DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}?">
-										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacTwo}.{$LocFacOne}.{$DWT.{$LocFacTwo}.{$LocFacOne}.{1}}" exact="$LocFacTwoData.clone"/>
+										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="[$LocFacOneData.clone,$LocFacTwoData.clone]"/>
 									</do_elseif>
 									<do_else>
 										<!-- SHOULD NOT REACH HERE!!! -->
@@ -1243,7 +1242,6 @@
 									</do_if>
 									<signal_cue_instantly cue="EventDynamicWarEventNotification" param="['Fatigue',$LocFacOne,$LocFacTwo,$LocTempRel,$LocFacOne.relationto.{$LocFacTwo}]"/>
 									<remove_value name="$LocTempRel"/>
-									<!-- TODO: News -->
 								</do_if>
 								<do_if value="$CleanupData">
 									<remove_value name="$DWT.{$LocFacOne}.{$LocFacTwo}"/>
@@ -1261,6 +1259,10 @@
 								<do_if value="(not $StopDataGather) and (not $CleanupData)">
 									<reset_cue cue="this"/>
 								</do_if>
+								<remove_value name="$OutputData"/>
+								<remove_value name="$EndTheWar"/>
+								<remove_value name="$CleanupData"/>
+								<remove_value name="$SyncTime"/>
 							</actions>
 						</cue>
 					</cues>
@@ -1285,7 +1287,6 @@
 						<set_value name="$LocLogReason" exact="null"/>
 						<set_value name="$LocLogReport" exact="['','','']"/>
 						<set_value name="$LocNotification" exact="['','','','']"/>
-						<!-- TODO: Flavor text town -->
 						<!-- 
 							LOGBOOK
 								Title = $LocLogReport.{1} // Faction = $LocLogReport.{2} // Text = $LocLogReport.{3}
@@ -7970,8 +7971,7 @@
 												</do_if>
 												<do_else>
 													<create_order object="$LocShip" id="'RecycleDefault'" default="true"/>
-													<!-- TODO: Change value to proper debug var check -->
-													<do_if value="true">
+													<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug">
 														<debug_text text="'MOD: DAJobsSST -- Recycle Ship -- Sector: %s -- Faction: %s -- Job: %s -- Ship: %s(%s)'.[$LocSector.knownname,$LocFaction,$LocJob,$LocShip.knownname,$LocShip.idcode]" context="false" filter="scripts"/>
 													</do_if>
 												</do_else>
@@ -7998,8 +7998,7 @@
 						<do_for_each name="$LocShip" in="$DAJSST.$ShipsToRecycle">
 							<do_if value="@$LocShip and (not $LocShip.iscommandeered)">
 								<create_order object="$LocShip" id="'RecycleDefault'" default="true"/>
-								<!-- TODO: Change value to proper debug var check -->
-								<do_if value="true">
+								<do_if value="$DADVT.$DAJobsSSTXtremelyDetailedDebug">
 									<debug_text text="'MOD: DAJobsSST -- Recycle Ship -- Faction: %s -- Ship: %s(%s)'.[$LocShip.trueowner,$LocShip.knownname,$LocShip.idcode]" context="false" filter="scripts"/>
 								</do_if>
 							</do_if>
@@ -9479,7 +9478,6 @@
 												<break/>
 											</do_if>
 										</do_while>
-										<!-- TODO Proper debug var add -->
 										<do_if value="$LocEscape">
 											<debug_text text="'MOD: DAGod -- EventGodDesignStation -- Escaped from the do_while -- Faction: %s -- Ware: %s -- $LeftToAllocate: %s -- $LocEscape: %s'.[$DAGodLocFaction.id,$DAGodLocWare.id,$LocStation.knownname,$LeftToAllocate,$LocEscape]" context="false" filter="scripts"/>
 										</do_if>
@@ -11111,35 +11109,6 @@
 							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.cheltmeat}.{2}" exact="37"/>
 							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.split}.{ware.scruffinfruits}.{2}" exact="16"/>
 						</do_if>
-						<do_if value="faction.court? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.court})">
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedcomposites}.{2}" exact="3"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.advancedelectronics}.{2}" exact="9"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.antimattercells}.{2}" exact="9"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.antimatterconverters}.{2}" exact="5"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.claytronics}.{2}" exact="32"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.dronecomponents}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.energycells}.{2}" exact="20"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.engineparts}.{2}" exact="19"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.fieldcoils}.{2}" exact="2"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.graphene}.{2}" exact="17"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.hullparts}.{2}" exact="40"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.medicalsupplies}.{2}" exact="51"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.microchips}.{2}" exact="28"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.missilecomponents}.{2}" exact="3"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.quantumtubes}.{2}" exact="24"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.refinedmetals}.{2}" exact="25"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.scanningarrays}.{2}" exact="6"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.shieldcomponents}.{2}" exact="8"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.siliconwafers}.{2}" exact="25"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.smartchips}.{2}" exact="15"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.spices}.{2}" exact="13"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.superfluidcoolant}.{2}" exact="11"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.turretcomponents}.{2}" exact="4"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.water}.{2}" exact="18"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.weaponcomponents}.{2}" exact="10"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.cheltmeat}.{2}" exact="40"/>
-							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.court}.{ware.scruffinfruits}.{2}" exact="21"/>
-						</do_if>
 						<do_if value="faction.terran? and (not $DADVT.$DAGodFactionsTriggered.indexof.{faction.terran})">
 							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.energycells}.{2}" exact="64"/>
 							<set_value name="$DADVT.$DAGodFactionModuleQuotas.{faction.terran}.{ware.medicalsupplies}.{2}" exact="21"/>
@@ -11215,12 +11184,15 @@
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="not $DADVT.$DAGodExcludedFactions? or ($DADVT.$DAGodExcludedFactions == null)">
-							<set_value name="$DADVT.$DAGodExcludedFactions" exact="[faction.civilian, faction.criminal, faction.khaak, faction.player, faction.smuggler, faction.visitor, faction.xenon]"/>
+							<set_value name="$DADVT.$DAGodExcludedFactions" exact="[faction.buccaneers,faction.civilian,faction.criminal,faction.hatikvah,faction.khaak,faction.player,faction.smuggler,faction.visitor,faction.xenon]"/>
 							<do_if value="faction.loanshark?">
 								<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.loanshark"/>
 							</do_if>
 							<do_if value="faction.scavenger?">
 								<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.scavenger"/>
+							</do_if>
+							<do_if value="faction.court?">
+								<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.court"/>
 							</do_if>
 							<do_if value="faction.fallensplit?">
 								<append_to_list name="$DADVT.$DAGodExcludedFactions" exact="faction.fallensplit"/>

@@ -49,7 +49,7 @@
 		<t id="141">Ignored</t>
 		<t id="142">Enable AI Relations Cap</t>
 		<t id="143">Maximum Factions to Check</t>
-		<t id="144">(XXX)</t>
+		<t id="144">War History</t>
 		<t id="145">Sector Faction Logic Menu</t>
 		<t id="146">Enable DW Stat Tracking</t>
 		<t id="147">Enable DW Fatigue</t>
@@ -102,7 +102,7 @@
 		<t id="2116">Cluster</t>
 		<t id="2117">Change in count compared to %s minutes ago.</t>
 		<t id="2118">War Fatigue</t>
-		<t id="2119">(XXX)</t>
+		<t id="2119">War Score</t>
 		<t id="2120">(XXX)</t>
 		<t id="2121">(XXX)</t>
 		<t id="2122">(XXX)</t>
@@ -157,6 +157,21 @@
 		<t id="3172">You are about to embark upon the Great Crusade, toward which we have striven these many months. The eyes of the world are upon you. The hopes and prayers of our people everywhere march with you. You will bring about the destruction of the enemy war machine, the eliminations of tyranny, and the security for ourselves in a free universe.(Dwight D Eisenhower)(Altered)</t>
 		<t id="3173">The path we have chosen for the present is full of hazards, as all paths are; but it is the one most consistent with our character and courage as a nation. The cost of our way of life is always high, but we have always paid it. And one path we shall never choose, and that is the path of surrender or submission.(John F. Kennedy)(Altered)</t>
 		<t id="3174">Shall we allow our audacious enemies to violate with impunity the territory of our nation? Will you permit the enemy to escape which has carried terror into your families? You will not. March, then, to meet them. Teach the universe that a malediction attends those that violate the territory of our people. The result of our efforts will be unclouded glory, and a durable peace.(Napoleon Bonaparte)(Altered)</t>
+		<!-- War Stages -->
+		<t id="3180">Cold War</t>
+		<t id="3181">Low-Intensity Conflict</t>
+		<t id="3182">Military Campaign</t>
+		<t id="3183">Full-Scale War</t>
+		<!-- War Names -->
+		<t id="3190">Decisive</t>
+		<t id="3191">Heroic</t>
+		<t id="3192">Balanced</t>
+		<t id="3193">Close</t>
+		<t id="3194">Costly</t>
+		<!-- War Outcomes -->
+		<t id="3200">Victory</t>
+		<t id="3201">Stalemate</t>
+		<t id="3202">Defeat</t>
 		<!-- Evolution Menu Entries -->
 		<t id="160">Enable Evolution</t>
 		<t id="161">Evolution Interval</t>
