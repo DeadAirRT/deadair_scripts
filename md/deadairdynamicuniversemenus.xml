@@ -1503,6 +1503,19 @@
 													<set_value name="$LocCivLKills" exact="[$TableShortcut.{1}.{11},$TableShortcut.{2}.{11}]"/>
 													<set_value name="$LocCivMKills" exact="[$TableShortcut.{1}.{12},$TableShortcut.{2}.{12}]"/>
 													<set_value name="$LocCivSKills" exact="[$TableShortcut.{1}.{13},$TableShortcut.{2}.{13}]"/>
+													<!-- 20241023 HF1 - Had war end time put in wrong index -->
+													<do_if value="(typeof $TableShortcut.{1}.{13} == datatype.time) and ($TableShortcut.{1}.{14} == null)">
+														<set_value name="$TableShortcut.{1}.{14}" exact="$TableShortcut.{1}.{13}"/>
+														<set_value name="$TableShortcut.{1}.{13}" exact="$TableShortcut.{1}.{4} - $TableShortcut.{1}.{10} - $TableShortcut.{1}.{11} - $TableShortcut.{1}.{12}"/>
+														<set_value name="$LocCivSKills" exact="[$TableShortcut.{1}.{13},$TableShortcut.{2}.{13}]"/>
+														<debug_text text="'MOD: DAMenus Menu_DynamicWar_WarHistory -- Fixed wrong index in $LocFacOneData -- $DADVT.$DADynamicWarResultsTable.{%s}.{%s}.{%s}'.[$LocFacOne,$LocFacTwo,$WarStartTime]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+													</do_if>
+													<do_if value="(typeof $TableShortcut.{2}.{13} == datatype.time) and ($TableShortcut.{2}.{14} == null)">
+														<set_value name="$TableShortcut.{2}.{14}" exact="$TableShortcut.{2}.{13}"/>
+														<set_value name="$TableShortcut.{2}.{13}" exact="$TableShortcut.{2}.{4} - $TableShortcut.{2}.{10} - $TableShortcut.{2}.{11} - $TableShortcut.{2}.{12}"/>
+														<set_value name="$LocCivSKills" exact="[$TableShortcut.{1}.{13},$TableShortcut.{2}.{13}]"/>
+														<debug_text text="'MOD: DAMenus Menu_DynamicWar_WarHistory -- Fixed wrong index in $LocFacTwoData-- $DADVT.$DADynamicWarResultsTable.{%s}.{%s}.{%s}'.[$LocFacOne,$LocFacTwo,$WarStartTime]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+													</do_if>
 													<set_value name="$LocWarEnded" exact="if @$TableShortcut.{1}.{14} then true else false"/>
 													<!-- War Stage -->
 													<do_if value="$LocWarEnded">
@@ -1514,29 +1527,29 @@
 															<set_value name="$LocFacOneKillPercent" exact="((($LocFacOneKillsTotal)f / ($LocTotalKills)f) * 100.0)i"/>
 															<!-- Kill% Thresholds == 0-25 = costly, 25-50 = close, 50 = balanced, 50-75 = heroic, 75-100 decisive -->
 															<do_if value="$LocFacOneKillPercent ge 75">
-																<set_value name="$LocWarName" exact="{33232474,3190}"/>
+																<set_value name="$LocWarName" exact="{33232474,3190}" comment="decisive"/>
 															</do_if>
-															<do_elseif value="$LocFacOneKillPercent gt 50">
-																<set_value name="$LocWarName" exact="{33232474,3191}"/>
+															<do_elseif value="$LocFacOneKillPercent gt 55">
+																<set_value name="$LocWarName" exact="{33232474,3191}" comment="heroic"/>
 															</do_elseif>
-															<do_elseif value="$LocFacOneKillPercent == 50">
-																<set_value name="$LocWarName" exact="{33232474,3192}"/>
+															<do_elseif value="$LocFacOneKillPercent gt 45">
+																<set_value name="$LocWarName" exact="{33232474,3192}" comment="balanced"/>
 															</do_elseif>
 															<do_elseif value="$LocFacOneKillPercent ge 25">
-																<set_value name="$LocWarName" exact="{33232474,3193}"/>
+																<set_value name="$LocWarName" exact="{33232474,3193}" comment="close"/>
 															</do_elseif>
 															<do_else>
-																<set_value name="$LocWarName" exact="{33232474,3194}"/>
+																<set_value name="$LocWarName" exact="{33232474,3194}" comment="costly"/>
 															</do_else>
 															<!-- Victory Stalemate Defeat -->
-															<do_if value="$LocFatigue.{2} ge 100">
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3200}]"/>
+															<do_if value="$LocFatigue.{1} lt $LocFatigue.{2}">
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3200}]" operation="add" comment="victory"/>
 															</do_if>
-															<do_elseif value="$LocFatigue.{1} ge 100">
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3202}]"/>
+															<do_elseif value="$LocFatigue.{2} lt $LocFatigue.{1}">
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3202}]" operation="add" comment="defeat"/>
 															</do_elseif>
 															<do_else>
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3201}]"/>
+																<set_value name="$LocWarName" exact="' %s'.[{33232474,3201}]" operation="add" comment="stalemate"/>
 															</do_else>
 															<remove_value name="$LocFacOneKillsTotal"/>
 															<remove_value name="$LocFacOneKillPercent"/>
