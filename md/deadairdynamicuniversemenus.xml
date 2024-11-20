@@ -1040,6 +1040,43 @@
 									$cellBGColor = $DAMVT.$BodyBackgroundDark
 								]"/>
 						</do_else>
+						
+						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 1,
+									$colSpan = 4,
+									$text = {33232474,148},
+									$mouseOverText = {33232474,1148},
+									$cellBGColor = $DAMVT.$BodyBackgroundBright
+								]"/>
+						<do_if value="$DADVT.$DADynamicWarEnable and $DADVT.$DADynamicWarStatTracking and $DADVT.$DADynamicWarFatigue">
+							<set_value name="$LocMax" exact="[480,$DADVT.$DADynamicWarFatigueTimer * 2].max"/>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Slider" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$onSliderCellConfirm = ExecuteOption_DynamicWarFatigueTimer,
+									$min = 0,
+									$minSelect = 30,
+									$max = $LocMax,
+									$maxSelect = $LocMax,
+									$exceedMaxValue = false,
+									$start = $DADVT.$DADynamicWarFatigueTimer,
+									$step = 30,
+									$suffix = 'min',
+								]"/>
+							<remove_value name="$LocMax"/>
+						</do_if>
+						<do_else>
+							<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+									$col = 5,
+									$colSpan = 4,
+									$text = {1001,8942},
+									$halign = 'right',
+									$cellBGColor = $DAMVT.$BodyBackgroundDark
+								]"/>
+						</do_else>
+						
+						
 						<signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
 									$col = 1,
@@ -1465,7 +1502,7 @@
 						<remove_value name="$LocText"/>
 						<do_if value="$DADVT.$DADynamicWarResultsTable.keys.count">
 							<!-- $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStart} == [$LocFacOneData.clone,$LocFacTwoData.clone] -->
-							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
 							<set_value name="$LocAlreadyPrintedTable" exact="table[]"/>
 							<set_value name="$LocFacList" exact="$DADVT.$DADynamicWarResultsTable.keys.list"/>
 							<sort_list list="$LocFacList" sortbyvalue="loop.element.knownname"/>
@@ -1475,7 +1512,7 @@
 									<sort_list list="$LocFacList2" sortbyvalue="loop.element.knownname"/>
 									<do_for_each name="$LocFacTwo" in="$LocFacList2">
 										<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}? and $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.count">
-											<do_all exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.count" counter="$WarCounter">
+											<do_all exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.count" counter="$WarCounter" reverse="true">
 												<set_value name="$WarStartTime" exact="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.keys.list.{$WarCounter}"/>
 												<do_if value="(not $LocAlreadyPrintedTable.{$LocFacOne}?) or (not $LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}?) or (not $LocAlreadyPrintedTable.{$LocFacOne}.{$LocFacTwo}.indexof.{$WarStartTime})">
 													<!-- 1+2+3+4+5+6 = LocFacOne	7+8+9+10+11+12 = LocFacTwo -->
@@ -1519,54 +1556,73 @@
 													<set_value name="$LocWarEnded" exact="if @$TableShortcut.{1}.{14} then true else false"/>
 													<!-- War Stage -->
 													<do_if value="$LocWarEnded">
-														<do_if value="$LocTotalKills == 0">
-															<set_value name="$LocWarName" exact="{33232474,3201}"/>
+														<do_if value="@$TableShortcut.{1}.{15} == null">
+															<do_if value="$LocTotalKills == 0">
+																<set_value name="$LocWarResultName" exact="{33232474,3201}" comment="stalemate"/>
+															</do_if>
+															<do_else>
+																<set_value name="$LocFacOneKillsTotal" exact="$LocMilKills.{1} + $LocCivKills.{1} + $LocStationKills.{1}"/>
+																<set_value name="$LocFacOneKillPercent" exact="((($LocFacOneKillsTotal)f / ($LocTotalKills)f) * 100.0)i"/>
+																<!-- Kill% Thresholds == 0-25 = costly, 25-50 = close, 50 = balanced, 50-75 = heroic, 75-100 decisive -->
+																<do_if value="$LocFacOneKillPercent ge 75">
+																	<set_value name="$LocWarResultName" exact="{33232474,3190}" comment="decisive"/>
+																</do_if>
+																<do_elseif value="$LocFacOneKillPercent gt 55">
+																	<set_value name="$LocWarResultName" exact="{33232474,3191}" comment="heroic"/>
+																</do_elseif>
+																<do_elseif value="$LocFacOneKillPercent gt 45">
+																	<set_value name="$LocWarResultName" exact="{33232474,3192}" comment="balanced"/>
+																</do_elseif>
+																<do_elseif value="$LocFacOneKillPercent ge 25">
+																	<set_value name="$LocWarResultName" exact="{33232474,3193}" comment="close"/>
+																</do_elseif>
+																<do_else>
+																	<set_value name="$LocWarResultName" exact="{33232474,3194}" comment="costly"/>
+																</do_else>
+																<!-- Victory Stalemate Defeat -->
+																<do_if value="$LocFatigue.{1} lt $LocFatigue.{2}">
+																	<set_value name="$LocWarResultName" exact="' %s'.[{33232474,3200}]" operation="add" comment="victory"/>
+																</do_if>
+																<do_elseif value="$LocFatigue.{2} lt $LocFatigue.{1}">
+																	<set_value name="$LocWarResultName" exact="' %s'.[{33232474,3202}]" operation="add" comment="defeat"/>
+																</do_elseif>
+																<do_else>
+																	<set_value name="$LocWarResultName" exact="' %s'.[{33232474,3201}]" operation="add" comment="stalemate"/>
+																</do_else>
+																<remove_value name="$LocFacOneKillsTotal"/>
+																<remove_value name="$LocFacOneKillPercent"/>
+															</do_else>
+															<set_value name="$PrefixName" exact="'%s-%s'.[$LocFacOne.shortname,$LocFacTwo.shortname]"/>
+															<set_value name="$SuffixName" exact="'%s %s'.[{1001,2952},$WarStartTime]"/>
+															<set_value name="$LocWarName" exact="'%s %s %s'.[$PrefixName,$LocWarResultName,$SuffixName]"/>
+															<do_if value="not $TableShortcut.{1}.{15}?">
+																<append_to_list name="$TableShortcut.{1}" exact="null"/>
+															</do_if>
+															<do_if value="not $TableShortcut.{2}.{15}?">
+																<append_to_list name="$TableShortcut.{2}" exact="null"/>
+															</do_if>
+															<set_value name="$TableShortcut.{1}.{15}" exact="$LocWarName"/>
+															<set_value name="$TableShortcut.{2}.{15}" exact="$LocWarName"/>
+															<remove_value name="$LocWarResultName"/>
+															<remove_value name="$PrefixName"/>
+															<remove_value name="$SuffixName"/>
 														</do_if>
 														<do_else>
-															<set_value name="$LocFacOneKillsTotal" exact="$LocMilKills.{1} + $LocCivKills.{1} + $LocStationKills.{1}"/>
-															<set_value name="$LocFacOneKillPercent" exact="((($LocFacOneKillsTotal)f / ($LocTotalKills)f) * 100.0)i"/>
-															<!-- Kill% Thresholds == 0-25 = costly, 25-50 = close, 50 = balanced, 50-75 = heroic, 75-100 decisive -->
-															<do_if value="$LocFacOneKillPercent ge 75">
-																<set_value name="$LocWarName" exact="{33232474,3190}" comment="decisive"/>
-															</do_if>
-															<do_elseif value="$LocFacOneKillPercent gt 55">
-																<set_value name="$LocWarName" exact="{33232474,3191}" comment="heroic"/>
-															</do_elseif>
-															<do_elseif value="$LocFacOneKillPercent gt 45">
-																<set_value name="$LocWarName" exact="{33232474,3192}" comment="balanced"/>
-															</do_elseif>
-															<do_elseif value="$LocFacOneKillPercent ge 25">
-																<set_value name="$LocWarName" exact="{33232474,3193}" comment="close"/>
-															</do_elseif>
-															<do_else>
-																<set_value name="$LocWarName" exact="{33232474,3194}" comment="costly"/>
-															</do_else>
-															<!-- Victory Stalemate Defeat -->
-															<do_if value="$LocFatigue.{1} lt $LocFatigue.{2}">
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3200}]" operation="add" comment="victory"/>
-															</do_if>
-															<do_elseif value="$LocFatigue.{2} lt $LocFatigue.{1}">
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3202}]" operation="add" comment="defeat"/>
-															</do_elseif>
-															<do_else>
-																<set_value name="$LocWarName" exact="' %s'.[{33232474,3201}]" operation="add" comment="stalemate"/>
-															</do_else>
-															<remove_value name="$LocFacOneKillsTotal"/>
-															<remove_value name="$LocFacOneKillPercent"/>
+															<set_value name="$LocWarName" exact="$TableShortcut.{1}.{15}"/>
 														</do_else>
 													</do_if>
 													<do_else>
 														<do_if value="$LocTotalKills == 0">
-															<set_value name="$LocWarName" exact="{33232474,3180}"/>
+															<set_value name="$LocWarName" exact="{33232474,3180}" comment="Cold War"/>
 														</do_if>
 														<do_elseif value="$LocTotalKills le 50">
-															<set_value name="$LocWarName" exact="{33232474,3181}"/>
+															<set_value name="$LocWarName" exact="{33232474,3181}" comment="Low-Intensity Conflict"/>
 														</do_elseif>
 														<do_elseif value="$LocTotalKills le 150">
-															<set_value name="$LocWarName" exact="{33232474,3182}"/>
+															<set_value name="$LocWarName" exact="{33232474,3182}" comment="Military Campaign"/>
 														</do_elseif>
 														<do_else>
-															<set_value name="$LocWarName" exact="{33232474,3183}"/>
+															<set_value name="$LocWarName" exact="{33232474,3183}" comment="Full-Scale War"/>
 														</do_else>
 													</do_else>
 													<!-- 1+2+3+4+5+6 = LocFacOne	7+8+9+10+11+12 = LocFacTwo -->
@@ -2020,6 +2076,16 @@
 					<actions>
 						<set_value name="$DADVT.$DADynamicWarPossibleFactionsPerEvent" exact="event.param.$value"/>
 						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarPossibleFactionsPerEvent to %s'.[$DADVT.$DADynamicWarPossibleFactionsPerEvent]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
+						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
+					</actions>
+				</cue>
+				<cue name="ExecuteOption_DynamicWarFatigueTimer" instantiate="true">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<set_value name="$DADVT.$DADynamicWarFatigueTimer" exact="event.param.$value"/>
+						<debug_text text="'MOD: DAMenus DynamicWar -- Updated $DADVT.$DADynamicWarFatigueTimer to %s'.[$DADVT.$DADynamicWarFatigueTimer]" context="false" filter="scripts" chance="$DAMVT.$DAMenuDebugEnable * 100"/>
 						<signal_cue_instantly cue="md.Simple_Menu_API.Refresh_Menu"/>
 					</actions>
 				</cue>

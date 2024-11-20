@@ -9,16 +9,12 @@
 					- Clean up cue variables with namespace this. They do not inherit the variables from parent cue and their children will not either
 				-->
 				<!-- TODO: Features:
-					- Dynamic War Flavor Text
 					- Jobs Expeditions News
 					- JobSST event_sector_changed owner, reevaluate situation for that sector only
 					- Gate activate/deactivate highways
 					- Look into adding news events from faction logic when it starts new phase
 				-->
 				<!-- MAYBE: Features:
-					- Allow setting AI traders to use DeadTater
-					- Integrate expeditions quota into SST
-					- Bounty and Favor rewards for police license kills from a faction against enemy
 					- Dynamic war alliances
 				-->
 				<!-- Base table and shortcut for settings/data -->
@@ -68,6 +64,7 @@
 				<set_value name="$DADVT.$DADynamicWarPossibleFactionsPerEvent" exact="4"/>
 				<set_value name="$DADVT.$DADynamicWarStatTracking" exact="true"/>
 				<set_value name="$DADVT.$DADynamicWarFatigue" exact="true"/>
+				<set_value name="$DADVT.$DADynamicWarFatigueTimer" exact="120"/>
 				<set_value name="md.$DynamicWarTable" exact="table[]"/>
 				<set_value name="$DWT" exact="md.$DynamicWarTable"/>
 				<set_value name="$DADVT.$DADynamicWarResultsTable" exact="table[]"/>
@@ -896,9 +893,9 @@
 							<find_station_by_true_owner groupname="$LocFacOneStations" faction="$LocFacOne" space="player.galaxy" checkoperational="true" multiple="true"/>
 							<find_station_by_true_owner groupname="$LocFacTwoStations" faction="$LocFacTwo" space="player.galaxy" checkoperational="true" multiple="true"/>
 							<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
-							<set_value name="$LocFacOneData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null]"/>
-							<set_value name="$LocFacTwoData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null]"/>
+							<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
+							<set_value name="$LocFacOneData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null,null]"/>
+							<set_value name="$LocFacTwoData" exact="[0,0,0,0,0,0,0,0,0,0,0,0,0,null,null]"/>
 							<set_value name="$StopDataGather" exact="false"/>
 							<do_if value="(not $DADVT?) or ($DADVT == null)">
 								<set_value name="$DADVT" exact="md.$DADynamicVarTable"/>
@@ -961,7 +958,7 @@
 							</conditions>
 							<actions>
 								<!-- event.object = killed, event.param = killer -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
 								<do_if value="event.object.isclass.ship_xl">
 									<!-- $LocFatigue -->
 									<set_value name="$LocFacOneData.{1}" exact="4" operation="add"/>
@@ -1053,7 +1050,7 @@
 							</conditions>
 							<actions>
 								<!-- event.object = killed, event.param = killer -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
 								<do_if value="event.object.isclass.ship_xl">
 									<!-- $LocFatigue -->
 									<set_value name="$LocFacTwoData.{1}" exact="4" operation="add"/>
@@ -1138,8 +1135,9 @@
 								<set_value name="$EndTheWar" exact="false"/>
 								<set_value name="$CleanupData" exact="false"/>
 								<set_value name="$SyncTime" exact="player.age"/>
+								<set_value name="$FatigueTimer" exact="if $DADVT.$DADynamicWarFatigueTimer? then ($DADVT.$DADynamicWarFatigueTimer * 60)s else 7200s"/>
 								<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+								<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
 								<do_if value="(not $DWT.{$LocFacOne}.{$LocFacTwo}?) or (not $DWT.{$LocFacTwo}.{$LocFacOne}?)">
 									<!-- Missing table -->
 									<set_value name="$StopDataGather" exact="true"/>
@@ -1174,7 +1172,7 @@
 									<set_value name="$LocFacOneData.{14}" exact="$SyncTime"/>
 									<set_value name="$LocFacTwoData.{14}" exact="$SyncTime"/>
 								</do_elseif>
-								<do_elseif value="(((player.age - $DWT.{$LocFacOne}.{$LocFacTwo}.{1}) gt 7200s) or ((player.age - $DWT.{$LocFacTwo}.{$LocFacOne}.{1}) gt 7200s)) and (($DWT.{$LocFacOne}.{$LocFacTwo}.{4} ge 100) or ($DWT.{$LocFacTwo}.{$LocFacOne}.{4} ge 100))">
+								<do_elseif value="$DADVT.$DADynamicWarFatigue and (((player.age - $DWT.{$LocFacOne}.{$LocFacTwo}.{1}) gt $FatigueTimer) or ((player.age - $DWT.{$LocFacTwo}.{$LocFacOne}.{1}) gt $FatigueTimer)) and (($LocFacOneData.{1} ge 100) or ($LocFacTwoData.{1} ge 100)) and (not (($LocFacOne == faction.player) or ($LocFacTwo == faction.player)))">
 									<!-- $Fatigue has reached 100+, end the war -->
 									<set_value name="$StopDataGather" exact="true"/>
 									<set_value name="$OutputData" exact="true"/>
@@ -1189,7 +1187,7 @@
 								<do_if value="$OutputData">
 									<!-- $DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$WarStart} == [$LocFacOneData.clone,$LocFacTwoData.clone] -->
 									<!-- $DWT.{$LocFacOne}.{$LocFacTwo} == [$Time,$OldRel,$NewRel,$Fatigue,$WarScore,$EndNow(bool),$SilentQuit(bool)] -->
-									<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded] -->
+									<!-- $LocFacData == [$LocFatigue,$LocWarScore,$MilKills,$CivKills,$StationKills,$MilXLKill,$MilLKill,$MilMKill,$MilSKill,$CivXLKill,$CivLKill,$CivMKill,$CivSKill,$TimeEnded,$WarName] -->
 									<do_if value="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}?">
 										<set_value name="$DADVT.$DADynamicWarResultsTable.{$LocFacOne}.{$LocFacTwo}.{$DWT.{$LocFacOne}.{$LocFacTwo}.{1}}" exact="[$LocFacOneData.clone,$LocFacTwoData.clone]"/>
 									</do_if>
@@ -1981,6 +1979,10 @@
 						</do_if>
 						<do_if value="(not $DADVT.$DADynamicWarFatigue?) or (not ((typeof $DADVT.$DADynamicWarFatigue == datatype.integer) and (($DADVT.$DADynamicWarFatigue == 1) or ($DADVT.$DADynamicWarFatigue == 0))))">
 							<set_value name="$DADVT.$DADynamicWarFatigue" exact="true"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DADVT.$DADynamicWarFatigueTimer?) or (not ($DADVT.$DADynamicWarFatigueTimer gt 0))">
+							<set_value name="$DADVT.$DADynamicWarFatigueTimer" exact="120"/>
 							<set_value name="$MissingVarCount" exact="1" operation="add"/>
 						</do_if>
 						<do_if value="(not md.$DynamicWarTable?) or (md.$DynamicWarTable == null)">

@@ -53,6 +53,7 @@
 		<t id="145">Sector Faction Logic Menu</t>
 		<t id="146">Enable DW Stat Tracking</t>
 		<t id="147">Enable DW Fatigue</t>
+		<t id="148">DW Minimum Time before Fatigue ending</t>
 		<!-- Dynamic War Menu Entry Descriptions -->
 		<t id="1110">Allows the player to use credits or favors to increase relations between two factions.</t>
 		<t id="1111">Allows the player to use credits or favors to increase relations between two factions. Decreasing relation between two factions requires a certain level of trust (reputation) with the faction.</t>
@@ -92,6 +93,7 @@
 		<t id="1145">Allows the player to change whether faction logic in Clusters and their child Sectors is enabled. This menu will force the cluster and child sectors to be on the same setting if changed to avoid problems with AI. This may cause issues with certain storyline missions.</t>
 		<t id="1146">Enables new functionality to track ship kills and war stats for conflicts started by this script package.</t>
 		<t id="1147">Enables factions returning to previous reputation when they have sustained enough losses. Wars have a minimum time of 2 hours before peace can result via fatigue.</t>
+		<t id="1148">If fatigue is enabled, this is the minimum time in minutes before a war can end due to fatigue threshold.</t>
 		<!-- Dynamic War Misc -->
 		<t id="2110">(FACTION)Relations Locked.</t>
 		<t id="2111">(XXX)</t>
