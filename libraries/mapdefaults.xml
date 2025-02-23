@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <diff>
-  <add sel="/defaults/dataset[@macro='Cluster_17_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_21_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_26_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_33_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_413_Sector001_macro']/properties/area" type="@tags">daxenonuseless</add>
-  <add sel="/defaults/dataset[@macro='Cluster_415_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_424_Sector002_macro']/properties/area" type="@tags">daxenoncore</add>
-  <add sel="/defaults/dataset[@macro='Cluster_112_Sector001_macro']/properties/area" type="@tags">daxenoncore</add>
+  <replace sel="/defaults/dataset[@macro='Cluster_17_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_21_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_26_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_33_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_415_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_424_Sector002_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
+  <replace sel="/defaults/dataset[@macro='Cluster_112_Sector001_macro']/properties/area/@tags">allowrandomanomaly daxenoncore</replace>
 </diff>

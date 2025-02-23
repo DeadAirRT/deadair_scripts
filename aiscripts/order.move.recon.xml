@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <diff>
-  <add sel="/aiscript/attention/actions/do_if[@value='@$localtarget']/do_if[@value='$localtarget.isoperational and ($trouble? or (not $break? and $time_scandone? and player.age ge $time_scandone))']/do_if[@value='$police']/do_else/debug_text" pos="before">
-    <do_if value="($localtarget.trueowner != faction.player) and ($localtarget.isclass.ship) and (this.isplayerowned)">
+  <add sel="/aiscript/attention/actions/do_if[@value='@$localtarget']/do_if[@value='$localtarget.isoperational and ($trouble? or (not $break? and $time_scandone? and player.age ge $time_scandone))']/do_if[@value='$police']/do_else/do_if[@value='$localtarget.isclass.ship']/do_if[@value='@$localtarget.pilot.$haltedby == this.assignedcontrolled']" pos="before">
+    <do_if value="($localtarget.trueowner != faction.player) and (this.isplayerowned)">
       <signal_objects object="player.entity" param="'policeassetscannedship'" param2="$localtarget" param3="this.ship"/>
     </do_if>
   </add>

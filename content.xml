@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<content id="DeadAir_Scripts" name="DeadAir Scripts" description="Collection of my custom scripts for a more dynamic game." author="DeadAir" version="111" date="2024-10-22" save="0" enabled="1">
+<content id="DeadAir_Scripts" name="DeadAir Scripts" description="Collection of my custom scripts for a more dynamic game." author="DeadAir" version="112" date="2025-02-22" save="0" enabled="1">
 	<dependency id="ego_dlc_split" optional="true" name="Split Vendetta"/>
 	<dependency id="ego_dlc_terran" optional="true" name="Cradle of Humanity"/>
 	<dependency id="ego_dlc_pirate" optional="true" name="Tides of Avarice"/>
