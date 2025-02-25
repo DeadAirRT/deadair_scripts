@@ -34,6 +34,7 @@
 				<set_value name="$DADVT.$DAGodEnable" exact="false"/>
 				<set_value name="$DADVT.$DABPEnable" exact="false"/>
 				<set_value name="$DAGVT.$DATPEnable" exact="true"/>
+				<set_value name="$DAGVT.$DAInfestationEnable" exact="false"/>
 				<!-- Dynamic War -->
 				<set_value name="$DADVT.$DADynamicWarFavorsEnable" exact="false"/>
 				<set_value name="$DADVT.$DADynamicWarDisabledFactions" exact="[faction.buccaneers, faction.civilian, faction.criminal, faction.khaak, faction.player, faction.smuggler, faction.visitor, faction.xenon]"/>
@@ -249,6 +250,22 @@
 				<set_value name="$DADVT.$DABPDebugEnable" exact="false"/>
 				<!-- Trader Profit -->
 				<set_value name="$DAGVT.$DATPTraderTable" exact="table[]"/>
+				<!-- Infestation -->
+				<set_value name="$DAGVT.$DAInfestationTable" exact="table[]"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$SectorTable" exact="table[]"/>
+				<create_group groupname="$DAGVT.$DAInfestationTable.$ShipGroup"/>
+				<create_group groupname="$DAGVT.$DAInfestationTable.$StationGroup"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$SpreadTime" exact="15" comment="in minutes"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$BaseShipCount" exact="4"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$MaxScaling" exact="32" comment="min 4*4 = 16, default 32*4 = 128  max 64*4 = 256"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$Evolution" exact="false"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$CurrentActiveCue" exact="null"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals" exact="table[]"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt" exact="false"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$SectorListInfestationListener" exact="[]"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$SectorListPatrolListener" exact="[]"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$HiveStationMacros" exact="[macro.landmarks_kha_hive_01_macro]"/>
+				<set_value name="$DAGVT.$DAInfestationTable.$DetailedDebug" exact="false"/>
 				<!-- Update on load are running twice in 7.0 for some reason. -->
 				<set_value name="$VerifyVariablesExistTimer" exact="-1s"/>
 				<set_value name="$UpdateOnLoadDynamicNewsRefreshTimer" exact="-1s"/>
@@ -11796,6 +11813,785 @@
 						<!-- Print only if missing -->
 						<do_if value="$MissingVarCount">
 							<debug_text text="'MOD: DATP -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
+							<do_if value="$TotalMissingVar?">
+								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
+							</do_if>
+						</do_if>
+						<remove_value name="$MissingVarCount"/>
+					</actions>
+				</library>
+				<!-- Infestation -->
+				<!-- Track sectors, chart six points outside sector core, spawn ships at existing hives that travel to closest uninfested sector point, once enough gather then create a new hive -->
+				<!-- Once a new hive from Infestation is created, spawn increasing numbers of ships that patrol sector -->
+				<!-- Settings for spread rate, base number of ships, scaling factor (number of ships and maybe evo style enhancement) -->
+				<!-- 
+					$DAGVT.$DAInfestationTable = table[]
+					$DAGVT.$DAInfestationTable.$SectorTable = table[]
+					$DAGVT.$DAInfestationTable.$ShipGroup = group
+					$DAGVT.$DAInfestationTable.$StationGroup = group
+					$DAGVT.$DAInfestationTable.$SpreadTime = 15 (in minutes)
+					$DAGVT.$DAInfestationTable.$BaseShipCount = 4
+					$DAGVT.$DAInfestationTable.$MaxScaling = 32
+					$DAGVT.$DAInfestationTable.$Evolution = false
+					$DAGVT.$DAInfestationTable.$CurrentActiveCue = null
+					$DAGVT.$DAInfestationTable.$DetailedDebug = false
+				-->
+				<cue name="EventInfActivated" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="not $DAGVT?">
+							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+						</do_if>
+						<include_actions ref="LibraryCheckInfVariables"/>
+						<set_value name="$DAGVT.$DAInfestationTable.$CurrentActiveCue" exact="this"/>
+						<debug_text text="'MOD: DAInf -- Infection activated. Current active cue: %s %s'.[$DAGVT.$DAInfestationTable.$CurrentActiveCue,$DAGVT.$DAInfestationTable.$CurrentActiveCue.state]" context="false" filter="scripts"/>
+					</actions>
+					<cues>
+						<cue name="InfWrapper" instantiate="false">
+							<actions>
+								<!-- Set up sector table, activate subcues -->
+								<find_sector groupname="$LocAllSectors" multiple="true">
+									<match_parent normalcluster="true"/>
+								</find_sector>
+								<!-- TODO: move InfNextTimer to var table -->
+								<set_value name="$InfNextTimer" exact="null"/>
+								<set_value name="$ProcessingGoals" exact="false"/>
+							</actions>
+							<cues>
+								<cue name="InfSectorTableSetUp">
+									<delay exact="1s"/>
+									<actions>
+										<do_if value="$LocAllSectors.count" min="1">
+											<set_value name="$LocSector" exact="$LocAllSectors.{1}"/>
+											<signal_cue_instantly cue="EventInfCheckSector" param="$LocSector"/>
+											<remove_from_group group="$LocAllSectors" object="$LocSector"/>
+											<reset_cue cue="this"/>
+										</do_if>
+										<do_else>
+											<debug_text text="'MOD: DAInf -- InfSectorTableSetUp completed.'" context="false" filter="scripts"/>
+											<signal_cue_instantly cue="InfTimerActivator"/>
+											<remove_value name="$LocAllSectors"/>
+											<remove_value name="$LocSector"/>
+										</do_else>
+									</actions>
+								</cue>
+								<cue name="InfTimerActivator" instantiate="false" namespace="this">
+									<conditions>
+										<event_cue_signalled/>
+									</conditions>
+									<actions>
+										<do_if value="not $DAGVT?">
+											<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+										</do_if>
+										<debug_text text="'MOD: DAInf -- Started InfTimerActivator'" context="false" filter="scripts"/>
+									</actions>
+									<cues>
+										<cue name="InfSpreadTimer" instantiate="true" checkinterval="5min">
+											<conditions>
+												<check_value value="$DAGVT.$DAInfestationEnable"/>
+												<check_value value="player.age ge @$InfNextTimer"/>
+											</conditions>
+											<actions>
+												<do_if value="$DAGVT.$DAInfestationTable.$HiveStationMacros.count">
+													<set_value name="$HiveStationMacros" exact="[]"/>
+													<append_list_elements name="$HiveStationMacros" other="$DAGVT.$DAInfestationTable.$HiveStationMacros"/>
+												</do_if>
+												<do_else>
+													<set_value name="$HiveStationMacros" exact="[macro.landmarks_kha_hive_01_macro]"/>
+												</do_else>
+												<find_station_by_true_owner groupname="$LocKhaakStations" faction="faction.khaak" macro="$HiveStationMacros" multiple="true" space="player.galaxy" checkoperational="true"/>
+												<find_station_by_true_owner name="$KhaBuilders" faction="faction.khaak" space="player.galaxy" canbuildships="true" checkoperational="true" multiple="false"/>
+												<do_if value="$KhaBuilders? and @$KhaBuilders">
+													<set_value name="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt" exact="false"/>
+												</do_if>
+												<do_else>
+													<set_value name="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt" exact="true"/>
+												</do_else>
+												<do_if value="$LocKhaakStations.count" min="1">
+													<debug_text text="'MOD: DAInf -- InfSpreadTimer execute.'" context="false" filter="scripts"/>
+													<signal_cue_instantly cue="EventInfSpreadingLogic" param="$LocKhaakStations"/>
+													<set_value name="$InfNextTimer" exact="player.age + ($DAGVT.$DAInfestationTable.$SpreadTime)min"/>
+												</do_if>
+												<remove_value name="$HiveStationMacros"/>
+												<remove_value name="$LocKhaakStations"/>
+												<remove_value name="$KhaBuilders"/>
+											</actions>
+										</cue>
+									</cues>
+								</cue>
+								<cue name="EventInfSpreadingLogic" instantiate="true" namespace="this">
+									<conditions>
+										<event_cue_signalled/>
+									</conditions>
+									<actions>
+										<debug_text text="'MOD: DAInf -- Started EventInfSpreadingLogic. Hive count: %s'.[@event.param.count]" context="false" filter="scripts"/>
+										<!-- event.param = group of hives -->
+										<do_if value="event.param? and event.param.count">
+											<do_if value="not $DAGVT?">
+												<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+											</do_if>
+											<create_group groupname="$LocHiveGroup"/>
+											<add_to_group groupname="$LocHiveGroup" group="event.param"/>
+											<set_value name="$Results" exact="[0,0]" comment="added, removed"/>
+										</do_if>
+										<do_else>
+											<debug_text text="'MOD: DAInf -- Cancelled EventInfSpreadingLogic, no hives.'" context="false" filter="scripts"/>
+											<cancel_cue cue="EventInfSpreadingLogic"/>
+										</do_else>
+									</actions>
+									<cues>
+										<cue name="InfSpeadingLogicProcess" instantiate="false">
+											<delay exact="1s"/>
+											<actions>
+												<do_if value="$LocHiveGroup.count" min="1">
+													<set_value name="$LocHive" exact="$LocHiveGroup.{1}"/>
+													<set_value name="$LocSector" exact="$LocHive.sector"/>
+													<do_if value="@$LocHive and @$LocSector">
+														<!-- Create list with $LocSector as {1} -->
+														<set_value name="$LocSectorsToCheck" exact="[]"/>
+														<append_to_list name="$LocSectorsToCheck" exact="$LocSector"/>
+														<!-- It's potentially a little amount of cpu wasted setting up following sectors but it helps reduce code amount significantly -->
+														<find_sector_in_range name="$LocSectorsInRange" object="$LocSector" maxdistance="1" multiple="true"/>
+														<do_if value="$LocSectorsInRange.count and (($LocSectorsInRange.count gt 1) or (($LocSectorsInRange.count == 1) and ($LocSectorsInRange.{1} != $LocSector)))">
+															<remove_from_list name="$LocSectorsInRange" exact="$LocSector" multiple="true"/>
+															<sort_list list="$LocSectorsInRange" sortbyvalue="loop.element.macro"/>
+															<do_for_each name="$LocNextSector" in="$LocSectorsInRange">
+																<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocNextSector}?">
+																	<append_to_list name="$LocSectorsToCheck" exact="$LocNextSector"/>
+																</do_if>
+															</do_for_each>
+														</do_if>
+														<set_value name="$HasValidGoalinSector" exact="false"/>
+														<do_for_each name="$LocSecCheck" in="$LocSectorsToCheck">
+															<!-- Check if sector is valid -->
+															<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}?">
+																<!-- Check for empty positions, add into $DAGVT.$DAInfestationTable.$CurrentInfestationGoals -->
+																<!-- If nothing added, check adjacent sector for goal -->
+																<do_for_each name="$Key" in="['$One','$Two','$Three','$Four','$Five','$Six']">
+																	<!-- $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key} = [$LocPos, $StationGroup, $PatrolGroup, $InfestationShipGroup, $TimeOfInfestation, $CurrentScaling, $PatrolLeader] -->
+																	<!-- Check if sector the hive is in has valid positions -->
+																	<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}? and @$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{1}">
+																		<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{2}.count" min="1">
+																			<!-- Already has station, remove from goals -->
+																			<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}? and $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}?">
+																				<remove_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}"/>
+																				<set_value name="$Results.{2}" exact="1" operation="add"/>
+																			</do_if>
+																		</do_if>
+																		<do_elseif value="($DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{2}.count == 0) and ($DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{3}.count lt 6)">
+																			<!-- Does not have a hive, continue checks -->
+																			<!-- Check if not in goals, if so add -->
+																			<do_if value="not $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}?">
+																				<set_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}" exact="table[]"/>
+																				<!-- $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key} = [LiveGroupEnroute,RequestedAmount,GroupOfStationsWithThisGoal] -->
+																				<set_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}" exact="[null,0,null]"/>
+																				<create_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{1}"/>
+																				<create_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}"/>
+																				<add_to_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}" object="$LocHive"/>
+																				<set_value name="$Results.{1}" exact="1" operation="add"/>
+																				<set_value name="$HasValidGoalinSector" exact="true"/>
+																				<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess -- First sector goal added: %s(%s)(%s) wants to infest %s in %s.'.[$LocHive.knownname,$LocHive.idcode,$LocHive.sector.knownname,$Key,$LocSecCheck.knownname]" context="false" filter="scripts"/>
+																				<!-- Limit to one goal per hive. Break out of checking all keys -->
+																				<break/>
+																			</do_if>
+																			<do_elseif value="not $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}?">
+																				<set_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}" exact="[null,0,null]"/>
+																				<create_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{1}"/>
+																				<create_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}"/>
+																				<add_to_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}" object="$LocHive"/>
+																				<set_value name="$Results.{1}" exact="1" operation="add"/>
+																				<set_value name="$HasValidGoalinSector" exact="true"/>
+																				<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess -- New Position Goal Added: %s(%s)(%s) wants to infest %s in %s.'.[$LocHive.knownname,$LocHive.idcode,$LocHive.sector.knownname,$Key,$LocSecCheck.knownname]" context="false" filter="scripts"/>
+																				<!-- Limit to one goal per hive. Break out of checking all keys -->
+																				<break/>
+																			</do_elseif>
+																			<do_elseif value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}? and $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.count">
+																				<!-- Already has a valid goal -->
+																				<do_if value="not $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}?">
+																					<!-- Broken group -->
+																					<create_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}"/>
+																					<add_to_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}" object="$LocHive"/>
+																					<set_value name="$HasValidGoalinSector" exact="true"/>
+																					<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess -- Attempting to fix group -- Sector: %s -- Key: %s -- Group exists?: %s -- Group count: %s'.[$LocSecCheck.knownname,$Key,$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}?,$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}.count]" context="false" filter="scripts"/>
+																					<!-- Limit to one goal per hive. Break out of checking all keys -->
+																					<break/>
+																				</do_if>
+																				<do_elseif value="not $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}.indexof.{$LocHive}">
+																					<!-- Add to group -->
+																					<add_to_group groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}" object="$LocHive"/>
+																					<set_value name="$HasValidGoalinSector" exact="true"/>
+																					<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess -- New Station Added to Goal: %s(%s)(%s) wants to infest %s in %s.'.[$LocHive.knownname,$LocHive.idcode,$LocHive.sector.knownname,$Key,$LocSecCheck.knownname]" context="false" filter="scripts"/>
+																					<!-- Limit to one goal per hive. Break out of checking all keys -->
+																					<break/>
+																				</do_elseif>
+																				<do_elseif value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}.{3}.indexof.{$LocHive}">
+																					<!-- Already in group -->
+																					<set_value name="$HasValidGoalinSector" exact="true"/>
+																					<!-- Limit to one goal per hive. Break out of checking all keys -->
+																					<break/>
+																				</do_elseif>
+																				<do_else>
+																					<!-- Error? -->
+																				</do_else>
+																			</do_elseif>
+																			<do_else>
+																				<!-- Error? -->
+																			</do_else>
+																		</do_elseif>
+																		<do_elseif value="($DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{2}.count == 0) and ($DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{3}.count ge 6)">
+																			<!-- Already have six ships attempting to spread infestation, remove from goals -->
+																			<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}? and $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}?">
+																				<remove_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key}"/>
+																				<set_value name="$Results.{2}" exact="1" operation="add"/>
+																			</do_if>
+																		</do_elseif>
+																		<do_else>
+																			<!-- Error? -->
+																		</do_else>
+																	</do_if>
+																	<do_elseif value="not $DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}?">
+																		<!-- Key wasn't valid so nothing was set up -->
+																	</do_elseif>
+																	<do_elseif value="not @$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}.{1}">
+																		<!-- Key was valid but no position set up -->
+																		<remove_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSecCheck}.{$Key}"/>
+																		<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess -- Removed invalid table entry in $SectorTable: %s %s.'.[$LocSecCheck.knownname,$Key]" context="false" filter="scripts"/>
+																	</do_elseif>
+																	<do_else>
+																		<!-- Error? -->
+																	</do_else>
+																</do_for_each>
+																<do_if value="$HasValidGoalinSector">
+																	<!-- Hive has a valid goal in sector, break out of checking additional sectors -->
+																	<break/>
+																</do_if>
+															</do_if>
+														</do_for_each>
+														<remove_value name="$LocSectorsToCheck"/>
+														<remove_value name="$HasValidGoalinSector"/>
+													</do_if>
+													<remove_from_group group="$LocHiveGroup" object="$LocHive"/>
+													<remove_value name="$LocHive"/>
+													<remove_value name="$LocSector"/>
+													<set_value name="$HasRun" exact="true"/>
+													<reset_cue cue="this"/>
+												</do_if>
+												<do_elseif value="($LocHiveGroup.count == 0) and @$HasRun">
+													<!-- Debug -->
+													<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess completed. Goals added: %s. Goals removed: %s.'.[@$Results.{1},@$Results.{2}]" context="false" filter="scripts"/>
+													<remove_value name="$Results"/>
+													<!-- Cleanup -->
+													<remove_value name="$HasRun"/>
+													<remove_value name="$LocHiveGroup"/>
+													<!-- Finish -->
+													<signal_cue_instantly cue="InfTimerShipRequester"/>
+													<cancel_cue cue="EventInfSpreadingLogic"/>
+												</do_elseif>
+												<do_else>
+													<debug_text text="'MOD: DAInf -- InfSpeadingLogicProcess completed.'" context="false" filter="scripts"/>
+													<cancel_cue cue="EventInfSpreadingLogic"/>
+												</do_else>
+											</actions>
+										</cue>
+									</cues>
+								</cue>
+								<cue name="InfTimerShipRequester" instantiate="true" namespace="this">
+									<conditions>
+										<event_cue_signalled/>
+									</conditions>
+									<actions>
+										<debug_text text="'MOD: DAInf -- Started InfTimerShipRequester'" context="false" filter="scripts"/>
+										<do_if value="not $DAGVT?">
+											<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+										</do_if>
+										<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.keys.count" min="1">
+											<!-- Sectors with listeners are in $DAGVT.$DAInfestationTable.$SectorListInfestationListener -->
+											<!-- Find valid ship macro -->
+											<get_ship_definition macro="$LocShipMacro" faction="faction.khaak" size="class.ship_m" tags="[tag.military,tag.fighter]"/>
+											<do_if value="$LocShipMacro? and @$LocShipMacro">
+												<generate_loadout result="$LocLoadout" faction="faction.khaak" macro="$LocShipMacro" level="1.0" variation="0.0"/>
+												<do_if value="$LocLoadout.count">
+													<set_value name="$LocLoadout" exact="$LocLoadout.{1}"/>
+												</do_if>
+												<do_if value="$LocLoadout? and @$LocLoadout">
+													<set_value name="$LocSectorList" exact="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.keys.list"/>
+													<do_if value="$LocSectorList.count" min="6">
+														<shuffle_list list="$LocSectorList"/>
+														<resize_list list="$LocSectorList" count="5"/>
+													</do_if>
+												</do_if>
+												<do_else>
+													<debug_text text="'MOD: DAInf -- InfTimerShipRequester -- No valid ship loadout found.'" context="false" filter="error"/>
+													<cancel_cue cue="InfTimerShipRequester"/>
+												</do_else>
+											</do_if>
+											<do_else>
+												<debug_text text="'MOD: DAInf -- InfTimerShipRequester -- No valid ship macro found.'" context="false" filter="error"/>
+												<cancel_cue cue="InfTimerShipRequester"/>
+											</do_else>
+										</do_if>
+										<do_else>
+											<debug_text text="'MOD: DAInf -- InfTimerShipRequester -- No infestation goals found.'" context="false" filter="scripts"/>
+											<cancel_cue cue="InfTimerShipRequester"/>
+										</do_else>
+									</actions>
+									<cues>
+										<cue name="InfShipSpreadTimer" instantiate="false">
+											<delay exact="1s"/>
+											<actions>
+												<do_if value="$LocSectorList.count" min="1">
+													<set_value name="$LocSector" exact="$LocSectorList.{1}"/>
+													<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.keys.count">
+														<do_for_each name="$Key" in="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.keys.list">
+															<!-- $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key} = [LiveGroupEnroute,RequestedAmount,GroupOfStationsWithThisGoal] -->
+															<!-- Check if this Key is an active goal of any hives -->
+															<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}? and $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{3}.count">
+																<!-- Check that the number of ships enroute/requested are less than the goal -->
+																<do_if value="($DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{1}.count + $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{2}) lt 6">
+																	<do_if value="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt">
+																		<!-- Logic for requesting a job ship from closest builder -->
+																		<!-- Find build stations, grab closest, add build, track ship -->
+																	</do_if>
+																	<do_else>
+																		<!-- Logic for spawning ship at Hive that has this location as a goal -->
+																		<!-- Use $LocHive.sector because they may be requesting in separate sector -->
+																		<do_for_each name="$LocHive" in="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{3}">
+																			<do_if value="($DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{1}.count + $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{2}) lt 6">
+																				<create_ship name="$LocShip" groupname="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.{$Key}.{1}" sector="$LocHive.sector" macro="$LocShipMacro">
+																					<safepos object="$LocHive"/>
+																					<owner exact="faction.khaak"/>
+																					<pilot>
+																						<select faction="faction.khaak" tags="tag.aipilot"/>
+																					</pilot>
+																				</create_ship>
+																				<do_if value="$LocShip? and @$LocShip and $LocShip.isoperational">
+																					<apply_loadout object="$LocShip" loadout="$LocLoadout"/>
+																					<set_value name="$LocName" exact="'%s %s %s'.[faction.khaak.shortname,{33232474,2440},$LocShip.macro.name]"/>
+																					<set_object_name object="$LocShip" name="$LocName"/>
+																					<remove_value name="$LocName"/>
+																					<create_order object="$LocShip" id="'DAInfestationShipScript'" default="true">
+																						<param name="destination" value="[$LocSector,$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{1}]"/>
+																						<param name="goalsector" value="$LocSector"/>
+																						<param name="goalkey" value="$Key"/>
+																						<param name="localdebug" value="true"/>
+																					</create_order>
+																					<do_if value="not $DAGVT.$DAInfestationTable.$SectorListInfestationListener.indexof.{$LocSector}">
+																						<append_to_list name="$DAGVT.$DAInfestationTable.$SectorListInfestationListener" exact="$LocSector"/>
+																						<signal_cue_instantly cue="InfSectorSignalListenerWrapper" param="$LocSector"/>
+																					</do_if>
+																					<!-- Signal watcher cue that gathers arrival signals -->
+																				</do_if>
+																				<do_else>
+																					<!-- Failed to spawn -->
+																					<debug_text text="'MOD: DAInf -- InfShipSpreadTimer -- Failed to spawn ship for: %s(%s) in %s -- Target sector: %s(%s)'.[$LocHive.knownname,$LocHive.idcode,$LocHive.sector,$LocSector.knownname,$Key]" context="false" filter="error"/>
+																				</do_else>
+																			</do_if>
+																			<do_else>
+																				<break/>
+																			</do_else>
+																		</do_for_each>
+																	</do_else>
+																</do_if>
+																<do_else>
+																	<!-- Position has enough infestation ships live/requested already -->
+																</do_else>
+															</do_if>
+															<do_else>
+																<!-- Either this position isn't a valid goal or no stations are currently targeting it -->
+															</do_else>
+														</do_for_each>
+													</do_if>
+													<!-- separate logic for spreading ships vs combat ships -->
+													<!-- need to track how many times the station has requested ships -->
+													<reset_cue cue="this"/>
+												</do_if>
+												<do_else>
+													<cancel_cue cue="InfTimerShipRequester"/>
+												</do_else>
+											</actions>
+										</cue>
+									</cues>
+								</cue>
+								<cue name="InfSectorSignalListenerWrapper" instantiate="true" namespace="this">
+									<conditions>
+										<event_cue_signalled/>
+									</conditions>
+									<actions>
+										<!-- event.param = sector -->
+										<do_if value="event.param? and @event.param and @event.param.isclass.sector">
+											<do_if value="not $DAGVT?">
+												<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+											</do_if>
+											<set_value name="$LocSector" exact="event.param"/>
+										</do_if>
+										<do_else>
+											<debug_text text="'MOD: DAInf -- InfSectorSignalListenerWrapper -- ERROR -- Invalid param -- event.param: %s -- event.param.knownname: %s -- event.param.class: %s'.[@event.param,@event.param.knownname,@event.param.class]" context="false" filter="error"/>
+											<cancel_cue cue="InfSectorSignalListenerWrapper"/>
+										</do_else>
+									</actions>
+									<cues>
+										<cue name="InfSectorSignalListener" instantiate="true">
+											<conditions>
+												<event_object_signalled object="$LocSector" param="'DAInfestationArrived'"/>
+											</conditions>
+											<actions>
+												<!-- signal == object="$targetsector" param="'DAInfestationArrived'" param2="this.assignedcontrolled" param3="[$goalsector,$goalkey]" -->
+												<!-- $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key} = [$LocPos, $StationGroup, $PatrolGroup, $InfestationShipGroup, $TimeOfInfestation, $CurrentScaling, $PatrolLeader] -->
+												<!-- $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key} = [LiveGroupEnroute,RequestedAmount,GroupOfStationsWithThisGoal] -->
+												<do_if value="@event.param2 and (@event.param3.{1} == $LocSector) and @event.param3.{2}">
+													<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.keys.list.indexof.{event.param3.{2}}">
+														<!-- Valid sector, valid goal -->
+														<do_if value="not $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{event.param3.{2}}.{4}.indexof.{event.param2}">
+															<add_to_group groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{event.param3.{2}}" object="event.param2"/>
+															<debug_text text="'MOD: DAInf -- InfSectorSignalListener -- Ship arrived to destination -- %s(%s) in %s for %s -- Group count: %s'.[event.param2.knownname,event.param2.idcode,event.param2.sector.knownname,event.param3.{2},$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}.count]" context="false" filter="scripts"/>
+															<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{event.param3.{2}}.{4}.count ge 6">
+																<signal_cue_instantly cue="EventInfNewHiveLocation" param="[$LocSector,event.param3.{2}]"/>
+															</do_if>
+														</do_if>
+														<do_else>
+															<!-- If order resets it would cause this -->
+															<debug_text text="'MOD: DAInf -- InfSectorSignalListener -- Ship signalled arrival again -- %s(%s) in %s for %s -- Group count: %s'.[event.param2.knownname,event.param2.idcode,event.param2.sector.knownname,event.param3.{2},$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}.count]" context="false" filter="scripts"/>
+															<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{event.param3.{2}}.{4}.count ge 6">
+																<signal_cue_instantly cue="EventInfNewHiveLocation" param="[$LocSector,event.param3.{2}]"/>
+															</do_if>
+														</do_else>
+													</do_if>
+												</do_if>
+											</actions>
+										</cue>
+										<cue name="InfSectorSignalListenerCleanup" instantiate="true" checkinterval="5min">
+											<actions>
+												<do_if value="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.keys.count" min="1">
+													<!-- Sector still has valid goals -->
+												</do_if>
+												<do_else>
+													<do_if value="$DAGVT.$DAInfestationTable.$HiveStationMacros.count">
+														<set_value name="$HiveStationMacros" exact="[]"/>
+														<append_list_elements name="$HiveStationMacros" other="$DAGVT.$DAInfestationTable.$HiveStationMacros"/>
+													</do_if>
+													<do_else>
+														<set_value name="$HiveStationMacros" exact="[macro.landmarks_kha_hive_01_macro]"/>
+													</do_else>
+													<find_station_by_true_owner groupname="$LocKhaakStations" faction="faction.khaak" macro="$HiveStationMacros" multiple="true" space="player.galaxy" checkoperational="true"/>
+													<debug_text text="'MOD: DAInf -- InfSectorSignalListenerCleanup -- Sector has no more active goals. Cleaning up listner. -- %s -- Infestation goals keys count: %s -- Hives in system: %s'.[$LocSector.knownname,$DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSector}.keys.count,@$LocKhaakStations.count]" context="false" filter="scripts"/>
+													<remove_value name="$LocKhaakStations"/>
+													<remove_from_list name="$DAGVT.$DAInfestationTable.$SectorListInfestationListener" exact="$LocSector" multiple="true"/>
+													<!-- Only cleaning up the listener, the spreading logic will clear from CurrentInfestationGoals -->
+													<cancel_cue cue="InfSectorSignalListenerWrapper"/>
+												</do_else>
+											</actions>
+										</cue>
+									</cues>
+									<!-- Figure out clean up of listener, check ships and build station -->
+								</cue>
+							</cues>
+						</cue>
+						<cue name="EventInfCheckSector" instantiate="true" namespace="this">
+							<conditions>
+								<event_cue_signalled/>
+							</conditions>
+							<actions>
+								<!-- event.param = sector -->
+								<do_if value="event.param? and @event.param and @event.param.isclass.sector">
+									<do_if value="not $DAGVT?">
+										<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+									</do_if>
+									<set_value name="$LocSector" exact="event.param"/>
+									<find_sector_in_range name="$LocSectorsInRange" object="$LocSector" maxdistance="1" multiple="true"/>
+									<do_if value="$LocSectorsInRange.count and (($LocSectorsInRange.count gt 1) or (($LocSectorsInRange.count == 1) and ($LocSectorsInRange.{1} != $LocSector)))">
+										<set_value name="$LocSectorPositions" exact="[]"/>
+										<!-- Determine positions -->
+										<set_value name="$LocCorePosition" exact="$LocSector.coreposition"/>
+										<set_value name="$LocCoreRadius" exact="$LocSector.coresize * 0.75"/>
+										<do_for_each name="$Yaw" in="[0deg,60deg,120deg,180deg,240deg,300deg]">
+											<run_actions ref="md.LIB_Generic.Create_Position_On_Plane" result="$SecSpawnPos">
+												<param name="AnchorPos" value="$LocCorePosition"/>
+												<param name="Distance" value="$LocCoreRadius"/>
+												<param name="Yaw" value="$Yaw"/>
+											</run_actions>
+											<do_if value="$SecSpawnPos? and @$SecSpawnPos">
+												<create_object macro="macro.eq_arg_satellite_02_macro" owner="faction.player" sector="$LocSector">
+													<safepos value="$SecSpawnPos" max="20km"/>
+												</create_object>
+												<create_object name="$Beacon" macro="macro.env_deco_nav_beacon_t1_macro" owner="faction.player" sector="$LocSector">
+													<safepos value="$SecSpawnPos" max="20km"/>
+												</create_object>
+												<set_object_name object="$Beacon" name="'%s - %s'.[$LocSector.knownname,@$Yaw]"/>
+												<append_to_list name="$LocSectorPositions" exact="$SecSpawnPos"/>
+												<remove_value name="$SecSpawnPos"/>
+												<remove_value name="$Beacon"/>
+											</do_if>
+											<do_else>
+												<append_to_list name="$LocSectorPositions" exact="null"/>
+											</do_else>
+										</do_for_each>
+										<set_value name="$HasValidPos" exact="false"/>
+										<do_for_each name="$LocPos" in="$LocSectorPositions">
+											<do_if value="$LocPos? and ($LocPos != null)">
+												<set_value name="$HasValidPos" exact="true"/>
+												<break/>
+											</do_if>
+										</do_for_each>
+										<do_if value="$HasValidPos">
+											<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}" exact="table[]"/>
+											<set_value name="$KeyList" exact="['$One','$Two','$Three','$Four','$Five','$Six']"/>
+											<do_for_each name="$LocPos" in="$LocSectorPositions" counter="$A">
+												<set_value name="$Key" exact="$KeyList.{$A}"/>
+												<do_if value="$LocPos? and ($LocPos != null)">
+													<!-- $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key} = [$LocPos, $StationGroup, $PatrolGroup, $InfestationShipGroup, $TimeOfInfestation, $CurrentScaling, $PatrolLeader] -->
+													<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}" exact="[$LocPos,null,null,null,null,null,null]"/>
+													<create_group groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{2}"/>
+													<create_group groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{3}"/>
+													<create_group groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}"/>
+													<create_group groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{7}"/>
+												</do_if>
+												<do_else>
+													<!-- No use creating a table entry for a broken position calculation -->
+												</do_else>
+												<remove_value name="$Key"/>
+											</do_for_each>
+											<remove_value name="$KeyList"/>
+										</do_if>
+										<remove_value name="$LocSectorPositions"/>
+										<remove_value name="$LocCorePosition"/>
+										<remove_value name="$LocCoreRadius"/>
+										<remove_value name="$HasValidPos"/>
+									</do_if>
+									<do_else>
+										<!-- Ignore disconnected sectors -->
+									</do_else>
+									<remove_value name="$LocSector"/>
+								</do_if>
+								<do_else>
+									<debug_text text="'MOD: DAInf -- EventInfCheckSector -- ERROR -- Invalid param -- event.param: %s -- event.param.knownname: %s -- event.param.class: %s'.[@event.param,@event.param.knownname,@event.param.class]" context="false" filter="error"/>
+								</do_else>
+							</actions>
+						</cue>
+						<cue name="EventInfNewHiveLocation" instantiate="true" namespace="this">
+							<conditions>
+								<event_cue_signalled/>
+							</conditions>
+							<actions>
+								<!-- Signalled because six ships are in position, create hive, add to SectorTable group, destroy ships -->
+								<!-- param == [$LocSector,event.param3.{2} == ($Key)] -->
+								<!-- $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key} = [$LocPos, $StationGroup, $PatrolGroup, $InfestationShipGroup, $TimeOfInfestation, $CurrentScaling, $PatrolLeader] -->
+								<!-- $DAGVT.$DAInfestationTable.$CurrentInfestationGoals.{$LocSecCheck}.{$Key} = [LiveGroupEnroute,RequestedAmount,GroupOfStationsWithThisGoal] -->
+								<do_if value="not $DAGVT?">
+									<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+								</do_if>
+								<do_if value="(event.param.{1}.isclass.sector) and (event.param.{2} != null)">
+									<set_value name="$LocSector" exact="event.param.{1}"/>
+									<set_value name="$Key" exact="event.param.{2}"/>
+									<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}? and @$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{1}">
+										<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}.count" min="6">
+											<!-- Destroy ships -->
+											<do_for_each name="$LocShip" in="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}">
+												<do_if value="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt">
+													<create_order object="$LocShip" id="'RecycleDefault'" default="true"/>
+													<debug_text text="'MOD: DAInf -- EventInfNewHiveLocation -- Sector: %s -- Key: %s -- %s(%s) ordered to recycle.'.[$LocSector.knownname,$Key,$LocShip.knownname,$LocShip.idcode]" context="false" filter="scripts"/>
+												</do_if>
+												<do_else>
+													<cancel_all_orders object="$LocShip"/>
+													<debug_text text="'MOD: DAInf -- EventInfNewHiveLocation -- Sector: %s -- Key: %s -- %s(%s) ordered to die.'.[$LocSector.knownname,$Key,$LocShip.knownname,$LocShip.idcode]" context="false" filter="scripts"/>
+													<destroy_object object="$LocShip" explosion="false"/>
+												</do_else>
+											</do_for_each>
+											<!-- Create hive -->
+											<create_station name="$NewHive" groupname="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{2}" sector="$LocSector" owner="faction.khaak" macro="$DAGVT.$DAInfestationTable.$HiveStationMacros.random" state="componentstate.operational">
+												<safepos value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{1}" max="20km" allowyaxis="false" includeplotbox="true"/>
+											</create_station>
+											<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{5}" exact="player.age"/>
+											<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{6}" exact="1"/>
+											<!-- TODO: Remove after testing -->
+											<create_object macro="macro.eq_arg_satellite_02_macro" owner="faction.player" sector="$LocSector">
+												<safepos value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{1}" max="20km"/>
+											</create_object>
+											<create_object name="$Beacon" macro="macro.env_deco_nav_beacon_t1_macro" owner="faction.player" sector="$LocSector">
+												<safepos value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{1}" max="20km"/>
+											</create_object>
+											<debug_text text="'MOD: DAInf -- EventInfNewHiveLocation -- New hive created -- Sector: %s -- Key: %s -- Station: %s(%s) -- InStationGroup: %s -- SectorTable.{3}(PatrolGroup.count): %s -- SectorTable.{4}(InfestationShipGroup.count): %s'.[$LocSector.knownname,$Key,$NewHive.knownname,$NewHive.idcode,$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{2}.indexof.{$NewHive},$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{3}.count,$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{4}.count]" context="false" filter="scripts"/>
+											<signal_objects object="player.galaxy" param="'init station'" param2="$NewHive" param3="false"/>
+											<do_if value="not $DAGVT.$DAInfestationTable.$SectorListPatrolListener.indexof.{$LocSector}">
+												<append_to_list name="$DAGVT.$DAInfestationTable.$SectorListPatrolListener" exact="$LocSector"/>
+												<signal_cue_instantly cue="EventInfSectorPatrolListener" param="$LocSector"/>
+											</do_if>
+										</do_if>
+										<do_else>
+											<!-- Ship count dropped below required value before this script completed -->
+										</do_else>
+									</do_if>
+									<do_else>
+										<!-- Invalid table entry somehow -->
+									</do_else>
+								</do_if>
+								<do_else>
+									<!-- Bad param -->
+								</do_else>
+							</actions>
+						</cue>
+						<cue name="EventInfSectorPatrolListener" instantiate="true" namespace="this">
+							<conditions>
+								<event_cue_signalled/>
+							</conditions>
+							<actions>
+								<!-- TODO: Continue working on script. Create list of sectors with listener/patrol logic cues, signal cue that sets up local groups, adds table objects to groups, increments over time, requests ships, reorganizes on losses, cancels on all hive losses -->
+								<!-- Patrol listener is only created for this mods hives, vanilla ones are not considered -->
+								<!-- $DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key} = [$LocPos, $StationGroup, $PatrolGroup, $InfestationShipGroup, $TimeOfInfestation, $CurrentScaling, $PatrolLeader] -->
+								<do_if value="not $DAGVT?">
+									<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+								</do_if>
+								<do_if value="event.param? and @event.param and @event.param.isclass.sector">
+									<set_value name="$LocSector" exact="event.param"/>
+									<set_value name="$HasAHive" exact="false"/>
+									<create_group groupname="$LocStationGroup"/>
+									<create_group groupname="$LocPatrolGroup"/>
+									<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.keys.list.count" min="1">
+										<do_for_each name="$Key" in="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.keys.list">
+											<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{2}.count" min="1">
+												<set_value name="$HasAHive" exact="true"/>
+												<do_for_each name="$LocStation" in="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{2}">
+													<add_to_group groupname="$LocStationGroup" object="$LocStation"/>
+												</do_for_each>
+												<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{5} le 0">
+													<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{5}" exact="player.age"/>
+												</do_if>
+												<do_if value="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{6} le 0">
+													<set_value name="$DAGVT.$DAInfestationTable.$SectorTable.{$LocSector}.{$Key}.{6}" exact="1"/>
+												</do_if>
+											</do_if>
+										</do_for_each>
+									</do_if>
+									<do_else>
+										<!-- No valid table entries -->
+										<remove_from_list name="$DAGVT.$DAInfestationTable.$SectorListPatrolListener" exact="event.param" multiple="true"/>
+										<cancel_cue cue="EventInfSectorPatrolListener"/>
+									</do_else>
+								</do_if>
+								<do_else>
+									<!-- Bad param -->
+									<remove_from_list name="$DAGVT.$DAInfestationTable.$SectorListPatrolListener" exact="event.param" multiple="true"/>
+									<cancel_cue cue="EventInfSectorPatrolListener"/>
+								</do_else>
+							</actions>
+							<cues>
+								<cue name="InfPatrolDestroyedListener" instantiate="true">
+									<conditions>
+										<check_any>
+											<event_object_destroyed group="$LocPatrolGroup"/>
+											<event_object_changed_owner group="$LocPatrolGroup"/>
+										</check_any>
+									</conditions>
+									<actions>
+										<!-- event_object_destroyed == object = destroyed object, param = killer, param2 = kill method, param3 = was parent killed -->
+										<!-- event_object_changed_owner == (object = owner changing object, param = new owner faction, param2 = previous owner faction) -->
+									</actions>
+								</cue>
+								<cue name="InfPatrolHiveDestroyedListener" instantiate="true">
+									<conditions>
+										<check_any>
+											<event_object_destroyed group="$LocStationGroup"/>
+											<event_object_changed_owner group="$LocStationGroup"/>
+										</check_any>
+									</conditions>
+									<actions>
+										<!-- event_object_destroyed == object = destroyed object, param = killer, param2 = kill method, param3 = was parent killed -->
+										<!-- event_object_changed_owner == (object = owner changing object, param = new owner faction, param2 = previous owner faction) -->
+									</actions>
+								</cue>
+								<cue name="InfPatrolScalingCue" instantiate="true" checkinterval="10min">
+									<actions>
+									
+									</actions>
+								</cue>
+								<cue name="InfPatrolCleanupCheck" instantiate="true" checkinterval="5min">
+									<actions>
+									
+									</actions>
+								</cue>
+							</cues>
+						</cue>
+					</cues>
+				</cue>
+				<cue name="EventInfDeactivated" instantiate="true" namespace="this">
+					<conditions>
+						<event_cue_signalled/>
+					</conditions>
+					<actions>
+						<do_if value="not $DAGVT?">
+							<set_value name="$DAGVT" exact="global.$DAVarTable"/>
+						</do_if>
+						<debug_text text="'MOD: DAInf -- Infection deactivated.'" context="false" filter="scripts"/>
+						<do_if value="$DAGVT.$DAInfestationTable.$CurrentActiveCue? and ($DAGVT.$DAInfestationTable.$CurrentActiveCue != null)">
+							<cancel_cue cue="$DAGVT.$DAInfestationTable.$CurrentActiveCue"/>
+							<debug_text text="'MOD: DAInf -- Previously active cue cancelled: %s %s'.[$DAGVT.$DAInfestationTable.$CurrentActiveCue,$DAGVT.$DAInfestationTable.$CurrentActiveCue.state]" context="false" filter="scripts"/>
+							<set_value name="$DAGVT.$DAInfestationTable.$CurrentActiveCue" exact="null"/>
+						</do_if>
+					</actions>
+				</cue>
+				<library name="LibraryCheckInfVariables">
+					<actions>
+						<set_value name="$MissingVarCount" exact="0"/>
+						<do_if value="(not $DAGVT.$DAInfestationEnable?) or (not ((typeof $DAGVT.$DAInfestationEnable == datatype.integer) and (($DAGVT.$DAInfestationEnable == 1) or ($DAGVT.$DAInfestationEnable == 0))))">
+							<set_value name="$DAGVT.$DAInfestationEnable" exact="true"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable?) or ($DAGVT.$DAInfestationTable == null)">
+							<set_value name="$DAGVT.$DAInfestationTable" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$SectorTable?) or ($DAGVT.$DAInfestationTable.$SectorTable == null)">
+							<set_value name="$DAGVT.$DAInfestationTable.$SectorTable" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$ShipGroup?) or ($DAGVT.$DAInfestationTable.$ShipGroup == null)">
+							<create_group groupname="$DAGVT.$DAInfestationTable.$ShipGroup"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$StationGroup?) or ($DAGVT.$DAInfestationTable.$StationGroup == null)">
+							<create_group groupname="$DAGVT.$DAInfestationTable.$StationGroup"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$SpreadTime?) or (not ($DAGVT.$DAInfestationTable.$SpreadTime gt 0))">
+							<set_value name="$DAGVT.$DAInfestationTable.$SpreadTime" exact="15"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$BaseShipCount?) or (not ($DAGVT.$DAInfestationTable.$BaseShipCount gt 0))">
+							<set_value name="$DAGVT.$DAInfestationTable.$BaseShipCount" exact="4"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$MaxScaling?) or (not ($DAGVT.$DAInfestationTable.$MaxScaling gt 0))">
+							<set_value name="$DAGVT.$DAInfestationTable.$MaxScaling" exact="32"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$Evolution?) or (not ((typeof $DAGVT.$DAInfestationTable.$Evolution == datatype.integer) and (($DAGVT.$DAInfestationTable.$Evolution == 1) or ($DAGVT.$DAInfestationTable.$Evolution == 0))))">
+							<set_value name="$DAGVT.$DAInfestationTable.$Evolution" exact="false"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$CurrentInfestationGoals?) or ($DAGVT.$DAInfestationTable.$CurrentInfestationGoals == null)">
+							<set_value name="$DAGVT.$DAInfestationTable.$CurrentInfestationGoals" exact="table[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$ShipsCanBeBuilt?) or (not ((typeof $DAGVT.$DAInfestationTable.$ShipsCanBeBuilt == datatype.integer) and (($DAGVT.$DAInfestationTable.$ShipsCanBeBuilt == 1) or ($DAGVT.$DAInfestationTable.$ShipsCanBeBuilt == 0))))">
+							<set_value name="$DAGVT.$DAInfestationTable.$ShipsCanBeBuilt" exact="false"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$SectorListInfestationListener?) or ($DAGVT.$DAInfestationTable.$SectorListInfestationListener == null)">
+							<set_value name="$DAGVT.$DAInfestationTable.$SectorListInfestationListener" exact="[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$SectorListPatrolListener?) or ($DAGVT.$DAInfestationTable.$SectorListPatrolListener == null)">
+							<set_value name="$DAGVT.$DAInfestationTable.$SectorListPatrolListener" exact="[]"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<do_if value="(not $DAGVT.$DAInfestationTable.$DetailedDebug?) or (not ((typeof $DAGVT.$DAInfestationTable.$DetailedDebug == datatype.integer) and (($DAGVT.$DAInfestationTable.$DetailedDebug == 1) or ($DAGVT.$DAInfestationTable.$DetailedDebug == 0))))">
+							<set_value name="$DAGVT.$DAInfestationTable.$DetailedDebug" exact="false"/>
+							<set_value name="$MissingVarCount" exact="1" operation="add"/>
+						</do_if>
+						<!-- Print only if missing -->
+						<do_if value="$MissingVarCount">
+							<debug_text text="'MOD: DAInf -- Number of missing variables set: %s.'.[$MissingVarCount]" context="true" filter="error"/>
 							<do_if value="$TotalMissingVar?">
 								<set_value name="$TotalMissingVar" exact="$MissingVarCount" operation="add"/>
 							</do_if>

@@ -9485,7 +9485,7 @@
 							<set_value name="$DAMVT.$DAStationModules.$WorkforceCalcs" exact="table[]"/>
 						</do_if>
 						<set_value name="$BlueprintList" exact="[]"/>
-						<get_ware_definition result="$BlueprintList" faction="faction.player" tags="tag.module"/>
+						<get_ware_definition result="$BlueprintList" tags="tag.module"/>
 						<do_for_each name="$Blueprint" in="$BlueprintList">
 							<do_if value="player.blueprints.{$Blueprint}.any.exists">
 								<do_if value="$Blueprint.objectmacro? and $Blueprint.objectmacro.isclass.production and $DAMVT.$DAStationCalcTable.{$Blueprint.objectmacro}?">

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<aiscript name="order.da.infestation.protectposition" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aiscripts.xsd">
+	<order id="DAInfestationShipScript" name="{33232474, 2441}" description="{33232474, 2442}" category="internal" allowinloop="false">
+		<params>
+			<param name="destination" type="position" text="{1041, 10027}" comment="Area to protect. Position">
+				<input_param name="class" value="class.sector"/>
+			</param>
+			<param name="goalsector" type="object" default="null" text="{1041, 10117}"/>
+			<param name="goalkey" type="number" default="null" text="{1041, 10126}"/>
+			<param name="localdebug" type="bool" text="{1041, 10086}" default="0" advanced="true" comment="Print debug output">
+				<input_param name="truevalue" value="100"/>
+			</param>
+		</params>
+		<requires>
+			<match shiptype="shiptype.lasertower" negate="true"/>
+			<match class="class.spacesuit" negate="true"/>
+			<match trueowner="faction.khaak"/>
+		</requires>
+		<location object="$destination.{1}" position="$destination.{2}" radius="this.ship.maxradarrange"/>
+	</order>
+	<interrupts>
+		<handler ref="SectorChangeHandler"/>
+		<handler ref="ScannedHandler"/>
+		<handler ref="InspectedHandler"/>
+		<handler ref="TargetInvalidHandler"/>
+	</interrupts>
+	<init>
+		<set_command command="command.patrol"/>
+		<do_if value="$destination.{1}.isclass.sector">
+			<set_value name="$targetsector" exact="$destination.{1}"/>
+		</do_if>
+		<do_else>
+			<debug_text text="'Input destination is not in a valid space. Destination Space: %1 (%2), Position: %3'.[@$destination.{1}.knownname, $destination.{1}, $destination.{2}]" filter="error"/>
+			<set_value name="$abort"/>
+		</do_else>
+		<do_if value="not $position?">
+			<set_value name="$position" exact="$destination.{2}"/>
+		</do_if>
+		<set_value name="$inittime" exact="player.age"/>
+	</init>
+	<attention min="unknown">
+		<actions>
+			<do_if value="$abort?">
+				<resume label="finish"/>
+			</do_if>
+			<label name="start"/>
+			<!-- if different zone, go there -->
+			<do_if value="(this.sector != $targetsector) or (this.ship.distanceto.[$targetsector, $position] gt this.ship.maxradarrange)">
+				<run_script name="'move.generic'" result="$movesuccess">
+					<param name="destination" value="$targetsector"/>
+					<param name="position" value="$position"/>
+					<param name="recallsubordinates" value="false"/>
+				</run_script>
+				<do_if value="not $movesuccess">
+					<do_if value="@this.assignedcontrolled.order.isrunning">
+						<set_order_failed order="this.assignedcontrolled.order" text="{1045, 101}" comment="Unable to reach destination."/>
+					</do_if>
+					<debug_text text="'Unable to reach destination. Aborting.'" chance="$debugchance"/>
+					<resume label="finish"/>
+				</do_if>
+			</do_if>
+			<label name="insector"/>
+			<get_zone_at_position name="$targetzone" sector="$targetsector" value="$position"/>
+			<do_if value="not $targetzone">
+				<!-- If there is still no zone at the position, the position is unobstructed and we are fairly close. Move straight there. -->
+				<move_to object="this.ship" destination="$targetsector" uselocalhighways="false" finishonapproach="true">
+					<position value="$position"/>
+				</move_to>
+				<!-- at this point, we should be at the destination, so there should now be a zone. -->
+				<get_zone_at_position name="$targetzone" sector="$targetsector" value="$position"/>
+				<do_if value="not $targetzone.exists">
+					<debug_text text="'Error: %1 (%2) should be at the destination zone, but there still is no zone at the destination. present location: %3, %4, %5. destination: %6'.[this.ship.knownname, this.ship, this.ship.zone.knownname, this.ship.sector.knownname, this.ship.cluster.knownname, $destination]" filter="error"/>
+					<resume label="finish"/>
+				</do_if>
+			</do_if>
+			<!-- Translate sector coordinates to zone coordinates. Dealing with zones is still necessary due to needing a safepos further down. -->
+			<do_if value="$targetzone">
+				<!-- Input: $position relative to $targetsector. Output: $zoneposition relative to $targetzone. -->
+				<create_position name="$zoneposition" space="$targetzone" value="$position" object="$targetsector"/>
+				<debug_text text="'%1 (%2) destination coordinates are now: %3 in %4 (%5), %6, %7'.[this.ship.knownname, this.ship, $zoneposition, $targetzone.knownname, $targetzone.macro, $targetzone.sector.knownname, $targetzone.cluster.knownname]" chance="$debugchance"/>
+			</do_if>
+			<set_order_syncpoint_reached order="this.ship.order"/>
+			<do_if value="$targetzone.exists">
+				<signal_objects object="$targetsector" param="'DAInfestationArrived'" param2="this.assignedcontrolled" param3="[$goalsector,$goalkey]"/>
+			</do_if>
+			<do_while value="$targetzone.exists">
+				<!-- initial random position in zone -->
+				<get_safe_pos result="$pos" zone="$targetzone" radius="this.ship.size/2f" max="this.ship.maxradarrange" value="$zoneposition"/>
+				<run_script name="'move.seekenemies'">
+					<param name="destination" value="$targetzone"/>
+					<param name="pos" value="$pos"/>
+					<param name="pursuetargets" value="false"/>
+					<param name="pursuedistance" value="$radius"/>
+					<param name="targetclasses" value="[class.ship,class.station,class.satellite]"/>
+					<param name="radius" value="this.ship.maxradarrange"/>
+					<param name="radiusanchorpos" value="$position"/>
+					<param name="radiusanchorspace" value="$targetsector"/>
+					<param name="engageonsight" value="true"/>
+					<param name="enforceradius" value="true"/>
+					<param name="internalorder" value="true"/>
+					<param name="debugchance" value="$debugchance"/>
+				</run_script>
+				<wait exact="500ms"/>
+			</do_while>
+			<do_if value="not $targetzone.exists">
+				<debug_text text="'targetzone of %s %s %s %s no longer exists.'.[@this.assignedcontrolled.job, @this.assignedcontrolled.idcode, @this.assignedcontrolled.knownname, this.assignedcontrolled]" chance="$debugchance"/>
+				<resume label="start"/>
+			</do_if>
+			<!-- Required for sync point handler -->
+			<label name="finish"/>
+			<do_if value="(this.sector != $targetsector) and (this.assignedcontrolled.gatedistance.{$targetsector} gt 0)">
+				<resume label="start"/>
+			</do_if>
+			<do_elseif value="(this.sector == $targetsector) and (this.ship.distanceto.[$targetsector, $position] gt this.ship.maxradarrange)">
+				<resume label="start"/>
+			</do_elseif>
+			<do_else>
+				<!-- There was an issue, die -->
+				<cancel_all_orders object="this.assignedcontrolled"/>
+				<destroy_object object="this.assignedcontrolled" explosion="false"/>
+			</do_else>
+		</actions>
+	</attention>
+	<on_abort>
+		<destroy_object object="this.assignedcontrolled" explosion="false"/>
+	</on_abort>
+</aiscript>
